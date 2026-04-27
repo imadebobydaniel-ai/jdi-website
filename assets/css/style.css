@@ -11,15 +11,18 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 50px;
+  padding: 15px 50px;
   background: #111;
 }
 
+/* LOGO (FIX BIAR TIDAK KEGEDEAN) */
 .logo {
-  color: #FF6A00;
-  font-size: 24px;
+  height: 40px;
+  width: auto;
+  object-fit: contain;
 }
 
+/* MENU */
 .navbar ul {
   display: flex;
   list-style: none;
@@ -68,7 +71,4 @@ body {
 
 .btn-wa:hover {
   background: #ff8533;
-}
-.logo {
-  height: 40px;
 }
