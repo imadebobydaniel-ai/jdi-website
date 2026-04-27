@@ -11,20 +11,26 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 30px;
+  padding: 5px 30px;
   background: #111;
 }
 
-/* LOGO (TRANSPARAN + OUTLINE PUTIH + LEBIH BESAR) */
+/* LOGO (BESAR + OUTLINE PUTIH SOLID SIMULASI) */
 .logo {
-  height: 90px; /* diperbesar */
+  height: 120px; /* diperbesar */
   width: auto;
   object-fit: contain;
 
-  /* outline putih (tanpa background) */
-  filter: drop-shadow(0 0 2px #fff)
-          drop-shadow(0 0 4px #fff)
-          drop-shadow(0 0 6px #fff);
+  /* outline putih lebih tegas (tidak blur) */
+  filter:
+    drop-shadow(1px 0 0 #fff)
+    drop-shadow(-1px 0 0 #fff)
+    drop-shadow(0 1px 0 #fff)
+    drop-shadow(0 -1px 0 #fff)
+    drop-shadow(1px 1px 0 #fff)
+    drop-shadow(-1px -1px 0 #fff)
+    drop-shadow(1px -1px 0 #fff)
+    drop-shadow(-1px 1px 0 #fff);
 }
 
 /* MENU */
