@@ -83,3 +83,41 @@ body {
 .btn-wa:hover {
   background: #ff8533;
 }
+/* LAYANAN */
+.layanan {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.layanan h2 {
+  color: #FF6A00;
+  margin-bottom: 40px;
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: #1a1a1a;
+  padding: 25px;
+  border-radius: 10px;
+  width: 250px;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  background: #222;
+}
+
+.card h3 {
+  color: #FF6A00;
+}
+
+.card p {
+  color: #ccc;
+}
