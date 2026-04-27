@@ -11,15 +11,20 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 50px;
+  padding: 10px 30px;
   background: #111;
 }
 
-/* LOGO (FIX BIAR TIDAK KEGEDEAN) */
+/* LOGO (BESAR + OUTLINE PUTIH) */
 .logo {
-  height: 40px;
+  height: 70px;
   width: auto;
   object-fit: contain;
+  padding: 5px;
+
+  /* outline putih */
+  filter: drop-shadow(0 0 2px white)
+          drop-shadow(0 0 4px white);
 }
 
 /* MENU */
@@ -71,11 +76,4 @@ body {
 
 .btn-wa:hover {
   background: #ff8533;
-}
-.logo {
-  height: 50px;
-  width: auto;
-  background: white;
-  padding: 5px 10px;
-  border-radius: 5px;
 }
