@@ -1,4 +1,10 @@
 body {
-  background: black;
+  margin: 0;
+  background: #0F0F0F;
   color: white;
+  font-family: 'Poppins', sans-serif;
+}
+
+h1 {
+  color: #FF6A00;
 }
