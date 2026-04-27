@@ -121,3 +121,42 @@ body {
 .card p {
   color: #ccc;
 }
+/* PORTFOLIO */
+.portfolio {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.portfolio h2 {
+  color: #FF6A00;
+  margin-bottom: 40px;
+}
+
+.portfolio-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.portfolio-item {
+  width: 250px;
+  background: #1a1a1a;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: 0.3s;
+}
+
+.portfolio-item img {
+  width: 100%;
+  display: block;
+}
+
+.portfolio-item p {
+  padding: 10px;
+  color: #ccc;
+}
+
+.portfolio-item:hover {
+  transform: scale(1.05);
+}
