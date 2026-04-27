@@ -1,1 +1,48 @@
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #0F0F0F;
+  color: white;
+}
 
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 50px;
+  background: #111;
+}
+
+.logo {
+  color: #FF6A00;
+}
+
+.navbar ul {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 100px 20px;
+}
+
+.hero h1 {
+  font-size: 40px;
+  color: #FF6A00;
+}
+
+.hero p {
+  margin: 20px 0;
+  color: #ccc;
+}
+
+.btn-wa {
+  background: #FF6A00;
+  padding: 12px 25px;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
