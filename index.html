@@ -68,6 +68,7 @@
             <div class="flex items-center gap-8">
                 <img src="logojdi.png" alt="Logo Jaya Digital Integrate" class="h-12 md:h-16 w-auto">
                 <div class="hidden md:flex space-x-8 font-medium text-gray-700">
+                    <a href="#" class="hover:text-accent-orange transition">Profil</a>
                     <a href="#" class="hover:text-accent-orange transition">Beranda</a>
                     <a href="#layanan" class="hover:text-accent-orange transition">Layanan</a>
                     <a href="#" class="hover:text-accent-orange transition">Proyek</a>
@@ -217,7 +218,7 @@
             <div class="lg:col-span-2">
                 <h3 class="text-xl font-bold mb-6 border-l-4 border-accent-orange pl-4">Lokasi Kami</h3>
                 <div class="rounded-xl overflow-hidden h-64 border border-white/10">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3985.732626245084!2d140.6865!3d-2.615!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMsKwMzYnNTQuMCJTIDE0MMKwNDEnMTEuNCJF!5e0!3m2!1sid!2sid!4v1620000000000!5m2!1sid!2sid" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3985.807123456789!2d140.7000!3d-2.6000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMsKwMzYnMDAuMCJTIDE0MMKwNDInMDAuMCJF!5e0!3m2!1sid!2sid!4v1620000000000!5m2!1sid!2sid" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
         </div>
@@ -242,9 +243,7 @@
                     <input type="text" id="p-alamat" placeholder="Alamat" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none">
                 </div>
                 <input type="text" id="p-usaha" placeholder="Nama Jenis Usaha" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none">
-                
                 <textarea id="p-deskripsi" placeholder="Jelaskan Deskripsi usaha anda" rows="2" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none"></textarea>
-                
                 <select id="p-jenis" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none bg-white">
                     <option value="" disabled selected>Pilih Projek Digital yang diinginkan</option>
                     <option value="Website">Website</option>
@@ -252,9 +251,7 @@
                     <option value="Digital Signage">Digital Signage</option>
                     <option value="Sistem Manajemen">Sistem Manajemen</option>
                 </select>
-                
                 <textarea id="p-keinginan" placeholder="Silahkan tuangkan keinginan anda dalam kolom ini" rows="3" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none"></textarea>
-                
                 <div class="flex gap-4 pt-4">
                     <button onclick="toggleProyekModal()" class="flex-1 bg-gray-200 text-gray-700 py-3 rounded-lg font-bold hover:bg-gray-300 transition">Batal</button>
                     <button onclick="previewProyek()" class="flex-1 bg-accent-orange text-white py-3 rounded-lg font-bold hover:bg-orange-600 transition">Kirim</button>
@@ -300,8 +297,8 @@
                 </div>
             </div>
             <div class="p-3 border-t flex gap-2">
-                <input type="text" placeholder="Ketik pesan..." class="flex-1 text-sm p-2 border rounded-lg outline-none focus:ring-1 focus:ring-accent-orange">
-                <button class="bg-accent-orange text-white px-3 py-1 rounded-lg text-xs font-bold">Kirim</button>
+                <input type="text" id="chat-input" placeholder="Ketik pesan..." class="flex-1 text-sm p-2 border rounded-lg outline-none focus:ring-1 focus:ring-accent-orange">
+                <button onclick="sendChat()" class="bg-accent-orange text-white px-3 py-1 rounded-lg text-xs font-bold">Kirim</button>
             </div>
         </div>
 
@@ -359,7 +356,6 @@
             portal.classList.toggle('hidden');
         }
 
-        // FUNGSI NOTIFIKASI BARU
         function showNotif(message) {
             document.getElementById('notif-message').innerText = message;
             document.getElementById('notif-modal').classList.remove('hidden');
@@ -378,12 +374,6 @@
             } else {
                 showNotif('Akses Ditolak! Kredensial salah.');
             }
-        }
-
-        function logout() {
-            document.getElementById('login-section').classList.remove('hidden');
-            document.getElementById('setting-section').classList.add('hidden');
-            toggleAdminPanel();
         }
 
         function toggleProyekModal() {
@@ -427,10 +417,48 @@
         function confirmSend() {
             showNotif("Selamat Rencana Projek Anda Telah dikirim, Team kami akan menghubungi anda");
             toggleProyekModal();
-            // Reset fields
             document.querySelectorAll('#proyek-modal input, #proyek-modal textarea').forEach(el => el.value = '');
             document.getElementById('p-jenis').selectedIndex = 0;
         }
+
+        // --- FUNGSI CHAT BARU ---
+        function sendChat() {
+            const input = document.getElementById('chat-input');
+            const content = document.getElementById('chat-content');
+            const pesan = input.value.trim();
+
+            if (pesan !== "") {
+                // 1. Tambahkan pesan user ke kotak chat
+                content.innerHTML += `
+                    <div class="bg-blue-100 p-3 rounded-lg text-navy-dark mb-2 self-end ml-8">
+                        ${pesan}
+                    </div>
+                `;
+                
+                // 2. Kosongkan input
+                input.value = "";
+
+                // 3. Auto-scroll ke bawah
+                content.scrollTop = content.scrollHeight;
+
+                // 4. Simulasi respon AI
+                setTimeout(() => {
+                    content.innerHTML += `
+                        <div class="bg-orange-100 p-3 rounded-lg text-navy-dark mb-2 mr-8">
+                            Terima kasih atas pertanyaannya. Admin kami akan segera merespon pesan Anda.
+                        </div>
+                    `;
+                    content.scrollTop = content.scrollHeight;
+                }, 1000);
+            }
+        }
+
+        // Tambahan: Agar bisa kirim pesan dengan menekan tombol 'Enter'
+        document.getElementById('chat-input')?.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                sendChat();
+            }
+        });
     </script>
 </body>
 </html>
