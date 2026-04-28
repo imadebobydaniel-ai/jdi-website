@@ -74,11 +74,12 @@
                     <a href="#kontak" class="hover:text-accent-orange transition">Kontak</a>
                 </div>
             </div>
+            
             <div class="flex items-center gap-4">
-                <button class="bg-accent-orange text-white px-5 py-2 rounded-full font-semibold hover:bg-orange-600 transition shadow-lg text-sm md:text-base">
+                <a href="https://wa.me/6281283393576" target="_blank" class="bg-accent-orange text-white px-5 py-2 rounded-full font-semibold hover:bg-orange-600 transition shadow-lg text-sm md:text-base">
                     Konsultasi Gratis
-                </button>
-                <button onclick="toggleAdminPanel()" class="text-xs font-bold text-navy-dark/40 hover:text-accent-orange transition uppercase tracking-wider border-l pl-4 border-gray-200">
+                </a>
+                <button onclick="toggleAdminPanel()" class="text-xs font-bold text-navy-dark/40 hover:text-accent-orange transition uppercase tracking-wider border-l pl-4 border-gray-200 hidden md:block">
                     Login Admin
                 </button>
             </div>
@@ -300,9 +301,7 @@
             const u = document.getElementById('user').value;
             const p = document.getElementById('pass').value;
             
-            // Validasi kredensial tetap sama
             if(u === 'admin' && p === 'bukadong821') {
-                // Mengarahkan ke file admin.html di tab yang sama
                 window.location.href = 'admin.html'; 
             } else {
                 alert('Akses Ditolak! Kredensial salah.');
