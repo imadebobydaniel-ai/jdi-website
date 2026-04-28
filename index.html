@@ -14,6 +14,28 @@
         .bg-accent-orange { background-color: #ff8c00; }
         .star { cursor: pointer; }
         
+        /* Efek Kontainer Modern & Floating */
+        .feature-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border-color: #ff8c00;
+        }
+
+        .feature-card:hover .icon-circle {
+            transform: scale(1.1) rotate(10deg);
+            background-color: #ff8c00;
+            color: white;
+        }
+
+        .icon-circle {
+            transition: all 0.3s ease;
+        }
+
         /* Floating Virtual Assistant Styles */
         #virtual-assistant {
             position: fixed;
@@ -56,8 +78,8 @@
                     Kami menghadirkan solusi teknologi mutakhir untuk kebutuhan administrasi, database, dan sistem informasi di wilayah Jayapura dan sekitarnya.
                 </p>
                 <div class="flex flex-wrap gap-4">
-                    <a href="#" class="bg-accent-orange text-white px-8 py-3 rounded-md font-bold hover:bg-orange-600 transition shadow-lg">Mulai Proyek</a>
-                    <a href="#" class="border-2 border-white px-8 py-3 rounded-md font-bold hover:bg-white hover:text-navy-dark transition">Lihat Portfolio</a>
+                    <a href="#" class="bg-accent-orange text-white px-8 py-3 rounded-md font-bold hover:bg-orange-600 transition shadow-lg text-center">Mulai Proyek</a>
+                    <a href="#" class="border-2 border-white px-8 py-3 rounded-md font-bold hover:bg-white hover:text-navy-dark transition text-center">Lihat Portfolio</a>
                 </div>
             </div>
 
@@ -80,48 +102,75 @@
         </div>
     </header>
 
-    <section id="layanan" class="py-20 max-w-7xl mx-auto px-6 text-center">
-        <h2 class="text-3xl font-bold text-navy-dark mb-12">Mengapa Memilih JDI?</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-accent-orange hover:shadow-xl transition flex flex-col items-center">
-                <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-4"><span class="text-accent-orange font-bold">01</span></div>
-                <h3 class="font-bold mb-2">Responsif</h3>
-                <p class="text-gray-600 text-xs">Akses lancar dari smartphone & desktop.</p>
+    <section id="layanan" class="py-24 max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-navy-dark mb-4">Mengapa Memilih JDI?</h2>
+            <p class="text-gray-500 max-w-2xl mx-auto">Komitmen kami adalah memberikan standar teknologi tertinggi untuk mendukung transformasi digital bisnis Anda di Papua.</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="feature-card bg-white p-8 rounded-3xl shadow-sm flex flex-col items-start text-left">
+                <div class="icon-circle w-14 h-14 bg-orange-100 text-accent-orange rounded-2xl flex items-center justify-center mb-6 shadow-inner">
+                    <span class="text-xl font-bold">01</span>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-navy-dark">Responsif</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">Optimasi multi-platform yang memastikan tampilan website Anda tetap sempurna dan fungsional baik di smartphone, tablet, maupun desktop secara otomatis.</p>
             </div>
-            <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-navy-dark hover:shadow-xl transition flex flex-col items-center">
-                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4"><span class="text-navy-dark font-bold">02</span></div>
-                <h3 class="font-bold mb-2">Scalable</h3>
-                <p class="text-gray-600 text-xs">Sistem siap tumbuh bersama bisnis Anda.</p>
+
+            <div class="feature-card bg-white p-8 rounded-3xl shadow-sm flex flex-col items-start text-left">
+                <div class="icon-circle w-14 h-14 bg-blue-100 text-navy-dark rounded-2xl flex items-center justify-center mb-6 shadow-inner">
+                    <span class="text-xl font-bold">02</span>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-navy-dark">Scalable</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">Arsitektur sistem masa depan yang memungkinkan peningkatan kapasitas secara instan seiring dengan berkembangnya skala bisnis dan jumlah pengguna Anda.</p>
             </div>
-            <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-accent-orange hover:shadow-xl transition flex flex-col items-center">
-                <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-4"><span class="text-accent-orange font-bold">03</span></div>
-                <h3 class="font-bold mb-2">Aman</h3>
-                <p class="text-gray-600 text-xs">Prioritas pada keamanan database modern.</p>
+
+            <div class="feature-card bg-white p-8 rounded-3xl shadow-sm flex flex-col items-start text-left">
+                <div class="icon-circle w-14 h-14 bg-orange-100 text-accent-orange rounded-2xl flex items-center justify-center mb-6 shadow-inner">
+                    <span class="text-xl font-bold">03</span>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-navy-dark">Aman</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">Implementasi sistem keamanan database tingkat lanjut untuk menjamin integritas data sensitif perusahaan dari potensi kebocoran atau serangan siber.</p>
             </div>
-            <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-navy-dark hover:shadow-xl transition flex flex-col items-center">
-                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4"><span class="text-navy-dark font-bold">04</span></div>
-                <h3 class="font-bold mb-2">SSL Certificate</h3>
-                <p class="text-gray-600 text-xs">Enkripsi data pengguna yang terjamin.</p>
+
+            <div class="feature-card bg-white p-8 rounded-3xl shadow-sm flex flex-col items-start text-left">
+                <div class="icon-circle w-14 h-14 bg-blue-100 text-navy-dark rounded-2xl flex items-center justify-center mb-6 shadow-inner">
+                    <span class="text-xl font-bold">04</span>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-navy-dark">SSL Certificate</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">Proteksi enkripsi data end-to-end yang menjamin keamanan transaksi pengguna sekaligus meningkatkan kredibilitas website Anda di mata mesin pencari.</p>
             </div>
-            <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-accent-orange hover:shadow-xl transition flex flex-col items-center">
-                <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-4"><span class="text-accent-orange font-bold">05</span></div>
-                <h3 class="font-bold mb-2">SEO Optimized</h3>
-                <p class="text-gray-600 text-xs">Meningkatkan visibilitas di Google.</p>
+
+            <div class="feature-card bg-white p-8 rounded-3xl shadow-sm flex flex-col items-start text-left">
+                <div class="icon-circle w-14 h-14 bg-orange-100 text-accent-orange rounded-2xl flex items-center justify-center mb-6 shadow-inner">
+                    <span class="text-xl font-bold">05</span>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-navy-dark">SEO Optimized</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">Struktur kode ramah SEO untuk otoritas pencarian yang lebih baik, membantu profil bisnis Anda muncul di halaman pertama Google secara organik.</p>
             </div>
-            <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-navy-dark hover:shadow-xl transition flex flex-col items-center">
-                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4"><span class="text-navy-dark font-bold">06</span></div>
-                <h3 class="font-bold mb-2">Total Solution</h3>
-                <p class="text-gray-600 text-xs">Layanan terintegrasi satu pintu.</p>
+
+            <div class="feature-card bg-white p-8 rounded-3xl shadow-sm flex flex-col items-start text-left">
+                <div class="icon-circle w-14 h-14 bg-blue-100 text-navy-dark rounded-2xl flex items-center justify-center mb-6 shadow-inner">
+                    <span class="text-xl font-bold">06</span>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-navy-dark">Total Solution</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">Layanan terintegrasi mulai dari konsep, pengembangan aplikasi, hingga manajemen server dalam satu ekosistem kerja yang efisien.</p>
             </div>
-            <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-accent-orange hover:shadow-xl transition flex flex-col items-center">
-                <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-4"><span class="text-accent-orange font-bold">07</span></div>
-                <h3 class="font-bold mb-2">Support 24/7</h3>
-                <p class="text-gray-600 text-xs">Tim teknikal siaga membantu kapan saja.</p>
+
+            <div class="feature-card bg-white p-8 rounded-3xl shadow-sm flex flex-col items-start text-left">
+                <div class="icon-circle w-14 h-14 bg-orange-100 text-accent-orange rounded-2xl flex items-center justify-center mb-6 shadow-inner">
+                    <span class="text-xl font-bold">07</span>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-navy-dark">Support 24/7</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">Dukungan teknis tanpa henti untuk memastikan sistem Anda selalu berjalan optimal tanpa hambatan operasional, kapan pun Anda membutuhkan bantuan.</p>
             </div>
-            <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-navy-dark hover:shadow-xl transition flex flex-col items-center">
-                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4"><span class="text-navy-dark font-bold">08</span></div>
-                <h3 class="font-bold mb-2">Jaminan Mutu</h3>
-                <p class="text-gray-600 text-xs">Hasil akhir sesuai standar ekspektasi.</p>
+
+            <div class="feature-card bg-white p-8 rounded-3xl shadow-sm flex flex-col items-start text-left">
+                <div class="icon-circle w-14 h-14 bg-blue-100 text-navy-dark rounded-2xl flex items-center justify-center mb-6 shadow-inner">
+                    <span class="text-xl font-bold">08</span>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-navy-dark">Jaminan Mutu</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">Proses pengujian ketat untuk memastikan hasil akhir produk memiliki performa tinggi, desain estetik, dan sesuai dengan target solusi bisnis Anda.</p>
             </div>
         </div>
     </section>
@@ -156,14 +205,14 @@
                 <h3 class="text-xl font-bold mb-6 border-l-4 border-accent-orange pl-4">Lokasi Kami</h3>
                 <div class="rounded-xl overflow-hidden shadow-2xl h-64 border border-white/10">
                     <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15945.18721200588!2d140.675662!3d-2.601552!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x686cf56810a9f5d1%3A0x6734151b7470f1a2!2sAbepura%2C%20Jayapura%20City%2C%20Papua!5e0!3m2!1sen!2sid!4v1714280000000!5m2!1sen!2sid" 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15949.721473215582!2d140.710000!3d-2.610000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x686cf4f200000001%3A0x0!2sAbepura%2C%20Jayapura%20City%2C%20Papua!5e0!3m2!1sid!2sid!4v1710000000000!5m2!1sid!2sid" 
                         width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
                     </iframe>
                 </div>
             </div>
         </div>
         <div class="mt-16 pt-8 border-t border-white/10 text-center text-gray-500 text-xs">
-            &copy; 2026 Jaya Digital Integrate. All Rights Reserved.
+            © 2026 Jaya Digital Integrate. All Rights Reserved.
         </div>
     </footer>
 
@@ -214,8 +263,8 @@
             if (isDragging) {
                 va.style.left = (e.clientX - offset.x) + 'px';
                 va.style.top = (e.clientY - offset.y) + 'px';
-                va.style.right = 'auto'; // Remove fixed right
-                va.style.bottom = 'auto'; // Remove fixed bottom
+                va.style.right = 'auto';
+                va.style.bottom = 'auto';
             }
         });
 
