@@ -99,7 +99,7 @@
                     Kami menghadirkan solusi teknologi mutakhir untuk kebutuhan administrasi, database, dan sistem informasi di wilayah Jayapura dan sekitarnya.
                 </p>
                 <div class="flex flex-wrap gap-4">
-                    <a href="#" class="bg-accent-orange text-white px-8 py-3 rounded-md font-bold hover:bg-orange-600 transition shadow-lg text-center">Mulai Proyek</a>
+                    <a href="javascript:void(0)" onclick="toggleProyekModal()" class="bg-accent-orange text-white px-8 py-3 rounded-md font-bold hover:bg-orange-600 transition shadow-lg text-center">Mulai Proyek</a>
                     <a href="#" class="border-2 border-white px-8 py-3 rounded-md font-bold hover:bg-white hover:text-navy-dark transition text-center">Lihat Portfolio</a>
                 </div>
             </div>
@@ -226,6 +226,55 @@
         </div>
     </footer>
 
+    <div id="proyek-modal" class="fixed inset-0 bg-navy-dark/90 z-[10002] hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-2xl rounded-2xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col">
+            <div class="p-6 border-b bg-gray-50">
+                <h3 class="text-2xl font-bold text-navy-dark text-center">Formulir Mulai Proyek</h3>
+            </div>
+            
+            <div class="p-8 overflow-y-auto space-y-4" id="form-container">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="text" id="p-nama" placeholder="Nama Lengkap" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none">
+                    <input type="text" id="p-hp" placeholder="Nomor HP" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none">
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="email" id="p-email" placeholder="Email" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none">
+                    <input type="text" id="p-alamat" placeholder="Alamat" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none">
+                </div>
+                <input type="text" id="p-usaha" placeholder="Nama Jenis Usaha" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none">
+                
+                <textarea id="p-deskripsi" placeholder="Jelaskan Deskripsi usaha anda" rows="2" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none"></textarea>
+                
+                <select id="p-jenis" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none bg-white">
+                    <option value="" disabled selected>Pilih Projek Digital yang diinginkan</option>
+                    <option value="Website">Website</option>
+                    <option value="Aplikasi Android">Aplikasi Android</option>
+                    <option value="Digital Signage">Digital Signage</option>
+                    <option value="Sistem Manajemen">Sistem Manajemen</option>
+                </select>
+                
+                <textarea id="p-keinginan" placeholder="Silahkan tuangkan keinginan anda dalam kolom ini" rows="3" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none"></textarea>
+                
+                <div class="flex gap-4 pt-4">
+                    <button onclick="toggleProyekModal()" class="flex-1 bg-gray-200 text-gray-700 py-3 rounded-lg font-bold hover:bg-gray-300 transition">Batal</button>
+                    <button onclick="previewProyek()" class="flex-1 bg-accent-orange text-white py-3 rounded-lg font-bold hover:bg-orange-600 transition">Kirim</button>
+                </div>
+            </div>
+
+            <div id="preview-container" class="hidden p-8 overflow-y-auto">
+                <div class="bg-orange-50 p-6 rounded-xl border border-orange-200 mb-6">
+                    <h4 class="font-bold text-navy-dark mb-4 border-b border-orange-200 pb-2">Preview Data Proyek</h4>
+                    <div id="preview-content" class="text-sm space-y-2 text-gray-700"></div>
+                </div>
+                <p class="text-center font-semibold mb-6">Apakah semuanya sudah sesuai?</p>
+                <div class="flex gap-4">
+                    <button onclick="backToForm()" class="flex-1 bg-gray-200 text-gray-700 py-3 rounded-lg font-bold hover:bg-gray-300 transition">Batal</button>
+                    <button onclick="confirmSend()" class="flex-1 bg-accent-orange text-white py-3 rounded-lg font-bold hover:bg-orange-600 transition">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="fixed bottom-6 right-6 z-[9999]">
         <div id="chat-box" class="bg-white w-72 md:w-80 rounded-2xl shadow-2xl border border-gray-200 overflow-hidden mb-4">
             <div class="bg-navy-dark p-4 text-white font-bold flex justify-between items-center">
@@ -312,6 +361,53 @@
             document.getElementById('login-section').classList.remove('hidden');
             document.getElementById('setting-section').classList.add('hidden');
             toggleAdminPanel();
+        }
+
+        /* JAVASCRIPT BARU UNTUK MODAL PROYEK */
+        function toggleProyekModal() {
+            const modal = document.getElementById('proyek-modal');
+            modal.classList.toggle('hidden');
+            if(modal.classList.contains('hidden')) backToForm();
+        }
+
+        function previewProyek() {
+            const data = {
+                "Nama": document.getElementById('p-nama').value,
+                "Nomor HP": document.getElementById('p-hp').value,
+                "Email": document.getElementById('p-email').value,
+                "Alamat": document.getElementById('p-alamat').value,
+                "Nama Usaha": document.getElementById('p-usaha').value,
+                "Deskripsi": document.getElementById('p-deskripsi').value,
+                "Jenis Projek": document.getElementById('p-jenis').value,
+                "Keinginan": document.getElementById('p-keinginan').value
+            };
+
+            if(!data["Nama"] || !data["Nomor HP"] || !data["Jenis Projek"]) {
+                alert('Mohon lengkapi Nama, Nomor HP, dan Jenis Projek.');
+                return;
+            }
+
+            let html = '';
+            for (const [key, value] of Object.entries(data)) {
+                html += `<p><strong>${key}:</strong> ${value || '-'}</p>`;
+            }
+
+            document.getElementById('preview-content').innerHTML = html;
+            document.getElementById('form-container').classList.add('hidden');
+            document.getElementById('preview-container').classList.remove('hidden');
+        }
+
+        function backToForm() {
+            document.getElementById('form-container').classList.remove('hidden');
+            document.getElementById('preview-container').classList.add('hidden');
+        }
+
+        function confirmSend() {
+            alert('Informasi berhasil terkirim ke Admin!');
+            toggleProyekModal();
+            // Reset fields
+            document.querySelectorAll('#proyek-modal input, #proyek-modal textarea').forEach(el => el.value = '');
+            document.getElementById('p-jenis').selectedIndex = 0;
         }
     </script>
 </body>
