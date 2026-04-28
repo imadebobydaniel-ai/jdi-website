@@ -11,7 +11,6 @@
         .bg-navy-dark { background-color: #0a1d37; }
         .text-accent-orange { color: #ff8c00; }
         .bg-accent-orange { background-color: #ff8c00; }
-        /* Transisi halus untuk perpindahan menu */
         .content-section { display: none; }
         .content-section.active { display: block; }
     </style>
@@ -27,16 +26,16 @@
             <a href="#" onclick="showSection('dashboard')" id="nav-dashboard" class="flex items-center gap-3 p-3 bg-accent-orange rounded-lg font-bold">
                 <span>📊</span> Dashboard
             </a>
-            <a href="#" onclick="showSection('portal-projek')" id="nav-projek" class="flex items-center gap-3 p-3 hover:bg-white/5 rounded-lg transition">
+            <a href="#" onclick="showSection('portal-projek')" id="nav-projek" class="flex items-center gap-3 p-3 hover:bg-white/5 rounded-lg transition text-gray-300">
                 <span>📂</span> Portal Projek
             </a>
-            <a href="#" class="flex items-center gap-3 p-3 hover:bg-white/5 rounded-lg transition">
+            <a href="#" class="flex items-center gap-3 p-3 hover:bg-white/5 rounded-lg transition text-gray-300">
                 <span>🤖</span> Pengetahuan AI
             </a>
-            <a href="#" class="flex items-center gap-3 p-3 hover:bg-white/5 rounded-lg transition">
+            <a href="#" class="flex items-center gap-3 p-3 hover:bg-white/5 rounded-lg transition text-gray-300">
                 <span>⭐</span> Review & Rating
             </a>
-            <a href="#" class="flex items-center gap-3 p-3 hover:bg-white/5 rounded-lg transition">
+            <a href="#" class="flex items-center gap-3 p-3 hover:bg-white/5 rounded-lg transition text-gray-300">
                 <span>🖼️</span> Galeri Portofolio
             </a>
         </nav>
@@ -57,7 +56,7 @@
         </header>
 
         <section id="dashboard-section" class="content-section active p-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 text-center md:text-left">
                 <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-accent-orange">
                     <p class="text-gray-500 text-sm font-bold uppercase mb-1">Total Pertanyaan AI</p>
                     <h3 class="text-3xl font-bold text-navy-dark">1,240</h3>
@@ -92,20 +91,11 @@
                         <tbody class="text-sm divide-y">
                             <tr>
                                 <td class="px-6 py-4 font-medium italic">"Apa itu JDI?"</td>
-                                <td class="px-6 py-4 text-gray-600">Jaya Digital Integrate adalah penyedia solusi IT di Jayapura...</td>
+                                <td class="px-6 py-4 text-gray-600 italic leading-relaxed">"Jaya Digital Integrate adalah penyedia solusi IT di Jayapura..."</td>
                                 <td class="px-6 py-4"><span class="bg-green-100 text-green-700 px-2 py-1 rounded-md text-[10px] font-bold">AKTIF</span></td>
-                                <td class="px-6 py-4 text-right space-x-2">
-                                    <button class="text-blue-500 font-bold">Edit</button>
-                                    <button class="text-red-500 font-bold">Hapus</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="px-6 py-4 font-medium italic">"Lokasi kantor di mana?"</td>
-                                <td class="px-6 py-4 text-gray-600">Kantor kami berlokasi di Jl. Tanah Hitam Abe Pantai...</td>
-                                <td class="px-6 py-4"><span class="bg-green-100 text-green-700 px-2 py-1 rounded-md text-[10px] font-bold">AKTIF</span></td>
-                                <td class="px-6 py-4 text-right space-x-2">
-                                    <button class="text-blue-500 font-bold">Edit</button>
-                                    <button class="text-red-500 font-bold">Hapus</button>
+                                <td class="px-6 py-4 text-right space-x-3 text-[12px] font-bold">
+                                    <button class="text-blue-500 hover:underline">Edit</button>
+                                    <button class="text-red-500 hover:underline">Hapus</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -116,44 +106,47 @@
 
         <section id="projek-section" class="content-section p-8">
             <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
-                <div class="p-6 border-b flex justify-between items-center">
+                <div class="p-6 border-b flex justify-between items-center bg-white">
                     <div>
-                        <h3 class="font-bold text-navy-dark text-lg">Daftar Masuk Projek</h3>
-                        <p class="text-xs text-gray-400">Data permintaan layanan dari pelanggan (Main Page)</p>
+                        <h3 class="font-bold text-navy-dark text-lg leading-none">Daftar Masuk Projek</h3>
+                        <p class="text-[11px] text-gray-400 mt-2">Data lengkap permintaan layanan dari Main Page</p>
                     </div>
                 </div>
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left">
-                        <thead class="bg-gray-50 text-gray-400 text-[10px] uppercase font-bold">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="bg-gray-50 text-gray-400 text-[10px] uppercase font-bold border-b">
                             <tr>
-                                <th class="px-6 py-4">Info Klien & Usaha</th>
-                                <th class="px-6 py-4">Kebutuhan Projek</th>
-                                <th class="px-6 py-4">Kontak</th>
+                                <th class="px-6 py-4">Nama & Nama Usaha</th>
+                                <th class="px-6 py-4">Kontak & Alamat</th>
+                                <th class="px-6 py-4">Jenis & Kebutuhan Projek</th>
                                 <th class="px-6 py-4">Status</th>
                                 <th class="px-6 py-4 text-right">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="text-sm divide-y" id="project-data-list">
+                        <tbody class="text-[13px] divide-y" id="project-data-list">
                             <tr>
-                                <td class="px-6 py-4">
-                                    <p class="font-bold text-navy-dark text-base">Budi Santoso</p>
-                                    <p class="text-xs text-gray-500">Toko Kelontong Berkah</p>
+                                <td class="px-6 py-5">
+                                    <div class="font-bold text-navy-dark text-[15px]">Budi Santoso</div>
+                                    <div class="text-[11px] text-gray-500 font-medium">Toko Kelontong Berkah</div>
                                 </td>
-                                <td class="px-6 py-4">
-                                    <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-[10px] font-bold block w-fit mb-1 uppercase">Website Katalog</span>
-                                    <p class="text-gray-600 text-xs line-clamp-1 italic">"Saya butuh web untuk menampilkan stok..."</p>
+                                <td class="px-6 py-5 leading-relaxed">
+                                    <div class="flex items-center gap-2 text-green-600 font-bold mb-1">
+                                        <span class="text-sm">📞</span> 0812-3456-7890
+                                    </div>
+                                    <div class="text-gray-600 truncate max-w-[180px]">📧 budi.santoso@email.com</div>
+                                    <div class="text-[11px] text-gray-400 italic mt-1">📍 Abepura, Jayapura Selatan</div>
                                 </td>
-                                <td class="px-6 py-4">
-                                    <button class="bg-green-500 text-white px-3 py-1 rounded text-[10px] font-bold hover:bg-green-600 transition flex items-center gap-1">
-                                        <span>💬</span> WhatsApp
-                                    </button>
+                                <td class="px-6 py-5">
+                                    <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-[9px] font-bold uppercase">Website Katalog</span>
+                                    <p class="text-gray-600 text-[12px] mt-2 italic leading-snug">"Saya butuh website untuk menampilkan stok barang secara real-time..."</p>
                                 </td>
-                                <td class="px-6 py-4">
-                                    <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded-md text-[10px] font-bold uppercase">Menunggu</span>
+                                <td class="px-6 py-5">
+                                    <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">Menunggu</span>
                                 </td>
-                                <td class="px-6 py-4 text-right space-x-2">
-                                    <button class="text-navy-dark font-bold hover:underline">Detail</button>
-                                    <button class="text-red-500 font-bold hover:underline">Hapus</button>
+                                <td class="px-6 py-5 text-right space-x-3 text-[12px] font-bold">
+                                    <button onclick="window.open('https://wa.me/6281234567890')" class="text-green-500 hover:underline">WhatsApp</button>
+                                    <button class="text-navy-dark hover:underline">Detail</button>
+                                    <button class="text-red-500 hover:underline">Hapus</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -166,25 +159,26 @@
 
     <script>
         function showSection(sectionId) {
-            // Sembunyikan semua section
             document.querySelectorAll('.content-section').forEach(section => {
                 section.classList.remove('active');
             });
 
-            // Reset semua style navigasi
             document.querySelectorAll('nav a').forEach(link => {
-                link.classList.remove('bg-accent-orange', 'font-bold');
-                link.classList.add('hover:bg-white/5');
+                link.classList.remove('bg-accent-orange', 'font-bold', 'text-white');
+                link.classList.add('hover:bg-white/5', 'text-gray-300');
             });
 
-            // Tampilkan section yang dipilih
             if (sectionId === 'dashboard') {
                 document.getElementById('dashboard-section').classList.add('active');
-                document.getElementById('nav-dashboard').classList.add('bg-accent-orange', 'font-bold');
+                const nav = document.getElementById('nav-dashboard');
+                nav.classList.add('bg-accent-orange', 'font-bold', 'text-white');
+                nav.classList.remove('text-gray-300');
                 document.getElementById('header-title').innerText = 'Ringkasan Statistik';
             } else if (sectionId === 'portal-projek') {
                 document.getElementById('projek-section').classList.add('active');
-                document.getElementById('nav-projek').classList.add('bg-accent-orange', 'font-bold');
+                const nav = document.getElementById('nav-projek');
+                nav.classList.add('bg-accent-orange', 'font-bold', 'text-white');
+                nav.classList.remove('text-gray-300');
                 document.getElementById('header-title').innerText = 'Manajemen Portal Projek';
             }
         }
