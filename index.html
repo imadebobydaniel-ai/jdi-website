@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jaya Digital Integrate - Solusi Digital Terintegrasi</title>
+    <title>Jaya Digital Integrate - Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
         .bg-navy-dark { background-color: #0a1d37; }
         .text-navy-dark { color: #0a1d37; }
         .text-accent-orange { color: #ff8c00; }
         .bg-accent-orange { background-color: #ff8c00; }
+        .star { cursor: pointer; }
         
-        /* Virtual Assistant Draggable Style */
+        /* Floating Virtual Assistant Styles */
         #virtual-assistant {
             position: fixed;
             bottom: 20px;
@@ -23,33 +23,22 @@
             cursor: move;
             touch-action: none;
         }
-        
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .star { cursor: pointer; transition: transform 0.2s; }
-        .star:hover { transform: scale(1.2); }
     </style>
 </head>
 <body class="bg-gray-50">
 
-    <nav class="bg-white shadow-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 flex justify-between items-center">
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center">
-                <img src="logojdi.png" alt="Logo JDI" class="h-10 md:h-14 w-auto">
+                <img src="logojdi.png" alt="Logo Jaya Digital Integrate" class="h-12 md:h-16 w-auto transition-all">
             </div>
-            
-            <div class="hidden lg:flex space-x-8 font-medium text-gray-700">
+            <div class="hidden md:flex space-x-8 font-medium text-gray-700">
                 <a href="#" class="hover:text-accent-orange transition">Beranda</a>
-                <a href="#" class="hover:text-accent-orange transition">Layanan</a>
+                <a href="#layanan" class="hover:text-accent-orange transition">Layanan</a>
                 <a href="#" class="hover:text-accent-orange transition">Proyek</a>
-                <a href="#" class="hover:text-accent-orange transition">Kontak</a>
+                <a href="#kontak" class="hover:text-accent-orange transition">Kontak</a>
             </div>
-            
-            <button class="bg-accent-orange text-white px-4 md:px-6 py-2 rounded-full font-bold hover:bg-orange-600 transition shadow-md text-sm md:text-base">
+            <button class="bg-accent-orange text-white px-5 py-2 rounded-full font-semibold hover:bg-orange-600 transition shadow-lg text-sm md:text-base">
                 Konsultasi Gratis
             </button>
         </div>
@@ -57,163 +46,200 @@
 
     <header class="relative bg-navy-dark text-white overflow-hidden">
         <div class="absolute top-0 right-0 w-1/3 h-full bg-accent-orange opacity-10 transform skew-x-12 translate-x-20"></div>
-        
-        <div class="max-w-7xl mx-auto px-6 py-16 md:py-28 flex flex-col md:flex-row items-center relative z-10">
-            <div class="md:w-1/2 mb-10 md:mb-0 text-center md:text-left">
-                <h1 class="text-3xl md:text-6xl font-bold leading-tight mb-6">
-                    Wujudkan Ide, <br>
-                    <span class="text-accent-orange">Kami Bangun Solusinya!</span>
+        <div class="max-w-7xl mx-auto px-6 py-16 md:py-32 flex flex-col md:flex-row items-center relative z-10">
+            <div class="md:w-1/2 mb-12 md:mb-0">
+                <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-6">
+                    Transformasi Digital <br>
+                    <span class="text-accent-orange">Tanpa Batas</span>
                 </h1>
-                <p class="text-gray-300 text-base md:text-lg mb-8 max-w-lg">
-                    Penyedia layanan pembuatan Website, Aplikasi, dan Sistem Manajemen terintegrasi di Jayapura untuk bisnis yang lebih maju.
+                <p class="text-gray-300 text-lg mb-8 max-w-lg">
+                    Kami menghadirkan solusi teknologi mutakhir untuk kebutuhan administrasi, database, dan sistem informasi di wilayah Jayapura dan sekitarnya.
                 </p>
-                <div class="flex flex-col sm:flex-row justify-center md:justify-start gap-4">
-                    <a href="https://wa.me/6281283393576" class="bg-accent-orange text-white px-8 py-3 rounded-md font-bold hover:bg-orange-600 transition text-center shadow-lg">Mulai Proyek</a>
-                    <a href="#" class="border-2 border-white px-8 py-3 rounded-md font-bold hover:bg-white hover:text-navy-dark transition text-center">Lihat Portfolio</a>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#" class="bg-accent-orange text-white px-8 py-3 rounded-md font-bold hover:bg-orange-600 transition shadow-lg">Mulai Proyek</a>
+                    <a href="#" class="border-2 border-white px-8 py-3 rounded-md font-bold hover:bg-white hover:text-navy-dark transition">Lihat Portfolio</a>
                 </div>
             </div>
 
             <div class="md:w-1/2 flex flex-col items-center">
                 <div class="bg-white/10 p-4 rounded-xl backdrop-blur-md border border-white/20 shadow-2xl w-full">
-                    <img src="https://via.placeholder.com/600x400/0a1d37/ffffff?text=Dashboard+JDI+Preview" alt="Preview" class="rounded-lg w-full">
+                    <img src="https://via.placeholder.com/600x400/0a1d37/ffffff?text=Dashboard+Preview+JDI" alt="JDI Dashboard Preview" class="rounded-lg w-full">
                 </div>
-                <div class="mt-6 bg-white text-navy-dark p-5 rounded-xl shadow-xl flex flex-col items-center w-full max-w-xs border-b-4 border-accent-orange transform transition hover:scale-105">
-                    <p class="text-xs font-bold mb-2 uppercase tracking-widest text-gray-400">Rating Kami</p>
-                    <div class="flex space-x-1" id="star-container">
-                        <button onclick="setRating(1)" class="star text-3xl text-gray-300">★</button>
-                        <button onclick="setRating(2)" class="star text-3xl text-gray-300">★</button>
-                        <button onclick="setRating(3)" class="star text-3xl text-gray-300">★</button>
-                        <button onclick="setRating(4)" class="star text-3xl text-gray-300">★</button>
-                        <button onclick="setRating(5)" class="star text-3xl text-gray-300">★</button>
+                <div class="mt-8 bg-white text-navy-dark p-6 rounded-2xl shadow-2xl flex flex-col items-center w-full max-w-xs border-b-8 border-accent-orange">
+                    <p class="text-sm font-bold mb-3 uppercase tracking-widest text-gray-500">Rating Kami:</p>
+                    <div class="flex space-x-2" id="star-container">
+                        <button onclick="setRating(1)" class="star text-4xl text-gray-300">★</button>
+                        <button onclick="setRating(2)" class="star text-4xl text-gray-300">★</button>
+                        <button onclick="setRating(3)" class="star text-4xl text-gray-300">★</button>
+                        <button onclick="setRating(4)" class="star text-4xl text-gray-300">★</button>
+                        <button onclick="setRating(5)" class="star text-4xl text-gray-300">★</button>
                     </div>
-                    <p id="rating-text" class="text-xs mt-2 font-medium text-gray-500 italic">Berikan penilaian Anda</p>
+                    <p id="rating-text" class="text-sm mt-3 font-semibold text-gray-400 italic">Klik bintang untuk menilai</p>
                 </div>
             </div>
         </div>
     </header>
 
-    <section class="py-12 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-2xl font-bold text-center mb-8 text-navy-dark">Lokasi Kami di Jayapura</h2>
-            <div class="rounded-2xl overflow-hidden shadow-lg border-4 border-white h-80 w-full">
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15944.382220412848!2d140.6853246!3d-2.6105828!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x686cf5095d3c5095%3A0x6b77273932e6509f!2sAbepura%2C%20Kota%20Jayapura%2C%20Papua!5e0!3m2!1sid!2sid!4v1714290000000!5m2!1sid!2sid" 
-                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    <section id="layanan" class="py-20 max-w-7xl mx-auto px-6 text-center">
+        <h2 class="text-3xl font-bold text-navy-dark mb-12">Mengapa Memilih JDI?</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-accent-orange hover:shadow-xl transition flex flex-col items-center">
+                <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-4"><span class="text-accent-orange font-bold">01</span></div>
+                <h3 class="font-bold mb-2">Responsif</h3>
+                <p class="text-gray-600 text-xs">Akses lancar dari smartphone & desktop.</p>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-navy-dark hover:shadow-xl transition flex flex-col items-center">
+                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4"><span class="text-navy-dark font-bold">02</span></div>
+                <h3 class="font-bold mb-2">Scalable</h3>
+                <p class="text-gray-600 text-xs">Sistem siap tumbuh bersama bisnis Anda.</p>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-accent-orange hover:shadow-xl transition flex flex-col items-center">
+                <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-4"><span class="text-accent-orange font-bold">03</span></div>
+                <h3 class="font-bold mb-2">Aman</h3>
+                <p class="text-gray-600 text-xs">Prioritas pada keamanan database modern.</p>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-navy-dark hover:shadow-xl transition flex flex-col items-center">
+                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4"><span class="text-navy-dark font-bold">04</span></div>
+                <h3 class="font-bold mb-2">SSL Certificate</h3>
+                <p class="text-gray-600 text-xs">Enkripsi data pengguna yang terjamin.</p>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-accent-orange hover:shadow-xl transition flex flex-col items-center">
+                <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-4"><span class="text-accent-orange font-bold">05</span></div>
+                <h3 class="font-bold mb-2">SEO Optimized</h3>
+                <p class="text-gray-600 text-xs">Meningkatkan visibilitas di Google.</p>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-navy-dark hover:shadow-xl transition flex flex-col items-center">
+                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4"><span class="text-navy-dark font-bold">06</span></div>
+                <h3 class="font-bold mb-2">Total Solution</h3>
+                <p class="text-gray-600 text-xs">Layanan terintegrasi satu pintu.</p>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-accent-orange hover:shadow-xl transition flex flex-col items-center">
+                <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-4"><span class="text-accent-orange font-bold">07</span></div>
+                <h3 class="font-bold mb-2">Support 24/7</h3>
+                <p class="text-gray-600 text-xs">Tim teknikal siaga membantu kapan saja.</p>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-navy-dark hover:shadow-xl transition flex flex-col items-center">
+                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4"><span class="text-navy-dark font-bold">08</span></div>
+                <h3 class="font-bold mb-2">Jaminan Mutu</h3>
+                <p class="text-gray-600 text-xs">Hasil akhir sesuai standar ekspektasi.</p>
             </div>
         </div>
     </section>
 
-    <footer class="bg-navy-dark text-white pt-16 pb-8">
-        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 border-b border-gray-700 pb-12">
-            <div class="space-y-4">
-                <img src="logojdi.png" alt="Logo Footer" class="h-12 brightness-200">
+    <footer id="kontak" class="bg-navy-dark text-white pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <div class="space-y-6">
+                <img src="logojdi.png" alt="Logo JDI" class="h-12 brightness-200">
                 <p class="text-gray-400 text-sm leading-relaxed">
-                    Solusi Digital Terintegrasi untuk Bisnis yang Lebih Maju. Kami berkomitmen menghadirkan teknologi terbaik dari Papua untuk Indonesia.
+                    Solusi digital terintegrasi untuk bisnis yang lebih maju di Papua. Kami berkomitmen memberikan kualitas terbaik untuk setiap proyek.
                 </p>
-            </div>
-
-            <div class="space-y-4">
-                <h3 class="text-lg font-bold text-accent-orange">Hubungi Kami</h3>
-                <ul class="space-y-3 text-sm text-gray-300">
-                    <li class="flex items-start">
-                        <i class="fas fa-map-marker-alt mt-1 mr-3 text-accent-orange"></i>
-                        <span>Jl. Tanah Hitam Abe Pantai, Awiyo, Abepura, <br>Jayapura - Papua, 99224</span>
-                    </li>
-                    <li class="flex items-center">
-                        <i class="fab fa-whatsapp mr-3 text-accent-orange"></i>
-                        <span>0812-8339-3576 (24 Jam Support)</span>
-                    </li>
-                    <li class="flex items-center">
-                        <i class="fas fa-envelope mr-3 text-accent-orange"></i>
-                        <span>contact@jdi-integrate.com</span>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="space-y-4">
-                <h3 class="text-lg font-bold text-accent-orange">Ikuti Kami</h3>
-                <div class="flex space-x-4 mb-4">
-                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent-orange transition"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent-orange transition"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent-orange transition"><i class="fab fa-tiktok"></i></a>
+                <div class="space-y-4">
+                    <div class="flex items-start space-x-4">
+                        <span class="text-accent-orange text-xl">📍</span>
+                        <p class="text-sm text-gray-300">
+                            Jl. Tanah Hitam Abe Pantai, Awiyo, Abepura,<br>
+                            Jayapura - Papua, 99224
+                        </p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <span class="text-accent-orange text-xl">📞</span>
+                        <p class="text-sm text-gray-300">081283393576 (24 Jam)</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <span class="text-accent-orange text-xl">✉️</span>
+                        <p class="text-sm text-gray-300">contact@jdi.id</p>
+                    </div>
                 </div>
-                <p class="text-xs text-gray-500">Pelayanan Teknis Tersedia 24 Jam Penuh untuk Klien Kami.</p>
+            </div>
+
+            <div class="lg:col-span-2">
+                <h3 class="text-xl font-bold mb-6 border-l-4 border-accent-orange pl-4">Lokasi Kami</h3>
+                <div class="rounded-xl overflow-hidden shadow-2xl h-64 border border-white/10">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15945.18721200588!2d140.675662!3d-2.601552!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x686cf56810a9f5d1%3A0x6734151b7470f1a2!2sAbepura%2C%20Jayapura%20City%2C%20Papua!5e0!3m2!1sen!2sid!4v1714280000000!5m2!1sen!2sid" 
+                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+                    </iframe>
+                </div>
             </div>
         </div>
-        <div class="text-center mt-8 text-xs text-gray-500">
+        <div class="mt-16 pt-8 border-t border-white/10 text-center text-gray-500 text-xs">
             &copy; 2026 Jaya Digital Integrate. All Rights Reserved.
         </div>
     </footer>
 
-    <div id="virtual-assistant" class="w-16 h-16 md:w-20 md:h-20 bg-accent-orange rounded-full shadow-2xl flex items-center justify-center border-4 border-white group overflow-hidden">
-        <a href="https://wa.me/6281283393576" target="_blank" class="w-full h-full flex items-center justify-center">
-            <i class="fab fa-whatsapp text-3xl md:text-4xl text-white"></i>
+    <div id="virtual-assistant">
+        <a href="https://wa.me/6281283393576" target="_blank" class="group relative flex items-center justify-center">
+            <div class="absolute -top-12 right-0 bg-white text-navy-dark px-3 py-1 rounded-lg text-xs font-bold shadow-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap border border-accent-orange">
+                Halo! Ada yang bisa saya bantu?
+            </div>
+            <div class="bg-accent-orange p-3 rounded-full shadow-2xl hover:scale-110 transition border-4 border-white">
+                <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12c0 2.17.76 4.19 2.04 5.79L2.71 21.3a.5.5 0 00.68.61l3.52-1.37A9.96 9.96 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.92 0-3.71-.67-5.13-1.8a.5.5 0 00-.51-.06l-2.43.95.89-2.28a.5.5 0 00-.05-.49A7.95 7.95 0 014 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z"/>
+                </svg>
+            </div>
         </a>
-        <span class="absolute right-full mr-3 bg-white text-navy-dark text-xs font-bold px-3 py-1 rounded shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition">Asisten JDI</span>
     </div>
 
     <script>
-        // Draggable Logic
-        const assistant = document.getElementById("virtual-assistant");
-        let isDragging = false;
-        let currentX, currentY, initialX, initialY, xOffset = 0, yOffset = 0;
-
-        assistant.addEventListener("mousedown", dragStart);
-        document.addEventListener("mousemove", drag);
-        document.addEventListener("mouseup", dragEnd);
-        
-        // Mobile Touch Support
-        assistant.addEventListener("touchstart", dragStart);
-        document.addEventListener("touchmove", drag);
-        document.addEventListener("touchend", dragEnd);
-
-        function dragStart(e) {
-            if (e.type === "touchstart") {
-                initialX = e.touches[0].clientX - xOffset;
-                initialY = e.touches[0].clientY - yOffset;
-            } else {
-                initialX = e.clientX - xOffset;
-                initialY = e.clientY - yOffset;
-            }
-            isDragging = true;
-        }
-
-        function drag(e) {
-            if (isDragging) {
-                e.preventDefault();
-                if (e.type === "touchmove") {
-                    currentX = e.touches[0].clientX - initialX;
-                    currentY = e.touches[0].clientY - initialY;
-                } else {
-                    currentX = e.clientX - initialX;
-                    currentY = e.clientY - initialY;
-                }
-                xOffset = currentX;
-                yOffset = currentY;
-                setTranslate(currentX, currentY, assistant);
-            }
-        }
-
-        function setTranslate(xPos, yPos, el) {
-            el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
-        }
-
-        function dragEnd() {
-            isDragging = false;
-        }
-
-        // Rating Logic
+        // Star Rating Logic
         function setRating(n) {
             const stars = document.querySelectorAll('.star');
             const ratingText = document.getElementById('rating-text');
             stars.forEach((star, index) => {
-                star.classList.toggle('text-orange-500', index < n);
-                star.classList.toggle('text-gray-300', index >= n);
+                if (index < n) {
+                    star.classList.remove('text-gray-300');
+                    star.classList.add('text-orange-500');
+                } else {
+                    star.classList.remove('text-orange-500');
+                    star.classList.add('text-gray-300');
+                }
             });
-            ratingText.innerText = `Terima kasih atas ${n} bintang Anda!`;
-            ratingText.classList.remove('text-gray-500');
-            ratingText.classList.add('text-accent-orange', 'font-bold');
+            ratingText.innerText = `Terima kasih! Anda memberi ${n} bintang.`;
+            ratingText.classList.remove('text-gray-400');
+            ratingText.classList.add('text-orange-600', 'not-italic', 'font-bold');
         }
+
+        // Draggable Logic for Virtual Assistant
+        const va = document.getElementById('virtual-assistant');
+        let isDragging = false;
+        let offset = { x: 0, y: 0 };
+
+        va.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            offset.x = e.clientX - va.offsetLeft;
+            offset.y = e.clientY - va.offsetTop;
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                va.style.left = (e.clientX - offset.x) + 'px';
+                va.style.top = (e.clientY - offset.y) + 'px';
+                va.style.right = 'auto'; // Remove fixed right
+                va.style.bottom = 'auto'; // Remove fixed bottom
+            }
+        });
+
+        document.addEventListener('mouseup', () => isDragging = false);
+
+        // Touch support for mobile dragging
+        va.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            const touch = e.touches[0];
+            offset.x = touch.clientX - va.offsetLeft;
+            offset.y = touch.clientY - va.offsetTop;
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            if (isDragging) {
+                const touch = e.touches[0];
+                va.style.left = (touch.clientX - offset.x) + 'px';
+                va.style.top = (touch.clientY - offset.y) + 'px';
+                va.style.right = 'auto';
+                va.style.bottom = 'auto';
+            }
+        });
+
+        document.addEventListener('touchend', () => isDragging = false);
     </script>
 </body>
 </html>
