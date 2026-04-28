@@ -261,20 +261,6 @@
                     <button onclick="toggleAdminPanel()" class="w-full text-gray-400 text-sm">Batal</button>
                 </div>
             </div>
-
-            <div id="setting-section" class="hidden p-8 max-h-[80vh] overflow-y-auto">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-xl font-bold text-navy-dark">Setting Respon AI</h3>
-                    <button onclick="logout()" class="text-red-500 text-xs font-bold uppercase">Keluar</button>
-                </div>
-                <div id="qa-list" class="space-y-4 mb-6">
-                    <div class="p-3 bg-gray-50 rounded-lg border">
-                        <p class="text-xs font-bold text-accent-orange">Sample Q:</p>
-                        <p class="text-sm italic">"Apa itu JDI?"</p>
-                    </div>
-                </div>
-                <button class="w-full border-2 border-dashed border-accent-orange text-accent-orange py-2 rounded-lg text-sm font-bold hover:bg-orange-50">+ Tambah Pengetahuan Baru</button>
-            </div>
         </div>
     </div>
 
@@ -313,9 +299,11 @@
         function handleLogin() {
             const u = document.getElementById('user').value;
             const p = document.getElementById('pass').value;
+            
+            // Validasi kredensial tetap sama
             if(u === 'admin' && p === 'bukadong821') {
-                document.getElementById('login-section').classList.add('hidden');
-                document.getElementById('setting-section').classList.remove('hidden');
+                // Mengarahkan ke file admin.html di tab yang sama
+                window.location.href = 'admin.html'; 
             } else {
                 alert('Akses Ditolak! Kredensial salah.');
             }
