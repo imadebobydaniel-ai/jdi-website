@@ -65,21 +65,21 @@
 
     <nav class="bg-white shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center">
+            <div class="flex items-center gap-8">
                 <img src="logojdi.png" alt="Logo Jaya Digital Integrate" class="h-12 md:h-16 w-auto">
-            </div>
-            <div class="hidden md:flex space-x-8 font-medium text-gray-700">
-                <a href="#" class="hover:text-accent-orange transition">Beranda</a>
-                <a href="#layanan" class="hover:text-accent-orange transition">Layanan</a>
-                <a href="#" class="hover:text-accent-orange transition">Proyek</a>
-                <a href="#kontak" class="hover:text-accent-orange transition">Kontak</a>
+                <div class="hidden md:flex space-x-8 font-medium text-gray-700">
+                    <a href="#" class="hover:text-accent-orange transition">Beranda</a>
+                    <a href="#layanan" class="hover:text-accent-orange transition">Layanan</a>
+                    <a href="#" class="hover:text-accent-orange transition">Proyek</a>
+                    <a href="#kontak" class="hover:text-accent-orange transition">Kontak</a>
+                </div>
             </div>
             <div class="flex items-center gap-4">
-                <button onclick="toggleAdminPanel()" class="text-xs font-bold text-navy-dark/60 hover:text-accent-orange transition uppercase tracking-wider">
-                    Login Admin
-                </button>
                 <button class="bg-accent-orange text-white px-5 py-2 rounded-full font-semibold hover:bg-orange-600 transition shadow-lg text-sm md:text-base">
                     Konsultasi Gratis
+                </button>
+                <button onclick="toggleAdminPanel()" class="text-xs font-bold text-navy-dark/40 hover:text-accent-orange transition uppercase tracking-wider border-l pl-4 border-gray-200">
+                    Login Admin
                 </button>
             </div>
         </div>
