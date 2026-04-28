@@ -121,17 +121,6 @@
                         <div class="swiper-pagination"></div>
                     </div>
                 </div>
-                <div class="mt-8 bg-white text-navy-dark p-6 rounded-2xl shadow-2xl flex flex-col items-center w-full max-w-xs border-b-8 border-accent-orange">
-                    <p class="text-sm font-bold mb-3 uppercase tracking-widest text-gray-500">Rating Kami:</p>
-                    <div class="flex space-x-2">
-                        <button onclick="setRating(1)" class="star text-4xl text-gray-300">★</button>
-                        <button onclick="setRating(2)" class="star text-4xl text-gray-300">★</button>
-                        <button onclick="setRating(3)" class="star text-4xl text-gray-300">★</button>
-                        <button onclick="setRating(4)" class="star text-4xl text-gray-300">★</button>
-                        <button onclick="setRating(5)" class="star text-4xl text-gray-300">★</button>
-                    </div>
-                    <p id="rating-text" class="text-sm mt-3 font-semibold text-gray-400 italic">Klik bintang untuk menilai</p>
-                </div>
             </div>
         </div>
     </header>
@@ -209,6 +198,19 @@
                 <p class="text-gray-400 text-sm leading-relaxed">
                     Solusi digital terintegrasi untuk bisnis yang lebih maju di Papua. Kami berkomitmen memberikan kualitas terbaik untuk setiap proyek.
                 </p>
+                
+                <div class="bg-white/5 p-4 rounded-xl border border-white/10 flex flex-col items-start w-full max-w-xs">
+                    <p class="text-xs font-bold mb-2 uppercase tracking-widest text-gray-400">Rating Kami:</p>
+                    <div class="flex space-x-1">
+                        <button onclick="setRating(1)" class="star text-2xl text-gray-500 hover:text-accent-orange transition">★</button>
+                        <button onclick="setRating(2)" class="star text-2xl text-gray-500 hover:text-accent-orange transition">★</button>
+                        <button onclick="setRating(3)" class="star text-2xl text-gray-500 hover:text-accent-orange transition">★</button>
+                        <button onclick="setRating(4)" class="star text-2xl text-gray-500 hover:text-accent-orange transition">★</button>
+                        <button onclick="setRating(5)" class="star text-2xl text-gray-500 hover:text-accent-orange transition">★</button>
+                    </div>
+                    <p id="rating-text" class="text-[10px] mt-2 font-semibold text-gray-500 italic uppercase">Klik bintang untuk menilai</p>
+                </div>
+
                 <div class="space-y-3 text-gray-300 text-sm">
                     <p class="flex items-center gap-3">📍 Jl. Tanah Hitam Abe Pantai, Awiyo, Abepura, Jayapura - Papua, 99224</p>
                     <p class="flex items-center gap-3">📞 081283393576</p>
@@ -232,7 +234,6 @@
             <div class="p-6 border-b bg-gray-50">
                 <h3 class="text-2xl font-bold text-navy-dark text-center">Formulir Mulai Proyek</h3>
             </div>
-            
             <div class="p-8 overflow-y-auto space-y-4" id="form-container">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <input type="text" id="p-nama" placeholder="Nama Lengkap" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none">
@@ -257,7 +258,6 @@
                     <button onclick="previewProyek()" class="flex-1 bg-accent-orange text-white py-3 rounded-lg font-bold hover:bg-orange-600 transition">Kirim</button>
                 </div>
             </div>
-
             <div id="preview-container" class="hidden p-8 overflow-y-auto">
                 <div class="bg-orange-50 p-6 rounded-xl border border-orange-200 mb-6">
                     <h4 class="font-bold text-navy-dark mb-4 border-b border-orange-200 pb-2">Preview Data Proyek</h4>
@@ -301,7 +301,6 @@
                 <button onclick="sendChat()" class="bg-accent-orange text-white px-3 py-1 rounded-lg text-xs font-bold">Kirim</button>
             </div>
         </div>
-
         <div onclick="toggleChat()" class="group cursor-pointer flex flex-col items-end">
             <div class="bg-white text-navy-dark text-xs font-bold px-3 py-1 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity mb-2">
                 Tanya JDI AI
@@ -341,9 +340,9 @@
         function setRating(n) {
             const stars = document.querySelectorAll('.star');
             const text = document.getElementById('rating-text');
-            stars.forEach((s, i) => s.style.color = i < n ? '#ff8c00' : '#d1d5db');
-            text.innerText = `Terima kasih! Anda memberi ${n} bintang.`;
-            text.className = "text-sm mt-3 font-bold text-orange-600";
+            stars.forEach((s, i) => s.style.color = i < n ? '#ff8c00' : '#6b7280');
+            text.innerText = `TERIMA KASIH! ANDA MEMBERI ${n} BINTANG.`;
+            text.className = "text-[10px] mt-2 font-bold text-orange-400 italic";
         }
 
         function toggleChat() {
@@ -368,7 +367,6 @@
         function handleLogin() {
             const u = document.getElementById('user').value;
             const p = document.getElementById('pass').value;
-            
             if(u === 'admin' && p === 'bukadong821') {
                 window.location.href = 'admin.html'; 
             } else {
@@ -393,17 +391,14 @@
                 "Jenis Projek": document.getElementById('p-jenis').value,
                 "Keinginan": document.getElementById('p-keinginan').value
             };
-
             if(!data["Nama"] || !data["Nomor HP"] || !data["Jenis Projek"]) {
                 showNotif('Mohon lengkapi Nama, Nomor HP, dan Jenis Projek.');
                 return;
             }
-
             let html = '';
             for (const [key, value] of Object.entries(data)) {
                 html += `<p><strong>${key}:</strong> ${value || '-'}</p>`;
             }
-
             document.getElementById('preview-content').innerHTML = html;
             document.getElementById('form-container').classList.add('hidden');
             document.getElementById('preview-container').classList.remove('hidden');
@@ -421,43 +416,23 @@
             document.getElementById('p-jenis').selectedIndex = 0;
         }
 
-        // --- FUNGSI CHAT BARU ---
         function sendChat() {
             const input = document.getElementById('chat-input');
             const content = document.getElementById('chat-content');
             const pesan = input.value.trim();
-
             if (pesan !== "") {
-                // 1. Tambahkan pesan user ke kotak chat
-                content.innerHTML += `
-                    <div class="bg-blue-100 p-3 rounded-lg text-navy-dark mb-2 self-end ml-8">
-                        ${pesan}
-                    </div>
-                `;
-                
-                // 2. Kosongkan input
+                content.innerHTML += `<div class="bg-blue-100 p-3 rounded-lg text-navy-dark mb-2 self-end ml-8">${pesan}</div>`;
                 input.value = "";
-
-                // 3. Auto-scroll ke bawah
                 content.scrollTop = content.scrollHeight;
-
-                // 4. Simulasi respon AI
                 setTimeout(() => {
-                    content.innerHTML += `
-                        <div class="bg-orange-100 p-3 rounded-lg text-navy-dark mb-2 mr-8">
-                            Terima kasih atas pertanyaannya. Admin kami akan segera merespon pesan Anda.
-                        </div>
-                    `;
+                    content.innerHTML += `<div class="bg-orange-100 p-3 rounded-lg text-navy-dark mb-2 mr-8">Terima kasih atas pertanyaannya. Admin kami akan segera merespon pesan Anda.</div>`;
                     content.scrollTop = content.scrollHeight;
                 }, 1000);
             }
         }
 
-        // Tambahan: Agar bisa kirim pesan dengan menekan tombol 'Enter'
         document.getElementById('chat-input')?.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                sendChat();
-            }
+            if (e.key === 'Enter') sendChat();
         });
     </script>
 </body>
