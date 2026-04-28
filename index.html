@@ -99,13 +99,19 @@
                     <div class="swiper mySwiper">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <img src="https://via.placeholder.com/600x400/0a1d37/ffffff?text=Brosur+Digital+1" alt="Brosur 1" class="rounded-lg w-full">
+                                <img src="https://raw.githubusercontent.com/username-anda/repo-anda/main/Penawaran%20Brosur%20Umum.jpeg" 
+                                     alt="Brosur JDI" 
+                                     class="rounded-lg w-full object-cover shadow-lg">
                             </div>
                             <div class="swiper-slide">
-                                <img src="https://via.placeholder.com/600x400/ff8c00/ffffff?text=Desain+Layanan+JDI" alt="Brosur 2" class="rounded-lg w-full">
+                                <img src="https://raw.githubusercontent.com/username-anda/repo-anda/main/image_77dd76.png" 
+                                     alt="Digital Signage 1" 
+                                     class="rounded-lg w-full object-cover shadow-lg">
                             </div>
                             <div class="swiper-slide">
-                                <img src="https://via.placeholder.com/600x400/0a1d37/ffffff?text=Portfolio+Terbaru" alt="Brosur 3" class="rounded-lg w-full">
+                                <img src="https://raw.githubusercontent.com/username-anda/repo-anda/main/image_77cf0e.png" 
+                                     alt="Digital Signage 2" 
+                                     class="rounded-lg w-full object-cover shadow-lg">
                             </div>
                         </div>
                         <div class="swiper-button-next"></div>
@@ -143,7 +149,7 @@
                 <h3 class="text-xl font-bold mb-3 text-navy-dark">Responsif</h3>
                 <p class="text-gray-600 text-sm leading-relaxed">Optimasi multi-platform yang memastikan tampilan website Anda tetap sempurna.</p>
             </div>
-            </div>
+        </div>
     </section>
 
     <footer id="kontak" class="bg-navy-dark text-white pt-16 pb-8">
@@ -165,12 +171,13 @@
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // Inisialisasi Swiper (Digital Signage)
+        // Inisialisasi Swiper dengan fitur Digital Signage
         var swiper = new Swiper(".mySwiper", {
             loop: true,
+            speed: 800, // Kecepatan transisi halus
             autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
+                delay: 5000, // Gambar berpindah otomatis setiap 5 detik
+                disableOnInteraction: false, // Tetap autoplay meski sudah disentuh/diklik
             },
             pagination: {
                 el: ".swiper-pagination",
@@ -180,8 +187,10 @@
                 nextEl: ".swiper-button-next",
                 prevEl: ".swiper-button-prev",
             },
-            // Mendukung Swipe Sentuh & Mouse Drag
-            grabCursor: true,
+            // Fitur Utama: Swipe & Mouse Drag
+            grabCursor: true, // Mouse akan berubah jadi tangan (bisa di-drag)
+            allowTouchMove: true, // Mengaktifkan fungsi swipe/sentuh
+            effect: "slide", // Efek pergeseran klasik digital signage
         });
 
         // Star Rating Logic
@@ -202,7 +211,7 @@
             ratingText.classList.add('text-orange-600', 'not-italic', 'font-bold');
         }
 
-        // Draggable Assistant Logic (Simplified)
+        // Draggable Assistant Logic
         const va = document.getElementById('virtual-assistant');
         let isDragging = false;
         va.addEventListener('mousedown', () => isDragging = true);
