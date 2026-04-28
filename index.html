@@ -275,6 +275,19 @@
         </div>
     </div>
 
+    <div id="notif-modal" class="fixed inset-0 bg-navy-dark/90 z-[10003] hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-sm rounded-2xl p-8 text-center shadow-2xl border-t-8 border-accent-orange">
+            <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                </svg>
+            </div>
+            <h3 class="text-xl font-bold text-navy-dark mb-2">Berhasil!</h3>
+            <p id="notif-message" class="text-gray-600 mb-6 text-sm leading-relaxed"></p>
+            <button onclick="closeNotif()" class="w-full bg-navy-dark text-white py-3 rounded-lg font-bold hover:bg-slate-800 transition">Tutup</button>
+        </div>
+    </div>
+
     <div class="fixed bottom-6 right-6 z-[9999]">
         <div id="chat-box" class="bg-white w-72 md:w-80 rounded-2xl shadow-2xl border border-gray-200 overflow-hidden mb-4">
             <div class="bg-navy-dark p-4 text-white font-bold flex justify-between items-center">
@@ -346,6 +359,16 @@
             portal.classList.toggle('hidden');
         }
 
+        // FUNGSI NOTIFIKASI BARU
+        function showNotif(message) {
+            document.getElementById('notif-message').innerText = message;
+            document.getElementById('notif-modal').classList.remove('hidden');
+        }
+
+        function closeNotif() {
+            document.getElementById('notif-modal').classList.add('hidden');
+        }
+
         function handleLogin() {
             const u = document.getElementById('user').value;
             const p = document.getElementById('pass').value;
@@ -353,7 +376,7 @@
             if(u === 'admin' && p === 'bukadong821') {
                 window.location.href = 'admin.html'; 
             } else {
-                alert('Akses Ditolak! Kredensial salah.');
+                showNotif('Akses Ditolak! Kredensial salah.');
             }
         }
 
@@ -363,7 +386,6 @@
             toggleAdminPanel();
         }
 
-        /* JAVASCRIPT BARU UNTUK MODAL PROYEK */
         function toggleProyekModal() {
             const modal = document.getElementById('proyek-modal');
             modal.classList.toggle('hidden');
@@ -383,7 +405,7 @@
             };
 
             if(!data["Nama"] || !data["Nomor HP"] || !data["Jenis Projek"]) {
-                alert('Mohon lengkapi Nama, Nomor HP, dan Jenis Projek.');
+                showNotif('Mohon lengkapi Nama, Nomor HP, dan Jenis Projek.');
                 return;
             }
 
@@ -403,7 +425,7 @@
         }
 
         function confirmSend() {
-            alert('Informasi berhasil terkirim ke Admin!');
+            showNotif("Selamat Rencana Projek Anda Telah dikirim, Team kami akan menghubungi anda");
             toggleProyekModal();
             // Reset fields
             document.querySelectorAll('#proyek-modal input, #proyek-modal textarea').forEach(el => el.value = '');
