@@ -7,6 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
     
     <style>
         body { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
@@ -27,7 +29,10 @@
             border-color: #ff8c00;
         }
 
-        .swiper { width: 100%; height: auto; border-radius: 0.75rem; }
+        /* Ukuran signage diperkecil & disesuaikan dengan landscape tulisan */
+        .swiper { width: 100%; max-height: 350px; border-radius: 0.75rem; }
+        .swiper-slide img { cursor: zoom-in; width: 100%; height: 350px; object-fit: cover; }
+
         .swiper-button-next, .swiper-button-prev {
             color: #ff8c00 !important;
             background: white;
@@ -79,10 +84,10 @@
                 <div class="bg-white/10 p-4 rounded-xl backdrop-blur-md border border-white/20 shadow-2xl w-full">
                     <div class="swiper mySwiper">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide"><img src="beuthetic.png" class="rounded-lg w-full object-cover"></div>
-                            <div class="swiper-slide"><img src="bubur-mandala.png" class="rounded-lg w-full object-cover"></div>
-                            <div class="swiper-slide"><img src="crhisto-cafe.png" class="rounded-lg w-full object-cover"></div>
-                            <div class="swiper-slide"><img src="d-klinic.png" class="rounded-lg w-full object-cover"></div>
+                            <div class="swiper-slide"><a href="beuthetic.png" data-fancybox="gallery"><img src="beuthetic.png" class="rounded-lg"></a></div>
+                            <div class="swiper-slide"><a href="bubur-mandala.png" data-fancybox="gallery"><img src="bubur-mandala.png" class="rounded-lg"></a></div>
+                            <div class="swiper-slide"><a href="crhisto-cafe.png" data-fancybox="gallery"><img src="crhisto-cafe.png" class="rounded-lg"></a></div>
+                            <div class="swiper-slide"><a href="d-klinic.png" data-fancybox="gallery"><img src="d-klinic.png" class="rounded-lg"></a></div>
                         </div>
                         <div class="swiper-button-next"></div>
                         <div class="swiper-button-prev"></div>
@@ -189,11 +194,18 @@
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
+        // Swiper Configuration
         var swiper = new Swiper(".mySwiper", {
             loop: true,
             autoplay: { delay: 5000, disableOnInteraction: false },
             pagination: { el: ".swiper-pagination", clickable: true },
             navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+        });
+
+        // Fancybox Configuration for Popup Slide
+        Fancybox.bind("[data-fancybox='gallery']", {
+            infinite: true,
+            transitionEffect: "slide",
         });
 
         function setRating(n) {
