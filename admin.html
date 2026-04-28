@@ -13,6 +13,15 @@
         .bg-accent-orange { background-color: #ff8c00; }
         .content-section { display: none; }
         .content-section.active { display: block; }
+        
+        /* Custom styling untuk dropdown status agar serasi */
+        .status-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='id9 5l7 7-7 7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.5rem center;
+            background-size: 1em;
+        }
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex">
@@ -23,7 +32,7 @@
             <p class="text-[10px] uppercase tracking-widest mt-2 text-gray-400 font-bold">Admin Panel</p>
         </div>
         <nav class="flex-1 p-4 space-y-2">
-            <a href="#" onclick="showSection('dashboard')" id="nav-dashboard" class="flex items-center gap-3 p-3 bg-accent-orange rounded-lg font-bold">
+            <a href="#" onclick="showSection('dashboard')" id="nav-dashboard" class="flex items-center gap-3 p-3 bg-accent-orange rounded-lg font-bold text-white">
                 <span>📊</span> Dashboard
             </a>
             <a href="#" onclick="showSection('portal-projek')" id="nav-projek" class="flex items-center gap-3 p-3 hover:bg-white/5 rounded-lg transition text-gray-300">
@@ -56,7 +65,7 @@
         </header>
 
         <section id="dashboard-section" class="content-section active p-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 text-center md:text-left">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-accent-orange">
                     <p class="text-gray-500 text-sm font-bold uppercase mb-1">Total Pertanyaan AI</p>
                     <h3 class="text-3xl font-bold text-navy-dark">1,240</h3>
@@ -71,7 +80,7 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+            <div class="bg-white rounded-2xl shadow-sm overflow-hidden border">
                 <div class="p-6 border-b flex justify-between items-center">
                     <h3 class="font-bold text-navy-dark">Basis Pengetahuan AI (Q&A)</h3>
                     <button class="bg-accent-orange text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-orange-600 transition">
@@ -80,19 +89,19 @@
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left">
-                        <thead class="bg-gray-50 text-gray-400 text-[10px] uppercase font-bold">
+                        <thead class="bg-gray-50 text-gray-400 text-[10px] uppercase font-bold border-b">
                             <tr>
-                                <th class="px-6 py-4">Pertanyaan User</th>
-                                <th class="px-6 py-4">Jawaban AI</th>
-                                <th class="px-6 py-4">Status</th>
+                                <th class="px-6 py-4 border-r">Pertanyaan User</th>
+                                <th class="px-6 py-4 border-r">Jawaban AI</th>
+                                <th class="px-6 py-4 border-r">Status</th>
                                 <th class="px-6 py-4 text-right">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="text-sm divide-y">
                             <tr>
-                                <td class="px-6 py-4 font-medium italic">"Apa itu JDI?"</td>
-                                <td class="px-6 py-4 text-gray-600 italic leading-relaxed">"Jaya Digital Integrate adalah penyedia solusi IT di Jayapura..."</td>
-                                <td class="px-6 py-4"><span class="bg-green-100 text-green-700 px-2 py-1 rounded-md text-[10px] font-bold">AKTIF</span></td>
+                                <td class="px-6 py-4 font-medium italic border-r">"Apa itu JDI?"</td>
+                                <td class="px-6 py-4 text-gray-600 italic border-r leading-relaxed">"Jaya Digital Integrate adalah penyedia solusi IT di Jayapura..."</td>
+                                <td class="px-6 py-4 border-r"><span class="bg-green-100 text-green-700 px-2 py-1 rounded-md text-[10px] font-bold">AKTIF</span></td>
                                 <td class="px-6 py-4 text-right space-x-3 text-[12px] font-bold">
                                     <button class="text-blue-500 hover:underline">Edit</button>
                                     <button class="text-red-500 hover:underline">Hapus</button>
@@ -105,48 +114,51 @@
         </section>
 
         <section id="projek-section" class="content-section p-8">
-            <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
-                <div class="p-6 border-b flex justify-between items-center bg-white">
-                    <div>
-                        <h3 class="font-bold text-navy-dark text-lg leading-none">Daftar Masuk Projek</h3>
-                        <p class="text-[11px] text-gray-400 mt-2">Data lengkap permintaan layanan dari Main Page</p>
-                    </div>
+            <div class="bg-white rounded-2xl shadow-sm overflow-hidden border">
+                <div class="p-6 border-b bg-white">
+                    <h3 class="font-bold text-navy-dark text-lg leading-none">Daftar Masuk Projek</h3>
+                    <p class="text-[11px] text-gray-400 mt-2 font-medium">Data lengkap permintaan layanan dari Main Page</p>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead class="bg-gray-50 text-gray-400 text-[10px] uppercase font-bold border-b">
                             <tr>
-                                <th class="px-6 py-4">Nama & Nama Usaha</th>
-                                <th class="px-6 py-4">Kontak & Alamat</th>
-                                <th class="px-6 py-4">Jenis & Kebutuhan Projek</th>
-                                <th class="px-6 py-4">Status</th>
+                                <th class="px-6 py-4 border-r">Nama & Nama Usaha</th>
+                                <th class="px-6 py-4 border-r">Kontak & Alamat</th>
+                                <th class="px-6 py-4 border-r">Jenis & Kebutuhan Projek</th>
+                                <th class="px-6 py-4 border-r">Status</th>
                                 <th class="px-6 py-4 text-right">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="text-[13px] divide-y" id="project-data-list">
                             <tr>
-                                <td class="px-6 py-5">
+                                <td class="px-6 py-5 border-r">
                                     <div class="font-bold text-navy-dark text-[15px]">Budi Santoso</div>
                                     <div class="text-[11px] text-gray-500 font-medium">Toko Kelontong Berkah</div>
                                 </td>
-                                <td class="px-6 py-5 leading-relaxed">
+                                <td class="px-6 py-5 border-r leading-relaxed">
                                     <div class="flex items-center gap-2 text-green-600 font-bold mb-1">
                                         <span class="text-sm">📞</span> 0812-3456-7890
                                     </div>
-                                    <div class="text-gray-600 truncate max-w-[180px]">📧 budi.santoso@email.com</div>
-                                    <div class="text-[11px] text-gray-400 italic mt-1">📍 Abepura, Jayapura Selatan</div>
+                                    <div class="text-gray-600 truncate max-w-[200px]">📧 budi.santoso@email.com</div>
+                                    <div class="text-[11px] text-gray-400 font-medium mt-1">📍 Abepura, Jayapura Selatan</div>
                                 </td>
-                                <td class="px-6 py-5">
-                                    <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-[9px] font-bold uppercase">Website Katalog</span>
+                                <td class="px-6 py-5 border-r">
+                                    <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wide">Website Katalog</span>
                                     <p class="text-gray-600 text-[12px] mt-2 italic leading-snug">"Saya butuh website untuk menampilkan stok barang secara real-time..."</p>
                                 </td>
-                                <td class="px-6 py-5">
-                                    <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">Menunggu</span>
+                                <td class="px-6 py-5 border-r">
+                                    <select class="status-select bg-yellow-50 text-yellow-700 border border-yellow-200 px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase cursor-pointer outline-none focus:ring-1 focus:ring-yellow-400 transition-all w-full">
+                                        <option value="pending" selected>Pending</option>
+                                        <option value="on-process">On Process</option>
+                                        <option value="done">Done</option>
+                                        <option value="cancel">Cancel</option>
+                                    </select>
                                 </td>
                                 <td class="px-6 py-5 text-right space-x-3 text-[12px] font-bold">
-                                    <button onclick="window.open('https://wa.me/6281234567890')" class="text-green-500 hover:underline">WhatsApp</button>
-                                    <button class="text-navy-dark hover:underline">Detail</button>
-                                    <button class="text-red-500 hover:underline">Hapus</button>
+                                    <button onclick="window.open('https://wa.me/6281234567890')" class="text-green-500 hover:bg-green-50 px-2 py-1 rounded">WhatsApp</button>
+                                    <button class="text-navy-dark hover:bg-gray-100 px-2 py-1 rounded">Detail</button>
+                                    <button class="text-red-500 hover:bg-red-50 px-2 py-1 rounded">Hapus</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -182,6 +194,27 @@
                 document.getElementById('header-title').innerText = 'Manajemen Portal Projek';
             }
         }
+
+        // Script tambahan untuk mengubah warna background dropdown berdasarkan pilihan status
+        document.addEventListener('change', function(e) {
+            if (e.target.classList.contains('status-select')) {
+                const select = e.target;
+                const value = select.value;
+                
+                // Reset classes
+                select.classList.remove('bg-yellow-50', 'text-yellow-700', 'border-yellow-200', 'bg-blue-50', 'text-blue-700', 'border-blue-200', 'bg-green-50', 'text-green-700', 'border-green-200', 'bg-red-50', 'text-red-700', 'border-red-200');
+
+                if (value === 'pending') {
+                    select.classList.add('bg-yellow-50', 'text-yellow-700', 'border-yellow-200');
+                } else if (value === 'on-process') {
+                    select.classList.add('bg-blue-50', 'text-blue-700', 'border-blue-200');
+                } else if (value === 'done') {
+                    select.classList.add('bg-green-50', 'text-green-700', 'border-green-200');
+                } else if (value === 'cancel') {
+                    select.classList.add('bg-red-50', 'text-red-700', 'border-red-200');
+                }
+            }
+        });
     </script>
 </body>
 </html>
