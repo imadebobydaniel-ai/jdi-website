@@ -78,13 +78,13 @@
                     <form id="form-ai" class="space-y-4">
                         <div>
                             <label class="block text-[11px] font-bold text-accent-orange uppercase mb-1">Pertanyaan (Sample Q):</label>
-                            <input type="text" placeholder="Contoh: Apa itu JDI?" class="w-full p-3 bg-gray-50 border border-dashed border-gray-300 rounded-lg text-sm italic focus:outline-none focus:border-accent-orange">
+                            <input type="text" id="input-pertanyaan" placeholder="Contoh: Apa itu JDI?" class="w-full p-3 bg-gray-50 border border-dashed border-gray-300 rounded-lg text-sm italic focus:outline-none focus:border-accent-orange">
                         </div>
                         <div>
                             <label class="block text-[11px] font-bold text-accent-orange uppercase mb-1">Jawaban AI:</label>
-                            <textarea rows="4" placeholder="Masukkan jawaban otomatis AI di sini..." class="w-full p-3 bg-gray-50 border border-dashed border-gray-300 rounded-lg text-sm italic focus:outline-none focus:border-accent-orange"></textarea>
+                            <textarea id="input-jawaban" rows="4" placeholder="Masukkan jawaban otomatis AI di sini..." class="w-full p-3 bg-gray-50 border border-dashed border-gray-300 rounded-lg text-sm italic focus:outline-none focus:border-accent-orange"></textarea>
                         </div>
-                        <button type="button" class="w-full bg-accent-orange text-white py-3 rounded-xl font-bold text-sm shadow-lg shadow-orange-200 hover:bg-orange-600 transition">
+                        <button type="button" onclick="simpanPengetahuan()" class="w-full bg-accent-orange text-white py-3 rounded-xl font-bold text-sm shadow-lg shadow-orange-200 hover:bg-orange-600 transition">
                             + Tambah Pengetahuan Baru
                         </button>
                     </form>
@@ -107,8 +107,30 @@
                     <h3 class="text-3xl font-bold text-navy-dark">856</h3>
                 </div>
             </div>
-            
-            </section>
+
+            <div class="bg-white rounded-2xl shadow-sm overflow-hidden border">
+                <div class="p-6 border-b flex justify-between items-center">
+                    <h3 class="font-bold text-navy-dark">Basis Pengetahuan AI (Q&A)</h3>
+                    <button onclick="toggleModal()" class="bg-accent-orange text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-orange-600 transition">
+                        + Tambah Pengetahuan
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-50 text-gray-400 text-[10px] uppercase font-bold border-b">
+                            <tr>
+                                <th class="px-6 py-4 border-r">Pertanyaan User</th>
+                                <th class="px-6 py-4 border-r">Jawaban AI</th>
+                                <th class="px-6 py-4 border-r">Status</th>
+                                <th class="px-6 py-4 text-right">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ai-knowledge-list" class="text-sm divide-y">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
 
         <section id="projek-section" class="content-section p-8">
             <div class="bg-white rounded-2xl shadow-sm overflow-hidden border">
@@ -173,6 +195,36 @@
             modal.classList.toggle('opacity-0');
             modal.classList.toggle('pointer-events-none');
             body.classList.toggle('modal-active');
+        }
+
+        // Fungsi Simpan Pengetahuan Baru
+        function simpanPengetahuan() {
+            const tanya = document.getElementById('input-pertanyaan').value;
+            const jawab = document.getElementById('input-jawaban').value;
+            const tableBody = document.getElementById('ai-knowledge-list');
+
+            if (tanya === "" || jawab === "") {
+                alert("Mohon isi pertanyaan dan jawaban terlebih dahulu!");
+                return;
+            }
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td class="px-6 py-4 font-medium italic border-r">"${tanya}"</td>
+                <td class="px-6 py-4 text-gray-600 italic border-r leading-relaxed">"${jawab}"</td>
+                <td class="px-6 py-4 border-r"><span class="bg-green-100 text-green-700 px-2 py-1 rounded-md text-[10px] font-bold">AKTIF</span></td>
+                <td class="px-6 py-4 text-right space-x-3 text-[12px] font-bold">
+                    <button class="text-blue-500 hover:underline">Edit</button>
+                    <button class="text-red-500 hover:underline" onclick="this.closest('tr').remove()">Hapus</button>
+                </td>
+            `;
+
+            tableBody.appendChild(row);
+
+            // Reset form dan tutup modal
+            document.getElementById('input-pertanyaan').value = "";
+            document.getElementById('input-jawaban').value = "";
+            toggleModal();
         }
 
         function showSection(sectionId) {
