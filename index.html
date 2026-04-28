@@ -66,9 +66,10 @@
     <nav class="bg-white shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-8">
-                <img src="logojdi.png" alt="Logo Jaya Digital Integrate" class="h-12 md:h-16 w-auto">
+                <img src="logojdi.png" alt="Logo Jaya Digital Integrate" class="h-10 md:h-16 w-auto">
+                
                 <div class="hidden md:flex space-x-8 font-medium text-gray-700">
-                    <a href="#" class="hover:text-accent-orange transition">Profil</a>
+                    <a href="profil.html" class="hover:text-accent-orange transition">Profil</a>
                     <a href="#" class="hover:text-accent-orange transition">Beranda</a>
                     <a href="#layanan" class="hover:text-accent-orange transition">Layanan</a>
                     <a href="#" class="hover:text-accent-orange transition">Proyek</a>
@@ -77,13 +78,24 @@
             </div>
             
             <div class="flex items-center gap-4">
-                <a href="https://wa.me/6281283393576" target="_blank" class="bg-accent-orange text-white px-5 py-2 rounded-full font-semibold hover:bg-orange-600 transition shadow-lg text-sm md:text-base">
+                <a href="https://wa.me/6281283393576" target="_blank" class="hidden sm:block bg-accent-orange text-white px-5 py-2 rounded-full font-semibold hover:bg-orange-600 transition shadow-lg text-sm">
                     Konsultasi Gratis
                 </a>
+                <button onclick="toggleMobileMenu()" class="md:hidden text-navy-dark focus:outline-none">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
                 <button onclick="toggleAdminPanel()" class="text-xs font-bold text-navy-dark/40 hover:text-accent-orange transition uppercase tracking-wider border-l pl-4 border-gray-200 hidden md:block">
                     Login Admin
                 </button>
             </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 flex flex-col p-6 space-y-4 shadow-xl text-sm">
+            <a href="profil.html" class="font-bold text-navy-dark">Profil</a>
+            <a href="#" class="font-bold text-navy-dark">Beranda</a>
+            <a href="#layanan" class="font-bold text-navy-dark">Layanan</a>
+            <a href="#kontak" class="font-bold text-navy-dark">Kontak</a>
+            <a href="https://wa.me/6281283393576" class="bg-accent-orange text-white p-3 rounded-xl text-center font-bold">Konsultasi Gratis</a>
         </div>
     </nav>
 
@@ -106,9 +118,14 @@
             </div>
 
             <div class="md:w-1/2 flex flex-col items-center">
-                <div class="bg-white/10 p-4 rounded-xl backdrop-blur-md border border-white/20 shadow-2xl w-full">
+                <div class="bg-white/10 p-4 rounded-xl backdrop-blur-md border border-white/20 shadow-2xl w-full relative">
                     <div class="swiper mySwiper">
                         <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <a href="digital-signage-1.png" data-fancybox="gallery" data-caption="Digital Signage JDI">
+                                    <img src="digital-signage-1.png" class="rounded-lg object-contain">
+                                </a>
+                            </div>
                             <div class="swiper-slide"><a href="Bubur Mandala.png" data-fancybox="gallery"><img src="Bubur Mandala.png" class="rounded-lg"></a></div>
                             <div class="swiper-slide"><a href="beuthetic.png" data-fancybox="gallery"><img src="beuthetic.png" class="rounded-lg"></a></div>
                             <div class="swiper-slide"><a href="crhisto-cafe.png" data-fancybox="gallery"><img src="crhisto-cafe.png" class="rounded-lg"></a></div>
@@ -119,6 +136,10 @@
                         <div class="swiper-button-next"></div>
                         <div class="swiper-button-prev"></div>
                         <div class="swiper-pagination"></div>
+                    </div>
+
+                    <div class="bg-white/90 p-4 rounded-xl shadow-xl flex flex-col items-center mt-4 md:absolute md:bottom-[-20px] md:right-0">
+                        <p class="text-[10px] font-bold uppercase text-navy-dark">Rating Kami:</p>
                     </div>
                 </div>
             </div>
@@ -336,6 +357,12 @@
             infinite: true,
             transitionEffect: "slide",
         });
+
+        // TAMBAHAN FUNGSI: Toggle Menu Mobile
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
 
         function setRating(n) {
             const stars = document.querySelectorAll('.star');
