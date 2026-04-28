@@ -27,13 +27,7 @@
             border-color: #ff8c00;
         }
 
-        /* Swiper Custom Styles */
-        .swiper {
-            width: 100%;
-            height: auto;
-            border-radius: 0.75rem;
-        }
-        
+        .swiper { width: 100%; height: auto; border-radius: 0.75rem; }
         .swiper-button-next, .swiper-button-prev {
             color: #ff8c00 !important;
             background: white;
@@ -42,20 +36,7 @@
             border-radius: 50%;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-
-        .swiper-button-next:after, .swiper-button-prev:after {
-            font-size: 18px !important;
-            font-weight: bold;
-        }
-
-        #virtual-assistant {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-            cursor: move;
-            touch-action: none;
-        }
+        .swiper-button-next:after, .swiper-button-prev:after { font-size: 18px !important; font-weight: bold; }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -63,7 +44,7 @@
     <nav class="bg-white shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center">
-                <img src="logojdi.png" alt="Logo Jaya Digital Integrate" class="h-12 md:h-16 w-auto transition-all">
+                <img src="logojdi.png" alt="Logo Jaya Digital Integrate" class="h-12 md:h-16 w-auto">
             </div>
             <div class="hidden md:flex space-x-8 font-medium text-gray-700">
                 <a href="#" class="hover:text-accent-orange transition">Beranda</a>
@@ -98,49 +79,19 @@
                 <div class="bg-white/10 p-4 rounded-xl backdrop-blur-md border border-white/20 shadow-2xl w-full">
                     <div class="swiper mySwiper">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <img src="https://raw.githubusercontent.com/username-anda/repo-anda/main/Penawaran%20Brosur%20Umum.jpeg" 
-                                     alt="Brosur JDI" 
-                                     class="rounded-lg w-full object-cover shadow-lg">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="beuthetic.png" 
-                                     alt="Digital Signage 1" 
-                                     class="rounded-lg w-full object-cover shadow-lg">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="bubur-mandala.png" 
-                                     alt="Digital Signage 2" 
-                                     class="rounded-lg w-full object-cover shadow-lg">
-
-                                  </div>
-                            <div class="swiper-slide">
-                                <img src="crhisto-cafe.png" 
-                                     alt="Digital Signage 2" 
-                                     class="rounded-lg w-full object-cover shadow-lg">
-
-                                    </div>
-                            <div class="swiper-slide">
-                                <img src="d-klinic.png" 
-                                     alt="Digital Signage 2" 
-                                     class="rounded-lg w-full object-cover shadow-lg">
-
-                                     </div>
-                            <div class="swiper-slide">
-                                <img src="de-wave.png" 
-                                     alt="Digital Signage 2" 
-                                     class="rounded-lg w-full object-cover shadow-lg">
-                            </div>
+                            <div class="swiper-slide"><img src="beuthetic.png" class="rounded-lg w-full object-cover"></div>
+                            <div class="swiper-slide"><img src="bubur-mandala.png" class="rounded-lg w-full object-cover"></div>
+                            <div class="swiper-slide"><img src="crhisto-cafe.png" class="rounded-lg w-full object-cover"></div>
+                            <div class="swiper-slide"><img src="d-klinic.png" class="rounded-lg w-full object-cover"></div>
                         </div>
                         <div class="swiper-button-next"></div>
                         <div class="swiper-button-prev"></div>
                         <div class="swiper-pagination"></div>
                     </div>
                 </div>
-
                 <div class="mt-8 bg-white text-navy-dark p-6 rounded-2xl shadow-2xl flex flex-col items-center w-full max-w-xs border-b-8 border-accent-orange">
                     <p class="text-sm font-bold mb-3 uppercase tracking-widest text-gray-500">Rating Kami:</p>
-                    <div class="flex space-x-2" id="star-container">
+                    <div class="flex space-x-2">
                         <button onclick="setRating(1)" class="star text-4xl text-gray-300">★</button>
                         <button onclick="setRating(2)" class="star text-4xl text-gray-300">★</button>
                         <button onclick="setRating(3)" class="star text-4xl text-gray-300">★</button>
@@ -161,11 +112,60 @@
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div class="feature-card bg-white p-8 rounded-3xl shadow-sm flex flex-col items-start text-left">
-                <div class="icon-circle w-14 h-14 bg-orange-100 text-accent-orange rounded-2xl flex items-center justify-center mb-6 shadow-inner">
+                <div class="w-14 h-14 bg-orange-100 text-accent-orange rounded-2xl flex items-center justify-center mb-6 shadow-inner">
                     <span class="text-xl font-bold">01</span>
                 </div>
                 <h3 class="text-xl font-bold mb-3 text-navy-dark">Responsif</h3>
-                <p class="text-gray-600 text-sm leading-relaxed">Optimasi multi-platform yang memastikan tampilan website Anda tetap sempurna.</p>
+                <p class="text-gray-600 text-sm leading-relaxed">Optimasi multi-platform yang memastikan tampilan website Anda tetap sempurna di smartphone, tablet, maupun desktop.</p>
+            </div>
+            <div class="feature-card bg-white p-8 rounded-3xl shadow-sm flex flex-col items-start text-left">
+                <div class="w-14 h-14 bg-blue-100 text-navy-dark rounded-2xl flex items-center justify-center mb-6 shadow-inner">
+                    <span class="text-xl font-bold">02</span>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-navy-dark">Scalable</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">Arsitektur sistem masa depan yang memungkinkan peningkatan kapasitas secara instan seiring berkembangnya bisnis Anda.</p>
+            </div>
+            <div class="feature-card bg-white p-8 rounded-3xl shadow-sm flex flex-col items-start text-left">
+                <div class="w-14 h-14 bg-orange-100 text-accent-orange rounded-2xl flex items-center justify-center mb-6 shadow-inner">
+                    <span class="text-xl font-bold">03</span>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-navy-dark">Aman</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">Implementasi sistem keamanan database tingkat lanjut untuk menjamin integritas data sensitif perusahaan.</p>
+            </div>
+            <div class="feature-card bg-white p-8 rounded-3xl shadow-sm flex flex-col items-start text-left">
+                <div class="w-14 h-14 bg-blue-100 text-navy-dark rounded-2xl flex items-center justify-center mb-6 shadow-inner">
+                    <span class="text-xl font-bold">04</span>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-navy-dark">SSL Certificate</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">Proteksi enkripsi data end-to-end yang menjamin keamanan transaksi dan meningkatkan kredibilitas di Google.</p>
+            </div>
+            <div class="feature-card bg-white p-8 rounded-3xl shadow-sm flex flex-col items-start text-left">
+                <div class="w-14 h-14 bg-orange-100 text-accent-orange rounded-2xl flex items-center justify-center mb-6 shadow-inner">
+                    <span class="text-xl font-bold">05</span>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-navy-dark">SEO Optimized</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">Struktur kode ramah SEO membantu profil bisnis Anda muncul di halaman pertama Google secara organik.</p>
+            </div>
+            <div class="feature-card bg-white p-8 rounded-3xl shadow-sm flex flex-col items-start text-left">
+                <div class="w-14 h-14 bg-blue-100 text-navy-dark rounded-2xl flex items-center justify-center mb-6 shadow-inner">
+                    <span class="text-xl font-bold">06</span>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-navy-dark">Total Solution</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">Layanan terintegrasi mulai dari konsep, pengembangan aplikasi, hingga manajemen server dalam satu ekosistem.</p>
+            </div>
+            <div class="feature-card bg-white p-8 rounded-3xl shadow-sm flex flex-col items-start text-left">
+                <div class="w-14 h-14 bg-orange-100 text-accent-orange rounded-2xl flex items-center justify-center mb-6 shadow-inner">
+                    <span class="text-xl font-bold">07</span>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-navy-dark">Support 24/7</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">Dukungan teknis tanpa henti untuk memastikan sistem Anda selalu berjalan optimal kapan pun dibutuhkan.</p>
+            </div>
+            <div class="feature-card bg-white p-8 rounded-3xl shadow-sm flex flex-col items-start text-left">
+                <div class="w-14 h-14 bg-blue-100 text-navy-dark rounded-2xl flex items-center justify-center mb-6 shadow-inner">
+                    <span class="text-xl font-bold">08</span>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-navy-dark">Jaminan Mutu</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">Proses pengujian ketat untuk memastikan hasil akhir produk berperforma tinggi dan desain estetik.</p>
             </div>
         </div>
     </section>
@@ -173,15 +173,15 @@
     <footer id="kontak" class="bg-navy-dark text-white pt-16 pb-8">
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-12">
             <div class="space-y-6">
-                <img src="logojdi.png" alt="Logo JDI" class="h-12" style="filter: drop-shadow(1px 1px 0 white) drop-shadow(-1px -1px 0 white) drop-shadow(1px -1px 0 white) drop-shadow(-1px 1px 0 white);">
+                <img src="logojdi.png" alt="Logo JDI" class="h-12 brightness-200">
                 <p class="text-gray-400 text-sm leading-relaxed">
-                    Solusi digital terintegrasi untuk bisnis yang lebih maju di Papua.
+                    Solusi digital terintegrasi untuk bisnis yang lebih maju di Papua. Kami berkomitmen memberikan kualitas terbaik untuk setiap proyek.
                 </p>
             </div>
             <div class="lg:col-span-2">
                 <h3 class="text-xl font-bold mb-6 border-l-4 border-accent-orange pl-4">Lokasi Kami</h3>
                 <div class="rounded-xl overflow-hidden h-64 border border-white/10">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3985.733472061214!2d140.6724!3d-2.5962!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMsKwMzUnNDYuMyJTIDE0MMKwNDAnMjAuNiJF!5e0!3m2!1sid!2sid!4v1714270000000!5m2!1sid!2sid" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?..." width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
         </div>
@@ -189,59 +189,20 @@
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // Inisialisasi Swiper dengan fitur Digital Signage
         var swiper = new Swiper(".mySwiper", {
             loop: true,
-            speed: 800, // Kecepatan transisi halus
-            autoplay: {
-                delay: 5000, // Gambar berpindah otomatis setiap 5 detik
-                disableOnInteraction: false, // Tetap autoplay meski sudah disentuh/diklik
-            },
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-            // Fitur Utama: Swipe & Mouse Drag
-            grabCursor: true, // Mouse akan berubah jadi tangan (bisa di-drag)
-            allowTouchMove: true, // Mengaktifkan fungsi swipe/sentuh
-            effect: "slide", // Efek pergeseran klasik digital signage
+            autoplay: { delay: 5000, disableOnInteraction: false },
+            pagination: { el: ".swiper-pagination", clickable: true },
+            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
         });
 
-        // Star Rating Logic
         function setRating(n) {
             const stars = document.querySelectorAll('.star');
-            const ratingText = document.getElementById('rating-text');
-            stars.forEach((star, index) => {
-                if (index < n) {
-                    star.classList.remove('text-gray-300');
-                    star.classList.add('text-orange-500');
-                } else {
-                    star.classList.remove('text-orange-500');
-                    star.classList.add('text-gray-300');
-                }
-            });
-            ratingText.innerText = `Terima kasih! Anda memberi ${n} bintang.`;
-            ratingText.classList.remove('text-gray-400');
-            ratingText.classList.add('text-orange-600', 'not-italic', 'font-bold');
+            const text = document.getElementById('rating-text');
+            stars.forEach((s, i) => s.style.color = i < n ? '#ff8c00' : '#d1d5db');
+            text.innerText = `Terima kasih! Anda memberi ${n} bintang.`;
+            text.className = "text-sm mt-3 font-bold text-orange-600";
         }
-
-        // Draggable Assistant Logic
-        const va = document.getElementById('virtual-assistant');
-        let isDragging = false;
-        va.addEventListener('mousedown', () => isDragging = true);
-        document.addEventListener('mouseup', () => isDragging = false);
-        document.addEventListener('mousemove', (e) => {
-            if (isDragging) {
-                va.style.left = (e.clientX - 25) + 'px';
-                va.style.top = (e.clientY - 25) + 'px';
-                va.style.right = 'auto';
-                va.style.bottom = 'auto';
-            }
-        });
     </script>
 </body>
 </html>
