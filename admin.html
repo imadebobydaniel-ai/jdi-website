@@ -14,14 +14,17 @@
         .content-section { display: none; }
         .content-section.active { display: block; }
         
-        /* Custom styling untuk dropdown status agar serasi */
         .status-select {
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='id9 5l7 7-7 7'%3E%3C/path%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 0.5rem center;
             background-size: 1em;
         }
+
+        /* Modal Animation */
+        .modal { transition: opacity 0.25s ease; }
+        body.modal-active { overflow: hidden; }
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex">
@@ -38,7 +41,7 @@
             <a href="#" onclick="showSection('portal-projek')" id="nav-projek" class="flex items-center gap-3 p-3 hover:bg-white/5 rounded-lg transition text-gray-300">
                 <span>📂</span> Portal Projek
             </a>
-            <a href="#" class="flex items-center gap-3 p-3 hover:bg-white/5 rounded-lg transition text-gray-300">
+            <a href="#" onclick="showSection('pengetahuan-ai')" id="nav-ai" class="flex items-center gap-3 p-3 hover:bg-white/5 rounded-lg transition text-gray-300">
                 <span>🤖</span> Pengetahuan AI
             </a>
             <a href="#" class="flex items-center gap-3 p-3 hover:bg-white/5 rounded-lg transition text-gray-300">
@@ -64,8 +67,33 @@
             </div>
         </header>
 
+        <div id="modal-ai" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50">
+            <div class="modal-overlay absolute w-full h-full bg-black opacity-50"></div>
+            <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded-2xl shadow-lg z-50 overflow-y-auto">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-bold text-navy-dark">Setting Respon AI</h3>
+                        <button onclick="toggleModal()" class="text-red-500 text-xs font-bold uppercase tracking-wider">Keluar</button>
+                    </div>
+                    <form id="form-ai" class="space-y-4">
+                        <div>
+                            <label class="block text-[11px] font-bold text-accent-orange uppercase mb-1">Pertanyaan (Sample Q):</label>
+                            <input type="text" placeholder="Contoh: Apa itu JDI?" class="w-full p-3 bg-gray-50 border border-dashed border-gray-300 rounded-lg text-sm italic focus:outline-none focus:border-accent-orange">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-accent-orange uppercase mb-1">Jawaban AI:</label>
+                            <textarea rows="4" placeholder="Masukkan jawaban otomatis AI di sini..." class="w-full p-3 bg-gray-50 border border-dashed border-gray-300 rounded-lg text-sm italic focus:outline-none focus:border-accent-orange"></textarea>
+                        </div>
+                        <button type="button" class="w-full bg-accent-orange text-white py-3 rounded-xl font-bold text-sm shadow-lg shadow-orange-200 hover:bg-orange-600 transition">
+                            + Tambah Pengetahuan Baru
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <section id="dashboard-section" class="content-section active p-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div id="stats-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-accent-orange">
                     <p class="text-gray-500 text-sm font-bold uppercase mb-1">Total Pertanyaan AI</p>
                     <h3 class="text-3xl font-bold text-navy-dark">1,240</h3>
@@ -83,7 +111,7 @@
             <div class="bg-white rounded-2xl shadow-sm overflow-hidden border">
                 <div class="p-6 border-b flex justify-between items-center">
                     <h3 class="font-bold text-navy-dark">Basis Pengetahuan AI (Q&A)</h3>
-                    <button class="bg-accent-orange text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-orange-600 transition">
+                    <button onclick="toggleModal()" class="bg-accent-orange text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-orange-600 transition">
                         + Tambah Pengetahuan
                     </button>
                 </div>
@@ -170,6 +198,14 @@
     </main>
 
     <script>
+        function toggleModal() {
+            const body = document.querySelector('body');
+            const modal = document.getElementById('modal-ai');
+            modal.classList.toggle('opacity-0');
+            modal.classList.toggle('pointer-events-none');
+            body.classList.toggle('modal-active');
+        }
+
         function showSection(sectionId) {
             document.querySelectorAll('.content-section').forEach(section => {
                 section.classList.remove('active');
@@ -180,12 +216,24 @@
                 link.classList.add('hover:bg-white/5', 'text-gray-300');
             });
 
+            const statsGrid = document.getElementById('stats-grid');
+
             if (sectionId === 'dashboard') {
                 document.getElementById('dashboard-section').classList.add('active');
+                statsGrid.classList.remove('hidden'); // Tampilkan statistik di dashboard
                 const nav = document.getElementById('nav-dashboard');
                 nav.classList.add('bg-accent-orange', 'font-bold', 'text-white');
                 nav.classList.remove('text-gray-300');
                 document.getElementById('header-title').innerText = 'Ringkasan Statistik';
+
+            } else if (sectionId === 'pengetahuan-ai') {
+                document.getElementById('dashboard-section').classList.add('active');
+                statsGrid.classList.add('hidden'); // Sembunyikan statistik saat di menu AI khusus
+                const nav = document.getElementById('nav-ai');
+                nav.classList.add('bg-accent-orange', 'font-bold', 'text-white');
+                nav.classList.remove('text-gray-300');
+                document.getElementById('header-title').innerText = 'Manajemen Respon AI';
+
             } else if (sectionId === 'portal-projek') {
                 document.getElementById('projek-section').classList.add('active');
                 const nav = document.getElementById('nav-projek');
@@ -195,24 +243,16 @@
             }
         }
 
-        // Script tambahan untuk mengubah warna background dropdown berdasarkan pilihan status
+        // Dropdown Status Handler
         document.addEventListener('change', function(e) {
             if (e.target.classList.contains('status-select')) {
                 const select = e.target;
                 const value = select.value;
-                
-                // Reset classes
                 select.classList.remove('bg-yellow-50', 'text-yellow-700', 'border-yellow-200', 'bg-blue-50', 'text-blue-700', 'border-blue-200', 'bg-green-50', 'text-green-700', 'border-green-200', 'bg-red-50', 'text-red-700', 'border-red-200');
-
-                if (value === 'pending') {
-                    select.classList.add('bg-yellow-50', 'text-yellow-700', 'border-yellow-200');
-                } else if (value === 'on-process') {
-                    select.classList.add('bg-blue-50', 'text-blue-700', 'border-blue-200');
-                } else if (value === 'done') {
-                    select.classList.add('bg-green-50', 'text-green-700', 'border-green-200');
-                } else if (value === 'cancel') {
-                    select.classList.add('bg-red-50', 'text-red-700', 'border-red-200');
-                }
+                if (value === 'pending') select.classList.add('bg-yellow-50', 'text-yellow-700', 'border-yellow-200');
+                else if (value === 'on-process') select.classList.add('bg-blue-50', 'text-blue-700', 'border-blue-200');
+                else if (value === 'done') select.classList.add('bg-green-50', 'text-green-700', 'border-green-200');
+                else if (value === 'cancel') select.classList.add('bg-red-50', 'text-red-700', 'border-red-200');
             }
         });
     </script>
