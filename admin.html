@@ -11,6 +11,9 @@
         .bg-navy-dark { background-color: #0a1d37; }
         .text-accent-orange { color: #ff8c00; }
         .bg-accent-orange { background-color: #ff8c00; }
+        /* Transisi halus untuk perpindahan menu */
+        .content-section { display: none; }
+        .content-section.active { display: block; }
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex">
@@ -21,8 +24,11 @@
             <p class="text-[10px] uppercase tracking-widest mt-2 text-gray-400 font-bold">Admin Panel</p>
         </div>
         <nav class="flex-1 p-4 space-y-2">
-            <a href="#" class="flex items-center gap-3 p-3 bg-accent-orange rounded-lg font-bold">
+            <a href="#" onclick="showSection('dashboard')" id="nav-dashboard" class="flex items-center gap-3 p-3 bg-accent-orange rounded-lg font-bold">
                 <span>📊</span> Dashboard
+            </a>
+            <a href="#" onclick="showSection('portal-projek')" id="nav-projek" class="flex items-center gap-3 p-3 hover:bg-white/5 rounded-lg transition">
+                <span>📂</span> Portal Projek
             </a>
             <a href="#" class="flex items-center gap-3 p-3 hover:bg-white/5 rounded-lg transition">
                 <span>🤖</span> Pengetahuan AI
@@ -43,14 +49,14 @@
 
     <main class="flex-1 flex flex-col">
         <header class="bg-white shadow-sm p-6 flex justify-between items-center">
-            <h2 class="text-xl font-bold text-navy-dark">Ringkasan Statistik</h2>
+            <h2 id="header-title" class="text-xl font-bold text-navy-dark">Ringkasan Statistik</h2>
             <div class="flex items-center gap-4">
                 <span class="text-sm font-medium text-gray-500">Selamat Datang, Admin</span>
                 <div class="w-10 h-10 bg-accent-orange rounded-full flex items-center justify-center text-white font-bold">A</div>
             </div>
         </header>
 
-        <section class="p-8">
+        <section id="dashboard-section" class="content-section active p-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-accent-orange">
                     <p class="text-gray-500 text-sm font-bold uppercase mb-1">Total Pertanyaan AI</p>
@@ -107,6 +113,81 @@
                 </div>
             </div>
         </section>
+
+        <section id="projek-section" class="content-section p-8">
+            <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+                <div class="p-6 border-b flex justify-between items-center">
+                    <div>
+                        <h3 class="font-bold text-navy-dark text-lg">Daftar Masuk Projek</h3>
+                        <p class="text-xs text-gray-400">Data permintaan layanan dari pelanggan (Main Page)</p>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-50 text-gray-400 text-[10px] uppercase font-bold">
+                            <tr>
+                                <th class="px-6 py-4">Info Klien & Usaha</th>
+                                <th class="px-6 py-4">Kebutuhan Projek</th>
+                                <th class="px-6 py-4">Kontak</th>
+                                <th class="px-6 py-4">Status</th>
+                                <th class="px-6 py-4 text-right">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm divide-y" id="project-data-list">
+                            <tr>
+                                <td class="px-6 py-4">
+                                    <p class="font-bold text-navy-dark text-base">Budi Santoso</p>
+                                    <p class="text-xs text-gray-500">Toko Kelontong Berkah</p>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-[10px] font-bold block w-fit mb-1 uppercase">Website Katalog</span>
+                                    <p class="text-gray-600 text-xs line-clamp-1 italic">"Saya butuh web untuk menampilkan stok..."</p>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <button class="bg-green-500 text-white px-3 py-1 rounded text-[10px] font-bold hover:bg-green-600 transition flex items-center gap-1">
+                                        <span>💬</span> WhatsApp
+                                    </button>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded-md text-[10px] font-bold uppercase">Menunggu</span>
+                                </td>
+                                <td class="px-6 py-4 text-right space-x-2">
+                                    <button class="text-navy-dark font-bold hover:underline">Detail</button>
+                                    <button class="text-red-500 font-bold hover:underline">Hapus</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
     </main>
+
+    <script>
+        function showSection(sectionId) {
+            // Sembunyikan semua section
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Reset semua style navigasi
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('bg-accent-orange', 'font-bold');
+                link.classList.add('hover:bg-white/5');
+            });
+
+            // Tampilkan section yang dipilih
+            if (sectionId === 'dashboard') {
+                document.getElementById('dashboard-section').classList.add('active');
+                document.getElementById('nav-dashboard').classList.add('bg-accent-orange', 'font-bold');
+                document.getElementById('header-title').innerText = 'Ringkasan Statistik';
+            } else if (sectionId === 'portal-projek') {
+                document.getElementById('projek-section').classList.add('active');
+                document.getElementById('nav-projek').classList.add('bg-accent-orange', 'font-bold');
+                document.getElementById('header-title').innerText = 'Manajemen Portal Projek';
+            }
+        }
+    </script>
 </body>
 </html>
