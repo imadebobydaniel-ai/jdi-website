@@ -16,7 +16,8 @@
         .text-navy-dark { color: #0a1d37; }
         .text-accent-orange { color: #ff8c00; }
         .bg-accent-orange { background-color: #ff8c00; }
-        .star { cursor: pointer; }
+        .star { cursor: pointer; color: #d1d5db; transition: color 0.2s; }
+        .star.active { color: #ff8c00; }
         
         .feature-card {
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -42,26 +43,14 @@
         }
         .swiper-button-next:after, .swiper-button-prev:after { font-size: 18px !important; font-weight: bold; }
 
-        .glow-orange {
-            filter: drop-shadow(0 0 15px rgba(255, 140, 0, 0.8));
+        /* CSS BARU UNTUK OUTLINE LOGO */
+        .logo-outline {
+            filter: drop-shadow(1px 1px 0 white) 
+                    drop-shadow(-1px -1px 0 white) 
+                    drop-shadow(1px -1px 0 white) 
+                    drop-shadow(-1px 1px 0 white);
         }
 
-        #chat-box {
-            transition: all 0.3s ease-in-out;
-            transform: translateY(20px);
-            opacity: 0;
-            pointer-events: none;
-            display: none;
-        }
-        #chat-box.active {
-            transform: translateY(0);
-            opacity: 1;
-            pointer-events: auto;
-            display: block;
-        }
-
-        /* --- INTEGRASI ANIMASI BARU --- */
-        
         /* Preloader Startup */
         #loading-screen {
             position: fixed;
@@ -76,10 +65,11 @@
         }
 
         .loader-logo {
-            width: 280px; /* Ukuran diperbesar */
+            width: 280px;
             height: auto;
             margin-bottom: 24px;
-            filter: brightness(200%);
+            /* Filter brightness tetap ada sesuai code awal, ditambah outline */
+            filter: brightness(200%) drop-shadow(1px 1px 0 white) drop-shadow(-1px -1px 0 white) drop-shadow(1px -1px 0 white) drop-shadow(-1px 1px 0 white);
         }
 
         .welcome-text {
@@ -108,11 +98,7 @@
             transition: width 5s linear;
         }
 
-        /* Main Page Transitions */
-        #main-content {
-            opacity: 0;
-            transition: opacity 1.2s ease;
-        }
+        #main-content { opacity: 0; transition: opacity 1.2s ease; }
 
         .fade-init {
             opacity: 0;
@@ -120,12 +106,8 @@
             transition: opacity 1.5s ease, transform 1.5s ease;
         }
         
-        .fade-in-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .fade-in-visible { opacity: 1; transform: translateY(0); }
 
-        /* Animasi Laptop Terbuka */
         .laptop-mockup {
             perspective: 1000px;
             opacity: 0;
@@ -133,11 +115,7 @@
             transition: all 1.5s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
-        .laptop-visible {
-            opacity: 1;
-            transform: scale(1) rotateX(0deg);
-        }
-
+        .laptop-visible { opacity: 1; transform: scale(1) rotateX(0deg); }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -154,54 +132,34 @@
         <nav class="bg-white shadow-sm sticky top-0 z-50">
             <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
                 <div class="flex items-center gap-8">
-                    <img src="logojdi.png" alt="Logo Jaya Digital Integrate" class="h-10 md:h-16 w-auto">
-                    
+                    <img src="logojdi.png" alt="Logo Jaya Digital Integrate" class="h-10 md:h-16 w-auto logo-outline">
                     <div class="hidden md:flex space-x-8 font-medium text-gray-700">
                         <a href="profile.html" class="hover:text-accent-orange transition">Profile</a>
                         <a href="#" class="hover:text-accent-orange transition">Beranda</a>
-                       <a href="layanan-kami.html" class="hover:text-accent-orange transition">Layanan Kami</a>
+                        <a href="layanan-kami.html" class="hover:text-accent-orange transition">Layanan Kami</a>
                         <a href="#" class="hover:text-accent-orange transition">Proyek</a>
                         <a href="#kontak" class="hover:text-accent-orange transition">Kontak</a>
                     </div>
                 </div>
                 
                 <div class="flex items-center gap-4">
-                    <a href="https://wa.me/6281283393576?text=Halo%20saya%20melihat%20jasa%20website%2C%20aplikasi%20android%2C%20digital%20signage%2C%20dan%20sistem%20manajemen%20di%20website%20anda.%20saya%20ingin%20konsultasi%20untuk%20usaha%20dan%20bisnis%20saya" target="_blank" class="hidden sm:block bg-accent-orange text-white px-5 py-2 rounded-full font-semibold hover:bg-orange-600 transition shadow-lg text-sm">
+                    <a href="https://wa.me/6281283393576" target="_blank" class="hidden sm:block bg-accent-orange text-white px-5 py-2 rounded-full font-semibold hover:bg-orange-600 transition shadow-lg text-sm">
                         Konsultasi Gratis
                     </a>
-                    <button onclick="toggleMobileMenu()" class="md:hidden text-navy-dark focus:outline-none">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-                    </button>
-                    <button onclick="toggleAdminPanel()" class="text-xs font-bold text-navy-dark/40 hover:text-accent-orange transition uppercase tracking-wider border-l pl-4 border-gray-200 hidden md:block">
-                        Login Admin
-                    </button>
+                    <button onclick="toggleAdminPanel()" class="text-xs font-bold text-navy-dark/40 hover:text-accent-orange border-l pl-4 hidden md:block uppercase tracking-wider">Login Admin</button>
                 </div>
-            </div>
-
-            <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 flex flex-col p-6 space-y-4 shadow-xl text-sm">
-                <a href="profile.html" class="font-bold text-navy-dark">Profile</a>
-                <a href="#" class="font-bold text-navy-dark">Beranda</a>
-               <a href="layanan-kami.html" class="hover:text-accent-orange transition">Layanan Kami</a>
-                <a href="#kontak" class="font-bold text-navy-dark">Kontak</a>
-                <a href="https://wa.me/6281283393576?text=Halo%20saya%20melihat%20jasa%20website%2C%20aplikasi%20android%2C%20digital%20signage%2C%20dan%20sistem%20manajemen%20di%20website%20anda.%20saya%20ingin%20konsultasi%20untuk%20usaha%20dan%20bisnis%20saya" target="_blank" class="bg-accent-orange text-white p-3 rounded-xl text-center font-bold">Konsultasi Gratis</a>
             </div>
         </nav>
 
         <header class="relative bg-navy-dark text-white overflow-hidden">
             <div class="absolute top-0 right-0 w-1/3 h-full bg-accent-orange opacity-10 transform skew-x-12 translate-x-20"></div>
             <div class="max-w-7xl mx-auto px-6 py-16 md:py-32 flex flex-col md:flex-row items-center justify-between relative z-10 gap-12">
-                
                 <div class="md:w-1/2">
-                    <h1 id="fade-text-1" class="text-4xl md:text-6xl font-bold leading-tight mb-6 fade-init">
-                        Transformasi Digital <br>
-                        <span class="text-accent-orange">Tanpa Batas</span>
-                    </h1>
-                    <p id="fade-text-2" class="text-gray-300 text-lg mb-8 max-w-lg fade-init">
-                        Kami menghadirkan solusi teknologi mutakhir untuk kebutuhan administrasi, database, dan sistem informasi manajemen di Jayapura dan sekitarnya.
-                    </p>
+                    <h1 id="fade-text-1" class="text-4xl md:text-6xl font-bold leading-tight mb-6 fade-init">Transformasi Digital <br><span class="text-accent-orange">Tanpa Batas</span></h1>
+                    <p id="fade-text-2" class="text-gray-300 text-lg mb-8 max-w-lg fade-init">Kami menghadirkan solusi teknologi mutakhir untuk kebutuhan administrasi, database, dan sistem informasi manajemen di Jayapura dan sekitarnya.</p>
                     <div id="fade-btns" class="flex flex-wrap gap-4 fade-init">
-                        <a href="javascript:void(0)" onclick="toggleProyekModal()" class="bg-accent-orange text-white px-8 py-3 rounded-md font-bold hover:bg-orange-600 transition shadow-lg text-center">Mulai Proyek</a>
-                        <a href="layanan-kami.html" class="border-2 border-white px-8 py-3 rounded-md font-bold hover:bg-white hover:text-navy-dark transition text-center">Layanan Kami</a>
+                        <a href="#" class="bg-accent-orange text-white px-8 py-3 rounded-md font-bold hover:bg-orange-600 transition shadow-lg">Mulai Proyek</a>
+                        <a href="layanan-kami.html" class="border-2 border-white px-8 py-3 rounded-md font-bold hover:bg-white hover:text-navy-dark transition">Layanan Kami</a>
                     </div>
                 </div>
 
@@ -219,6 +177,16 @@
                             <div class="swiper-button-prev"></div>
                         </div>
                     </div>
+                    <div class="mt-8 flex flex-col items-center">
+                        <div class="flex gap-2" id="rating-stars">
+                            <span class="star text-2xl active" onclick="setRating(1)">★</span>
+                            <span class="star text-2xl active" onclick="setRating(2)">★</span>
+                            <span class="star text-2xl active" onclick="setRating(3)">★</span>
+                            <span class="star text-2xl active" onclick="setRating(4)">★</span>
+                            <span class="star text-2xl active" onclick="setRating(5)">★</span>
+                        </div>
+                        <p class="text-white/60 text-xs mt-2 uppercase tracking-widest font-bold">Client Satisfaction Rating</p>
+                    </div>
                 </div>
             </div>
         </header>
@@ -230,33 +198,45 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="feature-card bg-white p-8 rounded-3xl shadow-sm flex flex-col items-start text-left">
-                    <div class="w-14 h-14 bg-orange-100 text-accent-orange rounded-2xl flex items-center justify-center mb-6 shadow-inner">
-                        <span class="text-xl font-bold">01</span>
-                    </div>
+                <div class="feature-card bg-white p-8 rounded-3xl shadow-sm">
+                    <div class="w-14 h-14 bg-orange-100 text-accent-orange rounded-2xl flex items-center justify-center mb-6 shadow-inner"><span class="text-xl font-bold">01</span></div>
                     <h3 class="text-xl font-bold mb-3 text-navy-dark">Responsif</h3>
                     <p class="text-gray-600 text-sm leading-relaxed">Optimasi multi-platform yang memastikan aplikasi atau website Anda berjalan sempurna di perangkat apa pun.</p>
                 </div>
-                <div class="feature-card bg-white p-8 rounded-3xl shadow-sm flex flex-col items-start text-left">
-                    <div class="w-14 h-14 bg-blue-100 text-navy-dark rounded-2xl flex items-center justify-center mb-6 shadow-inner">
-                        <span class="text-xl font-bold">02</span>
-                    </div>
+                <div class="feature-card bg-white p-8 rounded-3xl shadow-sm">
+                    <div class="w-14 h-14 bg-blue-100 text-navy-dark rounded-2xl flex items-center justify-center mb-6 shadow-inner"><span class="text-xl font-bold">02</span></div>
                     <h3 class="text-xl font-bold mb-3 text-navy-dark">Scalable</h3>
                     <p class="text-gray-600 text-sm leading-relaxed">Arsitektur sistem fleksibel yang siap tumbuh dan berkembang seiring meningkatnya skala kebutuhan operasional Anda.</p>
                 </div>
-                <div class="feature-card bg-white p-8 rounded-3xl shadow-sm flex flex-col items-start text-left">
-                    <div class="w-14 h-14 bg-orange-100 text-accent-orange rounded-2xl flex items-center justify-center mb-6 shadow-inner">
-                        <span class="text-xl font-bold">03</span>
-                    </div>
+                <div class="feature-card bg-white p-8 rounded-3xl shadow-sm">
+                    <div class="w-14 h-14 bg-orange-100 text-accent-orange rounded-2xl flex items-center justify-center mb-6 shadow-inner"><span class="text-xl font-bold">03</span></div>
                     <h3 class="text-xl font-bold mb-3 text-navy-dark">Aman</h3>
                     <p class="text-gray-600 text-sm leading-relaxed">Implementasi keamanan database tingkat lanjut seperti yang diterapkan pada sistem manajemen Pondok Pemulihan Papua.</p>
                 </div>
-                <div class="feature-card bg-white p-8 rounded-3xl shadow-sm flex flex-col items-start text-left">
-                    <div class="w-14 h-14 bg-blue-100 text-navy-dark rounded-2xl flex items-center justify-center mb-6 shadow-inner">
-                        <span class="text-xl font-bold">04</span>
-                    </div>
+                <div class="feature-card bg-white p-8 rounded-3xl shadow-sm">
+                    <div class="w-14 h-14 bg-blue-100 text-navy-dark rounded-2xl flex items-center justify-center mb-6 shadow-inner"><span class="text-xl font-bold">04</span></div>
                     <h3 class="text-xl font-bold mb-3 text-navy-dark">SSL Certificate</h3>
                     <p class="text-gray-600 text-sm leading-relaxed">Proteksi enkripsi data end-to-end yang menjamin keamanan informasi sensitif dan meningkatkan kredibilitas sistem.</p>
+                </div>
+                <div class="feature-card bg-white p-8 rounded-3xl shadow-sm">
+                    <div class="w-14 h-14 bg-orange-100 text-accent-orange rounded-2xl flex items-center justify-center mb-6 shadow-inner"><span class="text-xl font-bold">05</span></div>
+                    <h3 class="text-xl font-bold mb-3 text-navy-dark">Cloud Integrated</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Akses data kapan saja dan di mana saja dengan integrasi cloud server yang andal dan minim downtime.</p>
+                </div>
+                <div class="feature-card bg-white p-8 rounded-3xl shadow-sm">
+                    <div class="w-14 h-14 bg-blue-100 text-navy-dark rounded-2xl flex items-center justify-center mb-6 shadow-inner"><span class="text-xl font-bold">06</span></div>
+                    <h3 class="text-xl font-bold mb-3 text-navy-dark">UI/UX Modern</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Desain antarmuka yang bersih, intuitif, dan profesional untuk meningkatkan pengalaman pengguna.</p>
+                </div>
+                <div class="feature-card bg-white p-8 rounded-3xl shadow-sm">
+                    <div class="w-14 h-14 bg-orange-100 text-accent-orange rounded-2xl flex items-center justify-center mb-6 shadow-inner"><span class="text-xl font-bold">07</span></div>
+                    <h3 class="text-xl font-bold mb-3 text-navy-dark">Maintenance</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Dukungan pemeliharaan berkala untuk memastikan performa sistem tetap optimal di jangka panjang.</p>
+                </div>
+                <div class="feature-card bg-white p-8 rounded-3xl shadow-sm">
+                    <div class="w-14 h-14 bg-blue-100 text-navy-dark rounded-2xl flex items-center justify-center mb-6 shadow-inner"><span class="text-xl font-bold">08</span></div>
+                    <h3 class="text-xl font-bold mb-3 text-navy-dark">Local Expert</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Tim ahli yang memahami karakteristik dan kebutuhan infrastruktur digital di wilayah Jayapura dan Papua.</p>
                 </div>
             </div>
         </section>
@@ -264,29 +244,35 @@
         <footer id="kontak" class="bg-navy-dark text-white pt-16 pb-8">
             <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-12 border-b border-white/10 pb-12">
                 <div class="space-y-6">
-                    <img src="logojdi.png" alt="Logo JDI" class="h-12 brightness-200">
+                    <img src="logojdi.png" alt="Logo JDI" class="h-12 brightness-200 logo-outline">
                     <p class="text-gray-400 text-sm leading-relaxed">Solusi digital terintegrasi untuk pengelolaan sistem dan administrasi yang lebih profesional di tanah Papua.</p>
+                    <div class="text-gray-400 text-sm">
+                        <p class="font-bold text-white mb-2 underline decoration-accent-orange">Alamat Kantor:</p>
+                        <p>Jl. Raya Abepura - Sentani, Kelurahan Heram,</p>
+                        <p>Kecamatan Abepura, Kota Jayapura,</p>
+                        <p>Provinsi Papua, Indonesia.</p>
+                    </div>
                 </div>
                 <div class="lg:col-span-2">
                     <h3 class="text-xl font-bold mb-6 border-l-4 border-accent-orange pl-4">Lokasi Kami</h3>
                     <div class="rounded-xl overflow-hidden h-64 border border-white/10">
-                        <iframe src="https://www.google.com/maps/embed?pb=..." width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15951.365313364947!2d140.6358178125866!3d-2.5908581775836453!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x686cf574f1778917%3A0x600100d072834b6b!2sAbepura%2C%20Kota%20Jayapura%2C%20Papua!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                     </div>
                 </div>
             </div>
-            <div class="max-w-7xl mx-auto px-6 pt-8 text-center">
-                <p class="text-gray-500 text-xs tracking-widest uppercase font-semibold">© 2026 Jaya Digital Integrate. All Rights Reserved.</p>
+            <div class="max-w-7xl mx-auto px-6 pt-8 text-center text-gray-500 text-xs tracking-widest uppercase font-semibold">
+                © 2026 Jaya Digital Integrate. All Rights Reserved.
             </div>
         </footer>
     </div>
 
     <div id="admin-portal" class="fixed inset-0 bg-navy-dark/90 z-[10001] hidden flex items-center justify-center p-6">
-        <div class="bg-white w-full max-md rounded-2xl p-8">
+        <div class="bg-white w-full max-w-md rounded-2xl p-8 shadow-2xl">
             <h3 class="text-2xl font-bold text-navy-dark mb-6 text-center">Login Administrator</h3>
             <div class="space-y-4">
-                <input type="text" id="user" placeholder="Username" class="w-full p-3 border rounded-lg outline-none">
-                <input type="password" id="pass" placeholder="Password" class="w-full p-3 border rounded-lg outline-none">
-                <button onclick="handleLogin()" class="w-full bg-accent-orange text-white py-3 rounded-lg font-bold">Masuk</button>
+                <input type="text" id="user" placeholder="Username" class="w-full p-3 border rounded-lg outline-none focus:ring-2 focus:ring-accent-orange">
+                <input type="password" id="pass" placeholder="Password" class="w-full p-3 border rounded-lg outline-none focus:ring-2 focus:ring-accent-orange">
+                <button onclick="handleLogin()" class="w-full bg-accent-orange text-white py-3 rounded-lg font-bold hover:bg-orange-600 transition">Masuk</button>
                 <button onclick="toggleAdminPanel()" class="w-full text-gray-400 text-sm">Batal</button>
             </div>
         </div>
@@ -294,42 +280,33 @@
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // --- LOGIKA STARTUP & ANIMASI ---
         window.addEventListener('DOMContentLoaded', () => {
             const fill = document.getElementById('loader-fill');
             const welcome = document.getElementById('welcome-msg');
             const screen = document.getElementById('loading-screen');
             const main = document.getElementById('main-content');
 
-            // 1. Jalankan Loading Bar & Teks Welcome
             setTimeout(() => { 
                 fill.style.width = '100%';
                 welcome.style.opacity = '1';
                 welcome.style.transform = 'translateY(0)';
             }, 100);
 
-            // 2. Transisi Keluar Preloader (5 Detik)
             setTimeout(() => {
                 screen.style.opacity = '0';
                 setTimeout(() => {
                     screen.style.display = 'none';
                     main.style.opacity = '1';
-                    
-                    // 3. Jalankan Fade-in Teks Utama
                     document.getElementById('fade-text-1').classList.add('fade-in-visible');
                     setTimeout(() => document.getElementById('fade-text-2').classList.add('fade-in-visible'), 400);
                     setTimeout(() => document.getElementById('fade-btns').classList.add('fade-in-visible'), 800);
-                    
-                    // 4. Jalankan Animasi Laptop Terbuka
                     setTimeout(() => {
                         document.getElementById('laptop-mockup').classList.add('laptop-visible');
                     }, 1000);
-
                 }, 800);
             }, 5000);
         });
 
-        // Swiper & Fungsi UI Tetap
         var swiper = new Swiper(".mySwiper", {
             loop: true,
             autoplay: { delay: 4000 },
@@ -337,10 +314,19 @@
         });
 
         function toggleAdminPanel() { document.getElementById('admin-portal').classList.toggle('hidden'); }
+        
         function handleLogin() {
             if(document.getElementById('user').value === 'admin' && document.getElementById('pass').value === 'bukadong821') {
                 window.location.href = 'admin.html';
             } else { alert('Kredensial Salah'); }
+        }
+
+        function setRating(n) {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach((s, index) => {
+                if(index < n) s.classList.add('active');
+                else s.classList.remove('active');
+            });
         }
     </script>
 </body>
