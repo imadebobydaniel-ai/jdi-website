@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jaya Digital Integrate - Portfolio</title>
@@ -19,14 +18,13 @@
     .star { cursor: pointer; color: #d1d5db; transition: color 0.2s; }
     .star.active { color: #ff8c00; }
     
-    /* Implementasi Background Hero Section */
+    /* Hero Section */
     .hero-section {
         position: relative;
         width: 100%;
         min-height: 100vh;
         display: flex;
         align-items: center;
-        /* Menggunakan warna navy dark sistem sebagai layer gradasi */
         background: linear-gradient(to right, rgba(10, 29, 55, 0.95), rgba(10, 29, 55, 0.3)), 
                     url('jembatan-merah.jpg');
         background-size: cover;
@@ -34,11 +32,7 @@
         background-repeat: no-repeat;
     }
 
-    /* Penyesuaian Kontras Teks di dalam Hero */
-    .hero-section h1, .hero-section p {
-        color: #ffffff;
-        z-index: 2;
-    }
+    .hero-section h1, .hero-section p { color: #ffffff; z-index: 2; }
     
     .feature-card {
         transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -71,6 +65,7 @@
                 drop-shadow(-1px 1px 0 white);
     }
 
+    /* LOADING STARTUP 5 DETIK */
     #loading-screen {
         position: fixed;
         inset: 0;
@@ -84,17 +79,15 @@
     }
 
     .loader-logo {
-        width: 320px;
+        width: 280px;
         height: auto;
         margin-bottom: 30px;
         filter: drop-shadow(1.5px 1.5px 0 white) 
-                drop-shadow(-1.5px -1.5px 0 white) 
-                drop-shadow(1.5px -1.5px 0 white) 
-                drop-shadow(-1.5px 1.5px 0 white);
+                drop-shadow(-1.5px -1.5px 0 white);
     }
 
     .loader-bar-container {
-        width: 300px;
+        width: 260px;
         height: 6px;
         background: rgba(255,255,255,0.1);
         border-radius: 20px;
@@ -106,18 +99,20 @@
         width: 0%;
         height: 100%;
         background: #ff8c00;
-        transition: width 4s linear;
+        /* Durasi diatur 5 detik linear agar sinkron */
+        transition: width 5s linear;
     }
 
     .welcome-text {
         color: white;
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         font-weight: 600;
         letter-spacing: 1.5px;
         opacity: 0;
         transform: translateY(10px);
         transition: all 1s ease 0.5s;
         text-align: center;
+        padding: 0 20px;
     }
 
     #main-content { opacity: 0; transition: opacity 1.2s ease; }
@@ -138,7 +133,20 @@
     }
 
     .laptop-visible { opacity: 1; transform: scale(1) rotateX(0deg); }
-</style></head>
+
+    /* MOBILE FRIENDLY ADJUSTMENTS */
+    @media (max-width: 768px) {
+        .hero-section { text-align: center; padding-top: 80px; height: auto; min-height: 110vh; }
+        .hero-section h1 { font-size: 2.2rem; line-height: 1.2; }
+        .hero-section .flex-wrap { justify-content: center; }
+        .hero-section .md\:-mt-20 { margin-top: 0; }
+        .loader-logo { width: 220px; }
+        .loader-bar-container { width: 200px; }
+        /* Tab Menu Padding HP */
+        nav .max-w-7xl { padding-top: 1rem; padding-bottom: 1rem; }
+    }
+</style>
+</head>
 <body class="bg-gray-50">
 
     <div id="loading-screen">
@@ -152,7 +160,7 @@
     <div id="main-content">
         <nav class="bg-white shadow-sm sticky top-0 z-50">
             <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-                <div class="flex items-center gap-8">
+                <div class="flex items-center gap-4 md:gap-8">
                     <img src="logojdi.png" alt="Logo Jaya Digital Integrate" class="h-10 md:h-16 w-auto logo-outline">
                     <div class="hidden md:flex space-x-8 font-medium text-gray-700">
                         <a href="profile.html" class="hover:text-accent-orange transition">Profile</a>
@@ -167,27 +175,31 @@
                         Konsultasi Gratis
                     </a>
                     <button onclick="toggleAdminPanel()" class="text-xs font-bold text-navy-dark/40 hover:text-accent-orange border-l pl-4 hidden md:block uppercase tracking-wider">Login Admin</button>
+                    <div class="md:hidden text-navy-dark">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </div>
                 </div>
             </div>
         </nav>
 
-        <header class="hero-section py-20 px-10">
-            
+        <header class="hero-section py-20 px-6 md:px-10">
             <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between relative z-10 gap-12">
-                <div class="md:w-1/2 -mt-20">
-                    <h1 id="fade-text-1" class="text-4xl md:text-6xl font-bold leading-tight mb-6 text-white fade-init">
+                <div class="w-full md:w-1/2 md:-mt-32">
+                    <h1 id="fade-text-1" class="text-3xl md:text-6xl font-bold leading-tight mb-6 text-white fade-init">
                         Transformasi Digital <br><span class="text-accent-orange">Tanpa Batas</span>
                     </h1>
-                    <p id="fade-text-2" class="text-gray-200 text-lg mb-8 max-w-lg fade-init">
+                    <p id="fade-text-2" class="text-gray-200 text-base md:text-lg mb-8 max-w-lg fade-init">
                         Kami menghadirkan solusi teknologi mutakhir untuk kebutuhan administrasi, database, dan sistem informasi manajemen di Jayapura dan sekitarnya.
                     </p>
                     <div id="fade-btns" class="flex flex-wrap gap-4 fade-init">
-                        <a href="#" class="bg-accent-orange text-white px-8 py-3 rounded-md font-bold hover:bg-orange-600 transition shadow-lg">Mulai Proyek</a>
-                        <a href="layanan-kami.html" class="border-2 border-white text-white px-8 py-3 rounded-md font-bold hover:bg-white hover:text-navy-dark transition">Layanan Kami</a>
+                        <a href="#" class="bg-accent-orange text-white px-8 py-3 rounded-md font-bold hover:bg-orange-600 transition shadow-lg w-full sm:w-auto text-center">Mulai Proyek</a>
+                        <a href="layanan-kami.html" class="border-2 border-white text-white px-8 py-3 rounded-md font-bold hover:bg-white hover:text-navy-dark transition w-full sm:w-auto text-center">Layanan Kami</a>
                     </div>
                 </div>
 
-                <div class="md:w-1/2 flex flex-col items-center">
+                <div class="w-full md:w-1/2 flex flex-col items-center">
                     <div id="laptop-mockup" class="bg-white/10 p-4 rounded-xl backdrop-blur-md border border-white/20 shadow-2xl w-full relative laptop-mockup">
                         <div class="swiper mySwiper">
                             <div class="swiper-wrapper">
@@ -203,46 +215,46 @@
                     </div>
                     <div class="mt-8 flex flex-col items-center">
                         <div class="flex gap-2" id="rating-stars">
-                            <span class="star text-2xl active" onclick="setRating(1)">★</span>
-                            <span class="star text-2xl active" onclick="setRating(2)">★</span>
-                            <span class="star text-2xl active" onclick="setRating(3)">★</span>
-                            <span class="star text-2xl active" onclick="setRating(4)">★</span>
-                            <span class="star text-2xl active" onclick="setRating(5)">★</span>
+                            <span class="star text-2xl active">★</span>
+                            <span class="star text-2xl active">★</span>
+                            <span class="star text-2xl active">★</span>
+                            <span class="star text-2xl active">★</span>
+                            <span class="star text-2xl active">★</span>
                         </div>
-                        <p class="text-white/60 text-xs mt-2 uppercase tracking-widest font-bold">Client Satisfaction Rating</p>
+                        <p class="text-white/60 text-[10px] md:text-xs mt-2 uppercase tracking-widest font-bold">Client Satisfaction Rating</p>
                     </div>
                 </div>
             </div>
         </header>
 
-        <section id="layanan" class="py-24 max-w-7xl mx-auto px-6">
+        <section id="layanan" class="py-16 md:py-24 max-w-7xl mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-navy-dark mb-4">Mengapa Memilih JDI?</h2>
-                <p class="text-gray-500 max-w-2xl mx-auto">Komitmen kami adalah memberikan standar teknologi tertinggi untuk mendukung digitalisasi bisnis Anda melalui sistem yang efisien dan aman.</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-navy-dark mb-4">Mengapa Memilih JDI?</h2>
+                <p class="text-gray-500 max-w-2xl mx-auto text-sm md:text-base">Komitmen kami adalah memberikan standar teknologi tertinggi untuk mendukung digitalisasi bisnis Anda melalui sistem yang efisien dan aman.</p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
                 <div class="feature-card bg-white p-8 rounded-3xl shadow-sm">
                     <div class="w-14 h-14 bg-orange-100 text-accent-orange rounded-2xl flex items-center justify-center mb-6 shadow-inner"><span class="text-xl font-bold">01</span></div>
                     <h3 class="text-xl font-bold mb-3 text-navy-dark">Responsif</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed">Optimasi multi-platform yang memastikan aplikasi atau website Anda berjalan sempurna di perangkat apa pun.</p>
+                    <p class="text-gray-600 text-sm leading-relaxed">Optimasi multi-platform yang memastikan aplikasi berjalan sempurna di HP maupun Desktop.</p>
                 </div>
                 <div class="feature-card bg-white p-8 rounded-3xl shadow-sm">
                     <div class="w-14 h-14 bg-blue-100 text-navy-dark rounded-2xl flex items-center justify-center mb-6 shadow-inner"><span class="text-xl font-bold">02</span></div>
                     <h3 class="text-xl font-bold mb-3 text-navy-dark">Scalable</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed">Arsitektur sistem fleksibel yang siap tumbuh dan berkembang seiring meningkatnya skala kebutuhan operasional Anda.</p>
+                    <p class="text-gray-600 text-sm leading-relaxed">Arsitektur sistem fleksibel yang siap tumbuh seiring skala kebutuhan bisnis Anda.</p>
                 </div>
                 <div class="feature-card bg-white p-8 rounded-3xl shadow-sm">
                     <div class="w-14 h-14 bg-orange-100 text-accent-orange rounded-2xl flex items-center justify-center mb-6 shadow-inner"><span class="text-xl font-bold">03</span></div>
                     <h3 class="text-xl font-bold mb-3 text-navy-dark">Aman</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed">Implementasi keamanan database tingkat lanjut seperti yang diterapkan pada sistem manajemen Pondok Pemulihan Papua.</p>
+                    <p class="text-gray-600 text-sm leading-relaxed">Implementasi keamanan database tingkat lanjut untuk proteksi data maksimal.</p>
                 </div>
                 <div class="feature-card bg-white p-8 rounded-3xl shadow-sm">
                     <div class="w-14 h-14 bg-blue-100 text-navy-dark rounded-2xl flex items-center justify-center mb-6 shadow-inner"><span class="text-xl font-bold">04</span></div>
-                    <h3 class="text-xl font-bold mb-3 text-navy-dark">SSL Certificate</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed">Proteksi enkripsi data end-to-end yang menjamin keamanan informasi sensitif dan meningkatkan kredibilitas sistem.</p>
+                    <h3 class="text-xl font-bold mb-3 text-navy-dark">SSL</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Proteksi enkripsi data end-to-end yang menjamin keamanan informasi sensitif.</p>
                 </div>
-                <div id="services-container" class="lg:col-span-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"></div>
+                <div id="services-container" class="lg:col-span-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"></div>
             </div>
         </section>
 
@@ -250,22 +262,14 @@
             <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-12 border-b border-white/10 pb-12">
                 <div class="space-y-6">
                     <img src="logojdi.png" alt="Logo JDI" class="h-12 brightness-200 logo-outline">
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Solusi digital terintegrasi untuk pengelolaan sistem dan administrasi yang lebih profesional di tanah Papua.
-                    </p>
+                    <p class="text-gray-400 text-sm leading-relaxed">Solusi digital terintegrasi untuk pengelolaan sistem yang profesional di tanah Papua.</p>
                     <div class="text-gray-400 text-sm">
-                        <p class="font-bold text-white mb-2 underline decoration-accent-orange">Alamat Kantor:</p>
-                        <p>Jl. Tanah Hitam abe Pantai, Awiyo,</p>
-                        <p>Kecamatan Abepura, Kota Jayapura,</p>
-                        <p>Provinsi Papua, Indonesia.</p>
-                        
+                        <p class="font-bold text-white mb-2 underline decoration-accent-orange text-base">Alamat Kantor:</p>
+                        <p>Jl. Tanah Hitam abe Pantai, Awiyo, Abepura, Kota Jayapura, Papua.</p>
                         <div class="mt-4 flex items-center gap-3 text-accent-orange font-bold text-lg group">
-                            <div class="bg-white/10 p-2 rounded-full group-hover:bg-accent-orange group-hover:text-white transition">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                                </svg>
-                            </div>
-                            <a href="https://wa.me/6281283393576" target="_blank" class="hover:underline">0812-8339-3576</a>
+                            <a href="https://wa.me/6281283393576" target="_blank" class="hover:underline flex items-center gap-2">
+                                <span class="bg-white/10 p-2 rounded-full">📞</span> 0812-8339-3576
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -273,14 +277,14 @@
                 <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
                     <div class="flex flex-col">
                         <h3 class="text-xl font-bold mb-6 border-l-4 border-accent-orange pl-4">Lokasi Kami</h3>
-                        <div class="rounded-xl overflow-hidden border border-white/10 shadow-2xl flex-grow h-64 md:h-full min-h-[250px]">
-                            <iframe src="http://googleusercontent.com/maps.google.com/5" 
+                        <div class="rounded-xl overflow-hidden border border-white/10 shadow-2xl flex-grow h-[300px]">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3985.7335122152664!2d140.70428517436034!3d-2.5921868383321595!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x686cf50953a7b977%3A0xc62968393e8e19b1!2sJl.%20Tanah%20Hitam%2C%20Awiyo%2C%20Kec.%20Abepura%2C%20Kota%20Jayapura%2C%20Papua!5e0!3m2!1sid!2sid!4v1714390000000!5m2!1sid!2sid" 
                                 width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                         </div>
                     </div>
 
                     <div class="flex flex-col">
-                        <div class="flex flex-col justify-center items-center bg-white/5 rounded-2xl p-6 border border-white/10 flex-grow shadow-2xl h-64 md:h-full min-h-[250px]">
+                        <div class="flex flex-col justify-center items-center bg-white/5 rounded-2xl p-6 border border-white/10 flex-grow shadow-2xl h-[300px]">
                             <h3 class="text-lg font-bold mb-4 text-center">Beri Rating Layanan Kami</h3>
                             <div class="flex gap-2 mb-4" id="footer-rating-stars">
                                 <span class="star-footer text-4xl cursor-pointer text-gray-500 hover:text-accent-orange transition" onclick="setFooterRating(1)">★</span>
@@ -295,37 +299,23 @@
                 </div>
             </div>
             
-            <div class="max-w-7xl mx-auto px-6 pt-8 text-center text-gray-500 text-xs tracking-widest uppercase font-semibold">
+            <div class="max-w-7xl mx-auto px-6 pt-8 text-center text-gray-500 text-[10px] tracking-widest uppercase font-semibold">
                 © 2026 Jaya Digital Integrate. All Rights Reserved.
             </div>
         </footer>
-    </div>
-
-    <div id="admin-portal" class="fixed inset-0 bg-navy-dark/90 z-[10001] hidden flex items-center justify-center p-6">
-        <div class="bg-white w-full max-w-md rounded-2xl p-8 shadow-2xl">
-            <h3 class="text-2xl font-bold text-navy-dark mb-6 text-center">Login Administrator</h3>
-            <div class="space-y-4">
-                <input type="text" id="user" placeholder="Username" class="w-full p-3 border rounded-lg outline-none focus:ring-2 focus:ring-accent-orange">
-                <input type="password" id="pass" placeholder="Password" class="w-full p-3 border rounded-lg outline-none focus:ring-2 focus:ring-accent-orange">
-                <button onclick="handleLogin()" class="w-full bg-accent-orange text-white py-3 rounded-lg font-bold hover:bg-orange-600 transition">Masuk</button>
-                <button onclick="toggleAdminPanel()" class="w-full text-gray-400 text-sm">Batal</button>
-            </div>
-        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 
     <script>
-        // Inisialisasi Fancybox
         Fancybox.bind("[data-fancybox]", {});
 
-        // Data Layanan
         const servicesData = [
-            { title: "Manajemen Database", description: "Sistem pengelolaan data yang aman, terintegrasi, dan mudah diakses.", icon: "📁" },
-            { title: "Web Application", description: "Pengembangan aplikasi berbasis web yang responsif dan custom.", icon: "🌐" },
-            { title: "Sistem Informasi", description: "Solusi informasi manajemen untuk monitoring data real-time.", icon: "📊" },
-            { title: "Digital Signage", description: "Layanan konten visual digital terintegrasi untuk kebutuhan promosi.", icon: "📺" }
+            { title: "Manajemen Database", description: "Sistem pengelolaan data yang aman dan terintegrasi.", icon: "📁" },
+            { title: "Web Application", description: "Pengembangan aplikasi web responsif dan custom.", icon: "🌐" },
+            { title: "Sistem Informasi", description: "Solusi monitoring data real-time yang akurat.", icon: "📊" },
+            { title: "Digital Signage", description: "Konten visual digital untuk kebutuhan promosi.", icon: "📺" }
         ];
 
         function renderServices() {
@@ -334,10 +324,10 @@
             container.innerHTML = ""; 
             servicesData.forEach(service => {
                 const card = `
-                    <div class="bg-white rounded-2xl shadow-sm p-6 border hover:border-accent-orange hover:shadow-md transition duration-300 group">
-                        <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">${service.icon}</div>
-                        <h3 class="text-xl font-bold mb-2 text-navy-dark">${service.title}</h3>
-                        <p class="text-gray-600 text-sm leading-relaxed">${service.description}</p>
+                    <div class="bg-white rounded-2xl shadow-sm p-6 border hover:border-accent-orange transition group">
+                        <div class="text-3xl mb-4 group-hover:scale-110 transition-transform">${service.icon}</div>
+                        <h3 class="text-lg font-bold mb-2 text-navy-dark">${service.title}</h3>
+                        <p class="text-gray-600 text-xs leading-relaxed">${service.description}</p>
                     </div>`;
                 container.innerHTML += card;
             });
@@ -346,74 +336,45 @@
         function setFooterRating(n) {
             const stars = document.querySelectorAll('.star-footer');
             const status = document.getElementById('rating-status');
-            stars.forEach((s, index) => {
-                if(index < n) {
-                    s.classList.add('text-accent-orange');
-                    s.classList.remove('text-gray-500');
-                } else {
-                    s.classList.remove('text-accent-orange');
-                    s.classList.add('text-gray-500');
-                }
+            stars.forEach((s, i) => {
+                s.style.color = (i < n) ? '#ff8c00' : '#6b7280';
             });
-            if (status) {
-                status.innerText = "Terima kasih atas rating " + n + " bintang Anda!";
-                status.classList.remove('text-gray-400');
-                status.classList.add('text-white');
-            }
+            if (status) status.innerText = "Terima kasih atas rating " + n + " bintang!";
         }
 
-        function toggleAdminPanel() {
-            const panel = document.getElementById('admin-portal');
-            panel.classList.toggle('hidden');
-        }
-
-        // Logic Loader & Startup
+        // Logic Startup 5 Detik Berfungsi
         window.addEventListener('load', () => {
             const screen = document.getElementById('loading-screen');
             const main = document.getElementById('main-content');
             const fill = document.getElementById('loader-fill');
             const welcome = document.getElementById('welcome-msg');
             
-            const urlParams = new URLSearchParams(window.location.search);
-            const skipIntro = urlParams.get('skipIntro');
-            const hasSeenIntro = sessionStorage.getItem('hasSeenIntro');
+            // Mulai progress bar tepat setelah window load
+            setTimeout(() => { 
+                fill.style.width = '100%';
+                welcome.style.opacity = '1';
+                welcome.style.transform = 'translateY(0)';
+            }, 100);
 
-            const startAnimations = () => {
-                renderServices();
-                // Inisialisasi Swiper setelah konten muncul
-                new Swiper(".mySwiper", {
-                    navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-                    autoplay: { delay: 3000 },
-                    loop: true
-                });
-
-                main.style.opacity = '1';
-                document.getElementById('fade-text-1')?.classList.add('fade-in-visible');
-                setTimeout(() => document.getElementById('fade-text-2')?.classList.add('fade-in-visible'), 400);
-                setTimeout(() => document.getElementById('fade-btns')?.classList.add('fade-in-visible'), 800);
-                setTimeout(() => document.getElementById('laptop-mockup')?.classList.add('laptop-visible'), 1000);
-            };
-
-            if (skipIntro === 'true' || hasSeenIntro === 'true') {
-                screen.style.display = 'none';
-                startAnimations();
-            } else {
-                setTimeout(() => { 
-                    fill.style.width = '100%';
-                    welcome.style.opacity = '1';
-                    welcome.style.transform = 'translateY(0)';
-                }, 100);
-
+            // Transisi ke konten tepat setelah 5 detik bar berjalan
+            setTimeout(() => {
+                screen.style.opacity = '0';
                 setTimeout(() => {
-                    screen.style.opacity = '0';
-                    sessionStorage.setItem('hasSeenIntro', 'true');
-                    setTimeout(() => {
-                        screen.style.display = 'none';
-                        startAnimations();
-                    }, 1000);
-                }, 4500);
-            }
+                    screen.style.display = 'none';
+                    renderServices();
+                    new Swiper(".mySwiper", {
+                        navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+                        autoplay: { delay: 3000 },
+                        loop: true
+                    });
+                    main.style.opacity = '1';
+                    document.getElementById('fade-text-1')?.classList.add('fade-in-visible');
+                    setTimeout(() => document.getElementById('fade-text-2')?.classList.add('fade-in-visible'), 400);
+                    setTimeout(() => document.getElementById('fade-btns')?.classList.add('fade-in-visible'), 800);
+                    setTimeout(() => document.getElementById('laptop-mockup')?.classList.add('laptop-visible'), 1000);
+                }, 1000); // Durasi fade-out loading screen
+            }, 5000); 
         });
     </script>
 </body>
-</html>```
+</html>
