@@ -85,12 +85,27 @@
         transition: opacity 1s ease;
     }
 
-    .loader-logo {
-        width: 280px;
-        height: auto;
-        margin-bottom: 30px;
-        filter: drop-shadow(1.5px 1.5px 0 white) 
-                drop-shadow(-1.5px -1.5px 0 white);
+   /* Update pada bagian CSS Anda */
+
+.loader-logo {
+    width: 280px;
+    height: auto;
+    margin-bottom: 30px;
+    /* Outline putih yang lebih halus dan merata ke segala sisi */
+    filter: drop-shadow(1px 0 0 white) 
+            drop-shadow(-1px 0 0 white) 
+            drop-shadow(0 1px 0 white) 
+            drop-shadow(0 -1px 0 white)
+            drop-shadow(0.5px 0.5px 0.5px rgba(255,255,255,0.5));
+}
+
+.logo-outline {
+    /* Sama untuk logo di navigasi agar konsisten */
+    filter: drop-shadow(1px 0 0 white) 
+            drop-shadow(-1px 0 0 white) 
+            drop-shadow(0 1px 0 white) 
+            drop-shadow(0 -1px 0 white);
+}
     }
 
     .loader-bar-container {
