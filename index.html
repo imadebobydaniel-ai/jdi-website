@@ -66,13 +66,7 @@
     }
     .swiper-button-next:after, .swiper-button-prev:after { font-size: 18px !important; font-weight: bold; }
 
-    .logo-outline {
-        filter: drop-shadow(1px 1px 0 white) 
-                drop-shadow(-1px -1px 0 white) 
-                drop-shadow(1px -1px 0 white) 
-                drop-shadow(-1px 1px 0 white);
-    }
-
+    /* CSS Loading Screen & Logo Outline Tetap Dipertahankan */
     #loading-screen {
         position: fixed;
         inset: 0;
@@ -85,27 +79,22 @@
         transition: opacity 1s ease;
     }
 
-   /* Update pada bagian CSS Anda */
+    .loader-logo {
+        width: 280px;
+        height: auto;
+        margin-bottom: 30px;
+        filter: drop-shadow(1px 0 0 white) 
+                drop-shadow(-1px 0 0 white) 
+                drop-shadow(0 1px 0 white) 
+                drop-shadow(0 -1px 0 white)
+                drop-shadow(0.5px 0.5px 0.5px rgba(255,255,255,0.5));
+    }
 
-.loader-logo {
-    width: 280px;
-    height: auto;
-    margin-bottom: 30px;
-    /* Outline putih yang lebih halus dan merata ke segala sisi */
-    filter: drop-shadow(1px 0 0 white) 
-            drop-shadow(-1px 0 0 white) 
-            drop-shadow(0 1px 0 white) 
-            drop-shadow(0 -1px 0 white)
-            drop-shadow(0.5px 0.5px 0.5px rgba(255,255,255,0.5));
-}
-
-.logo-outline {
-    /* Sama untuk logo di navigasi agar konsisten */
-    filter: drop-shadow(1px 0 0 white) 
-            drop-shadow(-1px 0 0 white) 
-            drop-shadow(0 1px 0 white) 
-            drop-shadow(0 -1px 0 white);
-}
+    .logo-outline {
+        filter: drop-shadow(1px 0 0 white) 
+                drop-shadow(-1px 0 0 white) 
+                drop-shadow(0 1px 0 white) 
+                drop-shadow(0 -1px 0 white);
     }
 
     .loader-bar-container {
