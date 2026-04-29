@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Jaya Digital Integrate - Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -10,7 +10,16 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
     
     <style>
-    body { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; overflow-x: hidden; }
+    /* Tambahan overflow-x: hidden untuk mencegah scroll kanan-kiri */
+    html, body { 
+        font-family: 'Poppins', sans-serif; 
+        scroll-behavior: smooth; 
+        overflow-x: hidden; 
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    
     .bg-navy-dark { background-color: #0a1d37; }
     .text-navy-dark { color: #0a1d37; }
     .text-accent-orange { color: #ff8c00; }
@@ -30,6 +39,7 @@
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
+        overflow: hidden;
     }
 
     .hero-section h1, .hero-section p { color: #ffffff; z-index: 2; }
@@ -113,7 +123,7 @@
         padding: 0 20px;
     }
 
-    #main-content { opacity: 0; transition: opacity 1.2s ease; }
+    #main-content { opacity: 0; transition: opacity 1.2s ease; overflow-x: hidden; width: 100%; }
 
     .fade-init {
         opacity: 0;
@@ -128,6 +138,7 @@
         opacity: 0;
         transform: scale(0.8) rotateX(15deg);
         transition: all 1.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+        max-width: 100%;
     }
 
     .laptop-visible { opacity: 1; transform: scale(1) rotateX(0deg); }
@@ -154,7 +165,6 @@
         z-index: 2;
     }
 
-    /* Sprinkles Animation for Rating */
     @keyframes sprinkle {
         0% { transform: scale(0); opacity: 1; }
         100% { transform: scale(1.5); opacity: 0; }
@@ -169,7 +179,6 @@
         animation: sprinkle 0.6s ease-out forwards;
     }
 
-    /* Mobile Responsive Fixes */
     @media (max-width: 768px) {
         .hero-section h1 { font-size: 2rem !important; line-height: 1.2; }
         .hero-section p { font-size: 0.875rem !important; }
