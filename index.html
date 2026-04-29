@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jaya Digital Integrate - Portfolio</title>
@@ -10,114 +11,134 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
     
     <style>
-        body { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; overflow-x: hidden; }
-        .bg-navy-dark { background-color: #0a1d37; }
-        .text-navy-dark { color: #0a1d37; }
-        .text-accent-orange { color: #ff8c00; }
-        .bg-accent-orange { background-color: #ff8c00; }
-        .star { cursor: pointer; color: #d1d5db; transition: color 0.2s; }
-        .star.active { color: #ff8c00; }
-        
-        .feature-card {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); 
-            border-color: #ff8c00;
-        }
+    body { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; overflow-x: hidden; }
+    .bg-navy-dark { background-color: #0a1d37; }
+    .text-navy-dark { color: #0a1d37; }
+    .text-accent-orange { color: #ff8c00; }
+    .bg-accent-orange { background-color: #ff8c00; }
+    .star { cursor: pointer; color: #d1d5db; transition: color 0.2s; }
+    .star.active { color: #ff8c00; }
+    
+    /* Implementasi Background Hero Section */
+    .hero-section {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        /* Menggunakan warna navy dark sistem sebagai layer gradasi */
+        background: linear-gradient(to right, rgba(10, 29, 55, 0.95), rgba(10, 29, 55, 0.3)), 
+                    url('jembatan-merah.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
 
-        .swiper { width: 100%; max-height: 350px; border-radius: 0.75rem; }
-        .swiper-slide img { cursor: zoom-in; width: 100%; height: 350px; object-fit: cover; }
+    /* Penyesuaian Kontras Teks di dalam Hero */
+    .hero-section h1, .hero-section p {
+        color: #ffffff;
+        z-index: 2;
+    }
+    
+    .feature-card {
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-12px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); 
+        border-color: #ff8c00;
+    }
 
-        .swiper-button-next, .swiper-button-prev {
-            color: #ff8c00 !important;
-            background: white;
-            width: 40px !important;
-            height: 40px !important;
-            border-radius: 50%;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .swiper-button-next:after, .swiper-button-prev:after { font-size: 18px !important; font-weight: bold; }
+    .swiper { width: 100%; max-height: 350px; border-radius: 0.75rem; }
+    .swiper-slide img { cursor: zoom-in; width: 100%; height: 350px; object-fit: cover; }
 
-        .logo-outline {
-            filter: drop-shadow(1px 1px 0 white) 
-                    drop-shadow(-1px -1px 0 white) 
-                    drop-shadow(1px -1px 0 white) 
-                    drop-shadow(-1px 1px 0 white);
-        }
+    .swiper-button-next, .swiper-button-prev {
+        color: #ff8c00 !important;
+        background: white;
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 50%;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .swiper-button-next:after, .swiper-button-prev:after { font-size: 18px !important; font-weight: bold; }
 
-        #loading-screen {
-            position: fixed;
-            inset: 0;
-            background: #0a1d37;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 99999;
-            transition: opacity 1s ease;
-        }
+    .logo-outline {
+        filter: drop-shadow(1px 1px 0 white) 
+                drop-shadow(-1px -1px 0 white) 
+                drop-shadow(1px -1px 0 white) 
+                drop-shadow(-1px 1px 0 white);
+    }
 
-        .loader-logo {
-            width: 320px;
-            height: auto;
-            margin-bottom: 30px;
-            filter: drop-shadow(1.5px 1.5px 0 white) 
-                    drop-shadow(-1.5px -1.5px 0 white) 
-                    drop-shadow(1.5px -1.5px 0 white) 
-                    drop-shadow(-1.5px 1.5px 0 white);
-        }
+    #loading-screen {
+        position: fixed;
+        inset: 0;
+        background: #0a1d37;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 99999;
+        transition: opacity 1s ease;
+    }
 
-        .loader-bar-container {
-            width: 300px;
-            height: 6px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 20px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
+    .loader-logo {
+        width: 320px;
+        height: auto;
+        margin-bottom: 30px;
+        filter: drop-shadow(1.5px 1.5px 0 white) 
+                drop-shadow(-1.5px -1.5px 0 white) 
+                drop-shadow(1.5px -1.5px 0 white) 
+                drop-shadow(-1.5px 1.5px 0 white);
+    }
 
-        .loader-fill {
-            width: 0%;
-            height: 100%;
-            background: #ff8c00;
-            transition: width 4s linear;
-        }
+    .loader-bar-container {
+        width: 300px;
+        height: 6px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 20px;
+        overflow: hidden;
+        margin-bottom: 20px;
+    }
 
-        .welcome-text {
-            color: white;
-            font-size: 0.9rem;
-            font-weight: 600;
-            letter-spacing: 1.5px;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 1s ease 0.5s;
-            text-align: center;
-        }
+    .loader-fill {
+        width: 0%;
+        height: 100%;
+        background: #ff8c00;
+        transition: width 4s linear;
+    }
 
-        #main-content { opacity: 0; transition: opacity 1.2s ease; }
+    .welcome-text {
+        color: white;
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 1s ease 0.5s;
+        text-align: center;
+    }
 
-        .fade-init {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 1.5s ease, transform 1.5s ease;
-        }
-        
-        .fade-in-visible { opacity: 1; transform: translateY(0); }
+    #main-content { opacity: 0; transition: opacity 1.2s ease; }
 
-        .laptop-mockup {
-            perspective: 1000px;
-            opacity: 0;
-            transform: scale(0.8) rotateX(15deg);
-            transition: all 1.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
+    .fade-init {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 1.5s ease, transform 1.5s ease;
+    }
+    
+    .fade-in-visible { opacity: 1; transform: translateY(0); }
 
-        .laptop-visible { opacity: 1; transform: scale(1) rotateX(0deg); }
-    </style>
-</head>
+    .laptop-mockup {
+        perspective: 1000px;
+        opacity: 0;
+        transform: scale(0.8) rotateX(15deg);
+        transition: all 1.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .laptop-visible { opacity: 1; transform: scale(1) rotateX(0deg); }
+</style></head>
 <body class="bg-gray-50">
 
     <div id="loading-screen">
