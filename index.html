@@ -66,7 +66,6 @@
     }
     .swiper-button-next:after, .swiper-button-prev:after { font-size: 18px !important; font-weight: bold; }
 
-    /* CSS Loading Screen & Logo Outline Tetap Dipertahankan */
     #loading-screen {
         position: fixed;
         inset: 0;
@@ -243,7 +242,7 @@
                         Kami menghadirkan solusi teknologi mutakhir untuk kebutuhan administrasi, database, dan sistem informasi manajemen di Jayapura dan sekitarnya.
                     </p>
                     <div id="fade-btns" class="flex flex-col sm:flex-row justify-center md:justify-start gap-4 fade-init">
-                        <a href="#" class="bg-accent-orange text-white px-8 py-3 rounded-md font-bold hover:bg-orange-600 transition shadow-lg w-full sm:w-auto text-center">Mulai Proyek</a>
+                        <a href="javascript:void(0)" onclick="toggleProjectModal()" class="bg-accent-orange text-white px-8 py-3 rounded-md font-bold hover:bg-orange-600 transition shadow-lg w-full sm:w-auto text-center">Mulai Proyek</a>
                         <a href="layanan-kami.html" class="border-2 border-white text-white px-8 py-3 rounded-md font-bold hover:bg-white hover:text-navy-dark transition w-full sm:w-auto text-center">Layanan Kami</a>
                     </div>
                 </div>
@@ -308,6 +307,91 @@
             </div>
         </section>
 
+        <div id="project-modal" class="fixed inset-0 bg-navy-dark/90 z-[10002] hidden flex items-center justify-center p-4 overflow-y-auto">
+            <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl my-auto">
+                <div class="p-6 border-b flex justify-between items-center bg-gray-50 rounded-t-2xl">
+                    <h3 class="text-2xl font-bold text-navy-dark">Konsultasi Proyek Baru</h3>
+                    <button onclick="toggleProjectModal()" class="text-gray-400 hover:text-red-500 text-2xl">×</button>
+                </div>
+
+                <form id="proyekForm" class="p-6 space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Nama Lengkap</label>
+                            <input type="text" name="nama" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="Contoh: John Doe">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Nomor HP / WA</label>
+                            <input type="tel" name="phone" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="0812...">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Email</label>
+                            <input type="email" name="email" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="nama@email.com">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Alamat</label>
+                            <input type="text" name="alamat" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="Kota Jayapura...">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Jenis Usaha</label>
+                            <select name="jenis_usaha" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none bg-white">
+                                <option>UMKM</option>
+                                <option>Usaha Mandiri</option>
+                                <option>Usaha Sedang</option>
+                                <option>Usaha Skala Besar</option>
+                                <option>BUMN</option>
+                                <option>Pemerintahan</option>
+                                <option>Pendidikan</option>
+                                <option>Yayasan</option>
+                                <option>NGO / LSM</option>
+                                <option>Lainnya</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Pilih Layanan</label>
+                            <select name="layanan" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none bg-white">
+                                <option>Website</option>
+                                <option>Aplikasi Android</option>
+                                <option>Sistem Manajemen</option>
+                                <option>POS (Point of Sales)</option>
+                                <option>Absen Online</option>
+                                <option>Digital Signage</option>
+                                <option>Warehouse System</option>
+                                <option>Tracking System</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Jelaskan Singkat Usaha Anda</label>
+                        <input type="text" name="deskripsi_usaha" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="Bidang usaha anda...">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Detail Tujuan Proyek</label>
+                        <textarea name="tujuan_proyek" rows="3" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="Apa yang ingin anda capai dengan sistem ini?"></textarea>
+                    </div>
+
+                    <div class="flex gap-3 pt-4">
+                        <button type="button" onclick="kirimProyek()" class="flex-1 bg-accent-orange text-white py-3 rounded-lg font-bold hover:bg-orange-600 transition shadow-lg">KIRIM PERMINTAAN</button>
+                        <button type="button" onclick="toggleProjectModal()" class="flex-1 bg-gray-200 text-gray-700 py-3 rounded-lg font-bold hover:bg-gray-300 transition">BATAL</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="success-toast" class="fixed top-10 left-1/2 -translate-x-1/2 z-[10003] hidden">
+            <div class="bg-green-600 text-white px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-4">
+                <span class="text-2xl">✅</span>
+                <div>
+                    <p class="font-bold">Permintaan Anda telah dikirim!</p>
+                    <p class="text-xs opacity-90">Kami akan menghubungi Anda segera melalui WhatsApp/Email.</p>
+                </div>
+            </div>
+        </div>
         <footer id="kontak" class="footer-with-bg pt-16 pb-8">
             <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-12 border-b border-white/10 pb-12">
                 <div class="space-y-6">
@@ -400,6 +484,37 @@
         menu.classList.toggle('hidden');
     }
 
+    // FUNGSI MODAL PROYEK & PENGIRIMAN
+    function toggleProjectModal() {
+        const modal = document.getElementById('project-modal');
+        modal.classList.toggle('hidden');
+    }
+
+    function kirimProyek() {
+        const form = document.getElementById('proyekForm');
+        const formData = new FormData(form);
+        const dataProyek = Object.fromEntries(formData.entries());
+
+        // Simpan ke localStorage untuk Portal Projek
+        let projects = JSON.parse(localStorage.getItem('portal_projek') || '[]');
+        projects.push({
+            id: Date.now(),
+            date: new Date().toLocaleString(),
+            ...dataProyek
+        });
+        localStorage.setItem('portal_projek', JSON.stringify(projects));
+
+        // Notifikasi Sukses
+        const toast = document.getElementById('success-toast');
+        toast.classList.remove('hidden');
+        
+        form.reset();
+        setTimeout(() => {
+            toast.classList.add('hidden');
+            toggleProjectModal();
+        }, 3000);
+    }
+
     function setFooterRating(n, event) {
         const stars = document.querySelectorAll('.star-footer');
         const status = document.getElementById('rating-status');
@@ -435,7 +550,6 @@
         document.getElementById('admin-portal').classList.toggle('hidden');
     }
 
-    // LOGIKA STARTUP & SESSION CHECK
     window.addEventListener('load', () => {
         const screen = document.getElementById('loading-screen');
         const main = document.getElementById('main-content');
@@ -445,12 +559,10 @@
         const hasSeenIntro = sessionStorage.getItem('hasSeenIntro');
 
         if (hasSeenIntro) {
-            // JIKA SUDAH PERNAH LIHAT: Langsung Tampilkan Konten
             if (screen) screen.style.display = 'none';
             if (main) {
                 main.style.opacity = '1';
                 renderServices();
-                // Inisialisasi Swiper tanpa delay
                 if (typeof Swiper !== 'undefined') {
                     new Swiper(".mySwiper", {
                         navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
@@ -458,16 +570,13 @@
                         loop: true
                     });
                 }
-                // Aktifkan semua animasi fade-in secara instan
                 document.getElementById('fade-text-1')?.classList.add('fade-in-visible');
                 document.getElementById('fade-text-2')?.classList.add('fade-in-visible');
                 document.getElementById('fade-btns')?.classList.add('fade-in-visible');
                 document.getElementById('laptop-mockup')?.classList.add('laptop-visible');
             }
         } else {
-            // JIKA BELUM: Jalankan animasi startup normal
             welcome.style.fontSize = window.innerWidth < 768 ? '0.7rem' : '0.8rem';
-
             setTimeout(() => { 
                 fill.style.width = '100%';
                 welcome.style.opacity = '1';
@@ -476,7 +585,7 @@
 
             setTimeout(() => {
                 screen.style.opacity = '0';
-                sessionStorage.setItem('hasSeenIntro', 'true'); // Tandai sudah melihat
+                sessionStorage.setItem('hasSeenIntro', 'true');
                 
                 setTimeout(() => {
                     screen.style.display = 'none';
