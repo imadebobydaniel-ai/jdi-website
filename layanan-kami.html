@@ -57,25 +57,11 @@
                 <div class="w-full h-40 skeleton rounded-xl mb-4"></div>
                 <div class="h-6 skeleton w-3/4 mb-2"></div>
                 <div class="h-4 skeleton w-full mb-1"></div>
-                <div class="h-4 skeleton w-5/6"></div>
             </div>
             <div class="bg-white rounded-2xl shadow-sm p-6 border animate-pulse">
                 <div class="w-full h-40 skeleton rounded-xl mb-4"></div>
                 <div class="h-6 skeleton w-3/4 mb-2"></div>
                 <div class="h-4 skeleton w-full mb-1"></div>
-                <div class="h-4 skeleton w-5/6"></div>
-            </div>
-            <div class="bg-white rounded-2xl shadow-sm p-6 border animate-pulse">
-                <div class="w-full h-40 skeleton rounded-xl mb-4"></div>
-                <div class="h-6 skeleton w-3/4 mb-2"></div>
-                <div class="h-4 skeleton w-full mb-1"></div>
-                <div class="h-4 skeleton w-5/6"></div>
-            </div>
-            <div class="bg-white rounded-2xl shadow-sm p-6 border animate-pulse">
-                <div class="w-full h-40 skeleton rounded-xl mb-4"></div>
-                <div class="h-6 skeleton w-3/4 mb-2"></div>
-                <div class="h-4 skeleton w-full mb-1"></div>
-                <div class="h-4 skeleton w-5/6"></div>
             </div>
         </div>
     </section>
@@ -95,8 +81,52 @@
     </footer>
 
     <script>
-        // Logika pengambilan data API akan diletakkan di sini
-        console.log("Halaman Layanan Kami siap menerima integrasi API.");
+        // Data Layanan Utama JDI
+        const servicesData = [
+            {
+                title: "Manajemen Database",
+                description: "Sistem pengelolaan data yang aman, terintegrasi, dan mudah diakses untuk efisiensi administrasi.",
+                icon: "📁"
+            },
+            {
+                title: "Web Application",
+                description: "Pengembangan aplikasi berbasis web yang responsif dan custom sesuai kebutuhan bisnis Anda.",
+                icon: "🌐"
+            },
+            {
+                title: "Sistem Informasi",
+                description: "Solusi informasi manajemen untuk monitoring dan pelaporan data secara real-time.",
+                icon: "📊"
+            },
+            {
+                title: "Digital Signage",
+                description: "Layanan konten visual digital terintegrasi untuk kebutuhan promosi dan informasi publik.",
+                icon: "📺"
+            }
+        ];
+
+        function renderServices() {
+            const container = document.getElementById('services-container');
+            
+            // Simulasi sedikit waktu loading agar transisi halus
+            setTimeout(() => {
+                container.innerHTML = ""; // Bersihkan skeleton
+                
+                servicesData.forEach(service => {
+                    const card = `
+                        <div class="bg-white rounded-2xl shadow-sm p-6 border hover:border-accent-orange hover:shadow-md transition duration-300 group">
+                            <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">${service.icon}</div>
+                            <h3 class="text-xl font-bold mb-2 text-navy-dark">${service.title}</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">${service.description}</p>
+                        </div>
+                    `;
+                    container.innerHTML += card;
+                });
+            }, 800);
+        }
+
+        // Jalankan fungsi saat dokumen siap
+        document.addEventListener('DOMContentLoaded', renderServices);
     </script>
 </body>
 </html>
