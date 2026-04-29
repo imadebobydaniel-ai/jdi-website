@@ -132,55 +132,48 @@
 
     .laptop-visible { opacity: 1; transform: scale(1) rotateX(0deg); }
 
-    /* PERBAIKAN: Implementasi Gambar Latar Belakang Footer */
     .footer-with-bg {
         position: relative;
-        background-image: url('jyp.png'); /* Memanggil gambar jyp.png */
+        background-image: url('jyp.png');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        color: white; /* Memastikan semua teks di footer berwarna putih agar kontras */
+        color: white;
     }
 
-    /* PERBAIKAN: Overlay gelap agar teks footer tetap mudah dibaca di atas gambar */
     .footer-with-bg::before {
         content: '';
         position: absolute;
         inset: 0;
-        background-color: rgba(10, 29, 55, 0.85); /* Overlay navy gelap */
+        background-color: rgba(10, 29, 55, 0.85);
         z-index: 1;
     }
 
-    /* Memastikan konten footer berada di atas overlay */
     .footer-with-bg > div {
         position: relative;
         z-index: 2;
     }
 
-    /* Penyesuaian warna teks footer agar kontras */
-    .footer-with-bg h3,
-    .footer-with-bg p,
-    .footer-with-bg a,
-    .footer-with-bg div,
-    .footer-with-bg span {
-        color: rgba(255, 255, 255, 0.9) !important;
+    /* Sprinkles Animation for Rating */
+    @keyframes sprinkle {
+        0% { transform: scale(0); opacity: 1; }
+        100% { transform: scale(1.5); opacity: 0; }
+    }
+    .sprinkle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: #ff8c00;
+        border-radius: 50%;
+        pointer-events: none;
+        animation: sprinkle 0.6s ease-out forwards;
     }
 
-    .footer-with-bg .text-gray-400 {
-        color: rgba(255, 255, 255, 0.7) !important;
-    }
-
-    .footer-with-bg .text-gray-500 {
-        color: rgba(255, 255, 255, 0.6) !important;
-    }
-
-    .footer-with-bg .text-accent-orange {
-        color: #ff8c00 !important;
-    }
-
-    /* Mengatur border agar terlihat di atas background gambar */
-    .footer-with-bg .border-white\/10 {
-        border-color: rgba(255, 255, 255, 0.15);
+    /* Mobile Responsive Fixes */
+    @media (max-width: 768px) {
+        .hero-section h1 { font-size: 2rem !important; line-height: 1.2; }
+        .hero-section p { font-size: 0.875rem !important; }
+        .mobile-menu-active { display: block !important; }
     }
 </style>
 </head>
@@ -199,7 +192,7 @@
             <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
                 <div class="flex items-center gap-8">
                     <img src="logojdi.png" alt="Logo Jaya Digital Integrate" class="h-10 md:h-16 w-auto logo-outline">
-                    <div class="hidden md:flex space-x-8 font-medium text-gray-700">
+                    <div id="nav-links" class="hidden md:flex space-x-8 font-medium text-gray-700">
                         <a href="profile.html" class="hover:text-accent-orange transition">Profile</a>
                         <a href="index.html?skipIntro=true" class="hover:text-accent-orange">Beranda</a>
                         <a href="layanan-kami.html" class="hover:text-accent-orange transition">Layanan Kami</a>
@@ -212,12 +205,19 @@
                         Konsultasi Gratis
                     </a>
                     <button onclick="toggleAdminPanel()" class="text-xs font-bold text-navy-dark/40 hover:text-accent-orange border-l pl-4 hidden md:block uppercase tracking-wider">Login Admin</button>
-                    <div class="md:hidden text-navy-dark">
+                    <div class="md:hidden text-navy-dark cursor-pointer" onclick="toggleMobileMenu()">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                         </svg>
                     </div>
                 </div>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden bg-white border-t px-6 py-4 space-y-4">
+                <a href="profile.html" class="block font-medium text-gray-700">Profile</a>
+                <a href="index.html?skipIntro=true" class="block font-medium text-gray-700">Beranda</a>
+                <a href="layanan-kami.html" class="block font-medium text-gray-700">Layanan Kami</a>
+                <a href="#kontak" class="block font-medium text-gray-700">Kontak</a>
+                <button onclick="toggleAdminPanel()" class="block text-xs font-bold uppercase text-navy-dark/60">Login Admin</button>
             </div>
         </nav>
 
@@ -314,21 +314,21 @@
                 <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
                     <div class="flex flex-col">
                         <h3 class="text-xl font-bold mb-6 border-l-4 border-accent-orange pl-4">Lokasi Kami</h3>
-                        <div class="rounded-xl overflow-hidden border border-white/10 shadow-2xl flex-grow h-64 md:h-full min-h-[250px]">
-                            <iframe src="https://maps.google.com/maps?q=Tanah%20Hitam%20abe%20Pantai,%20Awiyo,%20Abepura,%20Kota%20Jayapura,%20Papua&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                        <div class="rounded-xl overflow-hidden border border-white/10 shadow-2xl flex-grow h-64 md:h-full">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15945.727503719047!2d140.7183061!3d-2.593674!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x686cf5095459344d%3A0xc34027798305c48b!2sJaya%20Digital%20Integrate!5e0!3m2!1sid!2sid!4v1714394500000!5m2!1sid!2sid" 
                                 width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                         </div>
                     </div>
 
                     <div class="flex flex-col">
-                        <div class="flex flex-col justify-center items-center bg-white/5 rounded-2xl p-6 border border-white/10 flex-grow shadow-2xl h-64 md:h-full min-h-[250px]">
+                        <div class="flex flex-col justify-center items-center bg-white/5 rounded-2xl p-4 border border-white/10 flex-grow shadow-2xl h-64 md:h-full relative overflow-hidden">
                             <h3 class="text-lg font-bold mb-4 text-center">Beri Rating Layanan Kami</h3>
-                            <div class="flex gap-2 mb-4" id="footer-rating-stars">
-                                <span class="star-footer text-4xl cursor-pointer transition" onclick="setFooterRating(1)">★</span>
-                                <span class="star-footer text-4xl cursor-pointer transition" onclick="setFooterRating(2)">★</span>
-                                <span class="star-footer text-4xl cursor-pointer transition" onclick="setFooterRating(3)">★</span>
-                                <span class="star-footer text-4xl cursor-pointer transition" onclick="setFooterRating(4)">★</span>
-                                <span class="star-footer text-4xl cursor-pointer transition" onclick="setFooterRating(5)">★</span>
+                            <div class="flex gap-2 mb-4 relative z-10" id="footer-rating-stars">
+                                <span class="star-footer text-4xl cursor-pointer transition relative" onclick="setFooterRating(1, event)">★</span>
+                                <span class="star-footer text-4xl cursor-pointer transition relative" onclick="setFooterRating(2, event)">★</span>
+                                <span class="star-footer text-4xl cursor-pointer transition relative" onclick="setFooterRating(3, event)">★</span>
+                                <span class="star-footer text-4xl cursor-pointer transition relative" onclick="setFooterRating(4, event)">★</span>
+                                <span class="star-footer text-4xl cursor-pointer transition relative" onclick="setFooterRating(5, event)">★</span>
                             </div>
                             <p id="rating-status" class="text-xs uppercase tracking-widest text-gray-400 font-bold">Klik untuk menilai</p>
                         </div>
@@ -382,17 +382,44 @@
             });
         }
 
-        // PERBAIKAN: Fungsi rating agar warna bintang sesuai instruksi visual sebelumnya (abu-abu -> orange)
-        function setFooterRating(n) {
+        // Perbaikan: Fungsi Toggle Menu Mobile
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Perbaikan: Fungsi Rating dengan Sprinkle Effect & Warna Orange Isi
+        function setFooterRating(n, event) {
             const stars = document.querySelectorAll('.star-footer');
             const status = document.getElementById('rating-status');
+            
+            // Mengubah warna bintang
             stars.forEach((s, i) => {
-                s.style.color = (i < n) ? '#ff8c00' : '#d1d5db'; // Orange jika dipilih, abu-abu jika tidak
+                s.style.color = (i < n) ? '#ff8c00' : '#d1d5db';
             });
+
+            // Membuat efek sprinkle
+            const rect = event.target.getBoundingClientRect();
+            for (let i = 0; i < 8; i++) {
+                const sprinkle = document.createElement('div');
+                sprinkle.className = 'sprinkle';
+                sprinkle.style.left = (event.clientX - rect.left + (Math.random() * 20 - 10)) + 'px';
+                sprinkle.style.top = (event.clientY - rect.top + (Math.random() * 20 - 10)) + 'px';
+                
+                // Random arah sprinkle
+                const angle = Math.random() * Math.PI * 2;
+                const dist = 30 + Math.random() * 30;
+                sprinkle.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
+                sprinkle.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
+                
+                event.target.appendChild(sprinkle);
+                setTimeout(() => sprinkle.remove(), 600);
+            }
+
             if (status) {
                 status.innerText = "Terima kasih atas rating " + n + " bintang Anda!";
                 status.classList.remove('text-gray-400');
-                status.classList.add('text-white');
+                status.classList.add('text-accent-orange');
             }
         }
 
@@ -400,24 +427,20 @@
             document.getElementById('admin-portal').classList.toggle('hidden');
         }
 
-        // Logic Loader 5 Detik Berfungsi & Mobile Friendly
         window.addEventListener('load', () => {
             const screen = document.getElementById('loading-screen');
             const main = document.getElementById('main-content');
             const fill = document.getElementById('loader-fill');
             const welcome = document.getElementById('welcome-msg');
             
-            // Perbaikan CSS in-line untuk memastikan mobile-friendly pada startup
             welcome.style.fontSize = window.innerWidth < 768 ? '0.7rem' : '0.8rem';
 
-            // Mulai progress bar tepat setelah window load
             setTimeout(() => { 
                 fill.style.width = '100%';
                 welcome.style.opacity = '1';
                 welcome.style.transform = 'translateY(0)';
             }, 100);
 
-            // Transisi ke konten tepat setelah 5 detik bar berjalan
             setTimeout(() => {
                 screen.style.opacity = '0';
                 setTimeout(() => {
@@ -433,7 +456,7 @@
                     setTimeout(() => document.getElementById('fade-text-2')?.classList.add('fade-in-visible'), 400);
                     setTimeout(() => document.getElementById('fade-btns')?.classList.add('fade-in-visible'), 800);
                     setTimeout(() => document.getElementById('laptop-mockup')?.classList.add('laptop-visible'), 1000);
-                }, 1000); // Durasi fade-out loading screen
+                }, 1000);
             }, 5000); 
         });
     </script>
