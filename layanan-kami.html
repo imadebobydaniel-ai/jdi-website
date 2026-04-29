@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layanan Kami - Jaya Digital Integrate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+        .bg-navy-dark { background-color: #0a1d37; }
+        .text-accent-orange { color: #ff8c00; }
+        .bg-accent-orange { background-color: #ff8c00; }
+        
+        /* Shimmer loading effect */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-8">
+                <img src="logojdi.png" alt="Logo JDI" class="h-10">
+                <div class="hidden md:flex space-x-8 font-medium text-gray-700">
+                    <a href="profile.html" class="hover:text-accent-orange transition">Profil</a>
+                    <a href="index.html" class="hover:text-accent-orange transition">Beranda</a>
+                    <a href="layanan-kami.html" class="text-accent-orange font-bold">Layanan</a>
+                    <a href="#" class="hover:text-accent-orange transition">Proyek</a>
+                    <a href="#" class="hover:text-accent-orange transition">Kontak</a>
+                </div>
+            </div>
+            <a href="https://wa.me/6281283393576" class="bg-accent-orange text-white px-6 py-2 rounded-full font-bold hover:bg-orange-600 transition">
+                Konsultasi Gratis
+            </a>
+        </div>
+    </nav>
+
+    <header class="bg-navy-dark py-20 text-white text-center">
+        <div class="max-w-4xl mx-auto px-6">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Solusi Teknologi Terintegrasi</h1>
+            <p class="text-gray-300 text-lg">Kami menghadirkan inovasi digital melalui API yang cerdas untuk memajukan bisnis Anda di tanah Papua.</p>
+        </div>
+    </header>
+
+    <section class="max-w-7xl mx-auto px-6 py-16">
+        <div id="services-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="bg-white rounded-2xl shadow-sm p-6 border animate-pulse">
+                <div class="w-full h-40 skeleton rounded-xl mb-4"></div>
+                <div class="h-6 skeleton w-3/4 mb-2"></div>
+                <div class="h-4 skeleton w-full mb-1"></div>
+                <div class="h-4 skeleton w-5/6"></div>
+            </div>
+            <div class="bg-white rounded-2xl shadow-sm p-6 border animate-pulse">
+                <div class="w-full h-40 skeleton rounded-xl mb-4"></div>
+                <div class="h-6 skeleton w-3/4 mb-2"></div>
+                <div class="h-4 skeleton w-full mb-1"></div>
+                <div class="h-4 skeleton w-5/6"></div>
+            </div>
+            <div class="bg-white rounded-2xl shadow-sm p-6 border animate-pulse">
+                <div class="w-full h-40 skeleton rounded-xl mb-4"></div>
+                <div class="h-6 skeleton w-3/4 mb-2"></div>
+                <div class="h-4 skeleton w-full mb-1"></div>
+                <div class="h-4 skeleton w-5/6"></div>
+            </div>
+            <div class="bg-white rounded-2xl shadow-sm p-6 border animate-pulse">
+                <div class="w-full h-40 skeleton rounded-xl mb-4"></div>
+                <div class="h-6 skeleton w-3/4 mb-2"></div>
+                <div class="h-4 skeleton w-full mb-1"></div>
+                <div class="h-4 skeleton w-5/6"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-gray-100 py-16 text-center">
+        <div class="max-w-2xl mx-auto px-6">
+            <h2 class="text-2xl font-bold text-navy-dark mb-4">Siap Bertransformasi Bersama JDI?</h2>
+            <p class="text-gray-600 mb-8">Diskusikan kebutuhan sistem Anda dengan tim ahli kami sekarang juga.</p>
+            <button onclick="window.location.href='index.html#kontak'" class="bg-navy-dark text-white px-8 py-3 rounded-xl font-bold hover:bg-gray-800 transition shadow-lg">
+                Hubungi Kami Sekarang
+            </button>
+        </div>
+    </section>
+
+    <footer class="bg-white border-t py-8 text-center text-sm text-gray-500">
+        <p>&copy; 2026 Jaya Digital Integrate. Membangun Digitalisasi Papua.</p>
+    </footer>
+
+    <script>
+        // Logika pengambilan data API akan diletakkan di sini
+        console.log("Halaman Layanan Kami siap menerima integrasi API.");
+    </script>
+</body>
+</html>
