@@ -266,25 +266,27 @@
             </div>
         </div>
 
-        <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
+        <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+            <div class="flex flex-col">
                 <h3 class="text-xl font-bold mb-6 border-l-4 border-accent-orange pl-4">Lokasi Kami</h3>
-                <div class="rounded-xl overflow-hidden h-64 border border-white/10 shadow-2xl">
+                <div class="rounded-xl overflow-hidden border border-white/10 shadow-2xl flex-grow h-64 md:h-full min-h-[250px]">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15949.123456789!2d140.6!3d-2.6!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMsKwMzYnMDAuMCJTIDE0MMKwMzYnMDAuMCJF!5e0!3m2!1sid!2sid!4v1234567890" 
                         width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
 
-            <div class="flex flex-col justify-center items-center bg-white/5 rounded-2xl p-6 border border-white/10">
-                <h3 class="text-lg font-bold mb-4 text-center">Beri Rating Layanan Kami</h3>
-                <div class="flex gap-2 mb-4" id="footer-rating-stars">
-                    <span class="star-footer text-4xl cursor-pointer text-gray-500 hover:text-accent-orange transition" onclick="setFooterRating(1)">★</span>
-                    <span class="star-footer text-4xl cursor-pointer text-gray-500 hover:text-accent-orange transition" onclick="setFooterRating(2)">★</span>
-                    <span class="star-footer text-4xl cursor-pointer text-gray-500 hover:text-accent-orange transition" onclick="setFooterRating(3)">★</span>
-                    <span class="star-footer text-4xl cursor-pointer text-gray-500 hover:text-accent-orange transition" onclick="setFooterRating(4)">★</span>
-                    <span class="star-footer text-4xl cursor-pointer text-gray-500 hover:text-accent-orange transition" onclick="setFooterRating(5)">★</span>
+            <div class="flex flex-col">
+                <h3 class="text-xl font-bold mb-6 opacity-0 hidden md:block">Rating</h3> <div class="flex flex-col justify-center items-center bg-white/5 rounded-2xl p-6 border border-white/10 flex-grow shadow-2xl h-64 md:h-full min-h-[250px]">
+                    <h3 class="text-lg font-bold mb-4 text-center">Beri Rating Layanan Kami</h3>
+                    <div class="flex gap-2 mb-4" id="footer-rating-stars">
+                        <span class="star-footer text-4xl cursor-pointer text-gray-500 hover:text-accent-orange transition" onclick="setFooterRating(1)">★</span>
+                        <span class="star-footer text-4xl cursor-pointer text-gray-500 hover:text-accent-orange transition" onclick="setFooterRating(2)">★</span>
+                        <span class="star-footer text-4xl cursor-pointer text-gray-500 hover:text-accent-orange transition" onclick="setFooterRating(3)">★</span>
+                        <span class="star-footer text-4xl cursor-pointer text-gray-500 hover:text-accent-orange transition" onclick="setFooterRating(4)">★</span>
+                        <span class="star-footer text-4xl cursor-pointer text-gray-500 hover:text-accent-orange transition" onclick="setFooterRating(5)">★</span>
+                    </div>
+                    <p id="rating-status" class="text-xs uppercase tracking-widest text-gray-400 font-bold">Klik untuk menilai</p>
                 </div>
-                <p id="rating-status" class="text-xs uppercase tracking-widest text-gray-400 font-bold">Klik untuk menilai</p>
             </div>
         </div>
     </div>
