@@ -80,7 +80,7 @@
         <p>&copy; 2026 Jaya Digital Integrate. Membangun Digitalisasi Papua.</p>
     </footer>
 
-   <script>
+  <script>
     // Data Layanan Utama JDI
     const servicesData = [
         {
@@ -92,6 +92,11 @@
             title: "Web Application",
             description: "Pengembangan aplikasi berbasis web yang responsif dan custom sesuai kebutuhan bisnis Anda.",
             icon: "🌐"
+        },
+        {
+            title: "Mobile Apps Android",
+            description: "Solusi aplikasi mobile Android berperforma tinggi dengan antarmuka modern untuk menjangkau pengguna lebih luas.",
+            icon: "📱🤖"
         },
         {
             title: "Sistem Informasi",
@@ -138,11 +143,9 @@
 
         // 2. Cek apakah user sudah pernah melihat loading di sesi ini
         if (sessionStorage.getItem('hasSeenIntro')) {
-            // Jika SUDAH pernah melihat: Langsung tampilkan konten
             if (screen) screen.style.display = 'none';
             if (main) {
                 main.style.opacity = '1';
-                // Langsung aktifkan animasi elemen interior (hero section)
                 const fadeElements = document.querySelectorAll('.fade-init');
                 fadeElements.forEach(el => el.classList.add('fade-in-visible'));
                 
@@ -150,7 +153,6 @@
                 if (laptop) laptop.classList.add('laptop-visible');
             }
         } else {
-            // Jika BELUM pernah melihat: Jalankan animasi loading normal
             if (fill) {
                 setTimeout(() => { 
                     fill.style.width = '100%';
@@ -163,13 +165,12 @@
 
             setTimeout(() => {
                 if (screen) screen.style.opacity = '0';
-                sessionStorage.setItem('hasSeenIntro', 'true'); // Tandai sesi agar tidak loading lagi
+                sessionStorage.setItem('hasSeenIntro', 'true');
 
                 setTimeout(() => {
                     if (screen) screen.style.display = 'none';
                     if (main) main.style.opacity = '1';
                     
-                    // Picu animasi masuk satu per satu untuk pertama kali
                     document.getElementById('fade-text-1')?.classList.add('fade-in-visible');
                     setTimeout(() => document.getElementById('fade-text-2')?.classList.add('fade-in-visible'), 400);
                     setTimeout(() => document.getElementById('fade-btns')?.classList.add('fade-in-visible'), 800);
