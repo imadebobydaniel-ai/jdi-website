@@ -371,76 +371,101 @@
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 
     <script>
-        Fancybox.bind("[data-fancybox]", {});
+    Fancybox.bind("[data-fancybox]", {});
 
-        const servicesData = [
-            { title: "Manajemen Database", description: "Sistem pengelolaan data yang aman dan terintegrasi.", icon: "📁" },
-            { title: "Web Application", description: "Pengembangan aplikasi web responsif dan custom.", icon: "🌐" },
-            { title: "Sistem Informasi", description: "Solusi monitoring data real-time yang akurat.", icon: "📊" },
-            { title: "Digital Signage", description: "Konten visual digital untuk kebutuhan promosi.", icon: "📺" }
-        ];
+    const servicesData = [
+        { title: "Manajemen Database", description: "Sistem pengelolaan data yang aman dan terintegrasi.", icon: "📁" },
+        { title: "Web Application", description: "Pengembangan aplikasi web responsif dan custom.", icon: "🌐" },
+        { title: "Sistem Informasi", description: "Solusi monitoring data real-time yang akurat.", icon: "📊" },
+        { title: "Digital Signage", description: "Konten visual digital untuk kebutuhan promosi.", icon: "📺" }
+    ];
 
-        function renderServices() {
-            const container = document.getElementById('services-container');
-            if (!container) return;
-            container.innerHTML = ""; 
-            servicesData.forEach(service => {
-                const card = `
-                    <div class="bg-white rounded-2xl shadow-sm p-6 border hover:border-accent-orange transition group">
-                        <div class="text-3xl mb-4 group-hover:scale-110 transition-transform">${service.icon}</div>
-                        <h3 class="text-lg font-bold mb-2 text-navy-dark">${service.title}</h3>
-                        <p class="text-gray-600 text-xs leading-relaxed">${service.description}</p>
-                    </div>`;
-                container.innerHTML += card;
-            });
-        }
+    function renderServices() {
+        const container = document.getElementById('services-container');
+        if (!container) return;
+        container.innerHTML = ""; 
+        servicesData.forEach(service => {
+            const card = `
+                <div class="bg-white rounded-2xl shadow-sm p-6 border hover:border-accent-orange transition group">
+                    <div class="text-3xl mb-4 group-hover:scale-110 transition-transform">${service.icon}</div>
+                    <h3 class="text-lg font-bold mb-2 text-navy-dark">${service.title}</h3>
+                    <p class="text-gray-600 text-xs leading-relaxed">${service.description}</p>
+                </div>`;
+            container.innerHTML += card;
+        });
+    }
 
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        }
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobile-menu');
+        menu.classList.toggle('hidden');
+    }
 
-        function setFooterRating(n, event) {
-            const stars = document.querySelectorAll('.star-footer');
-            const status = document.getElementById('rating-status');
+    function setFooterRating(n, event) {
+        const stars = document.querySelectorAll('.star-footer');
+        const status = document.getElementById('rating-status');
+        
+        stars.forEach((s, i) => {
+            s.style.color = (i < n) ? '#ff8c00' : '#d1d5db';
+        });
+
+        const rect = event.target.getBoundingClientRect();
+        for (let i = 0; i < 8; i++) {
+            const sprinkle = document.createElement('div');
+            sprinkle.className = 'sprinkle';
+            sprinkle.style.left = (event.clientX - rect.left + (Math.random() * 20 - 10)) + 'px';
+            sprinkle.style.top = (event.clientY - rect.top + (Math.random() * 20 - 10)) + 'px';
             
-            stars.forEach((s, i) => {
-                s.style.color = (i < n) ? '#ff8c00' : '#d1d5db';
-            });
-
-            const rect = event.target.getBoundingClientRect();
-            for (let i = 0; i < 8; i++) {
-                const sprinkle = document.createElement('div');
-                sprinkle.className = 'sprinkle';
-                sprinkle.style.left = (event.clientX - rect.left + (Math.random() * 20 - 10)) + 'px';
-                sprinkle.style.top = (event.clientY - rect.top + (Math.random() * 20 - 10)) + 'px';
-                
-                const angle = Math.random() * Math.PI * 2;
-                const dist = 30 + Math.random() * 30;
-                sprinkle.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
-                sprinkle.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
-                
-                event.target.appendChild(sprinkle);
-                setTimeout(() => sprinkle.remove(), 600);
-            }
-
-            if (status) {
-                status.innerText = "Terima kasih atas rating " + n + " bintang Anda!";
-                status.classList.remove('text-gray-400');
-                status.classList.add('text-accent-orange');
-            }
-        }
-
-        function toggleAdminPanel() {
-            document.getElementById('admin-portal').classList.toggle('hidden');
-        }
-
-        window.addEventListener('load', () => {
-            const screen = document.getElementById('loading-screen');
-            const main = document.getElementById('main-content');
-            const fill = document.getElementById('loader-fill');
-            const welcome = document.getElementById('welcome-msg');
+            const angle = Math.random() * Math.PI * 2;
+            const dist = 30 + Math.random() * 30;
+            sprinkle.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
+            sprinkle.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
             
+            event.target.appendChild(sprinkle);
+            setTimeout(() => sprinkle.remove(), 600);
+        }
+
+        if (status) {
+            status.innerText = "Terima kasih atas rating " + n + " bintang Anda!";
+            status.classList.remove('text-gray-400');
+            status.classList.add('text-accent-orange');
+        }
+    }
+
+    function toggleAdminPanel() {
+        document.getElementById('admin-portal').classList.toggle('hidden');
+    }
+
+    // LOGIKA STARTUP & SESSION CHECK
+    window.addEventListener('load', () => {
+        const screen = document.getElementById('loading-screen');
+        const main = document.getElementById('main-content');
+        const fill = document.getElementById('loader-fill');
+        const welcome = document.getElementById('welcome-msg');
+        
+        const hasSeenIntro = sessionStorage.getItem('hasSeenIntro');
+
+        if (hasSeenIntro) {
+            // JIKA SUDAH PERNAH LIHAT: Langsung Tampilkan Konten
+            if (screen) screen.style.display = 'none';
+            if (main) {
+                main.style.opacity = '1';
+                renderServices();
+                // Inisialisasi Swiper tanpa delay
+                if (typeof Swiper !== 'undefined') {
+                    new Swiper(".mySwiper", {
+                        navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+                        autoplay: { delay: 3000 },
+                        loop: true
+                    });
+                }
+                // Aktifkan semua animasi fade-in secara instan
+                document.getElementById('fade-text-1')?.classList.add('fade-in-visible');
+                document.getElementById('fade-text-2')?.classList.add('fade-in-visible');
+                document.getElementById('fade-btns')?.classList.add('fade-in-visible');
+                document.getElementById('laptop-mockup')?.classList.add('laptop-visible');
+            }
+        } else {
+            // JIKA BELUM: Jalankan animasi startup normal
             welcome.style.fontSize = window.innerWidth < 768 ? '0.7rem' : '0.8rem';
 
             setTimeout(() => { 
@@ -451,14 +476,18 @@
 
             setTimeout(() => {
                 screen.style.opacity = '0';
+                sessionStorage.setItem('hasSeenIntro', 'true'); // Tandai sudah melihat
+                
                 setTimeout(() => {
                     screen.style.display = 'none';
                     renderServices();
-                    new Swiper(".mySwiper", {
-                        navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-                        autoplay: { delay: 3000 },
-                        loop: true
-                    });
+                    if (typeof Swiper !== 'undefined') {
+                        new Swiper(".mySwiper", {
+                            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+                            autoplay: { delay: 3000 },
+                            loop: true
+                        });
+                    }
                     main.style.opacity = '1';
                     document.getElementById('fade-text-1')?.classList.add('fade-in-visible');
                     setTimeout(() => document.getElementById('fade-text-2')?.classList.add('fade-in-visible'), 400);
@@ -466,7 +495,7 @@
                     setTimeout(() => document.getElementById('laptop-mockup')?.classList.add('laptop-visible'), 1000);
                 }, 1000);
             }, 5000); 
-        });
-    </script>
-</body>
+        }
+    });
+</script></body>
 </html>
