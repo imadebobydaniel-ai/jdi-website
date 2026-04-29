@@ -19,14 +19,14 @@
     .star { cursor: pointer; color: #d1d5db; transition: color 0.2s; }
     .star.active { color: #ff8c00; }
     
-    /* PERBAIKAN: Implementasi Background Hero Section dengan Path File yang Benar */
+    /* Implementasi Background Hero Section */
     .hero-section {
         position: relative;
         width: 100%;
         min-height: 100vh;
         display: flex;
         align-items: center;
-        /* Diubah menjadi jembatan-merah.jpg agar sesuai dengan nama file di repositori */
+        /* Menggunakan warna navy dark sistem sebagai layer gradasi */
         background: linear-gradient(to right, rgba(10, 29, 55, 0.95), rgba(10, 29, 55, 0.3)), 
                     url('jembatan-merah.jpg');
         background-size: cover;
@@ -174,7 +174,7 @@
         <header class="hero-section py-20 px-10">
             
             <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between relative z-10 gap-12">
-                <div class="md:w-1/2">
+                <div class="md:w-1/2 -mt-20">
                     <h1 id="fade-text-1" class="text-4xl md:text-6xl font-bold leading-tight mb-6 text-white fade-init">
                         Transformasi Digital <br><span class="text-accent-orange">Tanpa Batas</span>
                     </h1>
@@ -273,14 +273,14 @@
                 <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
                     <div class="flex flex-col">
                         <h3 class="text-xl font-bold mb-6 border-l-4 border-accent-orange pl-4">Lokasi Kami</h3>
-                        <div class="rounded-xl overflow-hidden border border-white/10 shadow-2xl flex-grow h-64 md:h-full min-h-[300px]">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3985.744158499268!2d140.7180!3d-2.6160!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMsKwMzYnNTcuNiJTIDE0MMKwNDMnMDQuOCJF!5e0!3m2!1sid!2sid!4v1650000000000!5m2!1sid!2sid" 
+                        <div class="rounded-xl overflow-hidden border border-white/10 shadow-2xl flex-grow h-64 md:h-full min-h-[250px]">
+                            <iframe src="http://googleusercontent.com/maps.google.com/5" 
                                 width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                         </div>
                     </div>
 
                     <div class="flex flex-col">
-                        <div class="mt-14 flex flex-col justify-center items-center bg-white/5 rounded-2xl p-6 border border-white/10 flex-grow shadow-2xl min-h-[300px]">
+                        <div class="flex flex-col justify-center items-center bg-white/5 rounded-2xl p-6 border border-white/10 flex-grow shadow-2xl h-64 md:h-full min-h-[250px]">
                             <h3 class="text-lg font-bold mb-4 text-center">Beri Rating Layanan Kami</h3>
                             <div class="flex gap-2 mb-4" id="footer-rating-stars">
                                 <span class="star-footer text-4xl cursor-pointer text-gray-500 hover:text-accent-orange transition" onclick="setFooterRating(1)">★</span>
@@ -416,4 +416,4 @@
         });
     </script>
 </body>
-</html>
+</html>```
