@@ -99,6 +99,21 @@
             icon: "📱🤖"
         },
         {
+            title: "Sistem POS (Point of Sales)",
+            description: "Aplikasi kasir berbasis web untuk manajemen transaksi, stok produk, dan laporan penjualan yang akurat.",
+            icon: "🛒"
+        },
+        {
+            title: "Absensi Online Web",
+            description: "Sistem kehadiran karyawan berbasis cloud dengan pelacakan lokasi dan laporan absensi otomatis.",
+            icon: "⌚"
+        },
+        {
+            title: "Monitoring Warehouse",
+            description: "Sistem pelacakan inventaris gudang untuk memantau keluar masuk barang secara real-time.",
+            icon: "📦"
+        },
+        {
             title: "Sistem Informasi",
             description: "Solusi informasi manajemen untuk monitoring dan pelaporan data secara real-time.",
             icon: "📊"
@@ -112,11 +127,10 @@
 
     function renderServices() {
         const container = document.getElementById('services-container');
-        if (!container) return; // Mencegah error jika elemen tidak ada di halaman tertentu
+        if (!container) return;
 
-        // Simulasi sedikit waktu loading agar transisi halus
         setTimeout(() => {
-            container.innerHTML = ""; // Bersihkan skeleton
+            container.innerHTML = ""; 
             
             servicesData.forEach(service => {
                 const card = `
@@ -131,17 +145,14 @@
         }, 800);
     }
 
-    // Gabungan Logika Loading Screen & Render Services
     window.addEventListener('DOMContentLoaded', () => {
         const screen = document.getElementById('loading-screen');
         const main = document.getElementById('main-content');
         const fill = document.getElementById('loader-fill');
         const welcome = document.getElementById('welcome-msg');
         
-        // 1. Jalankan render layanan
         renderServices();
 
-        // 2. Cek apakah user sudah pernah melihat loading di sesi ini
         if (sessionStorage.getItem('hasSeenIntro')) {
             if (screen) screen.style.display = 'none';
             if (main) {
