@@ -7,7 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
     
     <style>
@@ -43,7 +42,6 @@
         }
         .swiper-button-next:after, .swiper-button-prev:after { font-size: 18px !important; font-weight: bold; }
 
-        /* CSS UNTUK OUTLINE LOGO */
         .logo-outline {
             filter: drop-shadow(1px 1px 0 white) 
                     drop-shadow(-1px -1px 0 white) 
@@ -51,7 +49,6 @@
                     drop-shadow(-1px 1px 0 white);
         }
 
-        /* Preloader Startup */
         #loading-screen {
             position: fixed;
             inset: 0;
@@ -65,10 +62,9 @@
         }
 
         .loader-logo {
-            width: 320px; /* Ukuran Logo Besar */
+            width: 320px;
             height: auto;
             margin-bottom: 30px;
-            /* Outline Putih Tidak Terlalu Tebal */
             filter: drop-shadow(1.5px 1.5px 0 white) 
                     drop-shadow(-1.5px -1.5px 0 white) 
                     drop-shadow(1.5px -1.5px 0 white) 
@@ -221,26 +217,7 @@
                     <h3 class="text-xl font-bold mb-3 text-navy-dark">SSL Certificate</h3>
                     <p class="text-gray-600 text-sm leading-relaxed">Proteksi enkripsi data end-to-end yang menjamin keamanan informasi sensitif dan meningkatkan kredibilitas sistem.</p>
                 </div>
-                <div class="feature-card bg-white p-8 rounded-3xl shadow-sm">
-                    <div class="w-14 h-14 bg-orange-100 text-accent-orange rounded-2xl flex items-center justify-center mb-6 shadow-inner"><span class="text-xl font-bold">05</span></div>
-                    <h3 class="text-xl font-bold mb-3 text-navy-dark">Cloud Integrated</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed">Akses data kapan saja dan di mana saja dengan integrasi cloud server yang andal dan minim downtime.</p>
-                </div>
-                <div class="feature-card bg-white p-8 rounded-3xl shadow-sm">
-                    <div class="w-14 h-14 bg-blue-100 text-navy-dark rounded-2xl flex items-center justify-center mb-6 shadow-inner"><span class="text-xl font-bold">06</span></div>
-                    <h3 class="text-xl font-bold mb-3 text-navy-dark">UI/UX Modern</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed">Desain antarmuka yang bersih, intuitif, dan profesional untuk meningkatkan pengalaman pengguna.</p>
-                </div>
-                <div class="feature-card bg-white p-8 rounded-3xl shadow-sm">
-                    <div class="w-14 h-14 bg-orange-100 text-accent-orange rounded-2xl flex items-center justify-center mb-6 shadow-inner"><span class="text-xl font-bold">07</span></div>
-                    <h3 class="text-xl font-bold mb-3 text-navy-dark">Maintenance</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed">Dukungan pemeliharaan berkala untuk memastikan performa sistem tetap optimal di jangka panjang.</p>
-                </div>
-                <div class="feature-card bg-white p-8 rounded-3xl shadow-sm">
-                    <div class="w-14 h-14 bg-blue-100 text-navy-dark rounded-2xl flex items-center justify-center mb-6 shadow-inner"><span class="text-xl font-bold">08</span></div>
-                    <h3 class="text-xl font-bold mb-3 text-navy-dark">Local Expert</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed">Tim ahli yang memahami karakteristik dan kebutuhan infrastruktur digital di wilayah Jayapura dan Papua.</p>
-                </div>
+                <div id="services-container" class="lg:col-span-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"></div>
             </div>
         </section>
 
@@ -272,13 +249,12 @@
                     <div class="flex flex-col">
                         <h3 class="text-xl font-bold mb-6 border-l-4 border-accent-orange pl-4">Lokasi Kami</h3>
                         <div class="rounded-xl overflow-hidden border border-white/10 shadow-2xl flex-grow h-64 md:h-full min-h-[250px]">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15949.123456789!2d140.6!3d-2.6!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMsKwMzYnMDAuMCJTIDE0MMKwMzYnMDAuMCJF!5e0!3m2!1sid!2sid!4v1234567890" 
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3985.748365261882!2d140.638515374189!3d-2.5881476384232943!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x686cf5095e7c2705%3A0x6e22f0360a0076a9!2sTanah%20Hitam%2C%20Awiyo%2C%20Kec.%20Abepura%2C%20Kota%20Jayapura%2C%20Papua!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" 
                                 width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                         </div>
                     </div>
 
                     <div class="flex flex-col">
-                        <h3 class="text-xl font-bold mb-6 opacity-0 hidden md:block">Rating</h3> 
                         <div class="flex flex-col justify-center items-center bg-white/5 rounded-2xl p-6 border border-white/10 flex-grow shadow-2xl h-64 md:h-full min-h-[250px]">
                             <h3 class="text-lg font-bold mb-4 text-center">Beri Rating Layanan Kami</h3>
                             <div class="flex gap-2 mb-4" id="footer-rating-stars">
@@ -312,47 +288,34 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+
     <script>
-        // Data Layanan Utama JDI
+        // Inisialisasi Fancybox
+        Fancybox.bind("[data-fancybox]", {});
+
+        // Data Layanan
         const servicesData = [
-            {
-                title: "Manajemen Database",
-                description: "Sistem pengelolaan data yang aman, terintegrasi, dan mudah diakses untuk efisiensi administrasi.",
-                icon: "📁"
-            },
-            {
-                title: "Web Application",
-                description: "Pengembangan aplikasi berbasis web yang responsif dan custom sesuai kebutuhan bisnis Anda.",
-                icon: "🌐"
-            },
-            {
-                title: "Sistem Informasi",
-                description: "Solusi informasi manajemen untuk monitoring dan pelaporan data secara real-time.",
-                icon: "📊"
-            },
-            {
-                title: "Digital Signage",
-                description: "Layanan konten visual digital terintegrasi untuk kebutuhan promosi dan informasi publik.",
-                icon: "📺"
-            }
+            { title: "Manajemen Database", description: "Sistem pengelolaan data yang aman, terintegrasi, dan mudah diakses.", icon: "📁" },
+            { title: "Web Application", description: "Pengembangan aplikasi berbasis web yang responsif dan custom.", icon: "🌐" },
+            { title: "Sistem Informasi", description: "Solusi informasi manajemen untuk monitoring data real-time.", icon: "📊" },
+            { title: "Digital Signage", description: "Layanan konten visual digital terintegrasi untuk kebutuhan promosi.", icon: "📺" }
         ];
 
         function renderServices() {
             const container = document.getElementById('services-container');
             if (!container) return;
-            setTimeout(() => {
-                container.innerHTML = ""; 
-                servicesData.forEach(service => {
-                    const card = `
-                        <div class="bg-white rounded-2xl shadow-sm p-6 border hover:border-accent-orange hover:shadow-md transition duration-300 group">
-                            <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">${service.icon}</div>
-                            <h3 class="text-xl font-bold mb-2 text-navy-dark">${service.title}</h3>
-                            <p class="text-gray-600 text-sm leading-relaxed">${service.description}</p>
-                        </div>
-                    `;
-                    container.innerHTML += card;
-                });
-            }, 800);
+            container.innerHTML = ""; 
+            servicesData.forEach(service => {
+                const card = `
+                    <div class="bg-white rounded-2xl shadow-sm p-6 border hover:border-accent-orange hover:shadow-md transition duration-300 group">
+                        <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">${service.icon}</div>
+                        <h3 class="text-xl font-bold mb-2 text-navy-dark">${service.title}</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">${service.description}</p>
+                    </div>`;
+                container.innerHTML += card;
+            });
         }
 
         function setFooterRating(n) {
@@ -374,8 +337,13 @@
             }
         }
 
-        // Logika Startup & Loader
-        window.addEventListener('DOMContentLoaded', () => {
+        function toggleAdminPanel() {
+            const panel = document.getElementById('admin-portal');
+            panel.classList.toggle('hidden');
+        }
+
+        // Logic Loader & Startup
+        window.addEventListener('load', () => {
             const screen = document.getElementById('loading-screen');
             const main = document.getElementById('main-content');
             const fill = document.getElementById('loader-fill');
@@ -385,52 +353,42 @@
             const skipIntro = urlParams.get('skipIntro');
             const hasSeenIntro = sessionStorage.getItem('hasSeenIntro');
 
-            const showInstantly = () => {
-                if (screen) screen.style.display = 'none';
-                if (main) {
-                    main.style.opacity = '1';
-                    document.querySelectorAll('.fade-init').forEach(el => el.classList.add('fade-in-visible'));
-                    document.getElementById('laptop-mockup')?.classList.add('laptop-visible');
-                }
+            const startAnimations = () => {
+                renderServices();
+                // Inisialisasi Swiper setelah konten muncul
+                new Swiper(".mySwiper", {
+                    navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+                    autoplay: { delay: 3000 },
+                    loop: true
+                });
+
+                main.style.opacity = '1';
+                document.getElementById('fade-text-1')?.classList.add('fade-in-visible');
+                setTimeout(() => document.getElementById('fade-text-2')?.classList.add('fade-in-visible'), 400);
+                setTimeout(() => document.getElementById('fade-btns')?.classList.add('fade-in-visible'), 800);
+                setTimeout(() => document.getElementById('laptop-mockup')?.classList.add('laptop-visible'), 1000);
             };
 
             if (skipIntro === 'true' || hasSeenIntro === 'true') {
-                showInstantly();
-                renderServices();
+                screen.style.display = 'none';
+                startAnimations();
             } else {
-                renderServices();
-                if (fill) {
-                    setTimeout(() => { 
-                        fill.style.width = '100%';
-                        if (welcome) {
-                            welcome.style.opacity = '1';
-                            welcome.style.transform = 'translateY(0)';
-                        }
-                    }, 100);
-                }
+                setTimeout(() => { 
+                    fill.style.width = '100%';
+                    welcome.style.opacity = '1';
+                    welcome.style.transform = 'translateY(0)';
+                }, 100);
 
                 setTimeout(() => {
-                    if (screen) screen.style.opacity = '0';
+                    screen.style.opacity = '0';
                     sessionStorage.setItem('hasSeenIntro', 'true');
-
                     setTimeout(() => {
-                        if (screen) screen.style.display = 'none';
-                        if (main) main.style.opacity = '1';
-                        
-                        document.getElementById('fade-text-1')?.classList.add('fade-in-visible');
-                        setTimeout(() => document.getElementById('fade-text-2')?.classList.add('fade-in-visible'), 400);
-                        setTimeout(() => {
-                            document.getElementById('laptop-mockup')?.classList.add('laptop-visible');
-                        }, 1000);
-                    }, 800);
-                }, 4500); // Durasi loading disesuaikan agar teks terbaca
+                        screen.style.display = 'none';
+                        startAnimations();
+                    }, 1000);
+                }, 4500);
             }
         });
-
-        function toggleAdminPanel() {
-            const panel = document.getElementById('admin-portal');
-            panel.classList.toggle('hidden');
-        }
     </script>
 </body>
 </html>
