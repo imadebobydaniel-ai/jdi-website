@@ -60,9 +60,9 @@
             display: block;
         }
 
-        /* --- TAMBAHAN ANIMASI BARU --- */
+        /* --- INTEGRASI ANIMASI BARU --- */
         
-        /* Loading Startup */
+        /* Preloader Startup */
         #loading-screen {
             position: fixed;
             inset: 0;
@@ -72,15 +72,32 @@
             align-items: center;
             justify-content: center;
             z-index: 99999;
-            transition: opacity 0.8s ease;
+            transition: opacity 1s ease;
+        }
+
+        .loader-logo {
+            width: 280px; /* Ukuran diperbesar */
+            height: auto;
+            margin-bottom: 24px;
+            filter: brightness(200%);
+        }
+
+        .welcome-text {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 1s ease 0.5s;
         }
 
         .loader-bar-container {
-            width: 200px;
-            height: 4px;
+            width: 300px;
+            height: 6px;
             background: rgba(255,255,255,0.1);
-            border-radius: 10px;
-            margin-top: 20px;
+            border-radius: 20px;
             overflow: hidden;
         }
 
@@ -91,10 +108,15 @@
             transition: width 5s linear;
         }
 
-        /* Fade In Utama */
+        /* Main Page Transitions */
+        #main-content {
+            opacity: 0;
+            transition: opacity 1.2s ease;
+        }
+
         .fade-init {
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(30px);
             transition: opacity 1.5s ease, transform 1.5s ease;
         }
         
@@ -103,31 +125,26 @@
             transform: translateY(0);
         }
 
-        /* Digital Signage Scroll Effect */
-        .signage-frame {
-            overflow: hidden;
-            position: relative;
-        }
-
-        .signage-scroll {
-            animation: scrollSignage 15s linear infinite;
-        }
-
-        @keyframes scrollSignage {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-50%); }
-        }
-        
-        #main-content {
+        /* Animasi Laptop Terbuka */
+        .laptop-mockup {
+            perspective: 1000px;
             opacity: 0;
-            transition: opacity 1s ease;
+            transform: scale(0.8) rotateX(15deg);
+            transition: all 1.5s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
+
+        .laptop-visible {
+            opacity: 1;
+            transform: scale(1) rotateX(0deg);
+        }
+
     </style>
 </head>
 <body class="bg-gray-50">
 
     <div id="loading-screen">
-        <img src="logojdi.png" alt="Logo JDI" class="h-20 w-auto brightness-200 mb-4">
+        <img src="logojdi.png" alt="Logo JDI" class="loader-logo">
+        <p id="welcome-msg" class="welcome-text">SELAMAT DATANG DI JAYA DIGITAL INTEGRATE</p>
         <div class="loader-bar-container">
             <div id="loader-fill" class="loader-fill"></div>
         </div>
@@ -189,17 +206,17 @@
                 </div>
 
                 <div class="md:w-1/2 flex flex-col items-center">
-                    <div class="bg-white/10 p-4 rounded-xl backdrop-blur-md border border-white/20 shadow-2xl w-full relative signage-frame">
-                        <div class="swiper mySwiper signage-scroll">
+                    <div id="laptop-mockup" class="bg-white/10 p-4 rounded-xl backdrop-blur-md border border-white/20 shadow-2xl w-full relative laptop-mockup">
+                        <div class="swiper mySwiper">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide"><a href="bubur-mandala.png" data-fancybox="gallery"><img src="bubur-mandala.png" class="rounded-lg"></a></div>
                                 <div class="swiper-slide"><a href="beuthetic.png" data-fancybox="gallery"><img src="beuthetic.png" class="rounded-lg"></a></div>
                                 <div class="swiper-slide"><a href="crhisto-cafe.png" data-fancybox="gallery"><img src="crhisto-cafe.png" class="rounded-lg"></a></div>
                                 <div class="swiper-slide"><a href="d-klinic.png" data-fancybox="gallery"><img src="d-klinic.png" class="rounded-lg"></a></div>
                                 <div class="swiper-slide"><a href="de-wave.png" data-fancybox="gallery"><img src="de-wave.png" class="rounded-lg"></a></div>
-                                <div class="swiper-slide"><img src="bubur-mandala.png" class="rounded-lg"></div>
-                                <div class="swiper-slide"><img src="beuthetic.png" class="rounded-lg"></div>
                             </div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
                         </div>
                     </div>
                 </div>
@@ -241,34 +258,6 @@
                     <h3 class="text-xl font-bold mb-3 text-navy-dark">SSL Certificate</h3>
                     <p class="text-gray-600 text-sm leading-relaxed">Proteksi enkripsi data end-to-end yang menjamin keamanan informasi sensitif dan meningkatkan kredibilitas sistem.</p>
                 </div>
-                <div class="feature-card bg-white p-8 rounded-3xl shadow-sm flex flex-col items-start text-left">
-                    <div class="w-14 h-14 bg-orange-100 text-accent-orange rounded-2xl flex items-center justify-center mb-6 shadow-inner">
-                        <span class="text-xl font-bold">05</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-navy-dark">SEO Optimized</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed">Struktur kode modern yang memudahkan profil bisnis Anda ditemukan oleh calon klien melalui mesin pencari.</p>
-                </div>
-                <div class="feature-card bg-white p-8 rounded-3xl shadow-sm flex flex-col items-start text-left">
-                    <div class="w-14 h-14 bg-blue-100 text-navy-dark rounded-2xl flex items-center justify-center mb-6 shadow-inner">
-                        <span class="text-xl font-bold">06</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-navy-dark">Total Solution</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed">Layanan terintegrasi mulai dari UI/UX, integrasi database Firebase, hingga manajemen sistem dalam satu ekosistem.</p>
-                </div>
-                <div class="feature-card bg-white p-8 rounded-3xl shadow-sm flex flex-col items-start text-left">
-                    <div class="w-14 h-14 bg-orange-100 text-accent-orange rounded-2xl flex items-center justify-center mb-6 shadow-inner">
-                        <span class="text-xl font-bold">07</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-navy-dark">Support 24/7</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed">Dukungan teknis responsif untuk memastikan aplikasi manajemen dan website Anda selalu berjalan optimal.</p>
-                </div>
-                <div class="feature-card bg-white p-8 rounded-3xl shadow-sm flex flex-col items-start text-left">
-                    <div class="w-14 h-14 bg-blue-100 text-navy-dark rounded-2xl flex items-center justify-center mb-6 shadow-inner">
-                        <span class="text-xl font-bold">08</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-navy-dark">Jaminan Mutu</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed">Proses pengujian ketat untuk menghadirkan solusi digital berperforma tinggi bagi instansi maupun pelaku usaha.</p>
-                </div>
             </div>
         </section>
 
@@ -276,32 +265,12 @@
             <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-12 border-b border-white/10 pb-12">
                 <div class="space-y-6">
                     <img src="logojdi.png" alt="Logo JDI" class="h-12 brightness-200">
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Solusi digital terintegrasi untuk pengelolaan sistem dan administrasi yang lebih profesional di tanah Papua.
-                    </p>
-                    
-                    <div class="bg-white/5 p-4 rounded-xl border border-white/10 flex flex-col items-start w-full max-w-xs">
-                        <p class="text-xs font-bold mb-2 uppercase tracking-widest text-gray-400">Rating Kami:</p>
-                        <div class="flex space-x-1">
-                            <button onclick="setRating(1)" class="star text-2xl text-gray-500 hover:text-accent-orange transition">★</button>
-                            <button onclick="setRating(2)" class="star text-2xl text-gray-500 hover:text-accent-orange transition">★</button>
-                            <button onclick="setRating(3)" class="star text-2xl text-gray-500 hover:text-accent-orange transition">★</button>
-                            <button onclick="setRating(4)" class="star text-2xl text-gray-500 hover:text-accent-orange transition">★</button>
-                            <button onclick="setRating(5)" class="star text-2xl text-gray-500 hover:text-accent-orange transition">★</button>
-                        </div>
-                        <p id="rating-text" class="text-[10px] mt-2 font-semibold text-gray-500 italic uppercase">Klik bintang untuk menilai</p>
-                    </div>
-
-                    <div class="space-y-3 text-gray-300 text-sm">
-                        <p class="flex items-center gap-3">📍 Jl. Tanah Hitam Abe Pantai, Awiyo, Abepura, Jayapura - Papua, 99224</p>
-                        <p class="flex items-center gap-3">📞 081283393576</p>
-                        <p class="flex items-center gap-3">✉️ contact@jdi.id</p>
-                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed">Solusi digital terintegrasi untuk pengelolaan sistem dan administrasi yang lebih profesional di tanah Papua.</p>
                 </div>
                 <div class="lg:col-span-2">
                     <h3 class="text-xl font-bold mb-6 border-l-4 border-accent-orange pl-4">Lokasi Kami</h3>
                     <div class="rounded-xl overflow-hidden h-64 border border-white/10">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3985.87574706566!2d140.704285!3d-2.603378!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMsKwMzYnMTIuMiJTIDE0MMKwNDInMTUuNCJF!5e0!3m2!1sid!2sid!4v1714392000000!5m2!1sid!2sid" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=..." width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                     </div>
                 </div>
             </div>
@@ -311,244 +280,68 @@
         </footer>
     </div>
 
-    <div id="proyek-modal" class="fixed inset-0 bg-navy-dark/90 z-[10002] hidden flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-2xl rounded-2xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col">
-            <div class="p-6 border-b bg-gray-50">
-                <h3 class="text-2xl font-bold text-navy-dark text-center">Formulir Mulai Proyek</h3>
-            </div>
-            <div class="p-8 overflow-y-auto space-y-4" id="form-container">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input type="text" id="p-nama" placeholder="Nama Lengkap" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none">
-                    <input type="text" id="p-hp" placeholder="Nomor HP" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none">
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input type="email" id="p-email" placeholder="Email" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none">
-                    <input type="text" id="p-alamat" placeholder="Alamat" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none">
-                </div>
-                <input type="text" id="p-usaha" placeholder="Nama Jenis Usaha" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none">
-                <textarea id="p-deskripsi" placeholder="Jelaskan Deskripsi usaha anda" rows="2" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none"></textarea>
-                <select id="p-jenis" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none bg-white">
-                    <option value="" disabled selected>Pilih Projek Digital yang diinginkan</option>
-                    <option value="Website">Website Profil Bisnis</option>
-                    <option value="Aplikasi Android">Aplikasi Android / Mobile</option>
-                    <option value="Digital Signage">Digital Signage</option>
-                    <option value="Sistem Manajemen">Sistem Manajemen (Database)</option>
-                </select>
-                <textarea id="p-keinginan" placeholder="Silahkan tuangkan keinginan anda dalam kolom ini" rows="3" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none"></textarea>
-                <div class="flex gap-4 pt-4">
-                    <button onclick="toggleProyekModal()" class="flex-1 bg-gray-200 text-gray-700 py-3 rounded-lg font-bold hover:bg-gray-300 transition">Batal</button>
-                    <button onclick="previewProyek()" class="flex-1 bg-accent-orange text-white py-3 rounded-lg font-bold hover:bg-orange-600 transition">Kirim</button>
-                </div>
-            </div>
-            <div id="preview-container" class="hidden p-8 overflow-y-auto">
-                <div class="bg-orange-50 p-6 rounded-xl border border-orange-200 mb-6">
-                    <h4 class="font-bold text-navy-dark mb-4 border-b border-orange-200 pb-2">Preview Data Proyek</h4>
-                    <div id="preview-content" class="text-sm space-y-2 text-gray-700"></div>
-                </div>
-                <p class="text-center font-semibold mb-6">Apakah semuanya sudah sesuai?</p>
-                <div class="flex gap-4">
-                    <button onclick="backToForm()" class="flex-1 bg-gray-200 text-gray-700 py-3 rounded-lg font-bold hover:bg-gray-300 transition">Batal</button>
-                    <button onclick="confirmSend()" class="flex-1 bg-accent-orange text-white py-3 rounded-lg font-bold hover:bg-orange-600 transition">OK</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="notif-modal" class="fixed inset-0 bg-navy-dark/90 z-[10003] hidden flex items-center justify-center p-4">
-        <div class="bg-white w-full max-sm rounded-2xl p-8 text-center shadow-2xl border-t-8 border-accent-orange">
-            <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
-                </svg>
-            </div>
-            <h3 class="text-xl font-bold text-navy-dark mb-2">Berhasil!</h3>
-            <p id="notif-message" class="text-gray-600 mb-6 text-sm leading-relaxed"></p>
-            <button onclick="closeNotif()" class="w-full bg-navy-dark text-white py-3 rounded-lg font-bold hover:bg-slate-800 transition">Tutup</button>
-        </div>
-    </div>
-
-    <div class="fixed bottom-6 right-6 z-[9999]">
-        <div id="chat-box" class="bg-white w-72 md:w-80 rounded-2xl shadow-2xl border border-gray-200 overflow-hidden mb-4">
-            <div class="bg-navy-dark p-4 text-white font-bold flex justify-between items-center">
-                <span>JDI Chat Support</span>
-                <button onclick="toggleChat()" class="text-white/50 hover:text-white">✕</button>
-            </div>
-            <div class="h-64 p-4 overflow-y-auto bg-gray-50 text-sm" id="chat-content">
-                <div class="bg-orange-100 p-3 rounded-lg text-navy-dark mb-2">
-                    Halo! Ada yang bisa kami bantu mengenai solusi digital Anda hari ini?
-                </div>
-            </div>
-            <div class="p-3 border-t flex gap-2">
-                <input type="text" id="chat-input" placeholder="Ketik pesan..." class="flex-1 text-sm p-2 border rounded-lg outline-none focus:ring-1 focus:ring-accent-orange">
-                <button onclick="sendChat()" class="bg-accent-orange text-white px-3 py-1 rounded-lg text-xs font-bold">Kirim</button>
-            </div>
-        </div>
-        <div onclick="toggleChat()" class="group cursor-pointer flex flex-col items-end">
-            <div class="bg-white text-navy-dark text-xs font-bold px-3 py-1 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity mb-2">
-                Tanya JDI Assistant
-            </div>
-            <img src="call-center.png" alt="AI Assistant" class="w-20 h-20 md:w-24 md:h-24 glow-orange hover:scale-110 transition-transform">
-        </div>
-    </div>
-
     <div id="admin-portal" class="fixed inset-0 bg-navy-dark/90 z-[10001] hidden flex items-center justify-center p-6">
-        <div class="bg-white w-full max-w-md rounded-2xl overflow-hidden shadow-2xl">
-            <div id="login-section" class="p-8">
-                <h3 class="text-2xl font-bold text-navy-dark mb-6 text-center">Login Administrator</h3>
-                <div class="space-y-4">
-                    <input type="text" id="user" placeholder="Username" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none">
-                    <input type="password" id="pass" placeholder="Password" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none">
-                    <button onclick="handleLogin()" class="w-full bg-accent-orange text-white py-3 rounded-lg font-bold hover:bg-orange-600 transition">Masuk</button>
-                    <button onclick="toggleAdminPanel()" class="w-full text-gray-400 text-sm">Batal</button>
-                </div>
+        <div class="bg-white w-full max-md rounded-2xl p-8">
+            <h3 class="text-2xl font-bold text-navy-dark mb-6 text-center">Login Administrator</h3>
+            <div class="space-y-4">
+                <input type="text" id="user" placeholder="Username" class="w-full p-3 border rounded-lg outline-none">
+                <input type="password" id="pass" placeholder="Password" class="w-full p-3 border rounded-lg outline-none">
+                <button onclick="handleLogin()" class="w-full bg-accent-orange text-white py-3 rounded-lg font-bold">Masuk</button>
+                <button onclick="toggleAdminPanel()" class="w-full text-gray-400 text-sm">Batal</button>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // --- LOGIKA STARTUP & FADE IN ---
-        window.addEventListener('load', function() {
-            const loader = document.getElementById('loader-fill');
+        // --- LOGIKA STARTUP & ANIMASI ---
+        window.addEventListener('DOMContentLoaded', () => {
+            const fill = document.getElementById('loader-fill');
+            const welcome = document.getElementById('welcome-msg');
             const screen = document.getElementById('loading-screen');
-            const mainContent = document.getElementById('main-content');
-            
-            // Mulai isi bar selama 5 detik
-            setTimeout(() => { loader.style.width = '100%'; }, 100);
+            const main = document.getElementById('main-content');
 
-            // Setelah 5 detik, transisi ke Main Page
+            // 1. Jalankan Loading Bar & Teks Welcome
+            setTimeout(() => { 
+                fill.style.width = '100%';
+                welcome.style.opacity = '1';
+                welcome.style.transform = 'translateY(0)';
+            }, 100);
+
+            // 2. Transisi Keluar Preloader (5 Detik)
             setTimeout(() => {
                 screen.style.opacity = '0';
                 setTimeout(() => {
                     screen.style.display = 'none';
-                    mainContent.style.opacity = '1';
+                    main.style.opacity = '1';
                     
-                    // Trigger Fade-in Teks Utama
+                    // 3. Jalankan Fade-in Teks Utama
                     document.getElementById('fade-text-1').classList.add('fade-in-visible');
+                    setTimeout(() => document.getElementById('fade-text-2').classList.add('fade-in-visible'), 400);
+                    setTimeout(() => document.getElementById('fade-btns').classList.add('fade-in-visible'), 800);
+                    
+                    // 4. Jalankan Animasi Laptop Terbuka
                     setTimeout(() => {
-                        document.getElementById('fade-text-2').classList.add('fade-in-visible');
-                    }, 500);
-                    setTimeout(() => {
-                        document.getElementById('fade-btns').classList.add('fade-in-visible');
+                        document.getElementById('laptop-mockup').classList.add('laptop-visible');
                     }, 1000);
+
                 }, 800);
             }, 5000);
         });
 
+        // Swiper & Fungsi UI Tetap
         var swiper = new Swiper(".mySwiper", {
             loop: true,
-            autoplay: { delay: 5000, disableOnInteraction: false },
-            pagination: { el: ".swiper-pagination", clickable: true },
+            autoplay: { delay: 4000 },
             navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
         });
 
-        Fancybox.bind("[data-fancybox='gallery']", {
-            infinite: true,
-            transitionEffect: "slide",
-        });
-
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        }
-
-        function setRating(n) {
-            const stars = document.querySelectorAll('.star');
-            const text = document.getElementById('rating-text');
-            stars.forEach((s, i) => s.style.color = i < n ? '#ff8c00' : '#6b7280');
-            text.innerText = `TERIMA KASIH! ANDA MEMBERI ${n} BINTANG.`;
-            text.className = "text-[10px] mt-2 font-bold text-orange-400 italic";
-        }
-
-        function toggleChat() {
-            const chatBox = document.getElementById('chat-box');
-            chatBox.classList.toggle('active');
-        }
-
-        function toggleAdminPanel() {
-            const portal = document.getElementById('admin-portal');
-            portal.classList.toggle('hidden');
-        }
-
-        function showNotif(message) {
-            document.getElementById('notif-message').innerText = message;
-            document.getElementById('notif-modal').classList.remove('hidden');
-        }
-
-        function closeNotif() {
-            document.getElementById('notif-modal').classList.add('hidden');
-        }
-
+        function toggleAdminPanel() { document.getElementById('admin-portal').classList.toggle('hidden'); }
         function handleLogin() {
-            const u = document.getElementById('user').value;
-            const p = document.getElementById('pass').value;
-            if(u === 'admin' && p === 'bukadong821') {
-                window.location.href = 'admin.html'; 
-            } else {
-                showNotif('Akses Ditolak! Kredensial salah.');
-            }
+            if(document.getElementById('user').value === 'admin' && document.getElementById('pass').value === 'bukadong821') {
+                window.location.href = 'admin.html';
+            } else { alert('Kredensial Salah'); }
         }
-
-        function toggleProyekModal() {
-            const modal = document.getElementById('proyek-modal');
-            modal.classList.toggle('hidden');
-            if(modal.classList.contains('hidden')) backToForm();
-        }
-
-        function previewProyek() {
-            const data = {
-                "Nama": document.getElementById('p-nama').value,
-                "Nomor HP": document.getElementById('p-hp').value,
-                "Email": document.getElementById('p-email').value,
-                "Alamat": document.getElementById('p-alamat').value,
-                "Nama Usaha": document.getElementById('p-usaha').value,
-                "Deskripsi": document.getElementById('p-deskripsi').value,
-                "Jenis Projek": document.getElementById('p-jenis').value,
-                "Keinginan": document.getElementById('p-keinginan').value
-            };
-            if(!data["Nama"] || !data["Nomor HP"] || !data["Jenis Projek"]) {
-                showNotif('Mohon lengkapi Nama, Nomor HP, dan Jenis Projek.');
-                return;
-            }
-            let html = '';
-            for (const [key, value] of Object.entries(data)) {
-                html += `<p><strong>${key}:</strong> ${value || '-'}</p>`;
-            }
-            document.getElementById('preview-content').innerHTML = html;
-            document.getElementById('form-container').classList.add('hidden');
-            document.getElementById('preview-container').classList.remove('hidden');
-        }
-
-        function backToForm() {
-            document.getElementById('form-container').classList.remove('hidden');
-            document.getElementById('preview-container').classList.add('hidden');
-        }
-
-        function confirmSend() {
-            showNotif("Selamat! Rencana Projek Anda telah dikirim. Tim JDI akan segera menghubungi Anda.");
-            toggleProyekModal();
-            document.querySelectorAll('#proyek-modal input, #proyek-modal textarea').forEach(el => el.value = '');
-            document.getElementById('p-jenis').selectedIndex = 0;
-        }
-
-        function sendChat() {
-            const input = document.getElementById('chat-input');
-            const content = document.getElementById('chat-content');
-            const pesan = input.value.trim();
-            if (pesan !== "") {
-                content.innerHTML += `<div class="bg-blue-100 p-3 rounded-lg text-navy-dark mb-2 self-end ml-8">${pesan}</div>`;
-                input.value = "";
-                content.scrollTop = content.scrollHeight;
-                setTimeout(() => {
-                    content.innerHTML += `<div class="bg-orange-100 p-3 rounded-lg text-navy-dark mb-2 mr-8">Terima kasih atas pertanyaannya. Admin JDI akan segera merespon pesan Anda.</div>`;
-                    content.scrollTop = content.scrollHeight;
-                }, 1000);
-            }
-        }
-
-        document.getElementById('chat-input')?.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') sendChat();
-        });
     </script>
 </body>
 </html>
