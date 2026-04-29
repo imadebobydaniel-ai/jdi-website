@@ -278,56 +278,60 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            const fill = document.getElementById('loader-fill');
-            const welcome = document.getElementById('welcome-msg');
-            const screen = document.getElementById('loading-screen');
-            const main = document.getElementById('main-content');
+   <script>
+    // ... (Data servicesData dan function renderServices Anda tetap di sini) ...
 
-            setTimeout(() => { 
-                fill.style.width = '100%';
-                welcome.style.opacity = '1';
-                welcome.style.transform = 'translateY(0)';
-            }, 100);
+    window.addEventListener('DOMContentLoaded', () => {
+        const screen = document.getElementById('loading-screen');
+        const main = document.getElementById('main-content');
+        const fill = document.getElementById('loader-fill');
+        const welcome = document.getElementById('welcome-msg');
+        
+        // Cek URL parameter ATAU sessionStorage
+        const urlParams = new URLSearchParams(window.location.search);
+        const skipIntro = urlParams.get('skipIntro');
+        const hasSeenIntro = sessionStorage.getItem('hasSeenIntro');
+
+        // Fungsi untuk menampilkan konten secara instan
+        const showInstantly = () => {
+            if (screen) screen.style.display = 'none';
+            if (main) {
+                main.style.opacity = '1';
+                // Aktifkan semua animasi interior
+                document.querySelectorAll('.fade-init').forEach(el => el.classList.add('fade-in-visible'));
+                document.getElementById('laptop-mockup')?.classList.add('laptop-visible');
+            }
+        };
+
+        if (skipIntro === 'true' || hasSeenIntro === 'true') {
+            showInstantly();
+            renderServices(); // Tetap render layanan
+        } else {
+            // Jalankan animasi loading normal untuk pertama kali
+            renderServices();
+            if (fill) {
+                setTimeout(() => { 
+                    fill.style.width = '100%';
+                    if (welcome) welcome.style.opacity = '1';
+                }, 100);
+            }
 
             setTimeout(() => {
-                screen.style.opacity = '0';
+                if (screen) screen.style.opacity = '0';
+                sessionStorage.setItem('hasSeenIntro', 'true'); // Kunci agar tidak loading lagi
+
                 setTimeout(() => {
-                    screen.style.display = 'none';
-                    main.style.opacity = '1';
-                    document.getElementById('fade-text-1').classList.add('fade-in-visible');
-                    setTimeout(() => document.getElementById('fade-text-2').classList.add('fade-in-visible'), 400);
-                    setTimeout(() => document.getElementById('fade-btns').classList.add('fade-in-visible'), 800);
+                    if (screen) screen.style.display = 'none';
+                    if (main) main.style.opacity = '1';
+                    // Jalankan animasi hero satu per satu
+                    document.getElementById('fade-text-1')?.classList.add('fade-in-visible');
+                    setTimeout(() => document.getElementById('fade-text-2')?.classList.add('fade-in-visible'), 400);
                     setTimeout(() => {
-                        document.getElementById('laptop-mockup').classList.add('laptop-visible');
+                        document.getElementById('laptop-mockup')?.classList.add('laptop-visible');
                     }, 1000);
                 }, 800);
-            }, 5000);
-        });
-
-        var swiper = new Swiper(".mySwiper", {
-            loop: true,
-            autoplay: { delay: 4000 },
-            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-        });
-
-        function toggleAdminPanel() { document.getElementById('admin-portal').classList.toggle('hidden'); }
-        
-        function handleLogin() {
-            if(document.getElementById('user').value === 'admin' && document.getElementById('pass').value === 'bukadong821') {
-                window.location.href = 'admin.html';
-            } else { alert('Kredensial Salah'); }
+            }, 3000);
         }
-
-        function setRating(n) {
-            const stars = document.querySelectorAll('.star');
-            stars.forEach((s, index) => {
-                if(index < n) s.classList.add('active');
-                else s.classList.remove('active');
-            });
-        }
-    </script>
-</body>
+    });
+</script></body>
 </html>
