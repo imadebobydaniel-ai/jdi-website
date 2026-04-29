@@ -80,53 +80,105 @@
         <p>&copy; 2026 Jaya Digital Integrate. Membangun Digitalisasi Papua.</p>
     </footer>
 
-    <script>
-        // Data Layanan Utama JDI
-        const servicesData = [
-            {
-                title: "Manajemen Database",
-                description: "Sistem pengelolaan data yang aman, terintegrasi, dan mudah diakses untuk efisiensi administrasi.",
-                icon: "📁"
-            },
-            {
-                title: "Web Application",
-                description: "Pengembangan aplikasi berbasis web yang responsif dan custom sesuai kebutuhan bisnis Anda.",
-                icon: "🌐"
-            },
-            {
-                title: "Sistem Informasi",
-                description: "Solusi informasi manajemen untuk monitoring dan pelaporan data secara real-time.",
-                icon: "📊"
-            },
-            {
-                title: "Digital Signage",
-                description: "Layanan konten visual digital terintegrasi untuk kebutuhan promosi dan informasi publik.",
-                icon: "📺"
-            }
-        ];
-
-        function renderServices() {
-            const container = document.getElementById('services-container');
-            
-            // Simulasi sedikit waktu loading agar transisi halus
-            setTimeout(() => {
-                container.innerHTML = ""; // Bersihkan skeleton
-                
-                servicesData.forEach(service => {
-                    const card = `
-                        <div class="bg-white rounded-2xl shadow-sm p-6 border hover:border-accent-orange hover:shadow-md transition duration-300 group">
-                            <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">${service.icon}</div>
-                            <h3 class="text-xl font-bold mb-2 text-navy-dark">${service.title}</h3>
-                            <p class="text-gray-600 text-sm leading-relaxed">${service.description}</p>
-                        </div>
-                    `;
-                    container.innerHTML += card;
-                });
-            }, 800);
+   <script>
+    // Data Layanan Utama JDI
+    const servicesData = [
+        {
+            title: "Manajemen Database",
+            description: "Sistem pengelolaan data yang aman, terintegrasi, dan mudah diakses untuk efisiensi administrasi.",
+            icon: "📁"
+        },
+        {
+            title: "Web Application",
+            description: "Pengembangan aplikasi berbasis web yang responsif dan custom sesuai kebutuhan bisnis Anda.",
+            icon: "🌐"
+        },
+        {
+            title: "Sistem Informasi",
+            description: "Solusi informasi manajemen untuk monitoring dan pelaporan data secara real-time.",
+            icon: "📊"
+        },
+        {
+            title: "Digital Signage",
+            description: "Layanan konten visual digital terintegrasi untuk kebutuhan promosi dan informasi publik.",
+            icon: "📺"
         }
+    ];
 
-        // Jalankan fungsi saat dokumen siap
-        document.addEventListener('DOMContentLoaded', renderServices);
-    </script>
-</body>
+    function renderServices() {
+        const container = document.getElementById('services-container');
+        if (!container) return; // Mencegah error jika elemen tidak ada di halaman tertentu
+
+        // Simulasi sedikit waktu loading agar transisi halus
+        setTimeout(() => {
+            container.innerHTML = ""; // Bersihkan skeleton
+            
+            servicesData.forEach(service => {
+                const card = `
+                    <div class="bg-white rounded-2xl shadow-sm p-6 border hover:border-accent-orange hover:shadow-md transition duration-300 group">
+                        <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">${service.icon}</div>
+                        <h3 class="text-xl font-bold mb-2 text-navy-dark">${service.title}</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">${service.description}</p>
+                    </div>
+                `;
+                container.innerHTML += card;
+            });
+        }, 800);
+    }
+
+    // Gabungan Logika Loading Screen & Render Services
+    window.addEventListener('DOMContentLoaded', () => {
+        const screen = document.getElementById('loading-screen');
+        const main = document.getElementById('main-content');
+        const fill = document.getElementById('loader-fill');
+        const welcome = document.getElementById('welcome-msg');
+        
+        // 1. Jalankan render layanan
+        renderServices();
+
+        // 2. Cek apakah user sudah pernah melihat loading di sesi ini
+        if (sessionStorage.getItem('hasSeenIntro')) {
+            // Jika SUDAH pernah melihat: Langsung tampilkan konten
+            if (screen) screen.style.display = 'none';
+            if (main) {
+                main.style.opacity = '1';
+                // Langsung aktifkan animasi elemen interior (hero section)
+                const fadeElements = document.querySelectorAll('.fade-init');
+                fadeElements.forEach(el => el.classList.add('fade-in-visible'));
+                
+                const laptop = document.getElementById('laptop-mockup');
+                if (laptop) laptop.classList.add('laptop-visible');
+            }
+        } else {
+            // Jika BELUM pernah melihat: Jalankan animasi loading normal
+            if (fill) {
+                setTimeout(() => { 
+                    fill.style.width = '100%';
+                    if (welcome) {
+                        welcome.style.opacity = '1';
+                        welcome.style.transform = 'translateY(0)';
+                    }
+                }, 100);
+            }
+
+            setTimeout(() => {
+                if (screen) screen.style.opacity = '0';
+                sessionStorage.setItem('hasSeenIntro', 'true'); // Tandai sesi agar tidak loading lagi
+
+                setTimeout(() => {
+                    if (screen) screen.style.display = 'none';
+                    if (main) main.style.opacity = '1';
+                    
+                    // Picu animasi masuk satu per satu untuk pertama kali
+                    document.getElementById('fade-text-1')?.classList.add('fade-in-visible');
+                    setTimeout(() => document.getElementById('fade-text-2')?.classList.add('fade-in-visible'), 400);
+                    setTimeout(() => document.getElementById('fade-btns')?.classList.add('fade-in-visible'), 800);
+                    setTimeout(() => {
+                        document.getElementById('laptop-mockup')?.classList.add('laptop-visible');
+                    }, 1000);
+                }, 800);
+            }, 3000);
+        }
+    });
+</script></body>
 </html>
