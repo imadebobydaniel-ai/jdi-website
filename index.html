@@ -455,67 +455,45 @@
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 
 <script>
-    // --- FORCE SHOW LOADING (Hanya untuk testing, hapus baris di bawah ini jika sudah fix) ---
-    // sessionStorage.clear(); 
-
-    // --- 1. LOGIKA LOADING SCREEN (STARTUP) ---
+    // --- 1. STARTUP & LOADING SCREEN (5 DETIK) ---
     window.addEventListener('load', () => {
         const screen = document.getElementById('loading-screen');
         const main = document.getElementById('main-content');
         const fill = document.getElementById('loader-fill');
         const welcome = document.getElementById('welcome-msg');
         
-        const hasSeenIntro = sessionStorage.getItem('hasSeenIntro');
-
-        // Pastikan main-content tersembunyi di awal
+        // Sembunyikan konten utama di awal agar tidak "balapan"
         if (main) main.style.opacity = '0';
 
-        if (hasSeenIntro) {
-            if (screen) screen.style.display = 'none';
-            if (main) {
-                main.style.opacity = '1';
-                initMainContent();
+        // Animasi Loading Bar (Mengisi dalam 5 detik)
+        setTimeout(() => { if (fill) fill.style.width = '100%'; }, 100);
+        
+        // Munculkan Pesan Welcome
+        setTimeout(() => { 
+            if (welcome) {
+                welcome.style.opacity = '1';
+                welcome.style.transform = 'translateY(0)';
             }
-        } else {
-            // Pastikan screen muncul
+        }, 500);
+
+        // Transisi ke Halaman Utama setelah 5 detik
+        setTimeout(() => {
             if (screen) {
-                screen.style.display = 'flex';
-                screen.style.opacity = '1';
+                screen.style.transition = 'opacity 1s ease';
+                screen.style.opacity = '0';
             }
-
-            // Jalankan animasi bar & welcome
-            setTimeout(() => { 
-                if (fill) fill.style.width = '100%'; 
-            }, 100);
-
-            setTimeout(() => { 
-                if (welcome) {
-                    welcome.style.opacity = '1';
-                    welcome.style.transform = 'translateY(0)';
-                }
-            }, 500);
-
-            // Transisi ke konten utama setelah 5 detik
+            
             setTimeout(() => {
-                if (screen) {
-                    screen.style.transition = 'opacity 1s ease';
-                    screen.style.opacity = '0';
+                if (screen) screen.style.display = 'none';
+                if (main) {
+                    main.style.transition = 'opacity 1s ease';
+                    main.style.opacity = '1';
                 }
-                sessionStorage.setItem('hasSeenIntro', 'true');
-                
-                setTimeout(() => {
-                    if (screen) screen.style.display = 'none';
-                    if (main) {
-                        main.style.transition = 'opacity 1s ease';
-                        main.style.opacity = '1';
-                    }
-                    initMainContent();
-                }, 1000);
-            }, 5000); 
-        }
+                initMainContent();
+            }, 1000);
+        }, 5000); 
     });
 
-    // Inisialisasi Konten Utama
     function initMainContent() {
         renderServices();
         if (typeof Swiper !== 'undefined') {
@@ -525,8 +503,7 @@
                 loop: true
             });
         }
-        
-        // Trigger animasi CSS
+        // Animasi Elemen Hero
         const ids = ['fade-text-1', 'fade-text-2', 'fade-btns', 'laptop-mockup'];
         ids.forEach((id, i) => {
             setTimeout(() => {
@@ -536,84 +513,124 @@
         });
     }
 
-    // --- 2. NOTIFIKASI MODERN ---
+    // --- 2. NOTIFIKASI TOAST (FLOATING BLOCK) ---
     function showNotification(message, isSuccess = false) {
         const toast = document.getElementById('success-toast');
         if (!toast) return;
-
+        
         toast.innerText = message;
-        toast.className = `fixed top-5 right-5 z-[10000] p-4 rounded-xl text-white font-bold shadow-2xl transition-all duration-300 ${isSuccess ? 'bg-green-500' : 'bg-orange-500'}`;
         toast.style.display = 'block';
-
-        setTimeout(() => {
-            toast.style.display = 'none';
+        toast.className = `fixed top-5 right-5 z-[10000] p-4 rounded-xl text-white font-bold shadow-2xl transition-all ${isSuccess ? 'bg-green-500' : 'bg-orange-500'}`;
+        
+        setTimeout(() => { 
+            toast.style.display = 'none'; 
         }, 3000);
     }
 
-    // --- 3. FUNGSI KIRIM PROYEK ---
-    function kirimProyek() {
-        const form = document.getElementById('proyekForm');
-        if (!form) return;
-
-        const inputs = form.querySelectorAll('input, select, textarea');
-        const nama = inputs[0]?.value.trim();
-        const kontak = inputs[1]?.value.trim();
-
-        if (!nama || !kontak) {
-            showNotification("⚠️ Mohon lengkapi Nama dan Kontak!", false);
-            return;
+    // --- 3. LOGIN & PANEL ADMIN (FIXED DARI IMAGE_2C37A5.JPG) ---
+    function toggleAdminPanel() {
+        const portal = document.getElementById('admin-portal');
+        if (portal) {
+            portal.classList.toggle('hidden');
         }
-
-        let dataProyek = {};
-        inputs.forEach(input => {
-            let key = input.getAttribute('name') || input.placeholder || input.id;
-            dataProyek[key] = input.value;
-        });
-
-        let projects = JSON.parse(localStorage.getItem('portal_projek') || '[]');
-        projects.push({ id: Date.now(), date: new Date().toLocaleString(), ...dataProyek });
-        localStorage.setItem('portal_projek', JSON.stringify(projects));
-
-        showNotification("✅ Permintaan proyek berhasil dikirim!", true);
-        form.reset();
-        setTimeout(toggleProjectModal, 1500);
-    }
-
-    // --- 4. DATA & UI ---
-    const servicesData = [
-        { title: "Manajemen Database", description: "Sistem pengelolaan data yang aman.", icon: "📁" },
-        { title: "Web Application", description: "Aplikasi web responsif dan custom.", icon: "🌐" },
-        { title: "Sistem Informasi", description: "Monitoring data real-time.", icon: "📊" },
-        { title: "Digital Signage", description: "Visual digital untuk promosi.", icon: "📺" }
-    ];
-
-    function renderServices() {
-        const container = document.getElementById('services-container');
-        if (!container) return;
-        container.innerHTML = servicesData.map(s => `
-            <div class="bg-white rounded-2xl shadow-sm p-6 border hover:border-accent-orange transition group">
-                <div class="text-3xl mb-4 group-hover:scale-110 transition-transform">${s.icon}</div>
-                <h3 class="text-lg font-bold mb-2 text-navy-dark">${s.title}</h3>
-                <p class="text-gray-600 text-xs">${s.description}</p>
-            </div>`).join('');
     }
 
     function handleLogin() {
         const user = document.getElementById('username')?.value;
         const pass = document.getElementById('password')?.value;
-        if (user === "admin" && pass === "admin123") window.location.href = 'admin.html';
-        else showNotification("❌ Login Gagal!", false);
+        
+        // Kredensial default
+        if (user === "admin" && pass === "admin123") {
+            window.location.href = 'admin.html';
+        } else {
+            showNotification("❌ Login Gagal! Username atau Password salah.", false);
+        }
     }
 
-    function toggleMobileMenu() { document.getElementById('mobile-menu')?.classList.toggle('hidden'); }
-    function toggleProjectModal() { document.getElementById('project-modal')?.classList.toggle('hidden'); }
+    // --- 4. FORM PROYEK (MULAI PROJEK) ---
+    function kirimProyek() {
+        const form = document.getElementById('proyekForm');
+        if (!form) return;
+
+        const inputs = form.querySelectorAll('input, select, textarea');
+        // Validasi: ambil input ke-1 (Nama) dan ke-2 (Kontak)
+        const nama = inputs[0]?.value.trim();
+        const kontak = inputs[1]?.value.trim();
+
+        if (!nama || !kontak) {
+            showNotification("⚠️ Mohon isi Nama dan Kontak Anda!", false);
+            return;
+        }
+
+        // Kumpulkan data
+        let data = {};
+        inputs.forEach(i => {
+            let key = i.getAttribute('name') || i.placeholder || i.id || "input_" + Math.random();
+            data[key] = i.value;
+        });
+
+        // Simpan ke LocalStorage agar bisa dibaca di admin.html
+        let projects = JSON.parse(localStorage.getItem('portal_projek') || '[]');
+        projects.push({ 
+            id: Date.now(), 
+            date: new Date().toLocaleString(), 
+            ...data 
+        });
+        localStorage.setItem('portal_projek', JSON.stringify(projects));
+
+        showNotification("✅ Berhasil! Data proyek Anda telah terkirim.", true);
+        form.reset();
+        
+        // Tutup modal setelah sukses
+        setTimeout(() => {
+            if (typeof toggleProjectModal === 'function') {
+                toggleProjectModal();
+            } else {
+                document.getElementById('project-modal')?.classList.add('hidden');
+            }
+        }, 1500);
+    }
+
+    // --- 5. FUNGSI UI PENDUKUNG ---
+    const servicesData = [
+        { title: "Manajemen Database", description: "Pengelolaan data terintegrasi.", icon: "📁" },
+        { title: "Web Application", description: "Web responsif dan custom.", icon: "🌐" },
+        { title: "Sistem Informasi", description: "Monitoring data akurat.", icon: "📊" },
+        { title: "Digital Signage", description: "Visual promosi digital.", icon: "📺" }
+    ];
+
+    function renderServices() {
+        const container = document.getElementById('services-container');
+        if (container) {
+            container.innerHTML = servicesData.map(s => `
+                <div class="bg-white rounded-2xl shadow-sm p-6 border hover:border-accent-orange transition group">
+                    <div class="text-3xl mb-4 group-hover:scale-110 transition-transform">${s.icon}</div>
+                    <h3 class="text-lg font-bold mb-2 text-navy-dark">${s.title}</h3>
+                    <p class="text-gray-600 text-xs">${s.description}</p>
+                </div>`).join('');
+        }
+    }
+
+    function toggleMobileMenu() { 
+        document.getElementById('mobile-menu')?.classList.toggle('hidden'); 
+    }
+
+    function toggleProjectModal() { 
+        document.getElementById('project-modal')?.classList.toggle('hidden'); 
+    }
     
     function setFooterRating(n) {
         document.querySelectorAll('.star-footer').forEach((s, i) => s.style.color = i < n ? '#ff8c00' : '#d1d5db');
         const status = document.getElementById('rating-status');
-        if (status) { status.innerText = "Terima kasih!"; status.style.display = 'block'; }
+        if (status) { 
+            status.innerText = "Terima kasih atas rating Anda!"; 
+            status.style.display = 'block'; 
+        }
     }
 
-    Fancybox.bind("[data-fancybox]", {});
+    // Bind Fancybox jika library tersedia
+    if (typeof Fancybox !== 'undefined') {
+        Fancybox.bind("[data-fancybox]", {});
+    }
 </script></body>
 </html>
