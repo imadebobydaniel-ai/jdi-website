@@ -536,7 +536,7 @@ function showNotification(message) {
         setTimeout(() => {
             toast.style.display = 'none';
             toast.classList.add('hidden');
-        }, 5000); // Durasi sedikit lebih lama untuk keterbacaan
+        }, 5000); 
     } else {
         alert(message);
     }
@@ -596,7 +596,7 @@ function prosesData() {
         return;
     }
 
-    // Penambahan Fitur Preview sebelum Mengirim
+    // Penambahan Fitur Preview sebelum Mengirim menggunakan jendela konfirmasi standar
     const konfirmasiPreview = confirm(
         "--- PREVIEW DATA PROYEK ---\n\n" +
         "Nama: " + nama + "\n" +
@@ -626,7 +626,7 @@ function simpanKeStorage(obj, form) {
         projects.push(obj);
         localStorage.setItem('projekJDI', JSON.stringify(projects));
 
-        // Notifikasi sesuai instruksi baru
+        // Notifikasi sesuai instruksi
         showNotification("Terimakasih Kami akan segera menghubungi anda");
 
         if(form) form.reset();
@@ -636,7 +636,10 @@ function simpanKeStorage(obj, form) {
     }
 }
 
-function kirimProyek() { prosesData(); }
+// Menghubungkan klik tombol ke fungsi prosesData tanpa memicu ReferenceError
+function kirimProyek() { 
+    prosesData(); 
+}
 
 function handleLogin() {
     const user = document.getElementById('user')?.value;
