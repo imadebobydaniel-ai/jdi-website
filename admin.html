@@ -224,40 +224,61 @@
 
         if (data.length === 0) {
             tableBody.innerHTML = '<tr><td colspan="5" class="p-10 text-center text-gray-400 italic">Belum ada data masuk dari portal.</td></tr>';
+            return;
         }
 
         data.forEach((item, index) => {
             const row = document.createElement('tr');
             row.className = "text-[13px] divide-y";
+            
+            // Penyesuaian variabel agar sinkron dengan input form (mendukung key 'nama_lengkap' atau 'nama')
+            const namaTampil = item.nama_lengkap || item.nama || 'No Name';
+            const usahaTampil = item.jenis_usaha || item.usaha || '-';
+            const kontakTampil = item.nomor_hp || item.kontak || '-';
+            const emailTampil = item.email || '-';
+            const layananTampil = item.pilih_layanan || item.layanan || 'Website';
+            const tujuanTampil = item.detail_tujuan || item.tujuan || '-';
+            const statusTampil = (item.status || 'pending').toLowerCase();
+
             row.innerHTML = `
                 <td class="px-6 py-5 border-r">
-                    <div class="font-bold text-navy-dark text-[15px]">${item.nama}</div>
-                    <div class="text-[11px] text-gray-500 font-medium">${item.usaha}</div>
+                    <div class="font-bold text-navy-dark text-[15px]">${namaTampil}</div>
+                    <div class="text-[11px] text-gray-500 font-medium">${usahaTampil}</div>
                 </td>
                 <td class="px-6 py-5 border-r leading-relaxed">
                     <div class="flex items-center gap-2 text-green-600 font-bold mb-1">
-                        <span class="text-sm">📞</span> ${item.kontak}
+                        <span class="text-sm">📞</span> ${kontakTampil}
                     </div>
-                    <div class="text-gray-600 truncate max-w-[200px]">📧 ${item.email}</div>
+                    <div class="text-gray-600 truncate max-w-[200px]">📧 ${emailTampil}</div>
                 </td>
                 <td class="px-6 py-5 border-r">
-                    <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wide">${item.layanan}</span>
-                    <p class="text-gray-600 text-[12px] mt-2 italic leading-snug">"${item.tujuan}"</p>
+                    <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wide">${layananTampil}</span>
+                    <p class="text-gray-600 text-[12px] mt-2 italic leading-snug">"${tujuanTampil}"</p>
                 </td>
                 <td class="px-6 py-5 border-r">
-                    <select class="status-select ${getStatusClass(item.status)} px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase cursor-pointer outline-none w-full">
-                        <option value="pending" ${item.status === 'pending' ? 'selected' : ''}>Pending</option>
-                        <option value="on-process" ${item.status === 'on-process' ? 'selected' : ''}>On Process</option>
-                        <option value="done" ${item.status === 'done' ? 'selected' : ''}>Done</option>
+                    <select onchange="updateStatus(${index}, this.value)" class="status-select ${getStatusClass(statusTampil)} px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase cursor-pointer outline-none w-full">
+                        <option value="pending" ${statusTampil === 'pending' ? 'selected' : ''}>Pending</option>
+                        <option value="on-process" ${statusTampil === 'on-process' ? 'selected' : ''}>On Process</option>
+                        <option value="done" ${statusTampil === 'done' ? 'selected' : ''}>Done</option>
                     </select>
                 </td>
                 <td class="px-6 py-5 text-right space-x-3 text-[12px] font-bold">
-                    <button onclick="window.open('https://wa.me/${item.kontak.replace(/\D/g,'')}')" class="text-green-500 hover:bg-green-50 px-2 py-1 rounded">WhatsApp</button>
+                    <button onclick="window.open('https://wa.me/${kontakTampil.replace(/\D/g,'')}')" class="text-green-500 hover:bg-green-50 px-2 py-1 rounded">WhatsApp</button>
                     <button class="text-red-500 hover:bg-red-50 px-2 py-1 rounded" onclick="hapusProjek(${index})">Hapus</button>
                 </td>
             `;
             tableBody.appendChild(row);
         });
+    }
+
+    // Fungsi tambahan untuk menyimpan perubahan status di localStorage
+    function updateStatus(index, newStatus) {
+        let data = JSON.parse(localStorage.getItem('projekJDI')) || [];
+        if (data[index]) {
+            data[index].status = newStatus;
+            localStorage.setItem('projekJDI', JSON.stringify(data));
+            loadProjectData(); // Refresh untuk memperbarui warna class status
+        }
     }
 
     function getStatusClass(status) {
@@ -335,14 +356,6 @@
             loadProjectData(); // Load data saat masuk portal
         }
     }
-
-    document.addEventListener('change', function(e) {
-        if (e.target.classList.contains('status-select')) {
-            const select = e.target;
-            const value = select.value;
-            select.className = `status-select ${getStatusClass(value)} px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase cursor-pointer outline-none w-full`;
-        }
-    });
 
     document.addEventListener('DOMContentLoaded', loadProjectData);
 </script></body>
