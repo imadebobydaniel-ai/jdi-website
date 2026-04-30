@@ -191,7 +191,7 @@
 
     </main>
 
-   <script>
+<script>
     // --- FUNGSI AUTH & MODAL ---
     function handleLogin() {
         const user = document.querySelector('input[type="text"]').value;
@@ -211,7 +211,7 @@
         body.classList.toggle('modal-active');
     }
 
-    // --- MANAJEMEN PORTAL PROJEK ---
+    // --- MANAJEMEN PORTAL PROJEK (INTEGRASI BARU) ---
     function loadProjectData() {
         const tableBody = document.getElementById('project-data-list');
         if (!tableBody) return;
@@ -228,40 +228,42 @@
             const row = document.createElement('tr');
             row.className = "text-[13px] divide-y";
             
-            // Integrasi Variabel Sinkron dengan Form Konsultasi
-            const nama = item.nama || item.nama_lengkap || 'No Name';
-            const usaha = item.usaha || item.jenis_usaha || '-';
-            const penjelasan = item.penjelasan || '-'; 
-            const kontak = item.kontak || item.nomor_hp || '-';
-            const email = item.email || '-';
-            const layanan = item.layanan || item.pilih_layanan || 'Website';
-            const tujuan = item.tujuan || item.detail_tujuan || '-';
-            const status = (item.status || 'pending').toLowerCase();
+            // Pemetaan variabel agar sinkron dengan input form di image_296721.png
+            const namaUser = item.nama || item.nama_lengkap || '-';
+            const jenisUsaha = item.usaha || item.jenis_usaha || '-';
+            const rincianUsaha = item.penjelasan_usaha || item.penjelasan || '-'; // "Jelaskan Singkat Usaha"
+            const waKontak = item.kontak || item.nomor_hp || '-';
+            const emailUser = item.email || '-';
+            const alamatUser = item.alamat || '-';
+            const layananDipilih = item.layanan || item.pilih_layanan || 'Website';
+            const detailTujuan = item.tujuan_proyek || item.tujuan || '-'; // "Detail Tujuan Proyek"
+            const statusAktif = (item.status || 'pending').toLowerCase();
 
             row.innerHTML = `
                 <td class="px-6 py-5 border-r">
-                    <div class="font-bold text-navy-dark text-[15px]">${nama}</div>
-                    <div class="text-[11px] text-gray-500 font-medium">${usaha} <span class="text-gray-400">(${penjelasan})</span></div>
+                    <div class="font-bold text-navy-dark text-[15px]">${namaUser}</div>
+                    <div class="text-[11px] text-gray-500 font-medium">${jenisUsaha} <span class="text-gray-400">(${rincianUsaha})</span></div>
                 </td>
                 <td class="px-6 py-5 border-r leading-relaxed">
                     <div class="flex items-center gap-2 text-green-600 font-bold mb-1">
-                        <span class="text-sm">📞</span> ${kontak}
+                        <span class="text-sm">📞</span> ${waKontak}
                     </div>
-                    <div class="text-gray-600 truncate max-w-[200px]">📧 ${email}</div>
+                    <div class="text-gray-600 truncate max-w-[200px]">📧 ${emailUser}</div>
+                    <div class="text-[10px] text-gray-400 mt-1">${alamatUser}</div>
                 </td>
                 <td class="px-6 py-5 border-r">
-                    <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wide">${layanan}</span>
-                    <p class="text-gray-600 text-[12px] mt-2 italic leading-snug">"${tujuan}"</p>
+                    <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wide">${layananDipilih}</span>
+                    <p class="text-gray-600 text-[12px] mt-2 italic leading-snug">"${detailTujuan}"</p>
                 </td>
                 <td class="px-6 py-5 border-r">
-                    <select onchange="updateStatus(${index}, this.value)" class="status-select ${getStatusClass(status)} px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase cursor-pointer outline-none w-full">
-                        <option value="pending" ${status === 'pending' ? 'selected' : ''}>Pending</option>
-                        <option value="on-process" ${status === 'on-process' ? 'selected' : ''}>On Process</option>
-                        <option value="done" ${status === 'done' ? 'selected' : ''}>Done</option>
+                    <select onchange="updateStatus(${index}, this.value)" class="status-select ${getStatusClass(statusAktif)} px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase cursor-pointer outline-none w-full">
+                        <option value="pending" ${statusAktif === 'pending' ? 'selected' : ''}>Pending</option>
+                        <option value="on-process" ${statusAktif === 'on-process' ? 'selected' : ''}>On Process</option>
+                        <option value="done" ${statusAktif === 'done' ? 'selected' : ''}>Done</option>
                     </select>
                 </td>
                 <td class="px-6 py-5 text-right space-x-3 text-[12px] font-bold">
-                    <button onclick="window.open('https://wa.me/${kontak.replace(/\D/g,'')}')" class="text-green-500 hover:bg-green-50 px-2 py-1 rounded">WhatsApp</button>
+                    <button onclick="window.open('https://wa.me/${waKontak.replace(/\D/g,'')}')" class="text-green-500 hover:bg-green-50 px-2 py-1 rounded">WhatsApp</button>
                     <button class="text-red-500 hover:bg-red-50 px-2 py-1 rounded" onclick="hapusProyek(${index})">Hapus</button>
                 </td>
             `;
