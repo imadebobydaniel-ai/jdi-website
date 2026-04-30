@@ -465,23 +465,20 @@
 window.addEventListener('load', () => {
     const screen = document.getElementById('loading-screen');
     const main = document.getElementById('main-content');
-    const fill = document.querySelector('.loader-fill'); // Sesuai class di style Anda
-    const welcomeTxt = document.querySelector('.welcome-text'); // Target teks selamat datang
+    const fill = document.querySelector('.loader-fill'); 
+    const welcomeTxt = document.querySelector('.welcome-text'); 
 
-    // 1. Jalankan Loading Stick (5 detik sesuai CSS transition)
     if (fill) {
         fill.style.width = '100%';
     }
 
-    // 2. Munculkan Tulisan "Selamat Datang" segera setelah load (saat loading screen masih ada)
     if (welcomeTxt) {
         setTimeout(() => {
             welcomeTxt.style.opacity = '1';
             welcomeTxt.style.transform = 'translateY(0)';
-        }, 500); // Muncul setelah 0.5 detik loading dimulai
+        }, 500); 
     }
 
-    // 3. Selesaikan Loading tepat di 5 detik
     setTimeout(() => {
         if (screen) {
             screen.style.opacity = '0';
@@ -539,7 +536,7 @@ function showNotification(message) {
         setTimeout(() => {
             toast.style.display = 'none';
             toast.classList.add('hidden');
-        }, 4000);
+        }, 5000); // Durasi sedikit lebih lama untuk keterbacaan
     } else {
         alert(message);
     }
@@ -580,7 +577,7 @@ function renderServices() {
 }
 
 /* ===============================
-   4. FORM DATA & STORAGE
+   4. FORM DATA & STORAGE (DENGAN PREVIEW)
 ================================ */
 function prosesData() {
     const form = document.getElementById('proyekForm') || document.querySelector('form');
@@ -592,13 +589,23 @@ function prosesData() {
 
     const nama = data['nama_lengkap'] || data['nama'];
     const hp = data['nomor_hp'] || data['phone'];
+    const layanan = data['pilih_layanan'] || '-';
 
     if (!nama || !hp) {
         alert("⚠️ Nama Lengkap dan Nomor HP wajib diisi!");
         return;
     }
 
-    if (!confirm("Kirim data sekarang?")) return;
+    // Penambahan Fitur Preview sebelum Mengirim
+    const konfirmasiPreview = confirm(
+        "--- PREVIEW DATA PROYEK ---\n\n" +
+        "Nama: " + nama + "\n" +
+        "WhatsApp: " + hp + "\n" +
+        "Layanan: " + layanan + "\n\n" +
+        "Apakah data di atas sudah benar?"
+    );
+
+    if (!konfirmasiPreview) return;
 
     const dataBaru = {
         id: Date.now(),
@@ -606,7 +613,7 @@ function prosesData() {
         nama: nama,
         kontak: hp,
         email: data['email'] || '-',
-        layanan: data['pilih_layanan'] || '-',
+        layanan: layanan,
         status: 'pending'
     };
 
@@ -619,10 +626,11 @@ function simpanKeStorage(obj, form) {
         projects.push(obj);
         localStorage.setItem('projekJDI', JSON.stringify(projects));
 
-        showNotification("✅ Permintaan berhasil dikirim!");
+        // Notifikasi sesuai instruksi baru
+        showNotification("Terimakasih Kami akan segera menghubungi anda");
 
         if(form) form.reset();
-        setTimeout(() => toggleProjectModal(), 1200);
+        setTimeout(() => toggleProjectModal(), 1500);
     } catch (e) {
         alert("❌ Gagal: " + e.message);
     }
