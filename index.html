@@ -384,7 +384,9 @@
                 </form>
             </div>
         </div>
-
+<button type="button" onclick="tampilkanPreview()" class="bg-accent-orange text-white w-full py-4 rounded-xl font-bold hover:bg-orange-600 transition-all shadow-lg">
+    KIRIM PERMINTAAN
+</button>
         <div id="success-toast" class="fixed top-10 left-1/2 -translate-x-1/2 z-[10003] hidden">
             <div class="bg-green-600 text-white px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-4">
                 <span class="text-2xl">✅</span>
@@ -462,33 +464,15 @@
         const screen = document.getElementById('loading-screen');
         const main = document.getElementById('main-content');
         const fill = document.getElementById('loader-fill');
-        const welcome = document.getElementById('welcome-msg');
         
-        if (main) main.style.opacity = '0';
-
-        setTimeout(() => { if (fill) fill.style.width = '100%'; }, 100);
-        setTimeout(() => { 
-            if (welcome) {
-                welcome.style.opacity = '1';
-                welcome.style.transform = 'translateY(0)';
-            }
-        }, 500);
-
+        if (fill) fill.style.width = '100%';
         setTimeout(() => {
             if (screen) {
-                screen.style.transition = 'opacity 1s ease';
                 screen.style.opacity = '0';
+                setTimeout(() => screen.style.display = 'none', 1000);
             }
-            sessionStorage.setItem('hasSeenIntro', 'true');
-            
-            setTimeout(() => {
-                if (screen) screen.style.display = 'none';
-                if (main) {
-                    main.style.transition = 'opacity 1s ease';
-                    main.style.opacity = '1';
-                }
-                initMainContent();
-            }, 1000);
+            if (main) main.style.opacity = '1';
+            initMainContent();
         }, 5000); 
     });
 
@@ -497,68 +481,33 @@
         if (typeof Swiper !== 'undefined') {
             new Swiper(".mySwiper", {
                 navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-                autoplay: { delay: 3000 },
-                loop: true
+                autoplay: { delay: 3000 }, loop: true
             });
         }
-        const ids = ['fade-text-1', 'fade-text-2', 'fade-btns', 'laptop-mockup'];
-        ids.forEach((id, i) => {
-            setTimeout(() => {
-                const el = document.getElementById(id);
-                if (el) el.classList.add(id.includes('laptop') ? 'laptop-visible' : 'fade-in-visible');
-            }, i * 300);
-        });
     }
 
-    // --- 2. NOTIFIKASI TOAST (MODERN) ---
-    function showNotification(message, isSuccess = false) {
+    // --- 2. NOTIFIKASI TOAST ---
+    function showNotification(message) {
         const toast = document.getElementById('success-toast');
-        if (!toast) return;
-
-        // Jika Anda ingin mengubah teks di dalam toast secara dinamis:
-        const msgEl = toast.querySelector('p.font-bold');
-        if (msgEl) msgEl.innerText = message;
-
-        toast.classList.remove('hidden');
-        toast.classList.add('block');
-        
-        setTimeout(() => {
-            toast.classList.add('hidden');
-            toast.classList.remove('block');
-        }, 5000);
-    }
-
-    // --- 3. LOGIN ADMIN ---
-    function toggleAdminPanel() {
-        const portal = document.getElementById('admin-portal');
-        if (portal) portal.classList.toggle('hidden');
-    }
-
-    function handleLogin() {
-        const userField = document.getElementById('user');
-        const passField = document.getElementById('pass');
-        const userValue = userField ? userField.value.trim() : "";
-        const passValue = passField ? passField.value.trim() : "";
-
-        if (userValue === "admin" && passValue === "bukadong821") {
-            showNotification("✅ Login Berhasil!", true);
-            sessionStorage.setItem('isLoggedIn', 'true');
-            setTimeout(() => { window.location.href = 'admin.html'; }, 1000);
+        if (toast) {
+            toast.classList.remove('hidden');
+            toast.classList.add('block');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+                toast.classList.remove('block');
+            }, 5000);
         } else {
-            alert("❌ Login Gagal! Username atau Password salah.");
-            if (passField) passField.value = "";
+            alert(message);
         }
     }
 
-    // --- 4. FORM PROYEK & PREVIEW (VERSI FIXED) ---
+    // --- 3. LOGIKA FORM & PREVIEW (FIXED) ---
     let temporaryData = null; 
 
     function tampilkanPreview() {
-        const form = document.getElementById('proyekForm');
-        if (!form) {
-            console.error("Form dengan ID 'proyekForm' tidak ditemukan!");
-            return;
-        }
+        // Cari form berdasarkan ID atau tag
+        const form = document.getElementById('proyekForm') || document.querySelector('form');
+        if (!form) return alert("Form tidak ditemukan!");
 
         const inputs = form.querySelectorAll('input, select, textarea');
         let fd = {};
@@ -567,18 +516,18 @@
             if (key) fd[key] = input.value.trim();
         });
 
-        // Menggunakan key 'nama' dan 'phone' sesuai screenshot user
-        const namaValue = fd['nama']; 
-        const kontakValue = fd['phone'];
+        // Validasi menggunakan nama field yang sesuai dengan HTML kamu
+        const namaValue = fd['nama_lengkap'] || fd['nama'];
+        const kontakValue = fd['nomor_hp'] || fd['phone'];
 
         if (!namaValue || !kontakValue) {
             alert("⚠️ Nama Lengkap dan Nomor HP/WA wajib diisi!");
             return;
         }
 
-        temporaryData = fd;
+        temporaryData = fd; // Data disimpan ke global agar kirimProyek() bisa jalan
 
-        const konfirmasi = confirm(`Cek Data Anda:\n\nNama: ${namaValue}\nNomor: ${kontakValue}\nLayanan: ${fd['pilih_layanan'] || '-'}\n\nApakah data sudah benar dan siap dikirim?`);
+        const konfirmasi = confirm(`CEK DATA ANDA:\n\nNama: ${namaValue}\nNomor: ${kontakValue}\nLayanan: ${fd['pilih_layanan'] || fd['layanan'] || '-'}\n\nKirim permintaan sekarang?`);
         
         if (konfirmasi) {
             kirimProyek();
@@ -586,19 +535,20 @@
     }
 
     function kirimProyek() {
+        // Sekarang temporaryData tidak akan NULL karena sudah diisi oleh tampilkanPreview()
         if (!temporaryData) return;
 
         let dataBaru = {
             id: Date.now(),
             tanggal: new Date().toLocaleString('id-ID'),
-            nama: temporaryData['nama'],
-            kontak: temporaryData['phone'],
+            nama: temporaryData['nama_lengkap'] || temporaryData['nama'],
+            kontak: temporaryData['nomor_hp'] || temporaryData['phone'],
             email: temporaryData['email'] || '-',
             alamat: temporaryData['alamat'] || '-',
             usaha: temporaryData['jenis_usaha'] || '-',
-            layanan: temporaryData['pilih_layanan'] || '-',
-            penjelasan_usaha: temporaryData['penjelasan_usaha'] || '-',
-            tujuan_proyek: temporaryData['tujuan_proyek'] || '-',
+            layanan: temporaryData['pilih_layanan'] || temporaryData['layanan'] || '-',
+            deskripsi: temporaryData['penjelasan_usaha'] || '-',
+            tujuan: temporaryData['tujuan_proyek'] || '-',
             status: 'pending' 
         };
 
@@ -607,50 +557,51 @@
             projects.push(dataBaru);
             localStorage.setItem('projekJDI', JSON.stringify(projects));
 
-            showNotification("✅ Berhasil! Permintaan Anda telah terkirim.", true);
+            showNotification("✅ Berhasil dikirim!");
             
-            document.getElementById('proyekForm').reset();
+            const form = document.getElementById('proyekForm') || document.querySelector('form');
+            if (form) form.reset();
             temporaryData = null;
-            
-            setTimeout(() => {
-                toggleProjectModal(); 
-            }, 1500);
+
+            if (typeof toggleProjectModal === 'function') {
+                setTimeout(toggleProjectModal, 1500);
+            }
         } catch (e) {
-            alert("❌ Gagal menyimpan data: " + e.message);
+            alert("Gagal simpan: " + e.message);
         }
     }
 
-    // --- 5. UI LAINNYA ---
-    const servicesData = [
-        { title: "Manajemen Database", description: "Pengelolaan data terintegrasi.", icon: "📁" },
-        { title: "Web Application", description: "Web responsif dan custom.", icon: "🌐" },
-        { title: "Sistem Informasi", description: "Monitoring data akurat.", icon: "📊" },
-        { title: "Digital Signage", description: "Visual promosi digital.", icon: "📺" }
-    ];
-
+    // --- 4. UI HELPER ---
     function renderServices() {
         const container = document.getElementById('services-container');
         if (container) {
-            container.innerHTML = servicesData.map(s => `
-                <div class="bg-white rounded-2xl shadow-sm p-6 border hover:border-accent-orange transition group">
-                    <div class="text-3xl mb-4 group-hover:scale-110 transition-transform">${s.icon}</div>
-                    <h3 class="text-lg font-bold mb-2 text-navy-dark">${s.title}</h3>
-                    <p class="text-gray-600 text-xs">${s.description}</p>
+            const services = [
+                { t: "Manajemen Database", i: "📁" },
+                { t: "Web Application", i: "🌐" },
+                { t: "Sistem Informasi", i: "📊" },
+                { t: "Digital Signage", i: "📺" }
+            ];
+            container.innerHTML = services.map(s => `
+                <div class="bg-white rounded-2xl shadow-sm p-6 border hover:border-accent-orange transition">
+                    <div class="text-3xl mb-4">${s.i}</div>
+                    <h3 class="text-lg font-bold">${s.t}</h3>
                 </div>`).join('');
         }
     }
 
-    function toggleMobileMenu() { document.getElementById('mobile-menu')?.classList.toggle('hidden'); }
-    function toggleProjectModal() { document.getElementById('project-modal')?.classList.toggle('hidden'); }
-    
-    function setFooterRating(n) {
-        document.querySelectorAll('.star-footer').forEach((s, i) => s.style.color = i < n ? '#ff8c00' : '#d1d5db');
-        const status = document.getElementById('rating-status');
-        if (status) { status.innerText = "Terima kasih!"; status.style.display = 'block'; }
+    function toggleProjectModal() { 
+        const modal = document.getElementById('project-modal');
+        if (modal) modal.classList.toggle('hidden'); 
     }
-
-    if (typeof Fancybox !== 'undefined') {
-        Fancybox.bind("[data-fancybox]", {});
+    
+    function handleLogin() {
+        const u = document.getElementById('user')?.value;
+        const p = document.getElementById('pass')?.value;
+        if (u === "admin" && p === "bukadong821") {
+            window.location.href = 'admin.html';
+        } else {
+            alert("Login Gagal!");
+        }
     }
 </script>/body>
 </html>
