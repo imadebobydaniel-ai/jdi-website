@@ -460,23 +460,30 @@
 
 <script>
 /* ===============================
-   1. LOADING & INIT (5 SECONDS STARTUP)
+   1. LOADING & INIT (FIXED 5s)
 ================================ */
 window.addEventListener('load', () => {
     const screen = document.getElementById('loading-screen');
     const main = document.getElementById('main-content');
-    const fill = document.getElementById('loader-fill');
+    const fill = document.querySelector('.loader-fill'); // Sesuai class di style Anda
+    const welcomeTxt = document.querySelector('.welcome-text'); // Target teks selamat datang
 
+    // 1. Jalankan Loading Stick (5 detik sesuai CSS transition)
     if (fill) {
-        // Durasi progress bar disesuaikan agar selaras dengan 5 detik
-        fill.style.transition = 'width 4.5s linear';
         fill.style.width = '100%';
     }
 
-    // Penyesuaian durasi startup menjadi tepat 5 detik (5000ms)
+    // 2. Munculkan Tulisan "Selamat Datang" segera setelah load (saat loading screen masih ada)
+    if (welcomeTxt) {
+        setTimeout(() => {
+            welcomeTxt.style.opacity = '1';
+            welcomeTxt.style.transform = 'translateY(0)';
+        }, 500); // Muncul setelah 0.5 detik loading dimulai
+    }
+
+    // 3. Selesaikan Loading tepat di 5 detik
     setTimeout(() => {
         if (screen) {
-            screen.style.transition = 'opacity 1s ease';
             screen.style.opacity = '0';
             
             setTimeout(() => {
@@ -484,7 +491,6 @@ window.addEventListener('load', () => {
                 
                 if (main) {
                     main.style.display = 'block';
-                    main.style.transition = 'opacity 1s ease';
                     main.offsetHeight; 
                     main.style.opacity = '1';
                 }
@@ -517,7 +523,7 @@ function initMainContent() {
 }
 
 /* ===============================
-   2. UI HELPER & VIRTUAL ASSISTANT
+   2. UI HELPER (NOTIF DISPLAY BLOCK & ASSISTANT)
 ================================ */
 function showNotification(message) {
     const toast = document.getElementById('success-toast');
@@ -526,6 +532,7 @@ function showNotification(message) {
         const text = toast.querySelector('p.font-bold') || toast.querySelector('p');
         if (text) text.innerText = message;
 
+        // Fungsikan display block sesuai instruksi
         toast.style.display = 'block'; 
         toast.classList.remove('hidden');
 
@@ -538,17 +545,16 @@ function showNotification(message) {
     }
 }
 
-function toggleProjectModal() {
-    document.getElementById('project-modal')?.classList.toggle('hidden');
-}
-
-// Mengembalikan fungsi asisten virtual
 function toggleAssistant() {
     const chatBox = document.getElementById('chat-assistant');
     if (chatBox) {
+        chatBox.style.display = (chatBox.style.display === 'flex') ? 'none' : 'flex';
         chatBox.classList.toggle('hidden');
-        chatBox.classList.toggle('flex');
     }
+}
+
+function toggleProjectModal() {
+    document.getElementById('project-modal')?.classList.toggle('hidden');
 }
 
 /* ===============================
@@ -574,21 +580,15 @@ function renderServices() {
 }
 
 /* ===============================
-   4. FORM KIRIM (FIX TOTAL)
+   4. FORM DATA & STORAGE
 ================================ */
 function prosesData() {
     const form = document.getElementById('proyekForm') || document.querySelector('form');
-    if (!form) {
-        alert("Form tidak ditemukan!");
-        return;
-    }
+    if (!form) return;
 
     const formData = new FormData(form);
     let data = {};
-
-    formData.forEach((value, key) => {
-        data[key] = value.trim();
-    });
+    formData.forEach((value, key) => { data[key] = value.trim(); });
 
     const nama = data['nama_lengkap'] || data['nama'];
     const hp = data['nomor_hp'] || data['phone'];
@@ -598,14 +598,7 @@ function prosesData() {
         return;
     }
 
-    const konfirmasi = confirm(
-        `CEK DATA ANDA:\n\n` +
-        `Nama: ${nama}\n` +
-        `Nomor: ${hp}\n` +
-        `Kirim sekarang?`
-    );
-
-    if (!konfirmasi) return;
+    if (!confirm("Kirim data sekarang?")) return;
 
     const dataBaru = {
         id: Date.now(),
@@ -613,20 +606,13 @@ function prosesData() {
         nama: nama,
         kontak: hp,
         email: data['email'] || '-',
-        alamat: data['alamat'] || '-',
-        usaha: data['jenis_usaha'] || '-',
-        layanan: data['pilih_layanan'] || data['layanan'] || '-',
-        deskripsi: data['penjelasan_usaha'] || data['deskripsi_usaha'] || '-',
-        tujuan: data['tujuan_proyek'] || '-',
+        layanan: data['pilih_layanan'] || '-',
         status: 'pending'
     };
 
     simpanKeStorage(dataBaru, form);
 }
 
-/* ===============================
-   5. SIMPAN DATA
-================================ */
 function simpanKeStorage(obj, form) {
     try {
         let projects = JSON.parse(localStorage.getItem('projekJDI') || '[]');
@@ -636,31 +622,21 @@ function simpanKeStorage(obj, form) {
         showNotification("✅ Permintaan berhasil dikirim!");
 
         if(form) form.reset();
-
-        setTimeout(() => {
-            toggleProjectModal();
-        }, 1200);
-
+        setTimeout(() => toggleProjectModal(), 1200);
     } catch (e) {
-        alert("❌ Gagal menyimpan data: " + e.message);
+        alert("❌ Gagal: " + e.message);
     }
 }
 
-/* ===============================
-   6. JEMBATAN ANTI-ERROR
-================================ */
-function kirimProyek() {
-    prosesData();
-}
+function kirimProyek() { prosesData(); }
 
 function handleLogin() {
     const user = document.getElementById('user')?.value;
     const pass = document.getElementById('pass')?.value;
-
     if (user === "admin" && pass === "bukadong821") {
         window.location.href = 'admin.html';
     } else {
-        alert("❌ Username atau password salah!");
+        alert("❌ Login Gagal!");
     }
 }
 </script>/body>
