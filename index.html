@@ -494,7 +494,10 @@ window.addEventListener('load', () => {
 });
 
 function initMainContent() {
+    // Fungsi renderServices hanya akan berjalan jika ada kontainer bernama 'services-list-container'
+    // Ini agar tidak menimpa bagian "Mengapa Memilih JDI"
     renderServices();
+
     const ids = ['fade-text-1', 'fade-text-2', 'fade-btns', 'laptop-mockup'];
     ids.forEach((id, i) => {
         setTimeout(() => {
@@ -544,17 +547,21 @@ function toggleProjectModal() {
 }
 
 /* ===============================
-   3. SERVICES RENDER
+   3. SERVICES RENDER (TARGET KHUSUS)
 ================================ */
 function renderServices() {
-    const container = document.getElementById('services-container');
+    // Pastikan ID ini berbeda dengan kontainer "Mengapa Memilih JDI"
+    // Gunakan ID kontainer yang memang khusus untuk daftar layanan teknis
+    const container = document.getElementById('technical-services-container');
     if (!container) return;
+
     const services = [
         { t: "Manajemen Database", i: "📁" },
         { t: "Web Application", i: "🌐" },
         { t: "Sistem Informasi", i: "📊" },
         { t: "Digital Signage", i: "📺" }
     ];
+
     container.innerHTML = services.map(s => `
         <div class="bg-white rounded-2xl shadow-sm p-6 border hover:border-accent-orange transition group cursor-pointer">
             <div class="text-3xl mb-4 group-hover:scale-110 transition">${s.i}</div>
@@ -564,9 +571,8 @@ function renderServices() {
 }
 
 /* ===============================
-   4. FORM DATA & STORAGE (TANPA ANOMALI)
+   4. DATA PROCESSING
 ================================ */
-// Fungsi ini sekarang murni hanya mengolah form dan tidak menyentuh elemen padding orange
 function prosesData() {
     const form = document.getElementById('proyekForm') || document.querySelector('form');
     if (!form) return;
@@ -611,7 +617,6 @@ function simpanKeStorage(obj, form) {
     }
 }
 
-// Jembatan untuk tombol kirim agar sistem tetap berjalan sesuai struktur Anda
 function kirimProyek() { 
     prosesData(); 
 }
