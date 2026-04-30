@@ -454,42 +454,68 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 
- <script>
-    // --- 1. INISIALISASI & STARTUP LOGO (JANGAN DIHAPUS) ---
+<script>
+    // --- FORCE SHOW LOADING (Hanya untuk testing, hapus baris di bawah ini jika sudah fix) ---
+    // sessionStorage.clear(); 
+
+    // --- 1. LOGIKA LOADING SCREEN (STARTUP) ---
     window.addEventListener('load', () => {
         const screen = document.getElementById('loading-screen');
         const main = document.getElementById('main-content');
         const fill = document.getElementById('loader-fill');
         const welcome = document.getElementById('welcome-msg');
+        
         const hasSeenIntro = sessionStorage.getItem('hasSeenIntro');
+
+        // Pastikan main-content tersembunyi di awal
+        if (main) main.style.opacity = '0';
 
         if (hasSeenIntro) {
             if (screen) screen.style.display = 'none';
-            if (main) main.style.opacity = '1';
-            initMainContent();
+            if (main) {
+                main.style.opacity = '1';
+                initMainContent();
+            }
         } else {
-            // Animasi Loading Bar & Welcome Message
+            // Pastikan screen muncul
+            if (screen) {
+                screen.style.display = 'flex';
+                screen.style.opacity = '1';
+            }
+
+            // Jalankan animasi bar & welcome
             setTimeout(() => { 
-                if (fill) fill.style.width = '100%';
+                if (fill) fill.style.width = '100%'; 
+            }, 100);
+
+            setTimeout(() => { 
                 if (welcome) {
                     welcome.style.opacity = '1';
                     welcome.style.transform = 'translateY(0)';
                 }
-            }, 100);
+            }, 500);
 
-            // Transisi ke Konten Utama (5 Detik)
+            // Transisi ke konten utama setelah 5 detik
             setTimeout(() => {
-                if (screen) screen.style.opacity = '0';
+                if (screen) {
+                    screen.style.transition = 'opacity 1s ease';
+                    screen.style.opacity = '0';
+                }
                 sessionStorage.setItem('hasSeenIntro', 'true');
+                
                 setTimeout(() => {
                     if (screen) screen.style.display = 'none';
-                    if (main) main.style.opacity = '1';
+                    if (main) {
+                        main.style.transition = 'opacity 1s ease';
+                        main.style.opacity = '1';
+                    }
                     initMainContent();
                 }, 1000);
             }, 5000); 
         }
     });
 
+    // Inisialisasi Konten Utama
     function initMainContent() {
         renderServices();
         if (typeof Swiper !== 'undefined') {
@@ -499,80 +525,66 @@
                 loop: true
             });
         }
-        // Animasi Elemen Hero
-        setTimeout(() => document.getElementById('fade-text-1')?.classList.add('fade-in-visible'), 200);
-        setTimeout(() => document.getElementById('fade-text-2')?.classList.add('fade-in-visible'), 500);
-        setTimeout(() => document.getElementById('fade-btns')?.classList.add('fade-in-visible'), 800);
-        setTimeout(() => document.getElementById('laptop-mockup')?.classList.add('laptop-visible'), 1000);
+        
+        // Trigger animasi CSS
+        const ids = ['fade-text-1', 'fade-text-2', 'fade-btns', 'laptop-mockup'];
+        ids.forEach((id, i) => {
+            setTimeout(() => {
+                const el = document.getElementById(id);
+                if (el) el.classList.add(id.includes('laptop') ? 'laptop-visible' : 'fade-in-visible');
+            }, i * 300);
+        });
     }
 
-    // --- 2. NOTIFIKASI TOAST MODERN ---
+    // --- 2. NOTIFIKASI MODERN ---
     function showNotification(message, isSuccess = false) {
         const toast = document.getElementById('success-toast');
         if (!toast) return;
 
         toast.innerText = message;
-        toast.classList.remove('hidden');
-        
-        // Styling via JS untuk memastikan tampilan melayang (Floating)
+        toast.className = `fixed top-5 right-5 z-[10000] p-4 rounded-xl text-white font-bold shadow-2xl transition-all duration-300 ${isSuccess ? 'bg-green-500' : 'bg-orange-500'}`;
         toast.style.display = 'block';
-        toast.style.position = 'fixed';
-        toast.style.top = '20px';
-        toast.style.right = '20px';
-        toast.style.zIndex = '9999';
-        toast.style.padding = '12px 24px';
-        toast.style.borderRadius = '10px';
-        toast.style.color = 'white';
-        toast.style.backgroundColor = isSuccess ? '#10B981' : '#FF8C00'; // Hijau jika sukses, Orange jika error
-        toast.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
 
         setTimeout(() => {
-            toast.classList.add('hidden');
             toast.style.display = 'none';
         }, 3000);
     }
 
-    // --- 3. FUNGSI KIRIM PROYEK (PERBAIKAN VALIDASI) ---
+    // --- 3. FUNGSI KIRIM PROYEK ---
     function kirimProyek() {
         const form = document.getElementById('proyekForm');
         if (!form) return;
 
         const inputs = form.querySelectorAll('input, select, textarea');
-        let data = {};
-        inputs.forEach(input => {
-            const key = input.getAttribute('name') || input.placeholder || input.id;
-            data[key] = input.value;
-        });
-
-        // Ambil Nama dan Kontak dari 2 input pertama (sesuai urutan di form Anda)
         const nama = inputs[0]?.value.trim();
         const kontak = inputs[1]?.value.trim();
 
         if (!nama || !kontak) {
-            showNotification("⚠️ Mohon lengkapi Nama dan Nomor HP!", false);
+            showNotification("⚠️ Mohon lengkapi Nama dan Kontak!", false);
             return;
         }
 
-        // Simpan ke LocalStorage
-        let projects = JSON.parse(localStorage.getItem('portal_projek') || '[]');
-        projects.push({
-            id: Date.now(),
-            timestamp: new Date().toLocaleString(),
-            ...data
+        let dataProyek = {};
+        inputs.forEach(input => {
+            let key = input.getAttribute('name') || input.placeholder || input.id;
+            dataProyek[key] = input.value;
         });
+
+        let projects = JSON.parse(localStorage.getItem('portal_projek') || '[]');
+        projects.push({ id: Date.now(), date: new Date().toLocaleString(), ...dataProyek });
         localStorage.setItem('portal_projek', JSON.stringify(projects));
 
-        showNotification("✅ Permintaan terkirim! Tim kami akan menghubungi Anda.", true);
+        showNotification("✅ Permintaan proyek berhasil dikirim!", true);
         form.reset();
         setTimeout(toggleProjectModal, 1500);
     }
 
-    // --- 4. LAYANAN & UI CONTROL ---
+    // --- 4. DATA & UI ---
     const servicesData = [
-        { title: "Manajemen Database", description: "Sistem pengelolaan data yang aman dan terintegrasi.", icon: "📁" },
-        { title: "Web Application", description: "Pengembangan aplikasi web responsif.", icon: "🌐" },
-        { title: "Sistem Informasi", description: "Solusi monitoring data real-time.", icon: "📊" },
-        { title: "Digital Signage", description: "Konten visual digital untuk promosi.", icon: "📺" }
+        { title: "Manajemen Database", description: "Sistem pengelolaan data yang aman.", icon: "📁" },
+        { title: "Web Application", description: "Aplikasi web responsif dan custom.", icon: "🌐" },
+        { title: "Sistem Informasi", description: "Monitoring data real-time.", icon: "📊" },
+        { title: "Digital Signage", description: "Visual digital untuk promosi.", icon: "📺" }
     ];
 
     function renderServices() {
@@ -589,18 +601,15 @@
     function handleLogin() {
         const user = document.getElementById('username')?.value;
         const pass = document.getElementById('password')?.value;
-        if (user === "admin" && pass === "admin123") {
-            window.location.href = 'admin.html';
-        } else {
-            showNotification("❌ Akses Ditolak! Cek Username/Password.", false);
-        }
+        if (user === "admin" && pass === "admin123") window.location.href = 'admin.html';
+        else showNotification("❌ Login Gagal!", false);
     }
 
     function toggleMobileMenu() { document.getElementById('mobile-menu')?.classList.toggle('hidden'); }
     function toggleProjectModal() { document.getElementById('project-modal')?.classList.toggle('hidden'); }
     
     function setFooterRating(n) {
-        document.querySelectorAll('.star-footer').forEach((s, i) => s.style.color = (i < n) ? '#ff8c00' : '#d1d5db');
+        document.querySelectorAll('.star-footer').forEach((s, i) => s.style.color = i < n ? '#ff8c00' : '#d1d5db');
         const status = document.getElementById('rating-status');
         if (status) { status.innerText = "Terima kasih!"; status.style.display = 'block'; }
     }
