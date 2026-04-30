@@ -565,20 +565,30 @@
     function kirimProyek() {
         const form = document.getElementById('proyekForm');
         if (!form) return;
-        const inputs = form.querySelectorAll('input, select, textarea');
-        const nama = inputs[0]?.value.trim();
-        const kontak = inputs[1]?.value.trim();
 
-        if (!nama || !kontak) {
-            showNotification("⚠️ Mohon isi Nama dan Kontak Anda!", false);
+        // Mengambil semua input dari modal konsultasi
+        const inputs = form.querySelectorAll('input, select, textarea');
+        let dataBaru = {
+            id: Date.now(),
+            tanggal: new Date().toLocaleString('id-ID'),
+            status: 'Pending' // Status default untuk proyek baru
+        };
+
+        // Mapping data berdasarkan atribut 'name' atau ID untuk konsistensi Portal Admin
+        inputs.forEach(input => {
+            const key = input.getAttribute('name') || input.id;
+            if (key) dataBaru[key] = input.value;
+        });
+
+        // Validasi: Sesuai atribut name pada HTML Konsultasi Proyek Baru
+        if (!dataBaru.nama_lengkap || !dataBaru.nomor_hp) {
+            showNotification("⚠️ Nama dan Nomor HP wajib diisi!", false);
             return;
         }
 
-        let data = {};
-        inputs.forEach(i => data[i.getAttribute('name') || i.placeholder || i.id] = i.value);
-        
+        // SIMPAN KE LOCALSTORAGE (Key: projekJDI) agar terbaca di Manajemen Portal Projek
         let projects = JSON.parse(localStorage.getItem('projekJDI') || '[]');
-        projects.push({ id: Date.now(), date: new Date().toLocaleString(), ...data });
+        projects.push(dataBaru);
         localStorage.setItem('projekJDI', JSON.stringify(projects));
 
         showNotification("✅ Berhasil! Proyek telah terkirim.", true);
