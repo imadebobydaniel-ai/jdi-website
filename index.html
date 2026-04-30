@@ -484,7 +484,20 @@
         menu.classList.toggle('hidden');
     }
 
-    // FUNGSI MODAL PROYEK & PENGIRIMAN
+    // --- PERBAIKAN LOGIN ---
+    function handleLogin() {
+        const user = document.getElementById('username')?.value; // Pastikan input punya ID 'username'
+        const pass = document.getElementById('password')?.value; // Pastikan input punya ID 'password'
+
+        // Logika sederhana: Ganti dengan kredensial yang Anda inginkan
+        if (user === "admin" && pass === "admin123") {
+            window.location.href = 'admin.html';
+        } else {
+            alert("Username atau password salah!");
+        }
+    }
+
+    // --- FUNGSI MODAL PROYEK & PENGIRIMAN ---
     function toggleProjectModal() {
         const modal = document.getElementById('project-modal');
         modal.classList.toggle('hidden');
@@ -492,29 +505,44 @@
 
     function kirimProyek() {
         const form = document.getElementById('proyekForm');
+        if (!form) return;
+
         const formData = new FormData(form);
         const dataProyek = Object.fromEntries(formData.entries());
 
-        // Simpan ke localStorage untuk Portal Projek
+        // Validasi Sederhana
+        if (!dataProyek.nama || !dataProyek.kontak) {
+            alert("Mohon isi minimal Nama dan Kontak!");
+            return;
+        }
+
+        // Simpan ke localStorage dengan kunci 'portal_projek' agar sinkron dengan admin
         let projects = JSON.parse(localStorage.getItem('portal_projek') || '[]');
         projects.push({
             id: Date.now(),
             date: new Date().toLocaleString(),
+            status: 'pending', // Status awal default
             ...dataProyek
         });
         localStorage.setItem('portal_projek', JSON.stringify(projects));
 
         // Notifikasi Sukses
         const toast = document.getElementById('success-toast');
-        toast.classList.remove('hidden');
-        
-        form.reset();
-        setTimeout(() => {
-            toast.classList.add('hidden');
+        if (toast) {
+            toast.classList.remove('hidden');
+            form.reset();
+            setTimeout(() => {
+                toast.classList.add('hidden');
+                toggleProjectModal();
+            }, 3000);
+        } else {
+            alert("Terima kasih! Permintaan proyek Anda telah dikirim.");
+            form.reset();
             toggleProjectModal();
-        }, 3000);
+        }
     }
 
+    // --- RATING FOOTER ---
     function setFooterRating(n, event) {
         const stars = document.querySelectorAll('.star-footer');
         const status = document.getElementById('rating-status');
@@ -547,9 +575,11 @@
     }
 
     function toggleAdminPanel() {
-        document.getElementById('admin-portal').classList.toggle('hidden');
+        const portal = document.getElementById('admin-portal');
+        if (portal) portal.classList.toggle('hidden');
     }
 
+    // --- LOADING & INITIALIZATION ---
     window.addEventListener('load', () => {
         const screen = document.getElementById('loading-screen');
         const main = document.getElementById('main-content');
@@ -576,19 +606,21 @@
                 document.getElementById('laptop-mockup')?.classList.add('laptop-visible');
             }
         } else {
-            welcome.style.fontSize = window.innerWidth < 768 ? '0.7rem' : '0.8rem';
+            if (welcome) welcome.style.fontSize = window.innerWidth < 768 ? '0.7rem' : '0.8rem';
             setTimeout(() => { 
-                fill.style.width = '100%';
-                welcome.style.opacity = '1';
-                welcome.style.transform = 'translateY(0)';
+                if (fill) fill.style.width = '100%';
+                if (welcome) {
+                    welcome.style.opacity = '1';
+                    welcome.style.transform = 'translateY(0)';
+                }
             }, 100);
 
             setTimeout(() => {
-                screen.style.opacity = '0';
+                if (screen) screen.style.opacity = '0';
                 sessionStorage.setItem('hasSeenIntro', 'true');
                 
                 setTimeout(() => {
-                    screen.style.display = 'none';
+                    if (screen) screen.style.display = 'none';
                     renderServices();
                     if (typeof Swiper !== 'undefined') {
                         new Swiper(".mySwiper", {
@@ -597,7 +629,7 @@
                             loop: true
                         });
                     }
-                    main.style.opacity = '1';
+                    if (main) main.style.opacity = '1';
                     document.getElementById('fade-text-1')?.classList.add('fade-in-visible');
                     setTimeout(() => document.getElementById('fade-text-2')?.classList.add('fade-in-visible'), 400);
                     setTimeout(() => document.getElementById('fade-btns')?.classList.add('fade-in-visible'), 800);
