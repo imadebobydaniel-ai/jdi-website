@@ -468,9 +468,7 @@ window.addEventListener('load', () => {
     const fill = document.querySelector('.loader-fill'); 
     const welcomeTxt = document.querySelector('.welcome-text'); 
 
-    if (fill) {
-        fill.style.width = '100%';
-    }
+    if (fill) fill.style.width = '100%';
 
     if (welcomeTxt) {
         setTimeout(() => {
@@ -482,10 +480,8 @@ window.addEventListener('load', () => {
     setTimeout(() => {
         if (screen) {
             screen.style.opacity = '0';
-            
             setTimeout(() => {
                 screen.style.display = 'none';
-                
                 if (main) {
                     main.style.display = 'block';
                     main.offsetHeight; 
@@ -499,14 +495,11 @@ window.addEventListener('load', () => {
 
 function initMainContent() {
     renderServices();
-
     const ids = ['fade-text-1', 'fade-text-2', 'fade-btns', 'laptop-mockup'];
     ids.forEach((id, i) => {
         setTimeout(() => {
             const el = document.getElementById(id);
-            if (el) {
-                el.classList.add(id.includes('laptop') ? 'laptop-visible' : 'fade-in-visible');
-            }
+            if (el) el.classList.add(id.includes('laptop') ? 'laptop-visible' : 'fade-in-visible');
         }, i * 250);
     });
 
@@ -520,22 +513,19 @@ function initMainContent() {
 }
 
 /* ===============================
-   2. UI HELPER (NOTIF & ASSISTANT)
+   2. UI HELPER & NOTIFIKASI
 ================================ */
 function showNotification(message) {
     const toast = document.getElementById('success-toast');
-
     if (toast) {
         const text = toast.querySelector('p.font-bold') || toast.querySelector('p');
         if (text) text.innerText = message;
-
         toast.style.display = 'block'; 
         toast.classList.remove('hidden');
-
         setTimeout(() => {
             toast.style.display = 'none';
             toast.classList.add('hidden');
-        }, 5000); 
+        }, 5000);
     } else {
         alert(message);
     }
@@ -559,14 +549,12 @@ function toggleProjectModal() {
 function renderServices() {
     const container = document.getElementById('services-container');
     if (!container) return;
-
     const services = [
         { t: "Manajemen Database", i: "📁" },
         { t: "Web Application", i: "🌐" },
         { t: "Sistem Informasi", i: "📊" },
         { t: "Digital Signage", i: "📺" }
     ];
-
     container.innerHTML = services.map(s => `
         <div class="bg-white rounded-2xl shadow-sm p-6 border hover:border-accent-orange transition group cursor-pointer">
             <div class="text-3xl mb-4 group-hover:scale-110 transition">${s.i}</div>
@@ -576,8 +564,9 @@ function renderServices() {
 }
 
 /* ===============================
-   4. FORM DATA & STORAGE (STABIL)
+   4. FORM DATA & STORAGE (TANPA ANOMALI)
 ================================ */
+// Fungsi ini sekarang murni hanya mengolah form dan tidak menyentuh elemen padding orange
 function prosesData() {
     const form = document.getElementById('proyekForm') || document.querySelector('form');
     if (!form) return;
@@ -588,22 +577,11 @@ function prosesData() {
 
     const nama = data['nama_lengkap'] || data['nama'];
     const hp = data['nomor_hp'] || data['phone'];
-    const layanan = data['pilih_layanan'] || '-';
 
     if (!nama || !hp) {
         alert("⚠️ Nama Lengkap dan Nomor HP wajib diisi!");
         return;
     }
-
-    const konfirmasi = confirm(
-        "KONFIRMASI PERMINTAAN:\n\n" +
-        "Nama: " + nama + "\n" +
-        "WhatsApp: " + hp + "\n" +
-        "Layanan: " + layanan + "\n\n" +
-        "Kirim sekarang?"
-    );
-
-    if (!konfirmasi) return;
 
     const dataBaru = {
         id: Date.now(),
@@ -611,7 +589,7 @@ function prosesData() {
         nama: nama,
         kontak: hp,
         email: data['email'] || '-',
-        layanan: layanan,
+        layanan: data['pilih_layanan'] || '-',
         status: 'pending'
     };
 
@@ -627,13 +605,13 @@ function simpanKeStorage(obj, form) {
         showNotification("Terimakasih Kami akan segera menghubungi anda");
 
         if(form) form.reset();
-        setTimeout(() => toggleProjectModal(), 1500);
+        setTimeout(() => toggleProjectModal(), 1200);
     } catch (e) {
         alert("❌ Gagal: " + e.message);
     }
 }
 
-// Fungsi jembatan tetap ada agar tombol HTML tidak eror
+// Jembatan untuk tombol kirim agar sistem tetap berjalan sesuai struktur Anda
 function kirimProyek() { 
     prosesData(); 
 }
