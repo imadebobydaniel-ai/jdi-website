@@ -518,25 +518,50 @@
         setTimeout(() => { toast.style.display = 'none'; }, 3000);
     }
 
-    // --- 3. LOGIN ADMIN (PASSWORD DISAMAKAN DENGAN GAMBAR ANDA) ---
+    // --- 3. LOGIN ADMIN (SESUAI ID HTML: "user" & "pass") ---
     function toggleAdminPanel() {
         const portal = document.getElementById('admin-portal');
         if (portal) portal.classList.toggle('hidden');
     }
 
     function handleLogin() {
-        const user = document.getElementById('username')?.value;
-        const pass = document.getElementById('password')?.value;
-        
-        // DISAMAKAN DENGAN GAMBAR: user "admin" & pass "bukadong821"
-        if (user === "admin" && pass === "bukadong821") {
-            window.location.href = 'admin.html';
+        // Mengambil elemen berdasarkan ID "user" dan "pass" sesuai HTML Anda
+        const userField = document.getElementById('user');
+        const passField = document.getElementById('pass');
+
+        // Mengambil nilai dan menghapus spasi yang tidak sengaja terketik
+        const userValue = userField ? userField.value.trim() : "";
+        const passValue = passField ? passField.value.trim() : "";
+
+        // Logika verifikasi sesuai data yang Anda miliki
+        if (userValue === "admin" && passValue === "bukadong821") {
+            showNotification("✅ Login Berhasil! Mengalihkan...", true);
+            
+            // Simpan status login sementara agar aman
+            sessionStorage.setItem('isLoggedIn', 'true');
+
+            setTimeout(() => {
+                window.location.href = 'admin.html';
+            }, 1000);
         } else {
             showNotification("❌ Login Gagal! Username atau Password salah.", false);
+            
+            // Opsional: Kosongkan password jika salah agar user bisa input ulang
+            if (passField) passField.value = "";
         }
     }
 
-    // --- 4. FORM PROYEK (STORAGE KEY DISAMAKAN: 'projekJDI') ---
+    // Mendukung tombol Enter untuk login
+    document.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            const portal = document.getElementById('admin-portal');
+            if (portal && !portal.classList.contains('hidden')) {
+                handleLogin();
+            }
+        }
+    });
+
+    // --- 4. FORM PROYEK (STORAGE KEY: 'projekJDI') ---
     function kirimProyek() {
         const form = document.getElementById('proyekForm');
         if (!form) return;
@@ -552,7 +577,6 @@
         let data = {};
         inputs.forEach(i => data[i.getAttribute('name') || i.placeholder || i.id] = i.value);
         
-        // MENGGUNAKAN KEY 'projekJDI' SESUAI GAMBAR SCRIPT ADMIN ANDA
         let projects = JSON.parse(localStorage.getItem('projekJDI') || '[]');
         projects.push({ id: Date.now(), date: new Date().toLocaleString(), ...data });
         localStorage.setItem('projekJDI', JSON.stringify(projects));
@@ -591,6 +615,9 @@
         if (status) { status.innerText = "Terima kasih!"; status.style.display = 'block'; }
     }
 
-    Fancybox.bind("[data-fancybox]", {});
+    // Pastikan library Fancybox sudah terpasang jika menggunakan ini
+    if (typeof Fancybox !== 'undefined') {
+        Fancybox.bind("[data-fancybox]", {});
+    }
 </script></body>
 </html>
