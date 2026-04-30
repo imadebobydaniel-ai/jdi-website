@@ -466,22 +466,43 @@
         const fill = document.getElementById('loader-fill');
         
         if (fill) fill.style.width = '100%';
+
+        // Kurangi waktu tunggu agar tidak terasa macet, konten muncul setelah loading selesai
         setTimeout(() => {
             if (screen) {
+                screen.style.transition = 'opacity 1s ease';
                 screen.style.opacity = '0';
                 setTimeout(() => screen.style.display = 'none', 1000);
             }
-            if (main) main.style.opacity = '1';
-            initMainContent();
-        }, 5000); 
+            if (main) {
+                main.style.transition = 'opacity 1s ease';
+                main.style.opacity = '1';
+            }
+            initMainContent(); // Memanggil render & animasi
+        }, 3000); // Saya percepat ke 3 detik agar user tidak menunggu terlalu lama
     });
 
     function initMainContent() {
         renderServices();
+        
+        // --- PERBAIKAN: MENGEMBALIKAN ANIMASI YANG HILANG ---
+        const ids = ['fade-text-1', 'fade-text-2', 'fade-btns', 'laptop-mockup'];
+        ids.forEach((id, i) => {
+            setTimeout(() => {
+                const el = document.getElementById(id);
+                if (el) {
+                    // Gunakan class yang sesuai dengan CSS kamu (fade-in-visible atau laptop-visible)
+                    const targetClass = id.includes('laptop') ? 'laptop-visible' : 'fade-in-visible';
+                    el.classList.add(targetClass);
+                }
+            }, i * 300);
+        });
+
         if (typeof Swiper !== 'undefined') {
             new Swiper(".mySwiper", {
                 navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-                autoplay: { delay: 3000 }, loop: true
+                autoplay: { delay: 3000 }, 
+                loop: true
             });
         }
     }
@@ -501,11 +522,10 @@
         }
     }
 
-    // --- 3. LOGIKA FORM & PREVIEW (FIXED) ---
+    // --- 3. LOGIKA FORM & PREVIEW ---
     let temporaryData = null; 
 
     function tampilkanPreview() {
-        // Cari form berdasarkan ID atau tag
         const form = document.getElementById('proyekForm') || document.querySelector('form');
         if (!form) return alert("Form tidak ditemukan!");
 
@@ -516,7 +536,7 @@
             if (key) fd[key] = input.value.trim();
         });
 
-        // Validasi menggunakan nama field yang sesuai dengan HTML kamu
+        // Mapping field agar fleksibel dengan nama di HTML
         const namaValue = fd['nama_lengkap'] || fd['nama'];
         const kontakValue = fd['nomor_hp'] || fd['phone'];
 
@@ -525,7 +545,7 @@
             return;
         }
 
-        temporaryData = fd; // Data disimpan ke global agar kirimProyek() bisa jalan
+        temporaryData = fd;
 
         const konfirmasi = confirm(`CEK DATA ANDA:\n\nNama: ${namaValue}\nNomor: ${kontakValue}\nLayanan: ${fd['pilih_layanan'] || fd['layanan'] || '-'}\n\nKirim permintaan sekarang?`);
         
@@ -535,10 +555,9 @@
     }
 
     function kirimProyek() {
-        // Sekarang temporaryData tidak akan NULL karena sudah diisi oleh tampilkanPreview()
         if (!temporaryData) return;
 
-        let dataBaru = {
+        const dataBaru = {
             id: Date.now(),
             tanggal: new Date().toLocaleString('id-ID'),
             nama: temporaryData['nama_lengkap'] || temporaryData['nama'],
@@ -563,9 +582,9 @@
             if (form) form.reset();
             temporaryData = null;
 
-            if (typeof toggleProjectModal === 'function') {
-                setTimeout(toggleProjectModal, 1500);
-            }
+            setTimeout(() => {
+                if (typeof toggleProjectModal === 'function') toggleProjectModal();
+            }, 1500);
         } catch (e) {
             alert("Gagal simpan: " + e.message);
         }
@@ -582,9 +601,9 @@
                 { t: "Digital Signage", i: "📺" }
             ];
             container.innerHTML = services.map(s => `
-                <div class="bg-white rounded-2xl shadow-sm p-6 border hover:border-accent-orange transition">
-                    <div class="text-3xl mb-4">${s.i}</div>
-                    <h3 class="text-lg font-bold">${s.t}</h3>
+                <div class="bg-white rounded-2xl shadow-sm p-6 border hover:border-accent-orange transition group">
+                    <div class="text-3xl mb-4 group-hover:scale-110 transition-transform">${s.i}</div>
+                    <h3 class="text-lg font-bold text-navy-dark">${s.t}</h3>
                 </div>`).join('');
         }
     }
@@ -600,7 +619,7 @@
         if (u === "admin" && p === "bukadong821") {
             window.location.href = 'admin.html';
         } else {
-            alert("Login Gagal!");
+            alert("❌ Login Gagal!");
         }
     }
 </script>/body>
