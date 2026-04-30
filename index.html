@@ -566,27 +566,25 @@
         const form = document.getElementById('proyekForm');
         if (!form) return;
 
-        // Mengambil semua input dari modal konsultasi
         const inputs = form.querySelectorAll('input, select, textarea');
         let dataBaru = {
             id: Date.now(),
             tanggal: new Date().toLocaleString('id-ID'),
-            status: 'Pending' // Status default untuk proyek baru
+            status: 'pending' 
         };
 
-        // Mapping data berdasarkan atribut 'name' atau ID untuk konsistensi Portal Admin
+        // Mengambil data berdasarkan atribut 'name'
         inputs.forEach(input => {
-            const key = input.getAttribute('name') || input.id;
+            const key = input.getAttribute('name');
             if (key) dataBaru[key] = input.value;
         });
 
-        // Validasi: Sesuai atribut name pada HTML Konsultasi Proyek Baru
-        if (!dataBaru.nama_lengkap || !dataBaru.nomor_hp) {
-            showNotification("⚠️ Nama dan Nomor HP wajib diisi!", false);
+        // Validasi minimal
+        if (!dataBaru.nama || !dataBaru.kontak) {
+            showNotification("⚠️ Nama dan Nomor WA wajib diisi!", false);
             return;
         }
 
-        // SIMPAN KE LOCALSTORAGE (Key: projekJDI) agar terbaca di Manajemen Portal Projek
         let projects = JSON.parse(localStorage.getItem('projekJDI') || '[]');
         projects.push(dataBaru);
         localStorage.setItem('projekJDI', JSON.stringify(projects));
