@@ -459,163 +459,184 @@
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 
 <script>
-    // --- 1. STARTUP & LOADING SCREEN ---
-    window.addEventListener('load', () => {
-        const screen = document.getElementById('loading-screen');
-        const main = document.getElementById('main-content');
-        const fill = document.getElementById('loader-fill');
-        
-        if (fill) fill.style.width = '100%';
+/* ===============================
+   1. LOADING & INIT
+================================ */
+window.addEventListener('load', () => {
+    const screen = document.getElementById('loading-screen');
+    const main = document.getElementById('main-content');
+    const fill = document.getElementById('loader-fill');
 
-        // Konten muncul setelah loading selesai (3 detik)
+    if (fill) fill.style.width = '100%';
+
+    setTimeout(() => {
+        if (screen) {
+            screen.style.opacity = '0';
+            setTimeout(() => screen.style.display = 'none', 800);
+        }
+
+        if (main) main.style.opacity = '1';
+
+        initMainContent();
+    }, 2500);
+});
+
+function initMainContent() {
+    renderServices();
+
+    const ids = ['fade-text-1', 'fade-text-2', 'fade-btns', 'laptop-mockup'];
+    ids.forEach((id, i) => {
         setTimeout(() => {
-            if (screen) {
-                screen.style.transition = 'opacity 1s ease';
-                screen.style.opacity = '0';
-                setTimeout(() => screen.style.display = 'none', 1000);
+            const el = document.getElementById(id);
+            if (el) {
+                el.classList.add(id.includes('laptop') ? 'laptop-visible' : 'fade-in-visible');
             }
-            if (main) {
-                main.style.transition = 'opacity 1s ease';
-                main.style.opacity = '1';
-            }
-            initMainContent(); 
-        }, 3000); 
+        }, i * 250);
     });
 
-    function initMainContent() {
-        renderServices();
-        
-        // --- AKTIFKAN ANIMASI KONTEN (FADE IN) ---
-        const ids = ['fade-text-1', 'fade-text-2', 'fade-btns', 'laptop-mockup'];
-        ids.forEach((id, i) => {
-            setTimeout(() => {
-                const el = document.getElementById(id);
-                if (el) {
-                    const targetClass = id.includes('laptop') ? 'laptop-visible' : 'fade-in-visible';
-                    el.classList.add(targetClass);
-                }
-            }, i * 300);
+    if (typeof Swiper !== 'undefined') {
+        new Swiper(".mySwiper", {
+            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+            autoplay: { delay: 3000 },
+            loop: true
         });
+    }
+}
 
-        if (typeof Swiper !== 'undefined') {
-            new Swiper(".mySwiper", {
-                navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-                autoplay: { delay: 3000 }, 
-                loop: true
-            });
-        }
+/* ===============================
+   2. UI HELPER
+================================ */
+function showNotification(message) {
+    const toast = document.getElementById('success-toast');
+
+    if (toast) {
+        const text = toast.querySelector('p.font-bold');
+        if (text) text.innerText = message;
+
+        toast.classList.remove('hidden');
+        toast.classList.add('block');
+
+        setTimeout(() => {
+            toast.classList.add('hidden');
+            toast.classList.remove('block');
+        }, 4000);
+    } else {
+        alert(message);
+    }
+}
+
+function toggleProjectModal() {
+    document.getElementById('project-modal')?.classList.toggle('hidden');
+}
+
+/* ===============================
+   3. SERVICES RENDER
+================================ */
+function renderServices() {
+    const container = document.getElementById('services-container');
+    if (!container) return;
+
+    const services = [
+        { t: "Manajemen Database", i: "📁" },
+        { t: "Web Application", i: "🌐" },
+        { t: "Sistem Informasi", i: "📊" },
+        { t: "Digital Signage", i: "📺" }
+    ];
+
+    container.innerHTML = services.map(s => `
+        <div class="bg-white rounded-2xl shadow-sm p-6 border hover:border-accent-orange transition group">
+            <div class="text-3xl mb-4 group-hover:scale-110 transition">${s.i}</div>
+            <h3 class="text-lg font-bold text-navy-dark">${s.t}</h3>
+        </div>
+    `).join('');
+}
+
+/* ===============================
+   4. FORM KIRIM (FIX TOTAL)
+================================ */
+function prosesData() {
+    const form = document.getElementById('proyekForm');
+    if (!form) {
+        alert("Form tidak ditemukan!");
+        return;
     }
 
-    // --- 2. NOTIFIKASI & UI HELPERS ---
-    function showNotification(message) {
-        const toast = document.getElementById('success-toast');
-        if (toast) {
-            toast.classList.remove('hidden');
-            toast.classList.add('block');
-            setTimeout(() => {
-                toast.classList.add('hidden');
-                toast.classList.remove('block');
-            }, 5000);
-        } else {
-            alert(message);
-        }
+    const formData = new FormData(form);
+    let data = {};
+
+    formData.forEach((value, key) => {
+        data[key] = value.trim();
+    });
+
+    // VALIDASI WAJIB
+    if (!data.nama_lengkap || !data.nomor_hp) {
+        alert("⚠️ Nama Lengkap dan Nomor HP wajib diisi!");
+        return;
     }
 
-    function toggleProjectModal() { 
-        const modal = document.getElementById('project-modal');
-        if (modal) modal.classList.toggle('hidden'); 
+    // KONFIRMASI
+    const konfirmasi = confirm(
+        `CEK DATA ANDA:\n\n` +
+        `Nama: ${data.nama_lengkap}\n` +
+        `Nomor: ${data.nomor_hp}\n` +
+        `Layanan: ${data.layanan || '-'}\n\n` +
+        `Kirim sekarang?`
+    );
+
+    if (!konfirmasi) return;
+
+    // FORMAT DATA
+    const dataBaru = {
+        id: Date.now(),
+        tanggal: new Date().toLocaleString('id-ID'),
+        nama: data.nama_lengkap,
+        kontak: data.nomor_hp,
+        email: data.email || '-',
+        alamat: data.alamat || '-',
+        usaha: data.jenis_usaha || '-',
+        layanan: data.layanan || '-',
+        deskripsi: data.deskripsi_usaha || '-',
+        tujuan: data.tujuan_proyek || '-',
+        status: 'pending'
+    };
+
+    simpanKeStorage(dataBaru, form);
+}
+
+/* ===============================
+   5. SIMPAN DATA
+================================ */
+function simpanKeStorage(obj, form) {
+    try {
+        let projects = JSON.parse(localStorage.getItem('projekJDI') || '[]');
+        projects.push(obj);
+        localStorage.setItem('projekJDI', JSON.stringify(projects));
+
+        showNotification("✅ Permintaan berhasil dikirim!");
+
+        form.reset();
+
+        setTimeout(() => {
+            toggleProjectModal();
+        }, 1200);
+
+    } catch (e) {
+        alert("❌ Gagal menyimpan data: " + e.message);
     }
+}
 
-    function renderServices() {
-        const container = document.getElementById('services-container');
-        if (container) {
-            const services = [
-                { t: "Manajemen Database", i: "📁" },
-                { t: "Web Application", i: "🌐" },
-                { t: "Sistem Informasi", i: "📊" },
-                { t: "Digital Signage", i: "📺" }
-            ];
-            container.innerHTML = services.map(s => `
-                <div class="bg-white rounded-2xl shadow-sm p-6 border hover:border-accent-orange transition group cursor-pointer">
-                    <div class="text-3xl mb-4 group-hover:scale-110 transition-transform">${s.i}</div>
-                    <h3 class="text-lg font-bold text-navy-dark">${s.t}</h3>
-                </div>`).join('');
-        }
+/* ===============================
+   6. ADMIN LOGIN
+================================ */
+function handleLogin() {
+    const user = document.getElementById('user')?.value;
+    const pass = document.getElementById('pass')?.value;
+
+    if (user === "admin" && pass === "bukadong821") {
+        window.location.href = 'admin.html';
+    } else {
+        alert("❌ Username atau password salah!");
     }
-
-    // --- 3. LOGIKA FORM KONSULTASI (ANTI-ERROR) ---
-    function prosesData() {
-        console.log("Proses data dimulai...");
-
-        // Ambil elemen form secara fleksibel
-        const form = document.getElementById('proyekForm') || document.querySelector('form');
-        if (!form) return alert("Sistem tidak bisa menemukan elemen form.");
-
-        // Gunakan FormData untuk mengambil seluruh input sekaligus
-        const formData = new FormData(form);
-        const data = {};
-        formData.forEach((value, key) => {
-            data[key] = value.trim();
-        });
-
-        // Deteksi Nama & HP (Mendukung ID atau atribut 'name' di HTML)
-        const nama = data['nama_lengkap'] || data['nama'] || document.getElementById('nama_lengkap')?.value;
-        const hp = data['nomor_hp'] || data['phone'] || document.getElementById('nomor_hp')?.value;
-
-        if (!nama || !hp) {
-            alert("⚠️ Nama Lengkap dan Nomor HP wajib diisi!");
-            return;
-        }
-
-        // Preview Konfirmasi
-        const konfirmasi = confirm(`CEK DATA ANDA:\n\nNama: ${nama}\nNomor: ${hp}\nLayanan: ${data['pilih_layanan'] || '-'}\n\nKirim sekarang?`);
-        
-        if (konfirmasi) {
-            const dataBaru = {
-                id: Date.now(),
-                tanggal: new Date().toLocaleString('id-ID'),
-                nama: nama,
-                kontak: hp,
-                email: data['email'] || '-',
-                alamat: data['alamat'] || '-',
-                usaha: data['jenis_usaha'] || '-',
-                layanan: data['pilih_layanan'] || '-',
-                deskripsi: data['penjelasan_usaha'] || '-',
-                tujuan: data['tujuan_proyek'] || '-',
-                status: 'pending' 
-            };
-
-            simpanKeStorage(dataBaru, form);
-        }
-    }
-
-    function simpanKeStorage(obj, formElement) {
-        try {
-            let projects = JSON.parse(localStorage.getItem('projekJDI') || '[]');
-            projects.push(obj);
-            localStorage.setItem('projekJDI', JSON.stringify(projects));
-
-            showNotification("✅ Berhasil dikirim!");
-            
-            if (formElement) formElement.reset();
-
-            setTimeout(() => {
-                toggleProjectModal();
-            }, 1500);
-        } catch (e) {
-            alert("Gagal simpan data: " + e.message);
-        }
-    }
-
-    // --- 4. ADMIN LOGIN ---
-    function handleLogin() {
-        const u = document.getElementById('user')?.value;
-        const p = document.getElementById('pass')?.value;
-        if (u === "admin" && p === "bukadong821") {
-            window.location.href = 'admin.html';
-        } else {
-            alert("❌ Login Gagal!");
-        }
-    }
+}
 </script>/body>
 </html>
