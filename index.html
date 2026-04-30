@@ -455,20 +455,16 @@
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 
 <script>
-    // --- 1. STARTUP & LOADING SCREEN (5 DETIK) ---
+    // --- 1. STARTUP & LOADING SCREEN (WAJIB ADA) ---
     window.addEventListener('load', () => {
         const screen = document.getElementById('loading-screen');
         const main = document.getElementById('main-content');
         const fill = document.getElementById('loader-fill');
         const welcome = document.getElementById('welcome-msg');
         
-        // Sembunyikan konten utama di awal agar tidak "balapan"
         if (main) main.style.opacity = '0';
 
-        // Animasi Loading Bar (Mengisi dalam 5 detik)
         setTimeout(() => { if (fill) fill.style.width = '100%'; }, 100);
-        
-        // Munculkan Pesan Welcome
         setTimeout(() => { 
             if (welcome) {
                 welcome.style.opacity = '1';
@@ -476,12 +472,12 @@
             }
         }, 500);
 
-        // Transisi ke Halaman Utama setelah 5 detik
         setTimeout(() => {
             if (screen) {
                 screen.style.transition = 'opacity 1s ease';
                 screen.style.opacity = '0';
             }
+            sessionStorage.setItem('hasSeenIntro', 'true');
             
             setTimeout(() => {
                 if (screen) screen.style.display = 'none';
@@ -503,7 +499,6 @@
                 loop: true
             });
         }
-        // Animasi Elemen Hero
         const ids = ['fade-text-1', 'fade-text-2', 'fade-btns', 'laptop-mockup'];
         ids.forEach((id, i) => {
             setTimeout(() => {
@@ -513,33 +508,27 @@
         });
     }
 
-    // --- 2. NOTIFIKASI TOAST (FLOATING BLOCK) ---
+    // --- 2. NOTIFIKASI TOAST ---
     function showNotification(message, isSuccess = false) {
         const toast = document.getElementById('success-toast');
         if (!toast) return;
-        
         toast.innerText = message;
         toast.style.display = 'block';
         toast.className = `fixed top-5 right-5 z-[10000] p-4 rounded-xl text-white font-bold shadow-2xl transition-all ${isSuccess ? 'bg-green-500' : 'bg-orange-500'}`;
-        
-        setTimeout(() => { 
-            toast.style.display = 'none'; 
-        }, 3000);
+        setTimeout(() => { toast.style.display = 'none'; }, 3000);
     }
 
-    // --- 3. LOGIN & PANEL ADMIN (FIXED DARI IMAGE_2C37A5.JPG) ---
+    // --- 3. LOGIN ADMIN (PASSWORD DISAMAKAN DENGAN GAMBAR ANDA) ---
     function toggleAdminPanel() {
         const portal = document.getElementById('admin-portal');
-        if (portal) {
-            portal.classList.toggle('hidden');
-        }
+        if (portal) portal.classList.toggle('hidden');
     }
 
     function handleLogin() {
         const user = document.getElementById('username')?.value;
         const pass = document.getElementById('password')?.value;
         
-        // Kredensial default
+        // DISAMAKAN DENGAN GAMBAR: user "admin" & pass "bukadong821"
         if (user === "admin" && pass === "bukadong821") {
             window.location.href = 'admin.html';
         } else {
@@ -547,13 +536,11 @@
         }
     }
 
-    // --- 4. FORM PROYEK (MULAI PROJEK) ---
+    // --- 4. FORM PROYEK (STORAGE KEY DISAMAKAN: 'projekJDI') ---
     function kirimProyek() {
         const form = document.getElementById('proyekForm');
         if (!form) return;
-
         const inputs = form.querySelectorAll('input, select, textarea');
-        // Validasi: ambil input ke-1 (Nama) dan ke-2 (Kontak)
         const nama = inputs[0]?.value.trim();
         const kontak = inputs[1]?.value.trim();
 
@@ -562,36 +549,20 @@
             return;
         }
 
-        // Kumpulkan data
         let data = {};
-        inputs.forEach(i => {
-            let key = i.getAttribute('name') || i.placeholder || i.id || "input_" + Math.random();
-            data[key] = i.value;
-        });
-
-        // Simpan ke LocalStorage agar bisa dibaca di admin.html
-        let projects = JSON.parse(localStorage.getItem('portal_projek') || '[]');
-        projects.push({ 
-            id: Date.now(), 
-            date: new Date().toLocaleString(), 
-            ...data 
-        });
-        localStorage.setItem('portal_projek', JSON.stringify(projects));
-
-        showNotification("✅ Berhasil! Data proyek Anda telah terkirim.", true);
-        form.reset();
+        inputs.forEach(i => data[i.getAttribute('name') || i.placeholder || i.id] = i.value);
         
-        // Tutup modal setelah sukses
-        setTimeout(() => {
-            if (typeof toggleProjectModal === 'function') {
-                toggleProjectModal();
-            } else {
-                document.getElementById('project-modal')?.classList.add('hidden');
-            }
-        }, 1500);
+        // MENGGUNAKAN KEY 'projekJDI' SESUAI GAMBAR SCRIPT ADMIN ANDA
+        let projects = JSON.parse(localStorage.getItem('projekJDI') || '[]');
+        projects.push({ id: Date.now(), date: new Date().toLocaleString(), ...data });
+        localStorage.setItem('projekJDI', JSON.stringify(projects));
+
+        showNotification("✅ Berhasil! Proyek telah terkirim.", true);
+        form.reset();
+        setTimeout(toggleProjectModal, 1500);
     }
 
-    // --- 5. FUNGSI UI PENDUKUNG ---
+    // --- 5. UI LAINNYA ---
     const servicesData = [
         { title: "Manajemen Database", description: "Pengelolaan data terintegrasi.", icon: "📁" },
         { title: "Web Application", description: "Web responsif dan custom.", icon: "🌐" },
@@ -611,26 +582,15 @@
         }
     }
 
-    function toggleMobileMenu() { 
-        document.getElementById('mobile-menu')?.classList.toggle('hidden'); 
-    }
-
-    function toggleProjectModal() { 
-        document.getElementById('project-modal')?.classList.toggle('hidden'); 
-    }
+    function toggleMobileMenu() { document.getElementById('mobile-menu')?.classList.toggle('hidden'); }
+    function toggleProjectModal() { document.getElementById('project-modal')?.classList.toggle('hidden'); }
     
     function setFooterRating(n) {
         document.querySelectorAll('.star-footer').forEach((s, i) => s.style.color = i < n ? '#ff8c00' : '#d1d5db');
         const status = document.getElementById('rating-status');
-        if (status) { 
-            status.innerText = "Terima kasih atas rating Anda!"; 
-            status.style.display = 'block'; 
-        }
+        if (status) { status.innerText = "Terima kasih!"; status.style.display = 'block'; }
     }
 
-    // Bind Fancybox jika library tersedia
-    if (typeof Fancybox !== 'undefined') {
-        Fancybox.bind("[data-fancybox]", {});
-    }
+    Fancybox.bind("[data-fancybox]", {});
 </script></body>
 </html>
