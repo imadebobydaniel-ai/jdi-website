@@ -551,49 +551,60 @@
         }
     });
 
-    // --- 4. FORM PROYEK (INTEGRASI TABEL ADMIN) ---
+    // --- 4. FORM PROYEK (VERSI AMAN BERDASARKAN URUTAN FORM) ---
     function kirimProyek() {
         const form = document.getElementById('proyekForm');
         if (!form) return;
 
-        // Mengambil elemen secara spesifik untuk memastikan kecocokan field tabel admin
-        const inputNama = document.querySelector('[name="nama_lengkap"]') || document.getElementById('nama_lengkap');
-        const inputKontak = document.querySelector('[name="nomor_hp"]') || document.getElementById('nomor_hp');
-        const inputEmail = document.querySelector('[name="email"]') || document.getElementById('email');
-        const inputAlamat = document.querySelector('[name="alamat"]') || document.getElementById('alamat');
-        const inputUsaha = document.querySelector('[name="jenis_usaha"]') || document.getElementById('jenis_usaha');
-        const inputLayanan = document.querySelector('[name="pilih_layanan"]') || document.getElementById('pilih_layanan');
-        const inputPenjelasan = document.querySelector('[name="penjelasan_usaha"]') || document.getElementById('penjelasan_usaha');
-        const inputTujuan = document.querySelector('[name="tujuan_proyek"]') || document.getElementById('tujuan_proyek');
+        // Mengambil semua elemen input/select/textarea di dalam form
+        const inputs = form.querySelectorAll('input, select, textarea');
+        
+        // Objek data sementara
+        let fd = {};
+        inputs.forEach(input => {
+            // Kita ambil berdasarkan ID atau Name yang ada di HTML
+            let key = input.id || input.getAttribute('name');
+            if (key) fd[key] = input.value.trim();
+        });
 
-        // Validasi Wajib
-        if (!inputNama?.value.trim() || !inputKontak?.value.trim()) {
+        // VALIDASI (Mendeteksi berbagai kemungkinan nama ID/Name di HTML Anda)
+        const namaValue = fd.nama_lengkap || fd.nama || fd.Nama;
+        const kontakValue = fd.nomor_hp || fd.kontak || fd.wa || fd.No;
+
+        if (!namaValue || !kontakValue) {
             showNotification("⚠️ Nama dan Nomor WA wajib diisi!", false);
             return;
         }
 
-        // Struktur data disamakan dengan fungsi loadProjectData() di admin
+        // Susun data final untuk disimpan di LocalStorage (sinkron dengan Tabel Admin)
         let dataBaru = {
             id: Date.now(),
             tanggal: new Date().toLocaleString('id-ID'),
-            nama: inputNama.value,
-            kontak: inputKontak.value,
-            email: inputEmail?.value || '-',
-            alamat: inputAlamat?.value || '-',
-            usaha: inputUsaha?.value || '-',
-            layanan: inputLayanan?.value || 'Website',
-            penjelasan_usaha: inputPenjelasan?.value || '-', // Tampil di kolom Nama/Usaha (detail kecil)
-            tujuan_proyek: inputTujuan?.value || '-',       // Tampil di kolom Layanan (rincian tujuan)
+            nama: namaValue,
+            kontak: kontakValue,
+            email: fd.email || '-',
+            alamat: fd.alamat || '-',
+            usaha: fd.jenis_usaha || '-',
+            layanan: fd.pilih_layanan || 'Website',
+            penjelasan_usaha: fd.penjelasan_usaha || '-',
+            tujuan_proyek: fd.tujuan_proyek || '-',
             status: 'pending' 
         };
 
-        let projects = JSON.parse(localStorage.getItem('projekJDI') || '[]');
-        projects.push(dataBaru);
-        localStorage.setItem('projekJDI', JSON.stringify(projects));
+        try {
+            let projects = JSON.parse(localStorage.getItem('projekJDI') || '[]');
+            projects.push(dataBaru);
+            localStorage.setItem('projekJDI', JSON.stringify(projects));
 
-        showNotification("✅ Berhasil! Proyek telah terkirim.", true);
-        form.reset();
-        setTimeout(toggleProjectModal, 1500);
+            showNotification("✅ Berhasil! Proyek telah terkirim.", true);
+            form.reset();
+            
+            setTimeout(() => {
+                if (typeof toggleProjectModal === 'function') toggleProjectModal();
+            }, 1500);
+        } catch (e) {
+            showNotification("❌ Gagal menyimpan data.", false);
+        }
     }
 
     // --- 5. UI LAINNYA ---
