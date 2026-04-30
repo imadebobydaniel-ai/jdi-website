@@ -518,7 +518,7 @@
         setTimeout(() => { toast.style.display = 'none'; }, 3000);
     }
 
-    // --- 3. LOGIN ADMIN (SESUAI ID HTML: "user" & "pass") ---
+    // --- 3. LOGIN ADMIN ---
     function toggleAdminPanel() {
         const portal = document.getElementById('admin-portal');
         if (portal) portal.classList.toggle('hidden');
@@ -527,14 +527,12 @@
     function handleLogin() {
         const userField = document.getElementById('user');
         const passField = document.getElementById('pass');
-
         const userValue = userField ? userField.value.trim() : "";
         const passValue = passField ? passField.value.trim() : "";
 
         if (userValue === "admin" && passValue === "bukadong821") {
             showNotification("✅ Login Berhasil! Mengalihkan...", true);
             sessionStorage.setItem('isLoggedIn', 'true');
-
             setTimeout(() => {
                 window.location.href = 'admin.html';
             }, 1000);
@@ -553,29 +551,28 @@
         }
     });
 
-    // --- 4. FORM PROYEK (STORAGE KEY: 'projekJDI') ---
-    // Logika diperbarui untuk akurasi ID dan Name elemen
+    // --- 4. FORM PROYEK (INTEGRASI TABEL ADMIN) ---
     function kirimProyek() {
         const form = document.getElementById('proyekForm');
         if (!form) return;
 
-        // Mengambil elemen secara spesifik berdasarkan ID atau Name agar lebih akurat
+        // Mengambil elemen secara spesifik untuk memastikan kecocokan field tabel admin
         const inputNama = document.querySelector('[name="nama_lengkap"]') || document.getElementById('nama_lengkap');
         const inputKontak = document.querySelector('[name="nomor_hp"]') || document.getElementById('nomor_hp');
         const inputEmail = document.querySelector('[name="email"]') || document.getElementById('email');
         const inputAlamat = document.querySelector('[name="alamat"]') || document.getElementById('alamat');
         const inputUsaha = document.querySelector('[name="jenis_usaha"]') || document.getElementById('jenis_usaha');
         const inputLayanan = document.querySelector('[name="pilih_layanan"]') || document.getElementById('pilih_layanan');
-        const inputPenjelasanUsaha = document.querySelector('[name="penjelasan_usaha"]') || document.getElementById('penjelasan_usaha');
-        const inputTujuanProyek = document.querySelector('[name="tujuan_proyek"]') || document.getElementById('tujuan_proyek');
+        const inputPenjelasan = document.querySelector('[name="penjelasan_usaha"]') || document.getElementById('penjelasan_usaha');
+        const inputTujuan = document.querySelector('[name="tujuan_proyek"]') || document.getElementById('tujuan_proyek');
 
-        // Validasi minimal: Nama dan Kontak tidak boleh kosong
+        // Validasi Wajib
         if (!inputNama?.value.trim() || !inputKontak?.value.trim()) {
             showNotification("⚠️ Nama dan Nomor WA wajib diisi!", false);
             return;
         }
 
-        // Menyusun objek data agar sesuai dengan pemetaan di halaman Admin
+        // Struktur data disamakan dengan fungsi loadProjectData() di admin
         let dataBaru = {
             id: Date.now(),
             tanggal: new Date().toLocaleString('id-ID'),
@@ -585,28 +582,18 @@
             alamat: inputAlamat?.value || '-',
             usaha: inputUsaha?.value || '-',
             layanan: inputLayanan?.value || 'Website',
-            penjelasan_usaha: inputPenjelasanUsaha?.value || '-',
-            tujuan_proyek: inputTujuanProyek?.value || '-',
-            status: 'pending'
+            penjelasan_usaha: inputPenjelasan?.value || '-', // Tampil di kolom Nama/Usaha (detail kecil)
+            tujuan_proyek: inputTujuan?.value || '-',       // Tampil di kolom Layanan (rincian tujuan)
+            status: 'pending' 
         };
 
-        // Simpan ke LocalStorage
-        try {
-            let projects = JSON.parse(localStorage.getItem('projekJDI') || '[]');
-            projects.push(dataBaru);
-            localStorage.setItem('projekJDI', JSON.stringify(projects));
+        let projects = JSON.parse(localStorage.getItem('projekJDI') || '[]');
+        projects.push(dataBaru);
+        localStorage.setItem('projekJDI', JSON.stringify(projects));
 
-            showNotification("✅ Berhasil! Proyek telah terkirim.", true);
-            form.reset();
-            
-            // Tutup modal setelah sukses
-            setTimeout(() => {
-                if (typeof toggleProjectModal === 'function') toggleProjectModal();
-            }, 1500);
-        } catch (e) {
-            console.error("Gagal menyimpan data:", e);
-            showNotification("❌ Gagal mengirim. Coba lagi.", false);
-        }
+        showNotification("✅ Berhasil! Proyek telah terkirim.", true);
+        form.reset();
+        setTimeout(toggleProjectModal, 1500);
     }
 
     // --- 5. UI LAINNYA ---
