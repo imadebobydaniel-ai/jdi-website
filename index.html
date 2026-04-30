@@ -315,22 +315,24 @@
                 </div>
 
                 <form id="proyekForm" class="p-6 space-y-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Nama Lengkap</label>
-                            <input type="text" name="nama" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="Contoh: John Doe">
+                            <!-- Ganti name="nama" menjadi name="nama_lengkap" -->
+                            <input type="text" name="nama_lengkap" id="nama_lengkap" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="Contoh: John Doe">
                         </div>
                         <div>
                             <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Nomor HP / WA</label>
-                            <input type="tel" name="phone" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="0812...">
+                            <!-- Ganti name="phone" menjadi name="nomor_hp" -->
+                            <input type="tel" name="nomor_hp" id="nomor_hp" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="0812...">
                         </div>
                         <div>
                             <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Email</label>
-                            <input type="email" name="email" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="nama@email.com">
+                            <input type="email" name="email" id="email" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="nama@email.com">
                         </div>
                         <div>
                             <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Alamat</label>
-                            <input type="text" name="alamat" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="Kota Jayapura...">
+                            <input type="text" name="alamat" id="alamat" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="Kota Jayapura...">
                         </div>
                     </div>
 
@@ -455,7 +457,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 
 <script>
-    // --- 1. STARTUP & LOADING SCREEN (WAJIB ADA) ---
+    // --- 1. STARTUP & LOADING SCREEN ---
     window.addEventListener('load', () => {
         const screen = document.getElementById('loading-screen');
         const main = document.getElementById('main-content');
@@ -508,14 +510,22 @@
         });
     }
 
-    // --- 2. NOTIFIKASI TOAST ---
+    // --- 2. NOTIFIKASI TOAST (MODERN) ---
     function showNotification(message, isSuccess = false) {
         const toast = document.getElementById('success-toast');
         if (!toast) return;
-        toast.innerText = message;
-        toast.style.display = 'block';
-        toast.className = `fixed top-5 right-5 z-[10000] p-4 rounded-xl text-white font-bold shadow-2xl transition-all ${isSuccess ? 'bg-green-500' : 'bg-orange-500'}`;
-        setTimeout(() => { toast.style.display = 'none'; }, 3000);
+
+        // Update isi pesan jika diperlukan (Opsional)
+        // toast.querySelector('p.font-bold').innerText = message;
+
+        toast.classList.remove('hidden');
+        toast.classList.add('block');
+        
+        // Sembunyikan otomatis setelah 5 detik
+        setTimeout(() => {
+            toast.classList.add('hidden');
+            toast.classList.remove('block');
+        }, 5000);
     }
 
     // --- 3. LOGIN ADMIN ---
@@ -531,63 +541,61 @@
         const passValue = passField ? passField.value.trim() : "";
 
         if (userValue === "admin" && passValue === "bukadong821") {
-            showNotification("✅ Login Berhasil! Mengalihkan...", true);
+            showNotification("✅ Login Berhasil!", true);
             sessionStorage.setItem('isLoggedIn', 'true');
-            setTimeout(() => {
-                window.location.href = 'admin.html';
-            }, 1000);
+            setTimeout(() => { window.location.href = 'admin.html'; }, 1000);
         } else {
-            showNotification("❌ Login Gagal! Username atau Password salah.", false);
+            alert("❌ Login Gagal!");
             if (passField) passField.value = "";
         }
     }
 
-    document.addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
-            const portal = document.getElementById('admin-portal');
-            if (portal && !portal.classList.contains('hidden')) {
-                handleLogin();
-            }
-        }
-    });
+    // --- 4. FORM PROYEK & PREVIEW ---
+    let temporaryData = null; // Simpan data sementara untuk preview
 
-    // --- 4. FORM PROYEK (VERSI AMAN BERDASARKAN URUTAN FORM) ---
-    function kirimProyek() {
+    function tampilkanPreview() {
         const form = document.getElementById('proyekForm');
         if (!form) return;
 
-        // Mengambil semua elemen input/select/textarea di dalam form
         const inputs = form.querySelectorAll('input, select, textarea');
-        
-        // Objek data sementara
         let fd = {};
         inputs.forEach(input => {
-            // Kita ambil berdasarkan ID atau Name yang ada di HTML
             let key = input.id || input.getAttribute('name');
             if (key) fd[key] = input.value.trim();
         });
 
-        // VALIDASI (Mendeteksi berbagai kemungkinan nama ID/Name di HTML Anda)
-        const namaValue = fd.nama_lengkap || fd.nama || fd.Nama;
-        const kontakValue = fd.nomor_hp || fd.kontak || fd.wa || fd.No;
+        const namaValue = fd.nama_lengkap || fd.nama;
+        const kontakValue = fd.nomor_hp || fd.phone;
 
         if (!namaValue || !kontakValue) {
-            showNotification("⚠️ Nama dan Nomor WA wajib diisi!", false);
+            alert("⚠️ Nama dan Nomor WA wajib diisi sebelum melihat preview!");
             return;
         }
 
-        // Susun data final untuk disimpan di LocalStorage (sinkron dengan Tabel Admin)
+        temporaryData = fd; // Simpan ke variabel global
+
+        // Munculkan Konfirmasi Sederhana (Atau bisa ganti ke Modal Preview jika punya UI-nya)
+        const konfirmasi = confirm(`Cek Data Anda:\n\nNama: ${namaValue}\nKontak: ${kontakValue}\nLayanan: ${fd.pilih_layanan || 'Website'}\n\nApakah data sudah benar?`);
+        
+        if (konfirmasi) {
+            kirimProyek();
+        }
+    }
+
+    function kirimProyek() {
+        if (!temporaryData) return;
+
         let dataBaru = {
             id: Date.now(),
             tanggal: new Date().toLocaleString('id-ID'),
-            nama: namaValue,
-            kontak: kontakValue,
-            email: fd.email || '-',
-            alamat: fd.alamat || '-',
-            usaha: fd.jenis_usaha || '-',
-            layanan: fd.pilih_layanan || 'Website',
-            penjelasan_usaha: fd.penjelasan_usaha || '-',
-            tujuan_proyek: fd.tujuan_proyek || '-',
+            nama: temporaryData.nama_lengkap || temporaryData.nama,
+            kontak: temporaryData.nomor_hp || temporaryData.phone,
+            email: temporaryData.email || '-',
+            alamat: temporaryData.alamat || '-',
+            usaha: temporaryData.jenis_usaha || '-',
+            layanan: temporaryData.pilih_layanan || 'Website',
+            penjelasan_usaha: temporaryData.penjelasan_usaha || '-',
+            tujuan_proyek: temporaryData.tujuan_proyek || '-',
             status: 'pending' 
         };
 
@@ -596,14 +604,17 @@
             projects.push(dataBaru);
             localStorage.setItem('projekJDI', JSON.stringify(projects));
 
-            showNotification("✅ Berhasil! Proyek telah terkirim.", true);
-            form.reset();
+            // TAMPILKAN TOAST SUCCESS
+            showNotification("✅ Berhasil!", true);
+            
+            document.getElementById('proyekForm').reset();
+            temporaryData = null;
             
             setTimeout(() => {
                 if (typeof toggleProjectModal === 'function') toggleProjectModal();
             }, 1500);
         } catch (e) {
-            showNotification("❌ Gagal menyimpan data.", false);
+            alert("❌ Gagal menyimpan data.");
         }
     }
 
