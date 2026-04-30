@@ -214,12 +214,9 @@
     // --- MANAJEMEN PORTAL PROJEK ---
     function loadProjectData() {
         const tableBody = document.getElementById('project-data-list');
-        // Pastikan tableBody ada sebelum mengisi (mencegah error di halaman login)
         if (!tableBody) return;
 
         const data = JSON.parse(localStorage.getItem('projekJDI')) || [];
-        
-        // Bersihkan tabel sebelum render ulang (kecuali header)
         tableBody.innerHTML = '';
 
         if (data.length === 0) {
@@ -231,53 +228,53 @@
             const row = document.createElement('tr');
             row.className = "text-[13px] divide-y";
             
-            // Penyesuaian variabel agar sinkron dengan input form (mendukung key 'nama_lengkap' atau 'nama')
-            const namaTampil = item.nama_lengkap || item.nama || 'No Name';
-            const usahaTampil = item.jenis_usaha || item.usaha || '-';
-            const kontakTampil = item.nomor_hp || item.kontak || '-';
-            const emailTampil = item.email || '-';
-            const layananTampil = item.pilih_layanan || item.layanan || 'Website';
-            const tujuanTampil = item.detail_tujuan || item.tujuan || '-';
-            const statusTampil = (item.status || 'pending').toLowerCase();
+            // Integrasi Variabel Sinkron dengan Form Konsultasi
+            const nama = item.nama || item.nama_lengkap || 'No Name';
+            const usaha = item.usaha || item.jenis_usaha || '-';
+            const penjelasan = item.penjelasan || '-'; 
+            const kontak = item.kontak || item.nomor_hp || '-';
+            const email = item.email || '-';
+            const layanan = item.layanan || item.pilih_layanan || 'Website';
+            const tujuan = item.tujuan || item.detail_tujuan || '-';
+            const status = (item.status || 'pending').toLowerCase();
 
             row.innerHTML = `
                 <td class="px-6 py-5 border-r">
-                    <div class="font-bold text-navy-dark text-[15px]">${namaTampil}</div>
-                    <div class="text-[11px] text-gray-500 font-medium">${usahaTampil}</div>
+                    <div class="font-bold text-navy-dark text-[15px]">${nama}</div>
+                    <div class="text-[11px] text-gray-500 font-medium">${usaha} <span class="text-gray-400">(${penjelasan})</span></div>
                 </td>
                 <td class="px-6 py-5 border-r leading-relaxed">
                     <div class="flex items-center gap-2 text-green-600 font-bold mb-1">
-                        <span class="text-sm">📞</span> ${kontakTampil}
+                        <span class="text-sm">📞</span> ${kontak}
                     </div>
-                    <div class="text-gray-600 truncate max-w-[200px]">📧 ${emailTampil}</div>
+                    <div class="text-gray-600 truncate max-w-[200px]">📧 ${email}</div>
                 </td>
                 <td class="px-6 py-5 border-r">
-                    <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wide">${layananTampil}</span>
-                    <p class="text-gray-600 text-[12px] mt-2 italic leading-snug">"${tujuanTampil}"</p>
+                    <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wide">${layanan}</span>
+                    <p class="text-gray-600 text-[12px] mt-2 italic leading-snug">"${tujuan}"</p>
                 </td>
                 <td class="px-6 py-5 border-r">
-                    <select onchange="updateStatus(${index}, this.value)" class="status-select ${getStatusClass(statusTampil)} px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase cursor-pointer outline-none w-full">
-                        <option value="pending" ${statusTampil === 'pending' ? 'selected' : ''}>Pending</option>
-                        <option value="on-process" ${statusTampil === 'on-process' ? 'selected' : ''}>On Process</option>
-                        <option value="done" ${statusTampil === 'done' ? 'selected' : ''}>Done</option>
+                    <select onchange="updateStatus(${index}, this.value)" class="status-select ${getStatusClass(status)} px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase cursor-pointer outline-none w-full">
+                        <option value="pending" ${status === 'pending' ? 'selected' : ''}>Pending</option>
+                        <option value="on-process" ${status === 'on-process' ? 'selected' : ''}>On Process</option>
+                        <option value="done" ${status === 'done' ? 'selected' : ''}>Done</option>
                     </select>
                 </td>
                 <td class="px-6 py-5 text-right space-x-3 text-[12px] font-bold">
-                    <button onclick="window.open('https://wa.me/${kontakTampil.replace(/\D/g,'')}')" class="text-green-500 hover:bg-green-50 px-2 py-1 rounded">WhatsApp</button>
-                    <button class="text-red-500 hover:bg-red-50 px-2 py-1 rounded" onclick="hapusProjek(${index})">Hapus</button>
+                    <button onclick="window.open('https://wa.me/${kontak.replace(/\D/g,'')}')" class="text-green-500 hover:bg-green-50 px-2 py-1 rounded">WhatsApp</button>
+                    <button class="text-red-500 hover:bg-red-50 px-2 py-1 rounded" onclick="hapusProyek(${index})">Hapus</button>
                 </td>
             `;
             tableBody.appendChild(row);
         });
     }
 
-    // Fungsi tambahan untuk menyimpan perubahan status di localStorage
     function updateStatus(index, newStatus) {
         let data = JSON.parse(localStorage.getItem('projekJDI')) || [];
         if (data[index]) {
             data[index].status = newStatus;
             localStorage.setItem('projekJDI', JSON.stringify(data));
-            loadProjectData(); // Refresh untuk memperbarui warna class status
+            loadProjectData(); 
         }
     }
 
@@ -288,12 +285,12 @@
         return 'bg-gray-50 text-gray-700 border border-gray-200';
     }
 
-    function hapusProjek(index) {
+    function hapusProyek(index) {
         if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
             let data = JSON.parse(localStorage.getItem('projekJDI')) || [];
             data.splice(index, 1);
             localStorage.setItem('projekJDI', JSON.stringify(data));
-            loadProjectData(); // Refresh tabel
+            loadProjectData();
         }
     }
 
@@ -353,7 +350,7 @@
             const nav = document.getElementById('nav-projek');
             nav.classList.add('bg-accent-orange', 'font-bold', 'text-white');
             document.getElementById('header-title').innerText = 'Manajemen Portal Projek';
-            loadProjectData(); // Load data saat masuk portal
+            loadProjectData();
         }
     }
 
