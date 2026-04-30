@@ -466,7 +466,6 @@
         { title: "Digital Signage", description: "Konten visual digital untuk kebutuhan promosi.", icon: "📺" }
     ];
 
-    // Fungsi Render Card Layanan
     function renderServices() {
         const container = document.getElementById('services-container');
         if (!container) return;
@@ -482,20 +481,60 @@
         });
     }
 
-    // Navigasi & UI Toggle
-    function toggleMobileMenu() {
-        const menu = document.getElementById('mobile-menu');
-        if (menu) menu.classList.toggle('hidden');
+    // --- FITUR NOTIFIKASI CUSTOM (BLOCK DISPLAY) ---
+    function showNotification(message, isSuccess = false) {
+        const toast = document.getElementById('success-toast');
+        if (!toast) return;
+
+        toast.innerText = message;
+        toast.style.display = 'block'; // Pastikan tampil sebagai block
+        toast.classList.remove('hidden');
+        
+        // Warna dinamis: Orange untuk info/error, Hijau untuk sukses (opsional)
+        toast.style.backgroundColor = isSuccess ? '#10B981' : '#FF8C00';
+
+        setTimeout(() => {
+            toast.classList.add('hidden');
+            toast.style.display = 'none';
+        }, 3000);
     }
 
-    function toggleAdminPanel() {
-        const portal = document.getElementById('admin-portal');
-        if (portal) portal.classList.toggle('hidden');
-    }
+    // --- PERBAIKAN FUNGSI KIRIM PROYEK ---
+    function kirimProyek() {
+        const form = document.getElementById('proyekForm');
+        if (!form) return;
 
-    function toggleProjectModal() {
-        const modal = document.getElementById('project-modal');
-        if (modal) modal.classList.toggle('hidden');
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        /* PERBAIKAN LOGIKA: 
+           Di screenshot Anda, input menggunakan label 'NAMA LENGKAP' dan 'NOMOR HP/WA'.
+           Pastikan atribut 'name' di elemen <input> adalah name="nama" dan name="kontak".
+        */
+        const nama = data.nama || data['NAMA LENGKAP']; 
+        const kontak = data.kontak || data['NOMOR HP / WA'];
+
+        if (!nama || !kontak) {
+            showNotification("⚠️ Mohon isi Nama dan Kontak Anda!", false);
+            return;
+        }
+
+        // Simpan data
+        let projects = JSON.parse(localStorage.getItem('portal_projek') || '[]');
+        projects.push({
+            id: Date.now(),
+            date: new Date().toLocaleString(),
+            status: 'pending',
+            nama: nama,
+            kontak: kontak,
+            ...data
+        });
+        localStorage.setItem('portal_projek', JSON.stringify(projects));
+
+        // Notifikasi Sukses (Block Display)
+        showNotification("✅ Permintaan proyek berhasil dikirim!", true);
+        form.reset();
+        setTimeout(() => { toggleProjectModal(); }, 1500);
     }
 
     // Logika Login Admin
@@ -506,81 +545,28 @@
         if (user === "admin" && pass === "admin123") {
             window.location.href = 'admin.html';
         } else {
-            alert("Username atau password salah!");
+            showNotification("❌ Username atau password salah!");
         }
     }
 
-    // Fungsi Pengiriman Proyek (Sinkron ke LocalStorage Admin)
-    function kirimProyek() {
-        const form = document.getElementById('proyekForm');
-        if (!form) return;
+    // Navigasi & UI Toggle
+    function toggleMobileMenu() { document.getElementById('mobile-menu')?.classList.toggle('hidden'); }
+    function toggleAdminPanel() { document.getElementById('admin-portal')?.classList.toggle('hidden'); }
+    function toggleProjectModal() { document.getElementById('project-modal')?.classList.toggle('hidden'); }
 
-        const formData = new FormData(form);
-        const dataProyek = Object.fromEntries(formData.entries());
-
-        if (!dataProyek.nama || !dataProyek.kontak) {
-            alert("Mohon isi minimal Nama dan Kontak!");
-            return;
-        }
-
-        let projects = JSON.parse(localStorage.getItem('portal_projek') || '[]');
-        projects.push({
-            id: Date.now(),
-            date: new Date().toLocaleString(),
-            status: 'pending',
-            ...dataProyek
-        });
-        localStorage.setItem('portal_projek', JSON.stringify(projects));
-
-        const toast = document.getElementById('success-toast');
-        if (toast) {
-            toast.classList.remove('hidden');
-            form.reset();
-            setTimeout(() => {
-                toast.classList.add('hidden');
-                toggleProjectModal();
-            }, 3000);
-        } else {
-            alert("Terima kasih! Permintaan proyek Anda telah dikirim.");
-            form.reset();
-            toggleProjectModal();
-        }
-    }
-
-    // Rating Footer dengan Efek Partikel
+    // Rating Footer
     function setFooterRating(n, event) {
         const stars = document.querySelectorAll('.star-footer');
-        const status = document.getElementById('rating-status');
+        stars.forEach((s, i) => s.style.color = (i < n) ? '#ff8c00' : '#d1d5db');
         
-        stars.forEach((s, i) => {
-            s.style.color = (i < n) ? '#ff8c00' : '#d1d5db';
-        });
-
-        // Efek Sprinkle/Partikel
-        const rect = event.target.getBoundingClientRect();
-        for (let i = 0; i < 8; i++) {
-            const sprinkle = document.createElement('div');
-            sprinkle.className = 'sprinkle';
-            sprinkle.style.left = (event.clientX - rect.left + (Math.random() * 20 - 10)) + 'px';
-            sprinkle.style.top = (event.clientY - rect.top + (Math.random() * 20 - 10)) + 'px';
-            
-            const angle = Math.random() * Math.PI * 2;
-            const dist = 30 + Math.random() * 30;
-            sprinkle.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
-            sprinkle.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
-            
-            event.target.appendChild(sprinkle);
-            setTimeout(() => sprinkle.remove(), 600);
-        }
-
+        const status = document.getElementById('rating-status');
         if (status) {
             status.innerText = "Terima kasih atas rating " + n + " bintang Anda!";
-            status.classList.remove('text-gray-400');
-            status.classList.add('text-accent-orange');
+            status.style.display = 'block';
         }
     }
 
-    // Inisialisasi Konten & Animasi
+    // Inisialisasi Konten & Startup
     function initMainContent() {
         renderServices();
         if (typeof Swiper !== 'undefined') {
@@ -590,20 +576,17 @@
                 loop: true
             });
         }
-        // Jalankan animasi teks hero
         document.getElementById('fade-text-1')?.classList.add('fade-in-visible');
         setTimeout(() => document.getElementById('fade-text-2')?.classList.add('fade-in-visible'), 400);
         setTimeout(() => document.getElementById('fade-btns')?.classList.add('fade-in-visible'), 800);
         setTimeout(() => document.getElementById('laptop-mockup')?.classList.add('laptop-visible'), 1000);
     }
 
-    // --- LOGIKA LOADING SCREEN (STARTUP 5 DETIK) ---
     window.addEventListener('load', () => {
         const screen = document.getElementById('loading-screen');
         const main = document.getElementById('main-content');
         const fill = document.getElementById('loader-fill');
         const welcome = document.getElementById('welcome-msg');
-        
         const hasSeenIntro = sessionStorage.getItem('hasSeenIntro');
 
         if (hasSeenIntro) {
@@ -611,9 +594,6 @@
             if (main) main.style.opacity = '1';
             initMainContent();
         } else {
-            if (welcome) welcome.style.fontSize = window.innerWidth < 768 ? '0.7rem' : '0.8rem';
-            
-            // Jalankan Loading Bar
             setTimeout(() => { 
                 if (fill) fill.style.width = '100%';
                 if (welcome) {
@@ -622,11 +602,9 @@
                 }
             }, 100);
 
-            // Selesai Loading (5 Detik)
             setTimeout(() => {
                 if (screen) screen.style.opacity = '0';
                 sessionStorage.setItem('hasSeenIntro', 'true');
-                
                 setTimeout(() => {
                     if (screen) screen.style.display = 'none';
                     if (main) main.style.opacity = '1';
