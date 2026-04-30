@@ -454,9 +454,11 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 
-    <script>
+   <script>
+    // Inisialisasi Fancybox
     Fancybox.bind("[data-fancybox]", {});
 
+    // Data Layanan
     const servicesData = [
         { title: "Manajemen Database", description: "Sistem pengelolaan data yang aman dan terintegrasi.", icon: "📁" },
         { title: "Web Application", description: "Pengembangan aplikasi web responsif dan custom.", icon: "🌐" },
@@ -464,6 +466,7 @@
         { title: "Digital Signage", description: "Konten visual digital untuk kebutuhan promosi.", icon: "📺" }
     ];
 
+    // Fungsi Render Card Layanan
     function renderServices() {
         const container = document.getElementById('services-container');
         if (!container) return;
@@ -479,17 +482,27 @@
         });
     }
 
+    // Navigasi & UI Toggle
     function toggleMobileMenu() {
         const menu = document.getElementById('mobile-menu');
-        menu.classList.toggle('hidden');
+        if (menu) menu.classList.toggle('hidden');
     }
 
-    // --- PERBAIKAN LOGIN ---
-    function handleLogin() {
-        const user = document.getElementById('username')?.value; // Pastikan input punya ID 'username'
-        const pass = document.getElementById('password')?.value; // Pastikan input punya ID 'password'
+    function toggleAdminPanel() {
+        const portal = document.getElementById('admin-portal');
+        if (portal) portal.classList.toggle('hidden');
+    }
 
-        // Logika sederhana: Ganti dengan kredensial yang Anda inginkan
+    function toggleProjectModal() {
+        const modal = document.getElementById('project-modal');
+        if (modal) modal.classList.toggle('hidden');
+    }
+
+    // Logika Login Admin
+    function handleLogin() {
+        const user = document.getElementById('username')?.value;
+        const pass = document.getElementById('password')?.value;
+
         if (user === "admin" && pass === "admin123") {
             window.location.href = 'admin.html';
         } else {
@@ -497,12 +510,7 @@
         }
     }
 
-    // --- FUNGSI MODAL PROYEK & PENGIRIMAN ---
-    function toggleProjectModal() {
-        const modal = document.getElementById('project-modal');
-        modal.classList.toggle('hidden');
-    }
-
+    // Fungsi Pengiriman Proyek (Sinkron ke LocalStorage Admin)
     function kirimProyek() {
         const form = document.getElementById('proyekForm');
         if (!form) return;
@@ -510,23 +518,20 @@
         const formData = new FormData(form);
         const dataProyek = Object.fromEntries(formData.entries());
 
-        // Validasi Sederhana
         if (!dataProyek.nama || !dataProyek.kontak) {
             alert("Mohon isi minimal Nama dan Kontak!");
             return;
         }
 
-        // Simpan ke localStorage dengan kunci 'portal_projek' agar sinkron dengan admin
         let projects = JSON.parse(localStorage.getItem('portal_projek') || '[]');
         projects.push({
             id: Date.now(),
             date: new Date().toLocaleString(),
-            status: 'pending', // Status awal default
+            status: 'pending',
             ...dataProyek
         });
         localStorage.setItem('portal_projek', JSON.stringify(projects));
 
-        // Notifikasi Sukses
         const toast = document.getElementById('success-toast');
         if (toast) {
             toast.classList.remove('hidden');
@@ -542,7 +547,7 @@
         }
     }
 
-    // --- RATING FOOTER ---
+    // Rating Footer dengan Efek Partikel
     function setFooterRating(n, event) {
         const stars = document.querySelectorAll('.star-footer');
         const status = document.getElementById('rating-status');
@@ -551,6 +556,7 @@
             s.style.color = (i < n) ? '#ff8c00' : '#d1d5db';
         });
 
+        // Efek Sprinkle/Partikel
         const rect = event.target.getBoundingClientRect();
         for (let i = 0; i < 8; i++) {
             const sprinkle = document.createElement('div');
@@ -574,12 +580,24 @@
         }
     }
 
-    function toggleAdminPanel() {
-        const portal = document.getElementById('admin-portal');
-        if (portal) portal.classList.toggle('hidden');
+    // Inisialisasi Konten & Animasi
+    function initMainContent() {
+        renderServices();
+        if (typeof Swiper !== 'undefined') {
+            new Swiper(".mySwiper", {
+                navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+                autoplay: { delay: 3000 },
+                loop: true
+            });
+        }
+        // Jalankan animasi teks hero
+        document.getElementById('fade-text-1')?.classList.add('fade-in-visible');
+        setTimeout(() => document.getElementById('fade-text-2')?.classList.add('fade-in-visible'), 400);
+        setTimeout(() => document.getElementById('fade-btns')?.classList.add('fade-in-visible'), 800);
+        setTimeout(() => document.getElementById('laptop-mockup')?.classList.add('laptop-visible'), 1000);
     }
 
-    // --- LOADING & INITIALIZATION ---
+    // --- LOGIKA LOADING SCREEN (STARTUP 5 DETIK) ---
     window.addEventListener('load', () => {
         const screen = document.getElementById('loading-screen');
         const main = document.getElementById('main-content');
@@ -590,23 +608,12 @@
 
         if (hasSeenIntro) {
             if (screen) screen.style.display = 'none';
-            if (main) {
-                main.style.opacity = '1';
-                renderServices();
-                if (typeof Swiper !== 'undefined') {
-                    new Swiper(".mySwiper", {
-                        navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-                        autoplay: { delay: 3000 },
-                        loop: true
-                    });
-                }
-                document.getElementById('fade-text-1')?.classList.add('fade-in-visible');
-                document.getElementById('fade-text-2')?.classList.add('fade-in-visible');
-                document.getElementById('fade-btns')?.classList.add('fade-in-visible');
-                document.getElementById('laptop-mockup')?.classList.add('laptop-visible');
-            }
+            if (main) main.style.opacity = '1';
+            initMainContent();
         } else {
             if (welcome) welcome.style.fontSize = window.innerWidth < 768 ? '0.7rem' : '0.8rem';
+            
+            // Jalankan Loading Bar
             setTimeout(() => { 
                 if (fill) fill.style.width = '100%';
                 if (welcome) {
@@ -615,25 +622,15 @@
                 }
             }, 100);
 
+            // Selesai Loading (5 Detik)
             setTimeout(() => {
                 if (screen) screen.style.opacity = '0';
                 sessionStorage.setItem('hasSeenIntro', 'true');
                 
                 setTimeout(() => {
                     if (screen) screen.style.display = 'none';
-                    renderServices();
-                    if (typeof Swiper !== 'undefined') {
-                        new Swiper(".mySwiper", {
-                            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-                            autoplay: { delay: 3000 },
-                            loop: true
-                        });
-                    }
                     if (main) main.style.opacity = '1';
-                    document.getElementById('fade-text-1')?.classList.add('fade-in-visible');
-                    setTimeout(() => document.getElementById('fade-text-2')?.classList.add('fade-in-visible'), 400);
-                    setTimeout(() => document.getElementById('fade-btns')?.classList.add('fade-in-visible'), 800);
-                    setTimeout(() => document.getElementById('laptop-mockup')?.classList.add('laptop-visible'), 1000);
+                    initMainContent();
                 }, 1000);
             }, 5000); 
         }
