@@ -520,7 +520,7 @@ function initMainContent() {
 }
 
 /* ===============================
-   2. UI HELPER (NOTIF DISPLAY BLOCK & ASSISTANT)
+   2. UI HELPER (NOTIF & ASSISTANT)
 ================================ */
 function showNotification(message) {
     const toast = document.getElementById('success-toast');
@@ -529,7 +529,6 @@ function showNotification(message) {
         const text = toast.querySelector('p.font-bold') || toast.querySelector('p');
         if (text) text.innerText = message;
 
-        // Fungsikan display block sesuai instruksi
         toast.style.display = 'block'; 
         toast.classList.remove('hidden');
 
@@ -577,7 +576,7 @@ function renderServices() {
 }
 
 /* ===============================
-   4. FORM DATA & STORAGE (DENGAN PREVIEW)
+   4. FORM DATA & STORAGE (STABIL)
 ================================ */
 function prosesData() {
     const form = document.getElementById('proyekForm') || document.querySelector('form');
@@ -596,16 +595,15 @@ function prosesData() {
         return;
     }
 
-    // Penambahan Fitur Preview sebelum Mengirim menggunakan jendela konfirmasi standar
-    const konfirmasiPreview = confirm(
-        "--- PREVIEW DATA PROYEK ---\n\n" +
+    const konfirmasi = confirm(
+        "KONFIRMASI PERMINTAAN:\n\n" +
         "Nama: " + nama + "\n" +
         "WhatsApp: " + hp + "\n" +
         "Layanan: " + layanan + "\n\n" +
-        "Apakah data di atas sudah benar?"
+        "Kirim sekarang?"
     );
 
-    if (!konfirmasiPreview) return;
+    if (!konfirmasi) return;
 
     const dataBaru = {
         id: Date.now(),
@@ -626,7 +624,6 @@ function simpanKeStorage(obj, form) {
         projects.push(obj);
         localStorage.setItem('projekJDI', JSON.stringify(projects));
 
-        // Notifikasi sesuai instruksi
         showNotification("Terimakasih Kami akan segera menghubungi anda");
 
         if(form) form.reset();
@@ -636,7 +633,7 @@ function simpanKeStorage(obj, form) {
     }
 }
 
-// Menghubungkan klik tombol ke fungsi prosesData tanpa memicu ReferenceError
+// Fungsi jembatan tetap ada agar tombol HTML tidak eror
 function kirimProyek() { 
     prosesData(); 
 }
