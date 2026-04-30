@@ -471,12 +471,14 @@ window.addEventListener('load', () => {
 
     setTimeout(() => {
         if (screen) {
+            screen.style.transition = 'opacity 1s ease'; // Tambahan agar smooth
             screen.style.opacity = '0';
             setTimeout(() => screen.style.display = 'none', 800);
         }
-
-        if (main) main.style.opacity = '1';
-
+        if (main) {
+            main.style.transition = 'opacity 1s ease';
+            main.style.opacity = '1';
+        }
         initMainContent();
     }, 2500);
 });
@@ -510,7 +512,7 @@ function showNotification(message) {
     const toast = document.getElementById('success-toast');
 
     if (toast) {
-        const text = toast.querySelector('p.font-bold');
+        const text = toast.querySelector('p.font-bold') || toast.querySelector('p');
         if (text) text.innerText = message;
 
         toast.classList.remove('hidden');
@@ -544,7 +546,7 @@ function renderServices() {
     ];
 
     container.innerHTML = services.map(s => `
-        <div class="bg-white rounded-2xl shadow-sm p-6 border hover:border-accent-orange transition group">
+        <div class="bg-white rounded-2xl shadow-sm p-6 border hover:border-accent-orange transition group cursor-pointer">
             <div class="text-3xl mb-4 group-hover:scale-110 transition">${s.i}</div>
             <h3 class="text-lg font-bold text-navy-dark">${s.t}</h3>
         </div>
@@ -555,7 +557,7 @@ function renderServices() {
    4. FORM KIRIM (FIX TOTAL)
 ================================ */
 function prosesData() {
-    const form = document.getElementById('proyekForm');
+    const form = document.getElementById('proyekForm') || document.querySelector('form');
     if (!form) {
         alert("Form tidak ditemukan!");
         return;
@@ -568,35 +570,35 @@ function prosesData() {
         data[key] = value.trim();
     });
 
-    // VALIDASI WAJIB
-    if (!data.nama_lengkap || !data.nomor_hp) {
+    // Validasi Field - Sesuaikan dengan 'name' di HTML kamu
+    const nama = data['nama_lengkap'] || data['nama'];
+    const hp = data['nomor_hp'] || data['phone'];
+
+    if (!nama || !hp) {
         alert("⚠️ Nama Lengkap dan Nomor HP wajib diisi!");
         return;
     }
 
-    // KONFIRMASI
     const konfirmasi = confirm(
         `CEK DATA ANDA:\n\n` +
-        `Nama: ${data.nama_lengkap}\n` +
-        `Nomor: ${data.nomor_hp}\n` +
-        `Layanan: ${data.layanan || '-'}\n\n` +
+        `Nama: ${nama}\n` +
+        `Nomor: ${hp}\n` +
         `Kirim sekarang?`
     );
 
     if (!konfirmasi) return;
 
-    // FORMAT DATA
     const dataBaru = {
         id: Date.now(),
         tanggal: new Date().toLocaleString('id-ID'),
-        nama: data.nama_lengkap,
-        kontak: data.nomor_hp,
-        email: data.email || '-',
-        alamat: data.alamat || '-',
-        usaha: data.jenis_usaha || '-',
-        layanan: data.layanan || '-',
-        deskripsi: data.deskripsi_usaha || '-',
-        tujuan: data.tujuan_proyek || '-',
+        nama: nama,
+        kontak: hp,
+        email: data['email'] || '-',
+        alamat: data['alamat'] || '-',
+        usaha: data['jenis_usaha'] || '-',
+        layanan: data['pilih_layanan'] || data['layanan'] || '-',
+        deskripsi: data['penjelasan_usaha'] || data['deskripsi_usaha'] || '-',
+        tujuan: data['tujuan_proyek'] || '-',
         status: 'pending'
     };
 
@@ -614,7 +616,7 @@ function simpanKeStorage(obj, form) {
 
         showNotification("✅ Permintaan berhasil dikirim!");
 
-        form.reset();
+        if(form) form.reset();
 
         setTimeout(() => {
             toggleProjectModal();
@@ -626,8 +628,13 @@ function simpanKeStorage(obj, form) {
 }
 
 /* ===============================
-   6. ADMIN LOGIN
+   6. JEMBATAN ANTI-ERROR (PENTING!)
 ================================ */
+// Ini untuk mengatasi error "kirimProyek is not defined" di console kamu
+function kirimProyek() {
+    prosesData();
+}
+
 function handleLogin() {
     const user = document.getElementById('user')?.value;
     const pass = document.getElementById('pass')?.value;
