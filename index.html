@@ -460,41 +460,38 @@
 
 <script>
 /* ===============================
-   1. LOADING & INIT (FIXED STARTUP)
+   1. LOADING & INIT (5 SECONDS STARTUP)
 ================================ */
 window.addEventListener('load', () => {
     const screen = document.getElementById('loading-screen');
     const main = document.getElementById('main-content');
     const fill = document.getElementById('loader-fill');
 
-    // Memastikan fill bar berjalan penuh saat load selesai
     if (fill) {
-        fill.style.transition = 'width 0.5s ease-out';
+        // Durasi progress bar disesuaikan agar selaras dengan 5 detik
+        fill.style.transition = 'width 4.5s linear';
         fill.style.width = '100%';
     }
 
-    // Penyesuaian timing startup agar lebih sempurna
+    // Penyesuaian durasi startup menjadi tepat 5 detik (5000ms)
     setTimeout(() => {
         if (screen) {
-            screen.style.transition = 'opacity 0.8s ease';
+            screen.style.transition = 'opacity 1s ease';
             screen.style.opacity = '0';
             
-            // Menghapus screen dari flow setelah transisi selesai
             setTimeout(() => {
                 screen.style.display = 'none';
                 
-                // Trigger main content setelah screen benar-benar hilang
                 if (main) {
-                    main.style.display = 'block'; // Memastikan display aktif
-                    main.style.transition = 'opacity 0.8s ease';
-                    // Force reflow untuk trigger transisi opacity
+                    main.style.display = 'block';
+                    main.style.transition = 'opacity 1s ease';
                     main.offsetHeight; 
                     main.style.opacity = '1';
                 }
                 initMainContent();
-            }, 800);
+            }, 1000);
         }
-    }, 2000); // Waktu tunggu loading diperhalus ke 2 detik
+    }, 5000); 
 });
 
 function initMainContent() {
@@ -520,7 +517,7 @@ function initMainContent() {
 }
 
 /* ===============================
-   2. UI HELPER (NOTIFIKASI BLOCK DISPLAY)
+   2. UI HELPER & VIRTUAL ASSISTANT
 ================================ */
 function showNotification(message) {
     const toast = document.getElementById('success-toast');
@@ -529,7 +526,6 @@ function showNotification(message) {
         const text = toast.querySelector('p.font-bold') || toast.querySelector('p');
         if (text) text.innerText = message;
 
-        // Mengubah notifikasi ke display block sesuai perintah
         toast.style.display = 'block'; 
         toast.classList.remove('hidden');
 
@@ -544,6 +540,15 @@ function showNotification(message) {
 
 function toggleProjectModal() {
     document.getElementById('project-modal')?.classList.toggle('hidden');
+}
+
+// Mengembalikan fungsi asisten virtual
+function toggleAssistant() {
+    const chatBox = document.getElementById('chat-assistant');
+    if (chatBox) {
+        chatBox.classList.toggle('hidden');
+        chatBox.classList.toggle('flex');
+    }
 }
 
 /* ===============================
@@ -642,7 +647,7 @@ function simpanKeStorage(obj, form) {
 }
 
 /* ===============================
-   6. JEMBATAN ANTI-ERROR (PENTING!)
+   6. JEMBATAN ANTI-ERROR
 ================================ */
 function kirimProyek() {
     prosesData();
