@@ -515,13 +515,13 @@
         const toast = document.getElementById('success-toast');
         if (!toast) return;
 
-        // Update isi pesan jika diperlukan (Opsional)
-        // toast.querySelector('p.font-bold').innerText = message;
+        // Jika Anda ingin mengubah teks di dalam toast secara dinamis:
+        const msgEl = toast.querySelector('p.font-bold');
+        if (msgEl) msgEl.innerText = message;
 
         toast.classList.remove('hidden');
         toast.classList.add('block');
         
-        // Sembunyikan otomatis setelah 5 detik
         setTimeout(() => {
             toast.classList.add('hidden');
             toast.classList.remove('block');
@@ -545,37 +545,40 @@
             sessionStorage.setItem('isLoggedIn', 'true');
             setTimeout(() => { window.location.href = 'admin.html'; }, 1000);
         } else {
-            alert("❌ Login Gagal!");
+            alert("❌ Login Gagal! Username atau Password salah.");
             if (passField) passField.value = "";
         }
     }
 
-    // --- 4. FORM PROYEK & PREVIEW ---
-    let temporaryData = null; // Simpan data sementara untuk preview
+    // --- 4. FORM PROYEK & PREVIEW (VERSI FIXED) ---
+    let temporaryData = null; 
 
     function tampilkanPreview() {
         const form = document.getElementById('proyekForm');
-        if (!form) return;
+        if (!form) {
+            console.error("Form dengan ID 'proyekForm' tidak ditemukan!");
+            return;
+        }
 
         const inputs = form.querySelectorAll('input, select, textarea');
         let fd = {};
         inputs.forEach(input => {
-            let key = input.id || input.getAttribute('name');
+            let key = input.getAttribute('name') || input.id;
             if (key) fd[key] = input.value.trim();
         });
 
-        const namaValue = fd.nama_lengkap || fd.nama;
-        const kontakValue = fd.nomor_hp || fd.phone;
+        // Menggunakan key 'nama' dan 'phone' sesuai screenshot user
+        const namaValue = fd['nama']; 
+        const kontakValue = fd['phone'];
 
         if (!namaValue || !kontakValue) {
-            alert("⚠️ Nama dan Nomor WA wajib diisi sebelum melihat preview!");
+            alert("⚠️ Nama Lengkap dan Nomor HP/WA wajib diisi!");
             return;
         }
 
-        temporaryData = fd; // Simpan ke variabel global
+        temporaryData = fd;
 
-        // Munculkan Konfirmasi Sederhana (Atau bisa ganti ke Modal Preview jika punya UI-nya)
-        const konfirmasi = confirm(`Cek Data Anda:\n\nNama: ${namaValue}\nKontak: ${kontakValue}\nLayanan: ${fd.pilih_layanan || 'Website'}\n\nApakah data sudah benar?`);
+        const konfirmasi = confirm(`Cek Data Anda:\n\nNama: ${namaValue}\nNomor: ${kontakValue}\nLayanan: ${fd['pilih_layanan'] || '-'}\n\nApakah data sudah benar dan siap dikirim?`);
         
         if (konfirmasi) {
             kirimProyek();
@@ -588,14 +591,14 @@
         let dataBaru = {
             id: Date.now(),
             tanggal: new Date().toLocaleString('id-ID'),
-            nama: temporaryData.nama_lengkap || temporaryData.nama,
-            kontak: temporaryData.nomor_hp || temporaryData.phone,
-            email: temporaryData.email || '-',
-            alamat: temporaryData.alamat || '-',
-            usaha: temporaryData.jenis_usaha || '-',
-            layanan: temporaryData.pilih_layanan || 'Website',
-            penjelasan_usaha: temporaryData.penjelasan_usaha || '-',
-            tujuan_proyek: temporaryData.tujuan_proyek || '-',
+            nama: temporaryData['nama'],
+            kontak: temporaryData['phone'],
+            email: temporaryData['email'] || '-',
+            alamat: temporaryData['alamat'] || '-',
+            usaha: temporaryData['jenis_usaha'] || '-',
+            layanan: temporaryData['pilih_layanan'] || '-',
+            penjelasan_usaha: temporaryData['penjelasan_usaha'] || '-',
+            tujuan_proyek: temporaryData['tujuan_proyek'] || '-',
             status: 'pending' 
         };
 
@@ -604,17 +607,16 @@
             projects.push(dataBaru);
             localStorage.setItem('projekJDI', JSON.stringify(projects));
 
-            // TAMPILKAN TOAST SUCCESS
-            showNotification("✅ Berhasil!", true);
+            showNotification("✅ Berhasil! Permintaan Anda telah terkirim.", true);
             
             document.getElementById('proyekForm').reset();
             temporaryData = null;
             
             setTimeout(() => {
-                if (typeof toggleProjectModal === 'function') toggleProjectModal();
+                toggleProjectModal(); 
             }, 1500);
         } catch (e) {
-            alert("❌ Gagal menyimpan data.");
+            alert("❌ Gagal menyimpan data: " + e.message);
         }
     }
 
