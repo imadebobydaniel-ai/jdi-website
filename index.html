@@ -467,7 +467,7 @@
         
         if (fill) fill.style.width = '100%';
 
-        // Kurangi waktu tunggu agar tidak terasa macet, konten muncul setelah loading selesai
+        // Konten muncul setelah loading selesai (3 detik)
         setTimeout(() => {
             if (screen) {
                 screen.style.transition = 'opacity 1s ease';
@@ -478,20 +478,19 @@
                 main.style.transition = 'opacity 1s ease';
                 main.style.opacity = '1';
             }
-            initMainContent(); // Memanggil render & animasi
-        }, 3000); // Saya percepat ke 3 detik agar user tidak menunggu terlalu lama
+            initMainContent(); 
+        }, 3000); 
     });
 
     function initMainContent() {
         renderServices();
         
-        // --- PERBAIKAN: MENGEMBALIKAN ANIMASI YANG HILANG ---
+        // --- AKTIFKAN ANIMASI KONTEN (FADE IN) ---
         const ids = ['fade-text-1', 'fade-text-2', 'fade-btns', 'laptop-mockup'];
         ids.forEach((id, i) => {
             setTimeout(() => {
                 const el = document.getElementById(id);
                 if (el) {
-                    // Gunakan class yang sesuai dengan CSS kamu (fade-in-visible atau laptop-visible)
                     const targetClass = id.includes('laptop') ? 'laptop-visible' : 'fade-in-visible';
                     el.classList.add(targetClass);
                 }
@@ -507,7 +506,7 @@
         }
     }
 
-    // --- 2. NOTIFIKASI TOAST ---
+    // --- 2. NOTIFIKASI & UI HELPERS ---
     function showNotification(message) {
         const toast = document.getElementById('success-toast');
         if (toast) {
@@ -522,75 +521,11 @@
         }
     }
 
-    // --- 3. LOGIKA FORM & PREVIEW ---
-    let temporaryData = null; 
-
-    function tampilkanPreview() {
-        const form = document.getElementById('proyekForm') || document.querySelector('form');
-        if (!form) return alert("Form tidak ditemukan!");
-
-        const inputs = form.querySelectorAll('input, select, textarea');
-        let fd = {};
-        inputs.forEach(input => {
-            let key = input.getAttribute('name') || input.id;
-            if (key) fd[key] = input.value.trim();
-        });
-
-        // Mapping field agar fleksibel dengan nama di HTML
-        const namaValue = fd['nama_lengkap'] || fd['nama'];
-        const kontakValue = fd['nomor_hp'] || fd['phone'];
-
-        if (!namaValue || !kontakValue) {
-            alert("⚠️ Nama Lengkap dan Nomor HP/WA wajib diisi!");
-            return;
-        }
-
-        temporaryData = fd;
-
-        const konfirmasi = confirm(`CEK DATA ANDA:\n\nNama: ${namaValue}\nNomor: ${kontakValue}\nLayanan: ${fd['pilih_layanan'] || fd['layanan'] || '-'}\n\nKirim permintaan sekarang?`);
-        
-        if (konfirmasi) {
-            kirimProyek();
-        }
+    function toggleProjectModal() { 
+        const modal = document.getElementById('project-modal');
+        if (modal) modal.classList.toggle('hidden'); 
     }
 
-    function kirimProyek() {
-        if (!temporaryData) return;
-
-        const dataBaru = {
-            id: Date.now(),
-            tanggal: new Date().toLocaleString('id-ID'),
-            nama: temporaryData['nama_lengkap'] || temporaryData['nama'],
-            kontak: temporaryData['nomor_hp'] || temporaryData['phone'],
-            email: temporaryData['email'] || '-',
-            alamat: temporaryData['alamat'] || '-',
-            usaha: temporaryData['jenis_usaha'] || '-',
-            layanan: temporaryData['pilih_layanan'] || temporaryData['layanan'] || '-',
-            deskripsi: temporaryData['penjelasan_usaha'] || '-',
-            tujuan: temporaryData['tujuan_proyek'] || '-',
-            status: 'pending' 
-        };
-
-        try {
-            let projects = JSON.parse(localStorage.getItem('projekJDI') || '[]');
-            projects.push(dataBaru);
-            localStorage.setItem('projekJDI', JSON.stringify(projects));
-
-            showNotification("✅ Berhasil dikirim!");
-            
-            const form = document.getElementById('proyekForm') || document.querySelector('form');
-            if (form) form.reset();
-            temporaryData = null;
-
-            setTimeout(() => {
-                if (typeof toggleProjectModal === 'function') toggleProjectModal();
-            }, 1500);
-        } catch (e) {
-            alert("Gagal simpan: " + e.message);
-        }
-    }
-
-    // --- 4. UI HELPER ---
     function renderServices() {
         const container = document.getElementById('services-container');
         if (container) {
@@ -601,18 +536,78 @@
                 { t: "Digital Signage", i: "📺" }
             ];
             container.innerHTML = services.map(s => `
-                <div class="bg-white rounded-2xl shadow-sm p-6 border hover:border-accent-orange transition group">
+                <div class="bg-white rounded-2xl shadow-sm p-6 border hover:border-accent-orange transition group cursor-pointer">
                     <div class="text-3xl mb-4 group-hover:scale-110 transition-transform">${s.i}</div>
                     <h3 class="text-lg font-bold text-navy-dark">${s.t}</h3>
                 </div>`).join('');
         }
     }
 
-    function toggleProjectModal() { 
-        const modal = document.getElementById('project-modal');
-        if (modal) modal.classList.toggle('hidden'); 
+    // --- 3. LOGIKA FORM KONSULTASI (ANTI-ERROR) ---
+    function prosesData() {
+        console.log("Proses data dimulai...");
+
+        // Ambil elemen form secara fleksibel
+        const form = document.getElementById('proyekForm') || document.querySelector('form');
+        if (!form) return alert("Sistem tidak bisa menemukan elemen form.");
+
+        // Gunakan FormData untuk mengambil seluruh input sekaligus
+        const formData = new FormData(form);
+        const data = {};
+        formData.forEach((value, key) => {
+            data[key] = value.trim();
+        });
+
+        // Deteksi Nama & HP (Mendukung ID atau atribut 'name' di HTML)
+        const nama = data['nama_lengkap'] || data['nama'] || document.getElementById('nama_lengkap')?.value;
+        const hp = data['nomor_hp'] || data['phone'] || document.getElementById('nomor_hp')?.value;
+
+        if (!nama || !hp) {
+            alert("⚠️ Nama Lengkap dan Nomor HP wajib diisi!");
+            return;
+        }
+
+        // Preview Konfirmasi
+        const konfirmasi = confirm(`CEK DATA ANDA:\n\nNama: ${nama}\nNomor: ${hp}\nLayanan: ${data['pilih_layanan'] || '-'}\n\nKirim sekarang?`);
+        
+        if (konfirmasi) {
+            const dataBaru = {
+                id: Date.now(),
+                tanggal: new Date().toLocaleString('id-ID'),
+                nama: nama,
+                kontak: hp,
+                email: data['email'] || '-',
+                alamat: data['alamat'] || '-',
+                usaha: data['jenis_usaha'] || '-',
+                layanan: data['pilih_layanan'] || '-',
+                deskripsi: data['penjelasan_usaha'] || '-',
+                tujuan: data['tujuan_proyek'] || '-',
+                status: 'pending' 
+            };
+
+            simpanKeStorage(dataBaru, form);
+        }
     }
-    
+
+    function simpanKeStorage(obj, formElement) {
+        try {
+            let projects = JSON.parse(localStorage.getItem('projekJDI') || '[]');
+            projects.push(obj);
+            localStorage.setItem('projekJDI', JSON.stringify(projects));
+
+            showNotification("✅ Berhasil dikirim!");
+            
+            if (formElement) formElement.reset();
+
+            setTimeout(() => {
+                toggleProjectModal();
+            }, 1500);
+        } catch (e) {
+            alert("Gagal simpan data: " + e.message);
+        }
+    }
+
+    // --- 4. ADMIN LOGIN ---
     function handleLogin() {
         const u = document.getElementById('user')?.value;
         const p = document.getElementById('pass')?.value;
