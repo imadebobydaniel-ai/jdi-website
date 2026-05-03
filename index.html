@@ -208,6 +208,26 @@
         color: #ff8c00;
         transform: scale(1.2);
     }
+    /* Menyesuaikan ukuran bintang dan presisi container */
+.footer-rating-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 250px; /* Sesuaikan angka ini agar sama tinggi dengan container Maps Anda */
+    height: 100%;
+}
+
+.footer-rating-star {
+    font-size: 2rem; /* Ukuran bintang diperbesar */
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin: 0 4px;
+}
+
+.footer-rating-star:hover {
+    transform: scale(1.2);
+}
 </style>
 </head>
 <body class="bg-gray-50">
@@ -285,14 +305,17 @@
                         <div class="swiper-button-prev"></div>
                     </div>
                 </div>
-                <div class="mt-8 flex flex-col items-center">
-                    <div class="flex gap-2" id="rating-stars">
-                        <span class="star text-2xl active">★</span>
-                        <span class="star text-2xl active">★</span>
-                        <span class="star text-2xl active">★</span>
-                        <span class="star text-2xl active">★</span>
-                        <span class="star text-2xl active">★</span>
-                    </div>
+               <div class="footer-rating-container border border-gray-700 rounded-xl p-6 bg-navy-light/50">
+    <h3 class="text-white font-bold mb-4">Beri Rating Layanan Kami</h3>
+    <div class="flex justify-center mb-4">
+        <span class="footer-rating-star text-gray-400" onclick="setFooterRating(1)">★</span>
+        <span class="footer-rating-star text-gray-400" onclick="setFooterRating(2)">★</span>
+        <span class="footer-rating-star text-gray-400" onclick="setFooterRating(3)">★</span>
+        <span class="footer-rating-star text-gray-400" onclick="setFooterRating(4)">★</span>
+        <span class="footer-rating-star text-gray-400" onclick="setFooterRating(5)">★</span>
+    </div>
+    <p class="text-xs text-gray-400 uppercase tracking-widest">Klik untuk menilai</p>
+</div>
                     <p class="text-white/60 text-[10px] md:text-xs mt-2 uppercase tracking-widest font-bold">Client Satisfaction Rating</p>
                 </div>
             </div>
@@ -442,7 +465,15 @@
                     <a href="https://www.instagram.com/jayadigitalintegrate/" target="_blank" class="social-icon text-white hover:text-accent-orange text-2xl transition">
                         <i class="fa-brands fa-instagram"></i>
                     </a>
-                </div>
+                    <a href="https://imadebobydaniel-ai.github.io/jdi-website/" target="_blank" class="flex items-center text-white hover:text-accent-orange transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="Language-21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM12 2a10 10 0 100 20 10 10 0 000-20z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
+        </svg>
+        <span class="text-xs">Lihat Website</span>
+    </a>
+</div>
+                    </div>
             </div>
 
             <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
@@ -667,12 +698,15 @@ function setFooterRating(rating) {
     const stars = document.querySelectorAll('.footer-rating-star');
     stars.forEach((star, index) => {
         if (index < rating) {
-            star.classList.add('text-yellow-400');
             star.classList.remove('text-gray-400');
+            star.classList.add('text-yellow-400');
         } else {
-            star.classList.add('text-gray-400');
             star.classList.remove('text-yellow-400');
+            star.classList.add('text-gray-400');
         }
+    });
+    showNotification("Terima kasih atas penilaian " + rating + " bintang Anda!");
+}
     });
     showNotification("Terima kasih atas penilaian " + rating + " bintang Anda!");
 }
