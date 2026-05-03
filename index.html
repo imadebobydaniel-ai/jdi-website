@@ -32,7 +32,7 @@
         min-height: 100vh;
         display: flex;
         align-items: center;
-        background: linear-gradient(to right, rgba(10, 29, 55, 0.92), rgba(10, 29, 55, 0.7));
+        background: linear-gradient(135deg, #0a1d37 0%, #061225 100%);
         overflow: hidden;
     }
 
@@ -70,13 +70,34 @@
         width: 100%; 
         border-radius: 0.75rem; 
     }
+    
+    .swiper-slide {
+        border-radius: 0.75rem;
+        overflow: hidden;
+    }
+    
     .swiper-slide img { 
-        cursor: zoom-in; 
         width: 100%; 
         height: 350px; 
         object-fit: cover;
         border-radius: 0.75rem;
+    }
+
+    /* Fallback untuk gambar yang gagal load */
+    .swiper-slide img.error-load {
+        display: none;
+    }
+    
+    .swiper-slide .fallback-card {
+        width: 100%;
+        height: 350px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         background: linear-gradient(135deg, #1a3a6e 0%, #0a1d37 100%);
+        border-radius: 0.75rem;
+        text-align: center;
+        color: white;
     }
 
     #loading-screen {
@@ -95,7 +116,8 @@
         width: 280px;
         height: auto;
         margin-bottom: 30px;
-        filter: drop-shadow(1px 0 0 white) drop-shadow(-1px 0 0 white) drop-shadow(0 1px 0 white) drop-shadow(0 -1px 0 white);
+        border-radius: 20px;
+        box-shadow: 0 0 20px rgba(255, 140, 0, 0.3);
     }
 
     .loader-fill {
@@ -180,20 +202,21 @@
     }
 
     .nav-logo {
-        height: 40px;
+        height: 50px;
         width: auto;
+        border-radius: 10px;
     }
 
     @media (min-width: 768px) {
         .nav-logo {
-            height: 64px;
+            height: 60px;
         }
     }
 
     @media (max-width: 768px) {
         .hero-section { padding-top: 80px; align-items: flex-start; }
         .footer-rating-container { min-height: auto; margin-top: 20px; }
-        .swiper-slide img { height: 250px; }
+        .swiper-slide img, .swiper-slide .fallback-card { height: 250px; }
     }
 
     @media (min-width: 1024px) {
@@ -209,7 +232,12 @@
 
 <!-- Loading Screen -->
 <div id="loading-screen">
-    <img src="logo-jdi.png" alt="Logo JDI" class="loader-logo" onerror="this.src='https://via.placeholder.com/280x100?text=JDI+Logo'">
+    <img src="logo-jdi.png" alt="Logo JDI" class="loader-logo" onerror="this.style.display='none'; this.nextSibling.style.display='block'">
+    <div style="display: none;" class="text-white text-center mb-8">
+        <i class="fas fa-chart-line text-6xl text-accent-orange mb-4"></i>
+        <p class="font-bold text-xl">JAYA DIGITAL INTEGRATE</p>
+        <p class="text-sm">Loading...</p>
+    </div>
     <div class="loader-bar-container">
         <div id="loader-fill" class="loader-fill"></div>
     </div>
@@ -219,9 +247,9 @@
 <div id="main-content">
     <!-- Navigation -->
     <nav class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
             <div class="flex items-center gap-8">
-                <img src="logo-jdi.png" alt="Logo Jaya Digital Integrate" class="nav-logo logo-outline" onerror="this.src='https://via.placeholder.com/200x80?text=JDI'">
+                <img src="logo-jdi.png" alt="Logo Jaya Digital Integrate" class="nav-logo logo-outline" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 200 80\'%3E%3Crect width=\'200\' height=\'80\' rx=\'10\' fill=\'%230a1d37\' stroke=\'%23ff8c00\' stroke-width=\'2\'/%3E%3Ctext x=\'100\' y=\'45\' text-anchor=\'middle\' fill=\'%23ff8c00\' font-family=\'Arial\' font-size=\'20\' font-weight=\'bold\'%3EJDI%3C/text%3E%3Ctext x=\'100\' y=\'65\' text-anchor=\'middle\' fill=\'white\' font-family=\'Arial\' font-size=\'10\'%3EJaya Digital%3C/text%3E%3C/svg%3E'">
                 <div id="nav-links" class="hidden md:flex space-x-8 font-medium text-gray-700">
                     <a href="#profile" class="hover:text-accent-orange transition">Profile</a>
                     <a href="#home" class="hover:text-accent-orange">Beranda</a>
@@ -232,7 +260,7 @@
             
             <div class="flex items-center gap-4">
                 <a href="https://wa.me/6281283393576" target="_blank" class="hidden sm:block bg-accent-orange text-white px-5 py-2 rounded-full font-semibold hover:bg-orange-600 transition shadow-lg text-sm">
-                    Konsultasi Gratis
+                    <i class="fab fa-whatsapp mr-2"></i> Konsultasi Gratis
                 </a>
                 <button onclick="toggleAdminPanel()" class="text-xs font-bold text-navy-dark/40 hover:text-accent-orange border-l pl-4 hidden md:block uppercase tracking-wider">Login Admin</button>
                 <div class="md:hidden text-navy-dark cursor-pointer" onclick="toggleMobileMenu()">
@@ -253,7 +281,7 @@
 
     <!-- Hero Section -->
     <header class="hero-section px-4 md:px-10" id="home">
-        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 w-full relative z-10 py-20">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 w-full relative z-10 py-16 lg:py-20">
             <div class="w-full lg:w-5/12 text-center lg:text-left lg:pr-10">
                 <h1 class="text-4xl lg:text-6xl font-bold text-white mb-6">
                     Transformasi Digital <br><span class="text-accent-orange">Tanpa Batas</span>
@@ -262,34 +290,90 @@
                     Kami menghadirkan solusi teknologi mutakhir untuk kebutuhan administrasi, database, dan sistem informasi manajemen di Jayapura dan sekitarnya.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                    <button onclick="toggleProjectModal()" class="bg-accent-orange px-8 py-3 rounded-md font-bold text-white shadow-lg">Mulai Proyek</button>
-                    <a href="#layanan" class="border-2 border-white px-8 py-3 rounded-md font-bold text-white">Layanan Kami</a>
+                    <button onclick="toggleProjectModal()" class="bg-accent-orange px-8 py-3 rounded-md font-bold text-white shadow-lg hover:bg-orange-600 transition">Mulai Proyek</button>
+                    <a href="#layanan" class="border-2 border-white px-8 py-3 rounded-md font-bold text-white hover:bg-white/10 transition">Layanan Kami</a>
                 </div>
             </div>
 
             <div class="w-full lg:w-7/12 flex flex-col justify-center lg:justify-end">
                 <div class="swiper mySwiper w-full">
                     <div class="swiper-wrapper">
+                        <!-- Slide 1 -->
                         <div class="swiper-slide">
-                            <img src="d-klinic.png" alt="D-Klinic" class="rounded-lg w-full h-[350px] object-cover" onerror="this.src='https://via.placeholder.com/850x450?text=D-Klinic'">
+                            <img src="d-klinic.png" alt="D-Klinic" class="w-full h-[350px] object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
+                            <div class="fallback-card" style="display: none;">
+                                <div class="text-center p-8">
+                                    <i class="fas fa-clinic-medical text-6xl text-accent-orange mb-4"></i>
+                                    <h3 class="text-xl font-bold">D-Klinic</h3>
+                                    <p class="text-sm mt-2">Sistem Manajemen Klinik</p>
+                                </div>
+                            </div>
                         </div>
+                        <!-- Slide 2 -->
                         <div class="swiper-slide">
-                            <img src="gereja.png" alt="Gereja" class="rounded-lg w-full h-[350px] object-cover" onerror="this.src='https://via.placeholder.com/850x450?text=Gereja'">
+                            <img src="gereja.png" alt="Gereja" class="w-full h-[350px] object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
+                            <div class="fallback-card" style="display: none;">
+                                <div class="text-center p-8">
+                                    <i class="fas fa-church text-6xl text-accent-orange mb-4"></i>
+                                    <h3 class="text-xl font-bold">Sistem Gereja</h3>
+                                    <p class="text-sm mt-2">Manajemen Jemaat Digital</p>
+                                </div>
+                            </div>
                         </div>
+                        <!-- Slide 3 -->
                         <div class="swiper-slide">
-                            <img src="skin.png" alt="Skin Care" class="rounded-lg w-full h-[350px] object-cover" onerror="this.src='https://via.placeholder.com/850x450?text=Skin'">
+                            <img src="skin.png" alt="Skin Care" class="w-full h-[350px] object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
+                            <div class="fallback-card" style="display: none;">
+                                <div class="text-center p-8">
+                                    <i class="fas fa-spa text-6xl text-accent-orange mb-4"></i>
+                                    <h3 class="text-xl font-bold">Skin Care System</h3>
+                                    <p class="text-sm mt-2">Manajemen Klinik Kecantikan</p>
+                                </div>
+                            </div>
                         </div>
+                        <!-- Slide 4 -->
                         <div class="swiper-slide">
-                            <img src="nusa-agro.png" alt="Nusa Agro" class="rounded-lg w-full h-[350px] object-cover" onerror="this.src='https://via.placeholder.com/850x450?text=Nusa+Agro'">
+                            <img src="nusa-agro.png" alt="Nusa Agro" class="w-full h-[350px] object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
+                            <div class="fallback-card" style="display: none;">
+                                <div class="text-center p-8">
+                                    <i class="fas fa-seedling text-6xl text-accent-orange mb-4"></i>
+                                    <h3 class="text-xl font-bold">Nusa Agro</h3>
+                                    <p class="text-sm mt-2">Sistem Manajemen Pertanian</p>
+                                </div>
+                            </div>
                         </div>
+                        <!-- Slide 5 -->
                         <div class="swiper-slide">
-                            <img src="rapopang.png" alt="Rapopang" class="rounded-lg w-full h-[350px] object-cover" onerror="this.src='https://via.placeholder.com/850x450?text=Rapopang'">
+                            <img src="rapopang.png" alt="Rapopang" class="w-full h-[350px] object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
+                            <div class="fallback-card" style="display: none;">
+                                <div class="text-center p-8">
+                                    <i class="fas fa-utensils text-6xl text-accent-orange mb-4"></i>
+                                    <h3 class="text-xl font-bold">Rapopang</h3>
+                                    <p class="text-sm mt-2">Sistem Restoran</p>
+                                </div>
+                            </div>
                         </div>
+                        <!-- Slide 6 -->
                         <div class="swiper-slide">
-                            <img src="haven-cafe.png" alt="Haven Cafe" class="rounded-lg w-full h-[350px] object-cover" onerror="this.src='https://via.placeholder.com/850x450?text=Haven+Cafe'">
+                            <img src="haven-cafe.png" alt="Haven Cafe" class="w-full h-[350px] object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
+                            <div class="fallback-card" style="display: none;">
+                                <div class="text-center p-8">
+                                    <i class="fas fa-mug-hot text-6xl text-accent-orange mb-4"></i>
+                                    <h3 class="text-xl font-bold">Haven Cafe</h3>
+                                    <p class="text-sm mt-2">Sistem Kafe Digital</p>
+                                </div>
+                            </div>
                         </div>
+                        <!-- Slide 7 -->
                         <div class="swiper-slide">
-                            <img src="de-wave.png" alt="De Wave" class="rounded-lg w-full h-[350px] object-cover" onerror="this.src='https://via.placeholder.com/850x450?text=De+Wave'">
+                            <img src="de-wave.png" alt="De Wave" class="w-full h-[350px] object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
+                            <div class="fallback-card" style="display: none;">
+                                <div class="text-center p-8">
+                                    <i class="fas fa-water text-6xl text-accent-orange mb-4"></i>
+                                    <h3 class="text-xl font-bold">De Wave</h3>
+                                    <p class="text-sm mt-2">Sistem Manajemen Waterpark</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="swiper-pagination"></div>
@@ -354,19 +438,19 @@
             <form id="proyekForm" class="p-6 space-y-4" onsubmit="return false;">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Nama Lengkap</label>
+                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Nama Lengkap *</label>
                         <input type="text" name="nama_lengkap" id="nama_lengkap" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="Contoh: John Doe">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Nomor HP / WA</label>
+                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Nomor HP / WA *</label>
                         <input type="tel" name="nomor_hp" id="nomor_hp" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="0812...">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Email</label>
+                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Email *</label>
                         <input type="email" name="email" id="email" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="nama@email.com">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Alamat</label>
+                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Alamat *</label>
                         <input type="text" name="alamat" id="alamat" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="Kota Jayapura...">
                     </div>
                 </div>
@@ -436,7 +520,7 @@
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 border-b border-white/10 pb-12 relative z-10">
             
             <div class="lg:col-span-3 space-y-6">
-                <img src="logo-jdi.png" alt="Logo JDI" class="h-12 w-auto logo-outline" onerror="this.src='https://via.placeholder.com/200x80?text=JDI'">
+                <img src="logo-jdi.png" alt="Logo JDI" class="h-12 w-auto logo-outline" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 200 80\'%3E%3Crect width=\'200\' height=\'80\' rx=\'10\' fill=\'%230a1d37\' stroke=\'%23ff8c00\' stroke-width=\'2\'/%3E%3Ctext x=\'100\' y=\'45\' text-anchor=\'middle\' fill=\'%23ff8c00\' font-family=\'Arial\' font-size=\'20\' font-weight=\'bold\'%3EJDI%3C/text%3E%3Ctext x=\'100\' y=\'65\' text-anchor=\'middle\' fill=\'white\' font-family=\'Arial\' font-size=\'10\'%3EJaya Digital%3C/text%3E%3C/svg%3E'">
                 <p class="text-gray-400 text-sm leading-relaxed">Solusi digital terintegrasi untuk pengelolaan sistem yang profesional di tanah Papua.</p>
                 
                 <div class="text-gray-400 text-sm">
@@ -582,11 +666,6 @@ function initMainContent() {
             allowTouchMove: true
         });
     }
-
-    // Initialize Fancybox for zoom
-    if (typeof Fancybox !== 'undefined') {
-        Fancybox.bind("[data-fancybox]", {});
-    }
 }
 
 // ============================================
@@ -715,7 +794,6 @@ function submitRating() {
     
     showNotification("Terima kasih atas rating " + currentRating + " bintang Anda! Dukungan Anda sangat berarti bagi kami.");
     
-    // Reset setelah terkirim
     setTimeout(() => {
         const stars = document.querySelectorAll('.footer-rating-star');
         stars.forEach(star => {
