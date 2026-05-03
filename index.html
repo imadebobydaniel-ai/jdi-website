@@ -86,7 +86,7 @@
 
     #main-content { opacity: 0; transition: opacity 1.2s ease; width: 100%; }
 
-    /* 4. FOOTER & RATING SYSTEM (KOREKSI LOGIKA ORANGE SOLID) */
+    /* 4. FOOTER & RATING SYSTEM */
     .footer-with-bg {
         position: relative;
         background-image: url('jyp.png');
@@ -108,7 +108,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        min-height: 320px; /* Samakan dengan tinggi Maps */
+        min-height: 320px;
         height: 100%;
         border: 1px solid rgba(255, 255, 255, 0.1);
         background: rgba(255, 255, 255, 0.05);
@@ -123,11 +123,10 @@
         cursor: pointer;
         transition: all 0.3s ease;
         margin: 0 5px;
-        color: #d1d5db; /* Warna default abu-abu */
+        color: #d1d5db;
         display: inline-block;
     }
 
-    /* Logika Kumulatif: Class yang dipicu JS untuk Orange Solid */
     .footer-rating-star.filled {
         color: #ff8c00 !important; 
     }
@@ -142,7 +141,6 @@
         .footer-rating-container { min-height: auto; margin-top: 20px; }
     }
 </style>
-</style>
 </head>
 <body class="bg-gray-50">
 
@@ -150,13 +148,13 @@
 
 <div id="loading-screen">
     <img src="logo-jdi.png" alt="Logo JDI" class="loader-logo">
-    <div class="loader-bar-container">
+    <div class="loader-bar-container" style="width: 200px; height: 4px; background: rgba(255,255,255,0.1); margin: 20px 0; overflow: hidden;">
         <div id="loader-fill" class="loader-fill"></div>
     </div>
     <p id="welcome-msg" class="welcome-text">SELAMAT DATANG DI JAYA DIGITAL INTEGRATE</p>
 </div>
 
-<div id="main-content">
+<div id="main-content" style="display: none;">
     <nav class="bg-white shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-8">
@@ -193,20 +191,20 @@
     <header class="hero-section px-4 md:px-10">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between relative z-10 gap-8 w-full">
             <div class="w-full md:w-1/2 text-center md:text-left md:-mt-32">
-                <h1 id="fade-text-1" class="text-3xl md:text-6xl font-bold leading-tight mb-6 text-white fade-init">
+                <h1 id="fade-text-1" class="text-3xl md:text-6xl font-bold leading-tight mb-6 text-white">
                     Transformasi Digital <br><span class="text-accent-orange">Tanpa Batas</span>
                 </h1>
-                <p id="fade-text-2" class="text-gray-200 text-sm md:text-lg mb-8 max-w-lg mx-auto md:mx-0 fade-init">
+                <p id="fade-text-2" class="text-gray-200 text-sm md:text-lg mb-8 max-w-lg mx-auto md:mx-0">
                     Kami menghadirkan solusi teknologi mutakhir untuk kebutuhan administrasi, database, dan sistem informasi manajemen di Jayapura dan sekitarnya.
                 </p>
-                <div id="fade-btns" class="flex flex-col sm:flex-row justify-center md:justify-start gap-4 fade-init">
+                <div id="fade-btns" class="flex flex-col sm:flex-row justify-center md:justify-start gap-4">
                     <a href="javascript:void(0)" onclick="toggleProjectModal()" class="bg-accent-orange text-white px-8 py-3 rounded-md font-bold hover:bg-orange-600 transition shadow-lg w-full sm:w-auto text-center">Mulai Proyek</a>
                     <a href="layanan-kami.html" class="border-2 border-white text-white px-8 py-3 rounded-md font-bold hover:bg-white hover:text-navy-dark transition w-full sm:w-auto text-center">Layanan Kami</a>
                 </div>
             </div>
 
             <div class="w-full md:w-1/2 flex flex-col items-center">
-                <div id="laptop-mockup" class="bg-white/10 p-2 md:p-4 rounded-xl backdrop-blur-md border border-white/20 shadow-2xl w-full relative laptop-mockup">
+                <div id="laptop-mockup" class="bg-white/10 p-2 md:p-4 rounded-xl backdrop-blur-md border border-white/20 shadow-2xl w-full relative">
                     <div class="swiper mySwiper">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide"><a href="gereja.png" data-fancybox="gallery"><img src="gereja.png" class="rounded-lg"></a></div>
@@ -219,19 +217,7 @@
                         <div class="swiper-button-prev"></div>
                     </div>
                 </div>
-               <div class="footer-rating-container border border-gray-700 rounded-xl p-6 bg-navy-light/50">
-    <h3 class="text-white font-bold mb-4">Beri Rating Layanan Kami</h3>
-    <div class="flex justify-center mb-4">
-        <span class="footer-rating-star text-gray-400" onclick="setFooterRating(1)">★</span>
-        <span class="footer-rating-star text-gray-400" onclick="setFooterRating(2)">★</span>
-        <span class="footer-rating-star text-gray-400" onclick="setFooterRating(3)">★</span>
-        <span class="footer-rating-star text-gray-400" onclick="setFooterRating(4)">★</span>
-        <span class="footer-rating-star text-gray-400" onclick="setFooterRating(5)">★</span>
-    </div>
-    <p class="text-xs text-gray-400 uppercase tracking-widest">Klik untuk menilai</p>
-</div>
-                    <p class="text-white/60 text-[10px] md:text-xs mt-2 uppercase tracking-widest font-bold">Client Satisfaction Rating</p>
-                </div>
+                <p class="text-white/60 text-[10px] md:text-xs mt-4 uppercase tracking-widest font-bold">Client Satisfaction Portfolio</p>
             </div>
         </div>
     </header>
@@ -263,7 +249,7 @@
                 <h3 class="text-xl font-bold mb-3 text-navy-dark">SSL</h3>
                 <p class="text-gray-600 text-sm leading-relaxed">Proteksi enkripsi data end-to-end yang menjamin keamanan informasi sensitif.</p>
             </div>
-            <div id="services-container" class="lg:col-span-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"></div>
+            <div id="technical-services-container" class="lg:col-span-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mt-8"></div>
         </div>
     </section>
 
@@ -312,7 +298,7 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Pilih Layanan</label>
-                        <select name="layanan" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none bg-white">
+                        <select name="pilih_layanan" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none bg-white">
                             <option>Website</option>
                             <option>Aplikasi Android</option>
                             <option>Sistem Manajemen</option>
@@ -343,8 +329,6 @@
         </div>
     </div>
 
-    <div class="bg-accent-orange text-white w-full py-6 font-bold text-center tracking-widest uppercase rounded-t-xl"></div>
-
     <div id="success-toast" class="fixed top-10 left-1/2 -translate-x-1/2 z-[10003] hidden">
         <div class="bg-green-600 text-white px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-4">
             <span class="text-2xl">✅</span>
@@ -356,7 +340,7 @@
     </div>
 
     <footer id="kontak" class="footer-with-bg pt-16 pb-8"> 
-        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-12 border-b border-white/10 pb-12">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-12 border-b border-white/10 pb-12 relative z-10">
             
             <div class="space-y-6">
                 <img src="logo-jdi.png" alt="Logo JDI" class="h-12 brightness-200 logo-outline">
@@ -365,7 +349,7 @@
                 <div class="text-gray-400 text-sm">
                     <p class="font-bold text-white mb-2 underline decoration-accent-orange text-base">Alamat Kantor:</p>
                     <p>Jl. Tanah Hitam abe Pantai, Awiyo, Abepura, Kota Jayapura, Papua.</p>
-                    <div class="mt-4 flex items-center gap-3 text-accent-orange font-bold text-lg group">
+                    <div class="mt-4 flex items-center gap-3 text-accent-orange font-bold text-lg">
                         <a href="https://wa.me/6281283393576" target="_blank" class="hover:underline flex items-center gap-2">
                             <span class="bg-white/10 p-2 rounded-full">📞</span> 0812-8339-3576
                         </a>
@@ -373,44 +357,41 @@
                 </div>
 
                 <div class="footer-socials flex gap-4 mt-6">
-                    <a href="https://www.facebook.com/jaya.digital.integrate2026" target="_blank" class="social-icon text-white hover:text-accent-orange text-2xl transition">
+                    <a href="https://www.facebook.com/jaya.digital.integrate2026" target="_blank" class="text-white hover:text-accent-orange text-2xl transition">
                         <i class="fa-brands fa-facebook"></i>
                     </a>
-                    <a href="https://www.instagram.com/jayadigitalintegrate/" target="_blank" class="social-icon text-white hover:text-accent-orange text-2xl transition">
+                    <a href="https://www.instagram.com/jayadigitalintegrate/" target="_blank" class="text-white hover:text-accent-orange text-2xl transition">
                         <i class="fa-brands fa-instagram"></i>
                     </a>
-              
-    </a>
-</div>
-                    </div>
+                </div>
             </div>
 
             <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
                 <div class="flex flex-col">
-                    <h3 class="text-xl font-bold mb-6 border-l-4 border-accent-orange pl-4">Lokasi Kami</h3>
+                    <h3 class="text-xl font-bold mb-6 border-l-4 border-accent-orange pl-4 text-white">Lokasi Kami</h3>
                     <div class="rounded-xl overflow-hidden border border-white/10 shadow-2xl flex-grow h-64 md:h-full">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15945.72834375355!2d140.665384!3d-2.593717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x686cf5c36394334d%3A0xc3f1725ed149957e!2sAbepura%2C%20Kota%20Jayapura%2C%20Papua!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" 
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3985.74411130834!2d140.6366533!3d-2.6101111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMsKwMzYnMzYuNCJTIDE0MMKwMzgnMTEuOSJF!5e0!3m2!1sid!2sid!4v1715000000000!5m2!1sid!2sid" 
                             width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                     </div>
                 </div>
 
                 <div class="flex flex-col">
-                    <div class="flex flex-col justify-center items-center bg-white/5 rounded-2xl p-4 border border-white/10 flex-grow shadow-2xl h-64 md:h-full relative overflow-hidden">
-                        <h3 class="text-lg font-bold mb-4 text-center">Beri Rating Layanan Kami</h3>
-                       <div class="flex space-x-2">
-    <span class="footer-rating-star cursor-pointer text-gray-400" onclick="setFooterRating(1)">★</span>
-    <span class="footer-rating-star cursor-pointer text-gray-400" onclick="setFooterRating(2)">★</span>
-    <span class="footer-rating-star cursor-pointer text-gray-400" onclick="setFooterRating(3)">★</span>
-    <span class="footer-rating-star cursor-pointer text-gray-400" onclick="setFooterRating(4)">★</span>
-    <span class="footer-rating-star cursor-pointer text-gray-400" onclick="setFooterRating(5)">★</span>
-</div>
+                    <div class="footer-rating-container bg-white/5 rounded-2xl p-6 border border-white/10 flex-grow shadow-2xl relative overflow-hidden">
+                        <h3 class="text-lg font-bold mb-4 text-center text-white">Beri Rating Layanan Kami</h3>
+                        <div class="flex justify-center space-x-2 mb-4">
+                            <span class="footer-rating-star text-gray-400" onclick="setFooterRating(1)">★</span>
+                            <span class="footer-rating-star text-gray-400" onclick="setFooterRating(2)">★</span>
+                            <span class="footer-rating-star text-gray-400" onclick="setFooterRating(3)">★</span>
+                            <span class="footer-rating-star text-gray-400" onclick="setFooterRating(4)">★</span>
+                            <span class="footer-rating-star text-gray-400" onclick="setFooterRating(5)">★</span>
+                        </div>
                         <p id="rating-status" class="text-xs uppercase tracking-widest text-gray-400 font-bold">Klik untuk menilai</p>
                     </div>
                 </div>
             </div>
         </div>
         
-        <div class="max-w-7xl mx-auto px-6 pt-8 text-center text-gray-500 text-[10px] tracking-widest uppercase font-semibold">
+        <div class="max-w-7xl mx-auto px-6 pt-8 text-center text-gray-500 text-[10px] tracking-widest uppercase font-semibold relative z-10">
             © 2026 Jaya Digital Integrate. All Rights Reserved.
         </div>
     </footer>
@@ -433,15 +414,17 @@
 
 <script>
 /* ===============================
-    1. LOADING & INIT (FIXED 5s)
+    1. LOADING & INIT
 ================================ */
 window.addEventListener('load', () => {
     const screen = document.getElementById('loading-screen');
     const main = document.getElementById('main-content');
-    const fill = document.querySelector('.loader-fill'); 
-    const welcomeTxt = document.querySelector('.welcome-text'); 
+    const fill = document.getElementById('loader-fill'); 
+    const welcomeTxt = document.getElementById('welcome-msg'); 
 
-    if (fill) fill.style.width = '100%';
+    if (fill) {
+        setTimeout(() => { fill.style.width = '100%'; }, 100);
+    }
 
     if (welcomeTxt) {
         setTimeout(() => {
@@ -454,12 +437,14 @@ window.addEventListener('load', () => {
         if (screen) {
             screen.style.opacity = '0';
             setTimeout(() => {
-                screen.style.display = 'none';
+                screen.style.display = 'block';
                 if (main) {
                     main.style.display = 'block';
+                    // Trigger reflow
                     main.offsetHeight; 
                     main.style.opacity = '1';
                 }
+                screen.style.display = 'none';
                 initMainContent();
             }, 1000);
         }
@@ -468,14 +453,6 @@ window.addEventListener('load', () => {
 
 function initMainContent() {
     renderServices();
-
-    const ids = ['fade-text-1', 'fade-text-2', 'fade-btns', 'laptop-mockup'];
-    ids.forEach((id, i) => {
-        setTimeout(() => {
-            const el = document.getElementById(id);
-            if (el) el.classList.add(id.includes('laptop') ? 'laptop-visible' : 'fade-in-visible');
-        }, i * 250);
-    });
 
     if (typeof Swiper !== 'undefined') {
         new Swiper(".mySwiper", {
@@ -492,12 +469,10 @@ function initMainContent() {
 function showNotification(message) {
     const toast = document.getElementById('success-toast');
     if (toast) {
-        const text = toast.querySelector('p.font-bold') || toast.querySelector('p');
+        const text = toast.querySelector('p.font-bold');
         if (text) text.innerText = message;
-        toast.style.display = 'block'; 
         toast.classList.remove('hidden');
         setTimeout(() => {
-            toast.style.display = 'none';
             toast.classList.add('hidden');
         }, 5000);
     } else {
@@ -505,20 +480,16 @@ function showNotification(message) {
     }
 }
 
-function toggleAssistant() {
-    const chatBox = document.getElementById('chat-assistant');
-    if (chatBox) {
-        chatBox.style.display = (chatBox.style.display === 'flex') ? 'none' : 'flex';
-        chatBox.classList.toggle('hidden');
-    }
+function toggleProjectModal() {
+    document.getElementById('project-modal').classList.toggle('hidden');
 }
 
-function toggleProjectModal() {
-    document.getElementById('project-modal')?.classList.toggle('hidden');
+function toggleMobileMenu() {
+    document.getElementById('mobile-menu').classList.toggle('hidden');
 }
 
 /* ===============================
-    3. SERVICES RENDER (TARGET KHUSUS)
+    3. SERVICES RENDER
 ================================ */
 function renderServices() {
     const container = document.getElementById('technical-services-container');
@@ -542,18 +513,13 @@ function renderServices() {
 /* ===============================
     4. DATA PROCESSING & LOGIN
 ================================ */
-function prosesData() {
-    const form = document.getElementById('proyekForm') || document.querySelector('form');
-    if (!form) return;
-
+function kirimProyek() { 
+    const form = document.getElementById('proyekForm');
     const formData = new FormData(form);
     let data = {};
     formData.forEach((value, key) => { data[key] = value.trim(); });
 
-    const nama = data['nama_lengkap'] || data['nama'];
-    const hp = data['nomor_hp'] || data['phone'];
-
-    if (!nama || !hp) {
+    if (!data.nama_lengkap || !data.nomor_hp) {
         alert("⚠️ Nama Lengkap dan Nomor HP wajib diisi!");
         return;
     }
@@ -561,38 +527,26 @@ function prosesData() {
     const dataBaru = {
         id: Date.now(),
         tanggal: new Date().toLocaleString('id-ID'),
-        nama: nama,
-        kontak: hp,
-        email: data['email'] || '-',
-        layanan: data['pilih_layanan'] || '-',
+        ...data,
         status: 'pending'
     };
 
-    simpanKeStorage(dataBaru, form);
-}
-
-function simpanKeStorage(obj, form) {
     try {
         let projects = JSON.parse(localStorage.getItem('projekJDI') || '[]');
-        projects.push(obj);
+        projects.push(dataBaru);
         localStorage.setItem('projekJDI', JSON.stringify(projects));
 
-        showNotification("Terimakasih Kami akan segera menghubungi anda");
-
-        if(form) form.reset();
+        showNotification("Terimakasih! Kami akan segera menghubungi anda.");
+        form.reset();
         setTimeout(() => toggleProjectModal(), 1200);
     } catch (e) {
-        alert("❌ Gagal: " + e.message);
+        alert("❌ Gagal menyimpan data: " + e.message);
     }
 }
 
-function kirimProyek() { 
-    prosesData(); 
-}
-
 function handleLogin() {
-    const user = document.getElementById('user')?.value;
-    const pass = document.getElementById('pass')?.value;
+    const user = document.getElementById('user').value;
+    const pass = document.getElementById('pass').value;
     if (user === "admin" && pass === "bukadong821") {
         window.location.href = 'admin.html';
     } else {
@@ -601,32 +555,32 @@ function handleLogin() {
 }
 
 /* ===============================
-    5. FIX: RATING & ADMIN PANEL
+    5. RATING & ADMIN PANEL
 ================================ */
 function setFooterRating(rating) {
     const stars = document.querySelectorAll('.footer-rating-star');
+    const status = document.getElementById('rating-status');
+    
     stars.forEach((star, index) => {
-        // Logika Kumulatif: Jika klik bintang 3, maka bintang 1,2,3 jadi orange
         if (index < rating) {
-            star.style.color = '#ff8c00'; // Orange solid
+            star.style.color = '#ff8c00';
             star.classList.add('filled');
         } else {
-            star.style.color = '#d1d5db'; // Abu-abu
+            star.style.color = '#d1d5db';
             star.classList.remove('filled');
         }
     });
-    showNotification("Terima kasih atas penilaian " + rating + " bintang Anda!");
+    
+    if(status) status.innerText = "Terima kasih atas " + rating + " bintang Anda!";
+    showNotification("Rating " + rating + " bintang berhasil dikirim!");
 }
 
 function toggleAdminPanel() {
-    const adminModal = document.getElementById('admin-modal');
-    if (adminModal) {
-        const isHidden = adminModal.classList.contains('hidden');
-        adminModal.classList.toggle('hidden');
-        adminModal.style.display = isHidden ? 'flex' : 'none';
-    } else {
-        console.warn("Elemen admin-modal tidak ditemukan.");
+    const adminPortal = document.getElementById('admin-portal');
+    if (adminPortal) {
+        adminPortal.classList.toggle('hidden');
     }
 }
-</script>/body>
+</script>
+</body>
 </html>
