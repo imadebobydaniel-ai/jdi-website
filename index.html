@@ -153,6 +153,40 @@
         opacity: 1 !important;
         transform: scale(1) rotateX(0deg) !important;
     }
+
+    /* MODIFIKASI KHUSUS DIGITAL SIGNAGE: DIPERBESAR & PRESISI */
+    .ds-special-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 320px; /* Samakan dengan Tinggi Maps & Rating agar Presisi */
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+        padding: 2rem;
+        transition: all 0.3s ease;
+    }
+
+    .ds-special-container:hover {
+        border-color: #ff8c00;
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .ds-special-icon {
+        font-size: 8rem; /* Ukuran diperbesar signifikan */
+        color: #ff8c00;
+        margin-bottom: 1.5rem;
+        filter: drop-shadow(0 0 15px rgba(255, 140, 0, 0.3));
+    }
+
+    .ds-special-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: white;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
 </style>
 </head>
 <body class="bg-gray-50">
@@ -355,7 +389,7 @@
     </div>
 
     <footer id="kontak" class="footer-with-bg pt-16 pb-8"> 
-        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-12 border-b border-white/10 pb-12 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-4 gap-8 border-b border-white/10 pb-12 relative z-10">
             
             <div class="space-y-6">
                 <img src="logo-jdi.png" alt="Logo JDI" class="h-12 brightness-200 logo-outline" style="filter: drop-shadow(1px 0 0 white) drop-shadow(-1px 0 0 white) drop-shadow(0 1px 0 white) drop-shadow(0 -1px 0 white);">
@@ -381,27 +415,32 @@
                 </div>
             </div>
 
-            <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
-                <div class="flex flex-col">
-                    <h3 class="text-xl font-bold mb-6 border-l-4 border-accent-orange pl-4 text-white">Lokasi Kami</h3>
-                    <div class="rounded-xl overflow-hidden border border-white/10 shadow-2xl flex-grow h-64 md:h-full">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15945.72834375355!2d140.665384!3d-2.593717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x686cf5c36394334d%3A0xc3f1725ed149957e!2sAbepura%2C%20Kota%20Jayapura%2C%20Papua!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" 
-                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                    </div>
+            <div class="flex flex-col">
+                <div class="ds-special-container shadow-2xl">
+                    <i class="fa-solid fa-tv ds-special-icon"></i>
+                    <h3 class="ds-special-title">Digital Signage</h3>
                 </div>
+            </div>
 
-                <div class="flex flex-col">
-                    <div class="footer-rating-container bg-white/5 rounded-2xl p-6 border border-white/10 flex-grow shadow-2xl relative overflow-hidden">
-                        <h3 class="text-lg font-bold mb-4 text-center text-white">Beri Rating Layanan Kami</h3>
-                        <div class="flex justify-center space-x-2 mb-4">
-                            <span class="footer-rating-star text-gray-400 filled" onclick="setFooterRating(1)" style="color: rgb(255, 140, 0) !important;">★</span>
-                            <span class="footer-rating-star text-gray-400 filled" onclick="setFooterRating(2)" style="color: rgb(255, 140, 0) !important;">★</span>
-                            <span class="footer-rating-star text-gray-400 filled" onclick="setFooterRating(3)" style="color: rgb(255, 140, 0) !important;">★</span>
-                            <span class="footer-rating-star text-gray-400 filled" onclick="setFooterRating(4)" style="color: rgb(255, 140, 0) !important;">★</span>
-                            <span class="footer-rating-star text-gray-400 filled" onclick="setFooterRating(5)" style="color: rgb(255, 140, 0) !important;">★</span>
-                        </div>
-                        <p id="rating-status" class="text-xs uppercase tracking-widest text-gray-400 font-bold">Terima kasih atas 5 bintang Anda!</p>
+            <div class="flex flex-col">
+                <h3 class="text-xl font-bold mb-6 border-l-4 border-accent-orange pl-4 text-white">Lokasi Kami</h3>
+                <div class="rounded-xl overflow-hidden border border-white/10 shadow-2xl flex-grow h-64 md:h-full">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15945.72834375355!2d140.665384!3d-2.593717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x686cf5c36394334d%3A0xc3f1725ed149957e!2sAbepura%2C%20Kota%20Jayapura%2C%20Papua!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" 
+                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <div class="footer-rating-container bg-white/5 rounded-2xl p-6 border border-white/10 flex-grow shadow-2xl relative overflow-hidden">
+                    <h3 class="text-lg font-bold mb-4 text-center text-white">Beri Rating Layanan Kami</h3>
+                    <div class="flex justify-center space-x-2 mb-4">
+                        <span class="footer-rating-star text-gray-400 filled" onclick="setFooterRating(1)" style="color: rgb(255, 140, 0) !important;">★</span>
+                        <span class="footer-rating-star text-gray-400 filled" onclick="setFooterRating(2)" style="color: rgb(255, 140, 0) !important;">★</span>
+                        <span class="footer-rating-star text-gray-400 filled" onclick="setFooterRating(3)" style="color: rgb(255, 140, 0) !important;">★</span>
+                        <span class="footer-rating-star text-gray-400 filled" onclick="setFooterRating(4)" style="color: rgb(255, 140, 0) !important;">★</span>
+                        <span class="footer-rating-star text-gray-400 filled" onclick="setFooterRating(5)" style="color: rgb(255, 140, 0) !important;">★</span>
                     </div>
+                    <p id="rating-status" class="text-xs uppercase tracking-widest text-gray-400 font-bold">Terima kasih atas 5 bintang Anda!</p>
                 </div>
             </div>
         </div>
