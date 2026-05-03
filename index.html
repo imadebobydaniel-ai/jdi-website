@@ -8,235 +8,297 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
-
-    <style>
-        /* 1. RESET & BASE STYLES */
-        html, body { 
-            font-family: 'Poppins', sans-serif; 
-            scroll-behavior: smooth; 
-            overflow-x: hidden; 
-            width: 100%; 
-            margin: 0;
-            padding: 0;
-        }
-        
-        .bg-navy-dark { background-color: #0a1d37; }
-        .text-navy-dark { color: #0a1d37; }
-        .text-accent-orange { color: #ff8c00; }
-        .bg-accent-orange { background-color: #ff8c00; }
-        
-        /* 2. HERO & FEATURE CARDS */
-        .hero-section {
-            position: relative;
-            width: 100%;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            background: linear-gradient(to right, rgba(10, 29, 55, 0.95), rgba(10, 29, 55, 0.3)), 
-                        url('jembatan-merah.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            overflow: hidden;
-        }
-
-        .hero-section h1, .hero-section p { color: #ffffff; z-index: 2; }
-        
-        .feature-card {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); 
-            border-color: #ff8c00;
-        }
-
-        /* 3. SWIPER & LOADER */
-        .swiper { width: 100%; max-height: 350px; border-radius: 0.75rem; }
-        .swiper-slide img { cursor: zoom-in; width: 100%; height: 350px; object-fit: cover; }
-
-        #loading-screen {
-            position: fixed;
-            inset: 0;
-            background: #0a1d37;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 99999;
-            transition: opacity 1s ease;
-        }
-
-        .loader-fill {
-            width: 0%;
-            height: 100%;
-            background: #ff8c00;
-            transition: width 5s linear;
-        }
-
-        .welcome-text {
-            color: white;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 1s ease 0.5s;
-            text-align: center;
-        }
-
-        #main-content { opacity: 0; transition: opacity 1.2s ease; width: 100%; }
-
-        /* 4. FOOTER & RATING SYSTEM */
-        .footer-with-bg {
-            position: relative;
-            background-image: url('jyp.png');
-            background-size: cover;
-            background-position: center;
-            color: white;
-        }
-
-        .footer-with-bg::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-color: rgba(10, 29, 55, 0.85);
-            z-index: 1;
-        }
-
-        .footer-rating-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 320px;
-            height: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 1rem;
-            padding: 2rem;
-            text-align: center;
-            box-sizing: border-box;
-        }
-
-        .footer-rating-star {
-            font-size: 3rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 0 5px;
-            color: #d1d5db;
-            display: inline-block;
-        }
-
-        .footer-rating-star.filled {
-            color: #ff8c00 !important; 
-        }
-
-        .footer-rating-star:hover {
-            transform: scale(1.2);
-            color: #ffb800;
-        }
-
-        /* 7. PORTFOLIO PREVIEW & LAPTOP MOCKUP */
-        #laptop-mockup {
-            width: 100% !important;
-            opacity: 0; 
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-
-        .laptop-visible {
-            opacity: 1 !important;
-            transform: scale(1.2) !important;
-        }
-
-        @media (min-width: 1024px) {
-            #laptop-mockup {
-                transform: translateX(20px) scale(1.05);
-            }
-            .laptop-visible {
-                transform: translateX(20px) scale(1.1) !important;
-            }
-        }
-    </style>
-</head>
-
-<body class="bg-gray-50">
-
-<div id="loading-screen">
-    <div class="loader-bar-container" style="width: 260px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 20px; overflow: hidden; margin-bottom: 20px;">
-        <div id="loader-fill" class="loader-fill"></div>
-    </div>
-    <p id="welcome-msg" class="welcome-text">SELAMAT DATANG DI JAYA DIGITAL INTEGRATE</p>
-</div>
-
-<div id="main-content">
-    <header class="hero-section px-4 md:px-10">
-        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 w-full relative z-10">
-            <div class="w-full lg:w-5/12 text-center lg:text-left">
-                <h1 class="text-4xl lg:text-6xl font-bold mb-6">Transformasi Digital <br><span class="text-accent-orange">Tanpa Batas</span></h1>
-                <p class="text-gray-200 mb-8">Solusi teknologi mutakhir di Jayapura dan sekitarnya.</p>
-            </div>
-
-            <div class="w-full lg:w-7/12 flex justify-center lg:justify-end">
-                <div class="swiper mySwiper" id="laptop-mockup">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <img src="kopu-kopi-ads.jpg" alt="Iklan 1" onerror="this.src='https://via.placeholder.com/850x450?text=Gambar+1+Tidak+Ditemukan'">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="iklan-lain.jpg" alt="Iklan 2" onerror="this.src='https://via.placeholder.com/850x450?text=Gambar+2+Tidak+Ditemukan'">
-                        </div>
-                    </div>
-                    <div class="swiper-pagination"></div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
-                </div>
-            </div>
-        </div>
-    </header>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script>
-    // 1. Loader Logic
-    window.addEventListener('load', () => {
-        const loaderFill = document.getElementById('loader-fill');
-        const welcomeMsg = document.getElementById('welcome-msg');
-        const loadingScreen = document.getElementById('loading-screen');
-        const mainContent = document.getElementById('main-content');
-
-        if(loaderFill) loaderFill.style.width = '100%';
-        if(welcomeMsg) welcomeMsg.style.opacity = '1';
-
-        setTimeout(() => {
-            loadingScreen.style.opacity = '0';
-            setTimeout(() => {
-                loadingScreen.style.display = 'none';
-                mainContent.style.opacity = '1';
-                
-                // Panggil inisialisasi Swiper setelah loading selesai
-                initSwiper();
-            }, 1000);
-        }, 5000);
-    });
-
-    // 2. Swiper Initialization Function
-    function initSwiper() {
-        const mockup = document.getElementById('laptop-mockup');
-        if (mockup) {
-            mockup.classList.add('laptop-visible');
-        }
-
-        new Swiper(".mySwiper", {
-            loop: true,
-            autoplay: { delay: 3000, disableOnInteraction: false },
-            pagination: { el: ".swiper-pagination", clickable: true },
-            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-        });
+    
+<style>
+    /* 1. RESET & BASE STYLES */
+    html, body { 
+        font-family: 'Poppins', sans-serif; 
+        scroll-behavior: smooth; 
+        overflow-x: hidden; 
+        width: 100%; 
+        margin: 0;
+        padding: 0;
     }
-</script>
+    
+    .bg-navy-dark { background-color: #0a1d37; }
+    .text-navy-dark { color: #0a1d37; }
+    .text-accent-orange { color: #ff8c00; }
+    .bg-accent-orange { background-color: #ff8c00; }
+    
+    /* 2. HERO & FEATURE CARDS */
+    .hero-section {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        background: linear-gradient(to right, rgba(10, 29, 55, 0.95), rgba(10, 29, 55, 0.3)), 
+                    url('jembatan-merah.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        overflow: hidden;
+    }
 
-</body>
-</html>
+    .hero-section h1, .hero-section p { color: #ffffff; z-index: 2; }
+    
+    .feature-card {
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-12px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); 
+        border-color: #ff8c00;
+    }
+
+    /* 3. SWIPER & LOADER */
+    .swiper { width: 100%; max-height: 350px; border-radius: 0.75rem; }
+    .swiper-slide img { cursor: zoom-in; width: 100%; height: 350px; object-fit: cover; }
+
+    #loading-screen {
+        position: fixed;
+        inset: 0;
+        background: #0a1d37;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 99999;
+        transition: opacity 1s ease;
+    }
+
+    .loader-fill {
+        width: 0%;
+        height: 100%;
+        background: #ff8c00;
+        transition: width 5s linear;
+    }
+
+    .welcome-text {
+        color: white;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 1s ease 0.5s;
+        text-align: center;
+    }
+
+    #main-content { opacity: 0; transition: opacity 1.2s ease; width: 100%; }
+
+    /* 4. FOOTER & RATING SYSTEM (Perbaikan Tampilan) */
+    .footer-with-bg {
+        position: relative;
+        background-image: url('jyp.png');
+        background-size: cover;
+        background-position: center;
+        color: white;
+    }
+
+    .footer-with-bg::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-color: rgba(10, 29, 55, 0.85);
+        z-index: 1;
+    }
+
+    .footer-rating-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 320px; /* Samakan dengan tinggi Maps */
+        height: 100%;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 1rem;
+        padding: 2rem;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    .footer-rating-star {
+        font-size: 3rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin: 0 5px;
+        color: #d1d5db; /* Warna default abu-abu */
+        display: inline-block;
+    }
+
+    /* Class untuk warna orange solid saat aktif */
+    .footer-rating-star.filled {
+        color: #ff8c00 !important; 
+    }
+
+    .footer-rating-star:hover {
+        transform: scale(1.2);
+        color: #ffb800;
+    }
+
+    /* 5. RESPONSIVE LAYOUT */
+    @media (max-width: 768px) {
+        .hero-section { padding-top: 80px; align-items: flex-start; }
+        .footer-rating-container { min-height: auto; margin-top: 20px; }
+    }
+
+    /* ANIMATION CLASSES FOR JAVASCRIPT */
+    .fade-in-visible {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+    }
+
+    .laptop-visible {
+        opacity: 1 !important;
+        transform: scale(1) rotateX(0deg) !important;
+    }
+
+    /* MODIFIKASI KHUSUS DIGITAL SIGNAGE: DIPERBESAR & PRESISI */
+    .ds-special-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 320px; /* Samakan dengan Tinggi Maps & Rating agar Presisi */
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+        padding: 2rem;
+        transition: all 0.3s ease;
+    }
+
+    .ds-special-container:hover {
+        border-color: #ff8c00;
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .ds-special-icon {
+        font-size: 8rem; /* Ukuran diperbesar signifikan */
+        color: #ff8c00;
+        margin-bottom: 1.5rem;
+        filter: drop-shadow(0 0 15px rgba(255, 140, 0, 0.3));
+    }
+
+    .ds-special-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: white;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+    /* Membuat gambar portofolio sedikit keluar dari container agar terlihat besar */
+.portfolio-preview img {
+    width: 100%;
+    max-width: 800px; /* Atur batas maksimal lebar gambar */
+    height: auto;
+    object-fit: contain;
+}
+
+@media (max-width: 992px) {
+    .portfolio-preview {
+        transform: scale(1) !important; /* Kembali ke ukuran normal di HP agar tidak terpotong */
+        margin-top: 30px;
+    }
+}
+    /* Potongan Script CSS untuk Presisi Bagian Atas */
+
+/* 1. Kesejajaran Teks di Sebelah Kiri */
+#upper-section h1 {
+    /* Memberikan sedikit padding bawah agar jarak ke paragraf pas */
+    padding-bottom: 5px; 
+    /* Mengatur line-height agar teks Transformasi Digital tidak terlalu rapat */
+    line-height: 1.2; 
+}
+
+#upper-section p {
+    /* Memberikan jarak atas yang pas setelah judul */
+    margin-top: 15px; 
+    /* Memberikan jarak bawah agar tombol tidak terlalu dekat */
+    margin-bottom: 25px; 
+}
+
+/* 2. Kesejajaran Tombol di Sebelah Kiri */
+#upper-section .d-flex.gap-3 {
+    /* Memastikan tombol rata kiri sempurna dengan teks di atasnya */
+    justify-content: flex-start !important; 
+    /* Memberikan jarak atas yang konsisten */
+    margin-top: 25px; 
+}
+
+/* 3. Kesejajaran Kontainer Iklan/Portfolio di Sebelah Kanan */
+.portfolio-preview {
+    /* Memastikan kontainer memiliki margin otomatis untuk presisi */
+    margin: 0 auto; 
+    /* Sedikit penyesuaian padding dalam agar konten di dalamnya seimbang */
+    padding: 10px; 
+    /* Transformasi scale untuk memperbesar visual sesuai permintaan sebelumnya */
+    transform: scale(1.1); 
+    /* Transisi halus agar presisi terlihat saat dimuat */
+    transition: 0.3s ease-in-out; 
+    /* Memastikan posisi container pas di tengah kolomnya */
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+}
+
+.portfolio-preview img {
+    /* Memastikan gambar iklan memenuhi kontainer dan tetap proporsional */
+    width: 100%; 
+    height: auto; 
+    object-fit: contain; 
+}
+    /* Pastikan container portfolio mengambil ruang maksimal */
+#laptop-mockup {
+    width: 100% !important;
+    max-width: none !important; /* Menghilangkan batas agar seukuran kotak merah */
+    transform: scale(1.2) !important; /* Menambah skala agar lebih besar */
+    margin-top: 20px;
+}
+
+/* Mengatur agar gambar di dalam Swiper memenuhi kotak */
+.swiper-slide img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+/* Menyeimbangkan posisi teks di kiri agar tidak tertutup gambar yang membesar */
+@media (min-width: 1024px) {
+    .hero-section .flex-col.md:flex-row {
+        gap: 2rem;
+    }
+    .w-full.md:w-5/12 { /* Kolom Teks */
+        width: 35% !important;
+    }
+    .w-full.md:w-7/12 { /* Kolom Gambar */
+        width: 65% !important;
+    }
+}
+    /* Pengaturan agar teks dan gambar memiliki jarak proporsional */
+@media (min-width: 1024px) {
+    #laptop-mockup {
+        /* Menggeser sedikit ke kanan agar tidak mepet tulisan */
+        transform: translateX(20px) scale(1.05); 
+        transition: transform 0.5s ease;
+    }
+    
+    /* Memberikan ruang kosong di antara dua kolom utama */
+    .hero-section .max-w-7xl {
+        gap: 50px !important; 
+    }
+}
+
+/* Memastikan gambar tetap tajam dan mengisi area kotak merah dengan rapi */
+.swiper-slide img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+</style>
 </head>
 <body class="bg-gray-50">
 
