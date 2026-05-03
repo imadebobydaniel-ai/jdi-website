@@ -8,7 +8,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <style>
     /* 1. RESET & BASE STYLES */
     html, body { 
@@ -362,18 +364,21 @@
 
     <div class="w-full lg:w-7/12 flex justify-center lg:justify-end">
         <div id="laptop-mockup" class="relative w-full" style="max-width: 850px;"> 
-            <div class="swiper mySwiper rounded-xl shadow-2xl border border-white/20 backdrop-blur-md p-2">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img src="kopukopi.png" class="rounded-lg w-full"></div>
-                </div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-            </div>
-            <p class="text-center text-white/60 text-xs mt-4 uppercase tracking-widest font-bold">Client Satisfaction Portfolio</p>
-        </div>
+            <div class="swiper mySwiper" id="laptop-mockup">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide">
+      <img src="kopu-kopi-ads.jpg" alt="Iklan 1">
     </div>
+    <div class="swiper-slide">
+      <img src="iklan-lain.jpg" alt="Iklan 2">
+    </div>
+  </div>
+
+  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div>
+  
+  <div class="swiper-pagination"></div>
 </div>
-    </div>
 </header>
 
     <section id="layanan" class="py-16 md:py-24 max-w-7xl mx-auto px-6">
@@ -614,6 +619,45 @@ window.addEventListener('load', () => {
         }
     }, 5000); 
 });
+    function initMainContent() {
+    renderServices();
+
+    const ids = ['fade-text-1', 'fade-text-2', 'fade-btns', 'laptop-mockup'];
+    ids.forEach((id, i) => {
+        setTimeout(() => {
+            const el = document.getElementById(id);
+            if (el) el.classList.add(id.includes('laptop') ? 'laptop-visible' : 'fade-in-visible');
+        }, i * 250);
+    });
+
+    // PERBAIKAN INISIALISASI SWIPER
+    if (typeof Swiper !== 'undefined') {
+        const swiper = new Swiper(".mySwiper", {
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false, // Tetap autoplay meski sudah disentuh manual
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            effect: "fade", // Efek transisi halus (opsional)
+            fadeEffect: { crossFade: true }
+        });
+        
+        // Memaksa Swiper untuk update posisi setelah konten muncul
+        setTimeout(() => {
+            swiper.update();
+        }, 500);
+    } else {
+        console.error("Library Swiper belum dimuat. Pastikan CDN Swiper sudah dipasang.");
+    }
+}
 
 function initMainContent() {
     renderServices();
