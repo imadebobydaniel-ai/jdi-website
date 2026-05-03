@@ -25,27 +25,19 @@
     .text-accent-orange { color: #ff8c00; }
     .bg-accent-orange { background-color: #ff8c00; }
     
-    /* HERO & FEATURE CARDS */
+    /* HERO SECTION dengan background jembatan-merah.jpg */
     .hero-section {
         position: relative;
         width: 100%;
         min-height: 100vh;
         display: flex;
         align-items: center;
-        background: linear-gradient(135deg, #0a1d37 0%, #061225 100%);
+        background: linear-gradient(to right, rgba(10, 29, 55, 0.88), rgba(10, 29, 55, 0.6)), 
+                    url('jembatan-merah.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
         overflow: hidden;
-    }
-
-    /* Background pattern */
-    .hero-section::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230a1d37'/%3E%3Cpath d='M20 20 L80 20 L80 80 L20 80 Z' fill='none' stroke='%23ff8c00' stroke-width='1' opacity='0.3'/%3E%3Ccircle cx='50' cy='50' r='30' fill='none' stroke='%23ff8c00' stroke-width='1' opacity='0.2'/%3E%3C/svg%3E");
-        background-repeat: repeat;
-        background-size: 100px;
-        opacity: 0.3;
-        z-index: 0;
     }
 
     .hero-section h1, .hero-section p, .hero-section .max-w-7xl { 
@@ -91,7 +83,7 @@
     .swiper-slide .fallback-card {
         width: 100%;
         height: 350px;
-        display: flex;
+        display: none;
         align-items: center;
         justify-content: center;
         background: linear-gradient(135deg, #1a3a6e 0%, #0a1d37 100%);
@@ -151,10 +143,14 @@
         display: none;
     }
 
-    /* FOOTER & RATING SYSTEM */
+    /* FOOTER dengan background jyp.png */
     .footer-with-bg {
         position: relative;
-        background: linear-gradient(135deg, #0a1d37 0%, #061225 100%);
+        background: linear-gradient(to bottom, rgba(10, 29, 55, 0.88), rgba(10, 29, 55, 0.92)), 
+                    url('jyp.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
         color: white;
     }
 
@@ -162,7 +158,7 @@
         content: '';
         position: absolute;
         inset: 0;
-        background-color: rgba(10, 29, 55, 0.95);
+        background-color: rgba(10, 29, 55, 0.75);
         z-index: 1;
     }
 
@@ -177,6 +173,7 @@
         border-radius: 1rem;
         padding: 2rem;
         text-align: center;
+        backdrop-filter: blur(5px);
     }
 
     .footer-rating-star {
@@ -279,7 +276,7 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section dengan background jembatan-merah.jpg -->
     <header class="hero-section px-4 md:px-10" id="home">
         <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 w-full relative z-10 py-16 lg:py-20">
             <div class="w-full lg:w-5/12 text-center lg:text-left lg:pr-10">
@@ -301,7 +298,7 @@
                         <!-- Slide 1 -->
                         <div class="swiper-slide">
                             <img src="d-klinic.png" alt="D-Klinic" class="w-full h-[350px] object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
-                            <div class="fallback-card" style="display: none;">
+                            <div class="fallback-card">
                                 <div class="text-center p-8">
                                     <i class="fas fa-clinic-medical text-6xl text-accent-orange mb-4"></i>
                                     <h3 class="text-xl font-bold">D-Klinic</h3>
@@ -312,7 +309,7 @@
                         <!-- Slide 2 -->
                         <div class="swiper-slide">
                             <img src="gereja.png" alt="Gereja" class="w-full h-[350px] object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
-                            <div class="fallback-card" style="display: none;">
+                            <div class="fallback-card">
                                 <div class="text-center p-8">
                                     <i class="fas fa-church text-6xl text-accent-orange mb-4"></i>
                                     <h3 class="text-xl font-bold">Sistem Gereja</h3>
@@ -323,7 +320,7 @@
                         <!-- Slide 3 -->
                         <div class="swiper-slide">
                             <img src="skin.png" alt="Skin Care" class="w-full h-[350px] object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
-                            <div class="fallback-card" style="display: none;">
+                            <div class="fallback-card">
                                 <div class="text-center p-8">
                                     <i class="fas fa-spa text-6xl text-accent-orange mb-4"></i>
                                     <h3 class="text-xl font-bold">Skin Care System</h3>
@@ -334,7 +331,7 @@
                         <!-- Slide 4 -->
                         <div class="swiper-slide">
                             <img src="nusa-agro.png" alt="Nusa Agro" class="w-full h-[350px] object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
-                            <div class="fallback-card" style="display: none;">
+                            <div class="fallback-card">
                                 <div class="text-center p-8">
                                     <i class="fas fa-seedling text-6xl text-accent-orange mb-4"></i>
                                     <h3 class="text-xl font-bold">Nusa Agro</h3>
@@ -345,7 +342,7 @@
                         <!-- Slide 5 -->
                         <div class="swiper-slide">
                             <img src="rapopang.png" alt="Rapopang" class="w-full h-[350px] object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
-                            <div class="fallback-card" style="display: none;">
+                            <div class="fallback-card">
                                 <div class="text-center p-8">
                                     <i class="fas fa-utensils text-6xl text-accent-orange mb-4"></i>
                                     <h3 class="text-xl font-bold">Rapopang</h3>
@@ -356,7 +353,7 @@
                         <!-- Slide 6 -->
                         <div class="swiper-slide">
                             <img src="haven-cafe.png" alt="Haven Cafe" class="w-full h-[350px] object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
-                            <div class="fallback-card" style="display: none;">
+                            <div class="fallback-card">
                                 <div class="text-center p-8">
                                     <i class="fas fa-mug-hot text-6xl text-accent-orange mb-4"></i>
                                     <h3 class="text-xl font-bold">Haven Cafe</h3>
@@ -367,7 +364,7 @@
                         <!-- Slide 7 -->
                         <div class="swiper-slide">
                             <img src="de-wave.png" alt="De Wave" class="w-full h-[350px] object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
-                            <div class="fallback-card" style="display: none;">
+                            <div class="fallback-card">
                                 <div class="text-center p-8">
                                     <i class="fas fa-water text-6xl text-accent-orange mb-4"></i>
                                     <h3 class="text-xl font-bold">De Wave</h3>
@@ -380,7 +377,7 @@
                     <div class="swiper-button-next"></div>
                     <div class="swiper-button-prev"></div>
                 </div>
-                <p class="text-center text-white/60 text-xs mt-4 uppercase tracking-widest font-bold">Client Satisfaction Portfolio</p>
+                <p class="text-center text-white/60 text-xs mt-4 uppercase tracking-widest font-bold">CLIENT SATISFACTION PORTFOLIO</p>
             </div>
         </div>
     </header>
@@ -515,7 +512,7 @@
         </div>
     </div>
 
-    <!-- Footer -->
+    <!-- Footer dengan background jyp.png -->
     <footer id="kontak" class="footer-with-bg pt-16 pb-8 border-t-8 border-accent-orange"> 
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 border-b border-white/10 pb-12 relative z-10">
             
