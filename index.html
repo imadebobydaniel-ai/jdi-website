@@ -238,10 +238,6 @@
 </body>
 </html>
 </head>
-<body>
-    </body>
-</html>
-</head>
 <body class="bg-gray-50">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -302,27 +298,20 @@
         </div>
     </div>
 
-   <div class="w-full lg:w-7/12 flex justify-center lg:justify-end">
-    <div class="relative w-full" style="max-width: 850px;"> 
-        
-        <div class="swiper mySwiper" id="laptop-mockup">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img src="kopu-kopi-ads.jpg" alt="Iklan 1" class="w-full h-auto rounded-xl" onerror="this.src='https://via.placeholder.com/850x450?text=Gambar+Tidak+Ditemukan'">
+    <div class="w-full lg:w-7/12 flex justify-center lg:justify-end">
+        <div id="laptop-mockup" class="relative w-full" style="max-width: 850px;"> 
+            <div class="swiper mySwiper rounded-xl shadow-2xl border border-white/20 backdrop-blur-md p-2">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="kopukopi.png" class="rounded-lg w-full"></div>
                 </div>
-                <div class="swiper-slide">
-                    <img src="iklan-lain.jpg" alt="Iklan 2" class="w-full h-auto rounded-xl" onerror="this.src='https://via.placeholder.com/850x450?text=Cek+Folder+Gambar'">
-                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
             </div>
-
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-            
-            <div class="swiper-pagination"></div>
+            <p class="text-center text-white/60 text-xs mt-4 uppercase tracking-widest font-bold">Client Satisfaction Portfolio</p>
         </div>
-
     </div>
 </div>
+    </div>
 </header>
 
     <section id="layanan" class="py-16 md:py-24 max-w-7xl mx-auto px-6">
@@ -515,7 +504,7 @@
 </div> 
 
 <div id="admin-portal" class="fixed inset-0 bg-navy-dark/90 z-[10001] hidden flex items-center justify-center p-6">
-    <div class="bg-white w-full max-md rounded-2xl p-8 shadow-2xl">
+    <div class="bg-white w-full max-w-md rounded-2xl p-8 shadow-2xl">
         <h3 class="text-2xl font-bold text-navy-dark mb-6 text-center">Login Administrator</h3>
         <div class="space-y-4">
             <input type="text" id="user" placeholder="Username" class="w-full p-3 border rounded-lg outline-none focus:ring-2 focus:ring-accent-orange">
@@ -530,43 +519,6 @@
 <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 
 <script>
-// Kode Tambahan untuk mematikan transparansi dan memicu animasi
-function initMainContent() {
-    // Memaksa elemen muncul meskipun transparan
-    const mockup = document.getElementById('laptop-mockup');
-    if (mockup) {
-        mockup.style.opacity = "1";
-        mockup.classList.add('laptop-visible');
-    }
-
-    // Inisialisasi Swiper
-    if (typeof Swiper !== 'undefined') {
-        new Swiper(".mySwiper", {
-            loop: true,
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            }
-        });
-    }
-}
-
-// Pastikan dipanggil setelah loading selesai
-window.addEventListener('load', () => {
-    // Logika loading Anda yang sudah ada...
-    setTimeout(() => {
-        initMainContent();
-    }, 5500); // Menyesuaikan dengan total durasi loading screen Anda
-});
-</script>
 /* ===============================
     1. LOADING & INIT (FIXED 5s)
 ================================ */
@@ -595,13 +547,12 @@ window.addEventListener('load', () => {
                     main.offsetHeight; 
                     main.style.opacity = '1';
                 }
-                initMainContent(); // Memanggil fungsi inisialisasi konten
+                initMainContent();
             }, 1000);
         }
     }, 5000); 
 });
 
-// FUNGSI INI HANYA BOLEH ADA SATU (DIBAWAH INI VERSI YANG BENAR)
 function initMainContent() {
     renderServices();
 
@@ -613,32 +564,12 @@ function initMainContent() {
         }, i * 250);
     });
 
-    // INISIALISASI SWIPER
     if (typeof Swiper !== 'undefined') {
-        const swiper = new Swiper(".mySwiper", {
-            loop: true,
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false, 
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            effect: "fade", 
-            fadeEffect: { crossFade: true }
+        new Swiper(".mySwiper", {
+            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+            autoplay: { delay: 3000 },
+            loop: true
         });
-        
-        // Memaksa Swiper untuk update posisi agar tidak nge-blank di awal
-        setTimeout(() => {
-            swiper.update();
-        }, 500);
-    } else {
-        console.error("Library Swiper belum dimuat.");
     }
 }
 
@@ -678,7 +609,7 @@ function toggleMobileMenu() {
 }
 
 /* ===============================
-    3. SERVICES RENDER
+    3. SERVICES RENDER (TARGET KHUSUS)
 ================================ */
 function renderServices() {
     const container = document.getElementById('technical-services-container');
@@ -769,10 +700,10 @@ function setFooterRating(rating) {
     
     stars.forEach((star, index) => {
         if (index < rating) {
-            star.style.color = '#ff8c00'; 
+            star.style.color = '#ff8c00'; // Orange solid
             star.classList.add('filled');
         } else {
-            star.style.color = '#d1d5db'; 
+            star.style.color = '#d1d5db'; // Abu-abu
             star.classList.remove('filled');
         }
     });
@@ -785,7 +716,10 @@ function toggleAdminPanel() {
     const adminModal = document.getElementById('admin-portal');
     if (adminModal) {
         adminModal.classList.toggle('hidden');
+    } else {
+        console.warn("Elemen admin-portal tidak ditemukan.");
     }
 }
-</script></body>
+</script>
+</body>
 </html>
