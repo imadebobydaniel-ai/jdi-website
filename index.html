@@ -201,6 +201,54 @@
         margin-top: 30px;
     }
 }
+    /* Potongan Script CSS untuk Presisi Bagian Atas */
+
+/* 1. Kesejajaran Teks di Sebelah Kiri */
+#upper-section h1 {
+    /* Memberikan sedikit padding bawah agar jarak ke paragraf pas */
+    padding-bottom: 5px; 
+    /* Mengatur line-height agar teks Transformasi Digital tidak terlalu rapat */
+    line-height: 1.2; 
+}
+
+#upper-section p {
+    /* Memberikan jarak atas yang pas setelah judul */
+    margin-top: 15px; 
+    /* Memberikan jarak bawah agar tombol tidak terlalu dekat */
+    margin-bottom: 25px; 
+}
+
+/* 2. Kesejajaran Tombol di Sebelah Kiri */
+#upper-section .d-flex.gap-3 {
+    /* Memastikan tombol rata kiri sempurna dengan teks di atasnya */
+    justify-content: flex-start !important; 
+    /* Memberikan jarak atas yang konsisten */
+    margin-top: 25px; 
+}
+
+/* 3. Kesejajaran Kontainer Iklan/Portfolio di Sebelah Kanan */
+.portfolio-preview {
+    /* Memastikan kontainer memiliki margin otomatis untuk presisi */
+    margin: 0 auto; 
+    /* Sedikit penyesuaian padding dalam agar konten di dalamnya seimbang */
+    padding: 10px; 
+    /* Transformasi scale untuk memperbesar visual sesuai permintaan sebelumnya */
+    transform: scale(1.1); 
+    /* Transisi halus agar presisi terlihat saat dimuat */
+    transition: 0.3s ease-in-out; 
+    /* Memastikan posisi container pas di tengah kolomnya */
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+}
+
+.portfolio-preview img {
+    /* Memastikan gambar iklan memenuhi kontainer dan tetap proporsional */
+    width: 100%; 
+    height: auto; 
+    object-fit: contain; 
+}
 </style>
 </head>
 <body class="bg-gray-50">
@@ -405,62 +453,74 @@
         </div>
     </div>
 
-    <footer id="kontak" class="footer-with-bg pt-16 pb-8"> 
-        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-4 gap-8 border-b border-white/10 pb-12 relative z-10">
-            
-            <div class="space-y-6">
-                <img src="logo-jdi.png" alt="Logo JDI" class="h-12 brightness-200 logo-outline" style="filter: drop-shadow(1px 0 0 white) drop-shadow(-1px 0 0 white) drop-shadow(0 1px 0 white) drop-shadow(0 -1px 0 white);">
-                <p class="text-gray-400 text-sm leading-relaxed">Solusi digital terintegrasi untuk pengelolaan sistem yang profesional di tanah Papua.</p>
-                
-                <div class="text-gray-400 text-sm">
-                    <p class="font-bold text-white mb-2 underline decoration-accent-orange text-base">Alamat Kantor:</p>
-                    <p>Jl. Tanah Hitam abe Pantai, Awiyo, Abepura, Kota Jayapura, Papua.</p>
-                    <div class="mt-4 flex items-center gap-3 text-accent-orange font-bold text-lg">
-                        <a href="https://wa.me/6281283393576" target="_blank" class="hover:underline flex items-center gap-2">
-                            <span class="bg-white/10 p-2 rounded-full">📞</span> 0812-8339-3576
-                        </a>
-                    </div>
-                </div>
-
-                <div class="footer-socials flex gap-4 mt-6">
-                    <a href="https://www.facebook.com/jaya.digital.integrate2026" target="_blank" class="text-white hover:text-accent-orange text-2xl transition">
-                        <i class="fa-brands fa-facebook"></i>
-                    </a>
-                    <a href="https://www.instagram.com/jayadigitalintegrate/" target="_blank" class="text-white hover:text-accent-orange text-2xl transition">
-                        <i class="fa-brands fa-instagram"></i>
-                    </a>
-                </div>
-            </div>
-
-           
-
-            <div class="flex flex-col">
-                <h3 class="text-xl font-bold mb-6 border-l-4 border-accent-orange pl-4 text-white">Lokasi Kami</h3>
-                <div class="rounded-xl overflow-hidden border border-white/10 shadow-2xl flex-grow h-64 md:h-full">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15945.72834375355!2d140.665384!3d-2.593717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x686cf5c36394334d%3A0xc3f1725ed149957e!2sAbepura%2C%20Kota%20Jayapura%2C%20Papua!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" 
-                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                </div>
-            </div>
-
-            <div class="flex flex-col">
-                <div class="footer-rating-container bg-white/5 rounded-2xl p-6 border border-white/10 flex-grow shadow-2xl relative overflow-hidden">
-                    <h3 class="text-lg font-bold mb-4 text-center text-white">Beri Rating Layanan Kami</h3>
-                    <div class="flex justify-center space-x-2 mb-4">
-                        <span class="footer-rating-star text-gray-400 filled" onclick="setFooterRating(1)" style="color: rgb(255, 140, 0) !important;">★</span>
-                        <span class="footer-rating-star text-gray-400 filled" onclick="setFooterRating(2)" style="color: rgb(255, 140, 0) !important;">★</span>
-                        <span class="footer-rating-star text-gray-400 filled" onclick="setFooterRating(3)" style="color: rgb(255, 140, 0) !important;">★</span>
-                        <span class="footer-rating-star text-gray-400 filled" onclick="setFooterRating(4)" style="color: rgb(255, 140, 0) !important;">★</span>
-                        <span class="footer-rating-star text-gray-400 filled" onclick="setFooterRating(5)" style="color: rgb(255, 140, 0) !important;">★</span>
-                    </div>
-                    <p id="rating-status" class="text-xs uppercase tracking-widest text-gray-400 font-bold">Terima kasih atas 5 bintang Anda!</p>
-                </div>
-            </div>
-        </div>
+   <footer id="kontak" class="footer-with-bg pt-16 pb-8 border-t-8 border-accent-orange"> 
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 border-b border-white/10 pb-12 relative z-10">
         
-        <div class="max-w-7xl mx-auto px-6 pt-8 text-center text-gray-500 text-[10px] tracking-widest uppercase font-semibold relative z-10">
-            © 2026 Jaya Digital Integrate. All Rights Reserved.
+        <div class="lg:col-span-3 space-y-6">
+            <img src="logo-jdi.png" alt="Logo JDI" class="h-12 brightness-200 logo-outline" style="filter: drop-shadow(1px 0 0 white) drop-shadow(-1px 0 0 white) drop-shadow(0 1px 0 white) drop-shadow(0 -1px 0 white);">
+            <p class="text-gray-400 text-sm leading-relaxed">Solusi digital terintegrasi untuk pengelolaan sistem yang profesional di tanah Papua.</p>
+            
+            <div class="text-gray-400 text-sm">
+                <p class="font-bold text-white mb-2 underline decoration-accent-orange text-base">Alamat Kantor:</p>
+                <p>Jl. Tanah Hitam abe Pantai, Awiyo, Abepura, Kota Jayapura, Papua.</p>
+                <div class="mt-4 flex items-center gap-3 text-accent-orange font-bold text-lg">
+                    <a href="https://wa.me/6281283393576" target="_blank" class="hover:underline flex items-center gap-2">
+                        <span class="bg-white/10 p-2 rounded-full">📞</span> 0812-8339-3576
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-socials flex gap-4 mt-6">
+                <a href="https://www.facebook.com/jaya.digital.integrate2026" target="_blank" class="text-white hover:text-accent-orange text-2xl transition">
+                    <i class="fa-brands fa-facebook"></i>
+                </a>
+                <a href="https://www.instagram.com/jayadigitalintegrate/" target="_blank" class="text-white hover:text-accent-orange text-2xl transition">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+            </div>
         </div>
-    </footer>
+
+        <div class="lg:col-span-4">
+            <div class="footer-rating-container bg-white/5 rounded-2xl p-8 border border-white/10 h-full shadow-2xl relative overflow-hidden flex flex-col justify-center items-center backdrop-blur-sm">
+                <h3 class="text-xl font-bold mb-6 text-center text-white">Beri Rating Layanan Kami</h3>
+                <div class="flex justify-center space-x-2 mb-6">
+                    <span class="footer-rating-star text-3xl cursor-pointer" onclick="setFooterRating(1)" style="color: rgb(255, 140, 0);">★</span>
+                    <span class="footer-rating-star text-3xl cursor-pointer" onclick="setFooterRating(2)" style="color: rgb(255, 140, 0);">★</span>
+                    <span class="footer-rating-star text-3xl cursor-pointer" onclick="setFooterRating(3)" style="color: rgb(255, 140, 0);">★</span>
+                    <span class="footer-rating-star text-3xl cursor-pointer" onclick="setFooterRating(4)" style="color: rgb(255, 140, 0);">★</span>
+                    <span class="footer-rating-star text-3xl cursor-pointer" onclick="setFooterRating(5)" style="color: rgb(255, 140, 0);">★</span>
+                </div>
+                <p id="rating-status" class="text-xs uppercase tracking-widest text-gray-400 font-bold text-center leading-relaxed">
+                    Terima kasih atas 5 bintang Anda! Dukungan Anda sangat berarti bagi kami.
+                </p>
+                <button class="w-full mt-6 py-2 bg-transparent border border-orange-400 text-orange-400 rounded-md hover:bg-orange-400 hover:text-white transition text-sm font-bold uppercase tracking-widest">
+                    Klik untuk Menilai
+                </button>
+            </div>
+        </div>
+
+        <div class="lg:col-span-5">
+            <div class="bg-white/5 rounded-2xl p-8 border border-white/10 h-full shadow-2xl backdrop-blur-sm">
+                <h3 class="text-xl font-bold mb-6 border-l-4 border-accent-orange pl-4 text-white">Saran dan Masukan</h3>
+                <form class="space-y-4">
+                    <div>
+                        <input type="text" placeholder="Nama Lengkap" class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-accent-orange transition">
+                    </div>
+                    <div>
+                        <textarea placeholder="Tuliskan saran atau pesan Anda di sini..." rows="4" class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-accent-orange transition"></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-3 bg-accent-orange text-white rounded-lg font-bold hover:bg-orange-600 transition shadow-lg text-sm uppercase tracking-widest">
+                        Kirim Pesan
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-6 pt-8 text-center text-gray-500 text-[10px] tracking-widest uppercase font-semibold relative z-10">
+        © 2026 Jaya Digital Integrate. All Rights Reserved.
+    </div>
+</footer>
 </div> 
 
 <div id="admin-portal" class="fixed inset-0 bg-navy-dark/90 z-[10001] hidden flex items-center justify-center p-6">
