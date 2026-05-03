@@ -86,7 +86,7 @@
 
     #main-content { opacity: 0; transition: opacity 1.2s ease; width: 100%; }
 
-    /* 4. FOOTER & RATING SYSTEM */
+    /* 4. FOOTER & RATING SYSTEM (Perbaikan Tampilan) */
     .footer-with-bg {
         position: relative;
         background-image: url('jyp.png');
@@ -108,7 +108,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        min-height: 320px;
+        min-height: 320px; /* Samakan dengan tinggi Maps */
         height: 100%;
         border: 1px solid rgba(255, 255, 255, 0.1);
         background: rgba(255, 255, 255, 0.05);
@@ -123,16 +123,18 @@
         cursor: pointer;
         transition: all 0.3s ease;
         margin: 0 5px;
-        color: #d1d5db;
+        color: #d1d5db; /* Warna default abu-abu */
         display: inline-block;
     }
 
+    /* Class untuk warna orange solid saat aktif */
     .footer-rating-star.filled {
         color: #ff8c00 !important; 
     }
 
     .footer-rating-star:hover {
         transform: scale(1.2);
+        color: #ffb800;
     }
 
     /* 5. RESPONSIVE LAYOUT */
@@ -147,18 +149,18 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <div id="loading-screen">
-    <img src="logo-jdi.png" alt="Logo JDI" class="loader-logo">
-    <div class="loader-bar-container" style="width: 200px; height: 4px; background: rgba(255,255,255,0.1); margin: 20px 0; overflow: hidden;">
+    <img src="logo-jdi.png" alt="Logo JDI" class="loader-logo" style="width: 280px; height: auto; margin-bottom: 30px; filter: drop-shadow(1px 0 0 white) drop-shadow(-1px 0 0 white) drop-shadow(0 1px 0 white) drop-shadow(0 -1px 0 white) drop-shadow(0.5px 0.5px 0.5px rgba(255,255,255,0.5));">
+    <div class="loader-bar-container" style="width: 260px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 20px; overflow: hidden; margin-bottom: 20px;">
         <div id="loader-fill" class="loader-fill"></div>
     </div>
     <p id="welcome-msg" class="welcome-text">SELAMAT DATANG DI JAYA DIGITAL INTEGRATE</p>
 </div>
 
-<div id="main-content" style="display: none;">
+<div id="main-content">
     <nav class="bg-white shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-8">
-                <img src="logo-jdi.png" alt="Logo Jaya Digital Integrate" class="h-10 md:h-16 w-auto logo-outline">
+                <img src="logo-jdi.png" alt="Logo Jaya Digital Integrate" class="h-10 md:h-16 w-auto logo-outline" style="filter: drop-shadow(1px 0 0 white) drop-shadow(-1px 0 0 white) drop-shadow(0 1px 0 white) drop-shadow(0 -1px 0 white);">
                 <div id="nav-links" class="hidden md:flex space-x-8 font-medium text-gray-700">
                     <a href="profile.html" class="hover:text-accent-orange transition">Profile</a>
                     <a href="index.html?skipIntro=true" class="hover:text-accent-orange">Beranda</a>
@@ -191,20 +193,20 @@
     <header class="hero-section px-4 md:px-10">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between relative z-10 gap-8 w-full">
             <div class="w-full md:w-1/2 text-center md:text-left md:-mt-32">
-                <h1 id="fade-text-1" class="text-3xl md:text-6xl font-bold leading-tight mb-6 text-white">
+                <h1 id="fade-text-1" class="text-3xl md:text-6xl font-bold leading-tight mb-6 text-white" style="opacity: 0; transform: translateY(30px); transition: opacity 1.5s ease, transform 1.5s ease;">
                     Transformasi Digital <br><span class="text-accent-orange">Tanpa Batas</span>
                 </h1>
-                <p id="fade-text-2" class="text-gray-200 text-sm md:text-lg mb-8 max-w-lg mx-auto md:mx-0">
+                <p id="fade-text-2" class="text-gray-200 text-sm md:text-lg mb-8 max-w-lg mx-auto md:mx-0" style="opacity: 0; transform: translateY(30px); transition: opacity 1.5s ease, transform 1.5s ease;">
                     Kami menghadirkan solusi teknologi mutakhir untuk kebutuhan administrasi, database, dan sistem informasi manajemen di Jayapura dan sekitarnya.
                 </p>
-                <div id="fade-btns" class="flex flex-col sm:flex-row justify-center md:justify-start gap-4">
+                <div id="fade-btns" class="flex flex-col sm:flex-row justify-center md:justify-start gap-4" style="opacity: 0; transform: translateY(30px); transition: opacity 1.5s ease, transform 1.5s ease;">
                     <a href="javascript:void(0)" onclick="toggleProjectModal()" class="bg-accent-orange text-white px-8 py-3 rounded-md font-bold hover:bg-orange-600 transition shadow-lg w-full sm:w-auto text-center">Mulai Proyek</a>
                     <a href="layanan-kami.html" class="border-2 border-white text-white px-8 py-3 rounded-md font-bold hover:bg-white hover:text-navy-dark transition w-full sm:w-auto text-center">Layanan Kami</a>
                 </div>
             </div>
 
             <div class="w-full md:w-1/2 flex flex-col items-center">
-                <div id="laptop-mockup" class="bg-white/10 p-2 md:p-4 rounded-xl backdrop-blur-md border border-white/20 shadow-2xl w-full relative">
+                <div id="laptop-mockup" class="bg-white/10 p-2 md:p-4 rounded-xl backdrop-blur-md border border-white/20 shadow-2xl w-full relative" style="perspective: 1000px; opacity: 0; transform: scale(0.8) rotateX(15deg); transition: all 1.5s cubic-bezier(0.165, 0.84, 0.44, 1); max-width: 100%;">
                     <div class="swiper mySwiper">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide"><a href="gereja.png" data-fancybox="gallery"><img src="gereja.png" class="rounded-lg"></a></div>
@@ -217,7 +219,7 @@
                         <div class="swiper-button-prev"></div>
                     </div>
                 </div>
-                <p class="text-white/60 text-[10px] md:text-xs mt-4 uppercase tracking-widest font-bold">Client Satisfaction Portfolio</p>
+                <p class="text-white/60 text-[10px] md:text-xs mt-2 uppercase tracking-widest font-bold">Client Satisfaction Portfolio</p>
             </div>
         </div>
     </header>
@@ -329,6 +331,8 @@
         </div>
     </div>
 
+    <div class="bg-accent-orange text-white w-full py-6 font-bold text-center tracking-widest uppercase rounded-t-xl"></div>
+
     <div id="success-toast" class="fixed top-10 left-1/2 -translate-x-1/2 z-[10003] hidden">
         <div class="bg-green-600 text-white px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-4">
             <span class="text-2xl">✅</span>
@@ -343,7 +347,7 @@
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-12 border-b border-white/10 pb-12 relative z-10">
             
             <div class="space-y-6">
-                <img src="logo-jdi.png" alt="Logo JDI" class="h-12 brightness-200 logo-outline">
+                <img src="logo-jdi.png" alt="Logo JDI" class="h-12 brightness-200 logo-outline" style="filter: drop-shadow(1px 0 0 white) drop-shadow(-1px 0 0 white) drop-shadow(0 1px 0 white) drop-shadow(0 -1px 0 white);">
                 <p class="text-gray-400 text-sm leading-relaxed">Solusi digital terintegrasi untuk pengelolaan sistem yang profesional di tanah Papua.</p>
                 
                 <div class="text-gray-400 text-sm">
@@ -370,7 +374,7 @@
                 <div class="flex flex-col">
                     <h3 class="text-xl font-bold mb-6 border-l-4 border-accent-orange pl-4 text-white">Lokasi Kami</h3>
                     <div class="rounded-xl overflow-hidden border border-white/10 shadow-2xl flex-grow h-64 md:h-full">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3985.74411130834!2d140.6366533!3d-2.6101111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMsKwMzYnMzYuNCJTIDE0MMKwMzgnMTEuOSJF!5e0!3m2!1sid!2sid!4v1715000000000!5m2!1sid!2sid" 
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15945.72834375355!2d140.665384!3d-2.593717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x686cf5c36394334d%3A0xc3f1725ed149957e!2sAbepura%2C%20Kota%20Jayapura%2C%20Papua!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" 
                             width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                     </div>
                 </div>
@@ -379,13 +383,13 @@
                     <div class="footer-rating-container bg-white/5 rounded-2xl p-6 border border-white/10 flex-grow shadow-2xl relative overflow-hidden">
                         <h3 class="text-lg font-bold mb-4 text-center text-white">Beri Rating Layanan Kami</h3>
                         <div class="flex justify-center space-x-2 mb-4">
-                            <span class="footer-rating-star text-gray-400" onclick="setFooterRating(1)">★</span>
-                            <span class="footer-rating-star text-gray-400" onclick="setFooterRating(2)">★</span>
-                            <span class="footer-rating-star text-gray-400" onclick="setFooterRating(3)">★</span>
-                            <span class="footer-rating-star text-gray-400" onclick="setFooterRating(4)">★</span>
-                            <span class="footer-rating-star text-gray-400" onclick="setFooterRating(5)">★</span>
+                            <span class="footer-rating-star text-gray-400 filled" onclick="setFooterRating(1)" style="color: rgb(255, 140, 0) !important;">★</span>
+                            <span class="footer-rating-star text-gray-400 filled" onclick="setFooterRating(2)" style="color: rgb(255, 140, 0) !important;">★</span>
+                            <span class="footer-rating-star text-gray-400 filled" onclick="setFooterRating(3)" style="color: rgb(255, 140, 0) !important;">★</span>
+                            <span class="footer-rating-star text-gray-400 filled" onclick="setFooterRating(4)" style="color: rgb(255, 140, 0) !important;">★</span>
+                            <span class="footer-rating-star text-gray-400 filled" onclick="setFooterRating(5)" style="color: rgb(255, 140, 0) !important;">★</span>
                         </div>
-                        <p id="rating-status" class="text-xs uppercase tracking-widest text-gray-400 font-bold">Klik untuk menilai</p>
+                        <p id="rating-status" class="text-xs uppercase tracking-widest text-gray-400 font-bold">Terima kasih atas 5 bintang Anda!</p>
                     </div>
                 </div>
             </div>
@@ -414,17 +418,15 @@
 
 <script>
 /* ===============================
-    1. LOADING & INIT
+    1. LOADING & INIT (FIXED 5s)
 ================================ */
 window.addEventListener('load', () => {
     const screen = document.getElementById('loading-screen');
     const main = document.getElementById('main-content');
-    const fill = document.getElementById('loader-fill'); 
-    const welcomeTxt = document.getElementById('welcome-msg'); 
+    const fill = document.querySelector('.loader-fill'); 
+    const welcomeTxt = document.querySelector('.welcome-text'); 
 
-    if (fill) {
-        setTimeout(() => { fill.style.width = '100%'; }, 100);
-    }
+    if (fill) fill.style.width = '100%';
 
     if (welcomeTxt) {
         setTimeout(() => {
@@ -437,14 +439,12 @@ window.addEventListener('load', () => {
         if (screen) {
             screen.style.opacity = '0';
             setTimeout(() => {
-                screen.style.display = 'block';
+                screen.style.display = 'none';
                 if (main) {
                     main.style.display = 'block';
-                    // Trigger reflow
                     main.offsetHeight; 
                     main.style.opacity = '1';
                 }
-                screen.style.display = 'none';
                 initMainContent();
             }, 1000);
         }
@@ -453,6 +453,14 @@ window.addEventListener('load', () => {
 
 function initMainContent() {
     renderServices();
+
+    const ids = ['fade-text-1', 'fade-text-2', 'fade-btns', 'laptop-mockup'];
+    ids.forEach((id, i) => {
+        setTimeout(() => {
+            const el = document.getElementById(id);
+            if (el) el.classList.add(id.includes('laptop') ? 'laptop-visible' : 'fade-in-visible');
+        }, i * 250);
+    });
 
     if (typeof Swiper !== 'undefined') {
         new Swiper(".mySwiper", {
@@ -469,10 +477,12 @@ function initMainContent() {
 function showNotification(message) {
     const toast = document.getElementById('success-toast');
     if (toast) {
-        const text = toast.querySelector('p.font-bold');
+        const text = toast.querySelector('p.font-bold') || toast.querySelector('p');
         if (text) text.innerText = message;
+        toast.style.display = 'block'; 
         toast.classList.remove('hidden');
         setTimeout(() => {
+            toast.style.display = 'none';
             toast.classList.add('hidden');
         }, 5000);
     } else {
@@ -480,16 +490,24 @@ function showNotification(message) {
     }
 }
 
+function toggleAssistant() {
+    const chatBox = document.getElementById('chat-assistant');
+    if (chatBox) {
+        chatBox.style.display = (chatBox.style.display === 'flex') ? 'none' : 'flex';
+        chatBox.classList.toggle('hidden');
+    }
+}
+
 function toggleProjectModal() {
-    document.getElementById('project-modal').classList.toggle('hidden');
+    document.getElementById('project-modal')?.classList.toggle('hidden');
 }
 
 function toggleMobileMenu() {
-    document.getElementById('mobile-menu').classList.toggle('hidden');
+    document.getElementById('mobile-menu')?.classList.toggle('hidden');
 }
 
 /* ===============================
-    3. SERVICES RENDER
+    3. SERVICES RENDER (TARGET KHUSUS)
 ================================ */
 function renderServices() {
     const container = document.getElementById('technical-services-container');
@@ -513,13 +531,18 @@ function renderServices() {
 /* ===============================
     4. DATA PROCESSING & LOGIN
 ================================ */
-function kirimProyek() { 
-    const form = document.getElementById('proyekForm');
+function prosesData() {
+    const form = document.getElementById('proyekForm') || document.querySelector('form');
+    if (!form) return;
+
     const formData = new FormData(form);
     let data = {};
     formData.forEach((value, key) => { data[key] = value.trim(); });
 
-    if (!data.nama_lengkap || !data.nomor_hp) {
+    const nama = data['nama_lengkap'] || data['nama'];
+    const hp = data['nomor_hp'] || data['phone'];
+
+    if (!nama || !hp) {
         alert("⚠️ Nama Lengkap dan Nomor HP wajib diisi!");
         return;
     }
@@ -527,26 +550,38 @@ function kirimProyek() {
     const dataBaru = {
         id: Date.now(),
         tanggal: new Date().toLocaleString('id-ID'),
-        ...data,
+        nama: nama,
+        kontak: hp,
+        email: data['email'] || '-',
+        layanan: data['pilih_layanan'] || '-',
         status: 'pending'
     };
 
+    simpanKeStorage(dataBaru, form);
+}
+
+function simpanKeStorage(obj, form) {
     try {
         let projects = JSON.parse(localStorage.getItem('projekJDI') || '[]');
-        projects.push(dataBaru);
+        projects.push(obj);
         localStorage.setItem('projekJDI', JSON.stringify(projects));
 
-        showNotification("Terimakasih! Kami akan segera menghubungi anda.");
-        form.reset();
+        showNotification("Terimakasih Kami akan segera menghubungi anda");
+
+        if(form) form.reset();
         setTimeout(() => toggleProjectModal(), 1200);
     } catch (e) {
-        alert("❌ Gagal menyimpan data: " + e.message);
+        alert("❌ Gagal: " + e.message);
     }
 }
 
+function kirimProyek() { 
+    prosesData(); 
+}
+
 function handleLogin() {
-    const user = document.getElementById('user').value;
-    const pass = document.getElementById('pass').value;
+    const user = document.getElementById('user')?.value;
+    const pass = document.getElementById('pass')?.value;
     if (user === "admin" && pass === "bukadong821") {
         window.location.href = 'admin.html';
     } else {
@@ -555,7 +590,7 @@ function handleLogin() {
 }
 
 /* ===============================
-    5. RATING & ADMIN PANEL
+    5. FIX: RATING & ADMIN PANEL
 ================================ */
 function setFooterRating(rating) {
     const stars = document.querySelectorAll('.footer-rating-star');
@@ -563,10 +598,10 @@ function setFooterRating(rating) {
     
     stars.forEach((star, index) => {
         if (index < rating) {
-            star.style.color = '#ff8c00';
+            star.style.color = '#ff8c00'; // Orange solid
             star.classList.add('filled');
         } else {
-            star.style.color = '#d1d5db';
+            star.style.color = '#d1d5db'; // Abu-abu
             star.classList.remove('filled');
         }
     });
@@ -576,9 +611,11 @@ function setFooterRating(rating) {
 }
 
 function toggleAdminPanel() {
-    const adminPortal = document.getElementById('admin-portal');
-    if (adminPortal) {
-        adminPortal.classList.toggle('hidden');
+    const adminModal = document.getElementById('admin-portal');
+    if (adminModal) {
+        adminModal.classList.toggle('hidden');
+    } else {
+        console.warn("Elemen admin-portal tidak ditemukan.");
     }
 }
 </script>
