@@ -618,6 +618,7 @@ window.addEventListener('load', () => {
                     main.offsetHeight; 
                     main.style.opacity = '1';
                 }
+                // Panggil inisialisasi konten utama
                 initMainContent();
             }, 1000);
         }
@@ -625,6 +626,7 @@ window.addEventListener('load', () => {
 });
 
 function initMainContent() {
+    console.log("Inisialisasi konten utama dimulai...");
     renderServices();
 
     const ids = ['fade-text-1', 'fade-text-2', 'fade-btns', 'laptop-mockup'];
@@ -635,46 +637,44 @@ function initMainContent() {
         }, i * 250);
     });
 
-    // INTEGRASI SWIPER (DENGAN PERBAIKAN OBSERVER)
+    /* ===============================
+        INTEGRASI SWIPER (FIXED PATH & FREEZE)
+    ================================ */
     if (typeof Swiper !== 'undefined') {
+        console.log("Swiper terdeteksi, memulai inisialisasi...");
         const swiper = new Swiper(".mySwiper", {
             loop: true,
-            speed: 800,
-            grabCursor: true,
-            allowTouchMove: true,
             autoplay: {
                 delay: 3000,
-                disableOnInteraction: false,
+                disableOnInteraction: false
             },
+            // Mencegah slide macet jika gambar telat dimuat
+            observer: true, 
+            observeParents: true,
+            watchOverflow: true,
+            
             navigation: {
                 nextEl: ".swiper-button-next",
                 prevEl: ".swiper-button-prev",
             },
-            // PENTING: Mencegah freeze saat gambar muncul/layout berubah
-            observer: true,
-            observeParents: true,
-            
-            slidesPerView: 1,
-            spaceBetween: 10,
-            touchRatio: 1,
-            touchAngle: 45,
-            simulateTouch: true
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            speed: 800,
+            grabCursor: true,
+            allowTouchMove: true
         });
 
-        // Paksa refresh swiper secara berkala setelah loading selesai
-        setTimeout(() => { swiper.update(); }, 500);
-        
-        // Simpan ke window agar bisa diakses global jika diperlukan
-        window.mainSwiper = swiper;
+        // Paksa update 1 detik setelah loading selesai untuk sinkronisasi layout
+        setTimeout(() => { 
+            swiper.update(); 
+            console.log("Swiper updated untuk sinkronisasi layout.");
+        }, 1000);
+    } else {
+        console.error("Library Swiper tidak ditemukan! Pastikan CDN sudah terpasang.");
     }
 }
-
-// Tambahan: Paksa update ulang jika ada gambar yang telat dimuat
-window.addEventListener('load', () => {
-    if (window.mainSwiper) {
-        setTimeout(() => { window.mainSwiper.update(); }, 1000);
-    }
-});
 
 /* ===============================
     2. UI HELPER & NOTIFIKASI
@@ -712,7 +712,7 @@ function toggleMobileMenu() {
 }
 
 /* ===============================
-    3. SERVICES RENDER (TARGET KHUSUS)
+    3. SERVICES RENDER
 ================================ */
 function renderServices() {
     const container = document.getElementById('technical-services-container');
@@ -734,56 +734,8 @@ function renderServices() {
 }
 
 /* ===============================
-    4. DATA PROCESSING & LOGIN
+    4. DATA & LOGIN
 ================================ */
-function prosesData() {
-    const form = document.getElementById('proyekForm') || document.querySelector('form');
-    if (!form) return;
-
-    const formData = new FormData(form);
-    let data = {};
-    formData.forEach((value, key) => { data[key] = value.trim(); });
-
-    const nama = data['nama_lengkap'] || data['nama'];
-    const hp = data['nomor_hp'] || data['phone'];
-
-    if (!nama || !hp) {
-        alert("⚠️ Nama Lengkap dan Nomor HP wajib diisi!");
-        return;
-    }
-
-    const dataBaru = {
-        id: Date.now(),
-        tanggal: new Date().toLocaleString('id-ID'),
-        nama: nama,
-        kontak: hp,
-        email: data['email'] || '-',
-        layanan: data['pilih_layanan'] || '-',
-        status: 'pending'
-    };
-
-    simpanKeStorage(dataBaru, form);
-}
-
-function simpanKeStorage(obj, form) {
-    try {
-        let projects = JSON.parse(localStorage.getItem('projekJDI') || '[]');
-        projects.push(obj);
-        localStorage.setItem('projekJDI', JSON.stringify(projects));
-
-        showNotification("Terimakasih Kami akan segera menghubungi anda");
-
-        if(form) form.reset();
-        setTimeout(() => toggleProjectModal(), 1200);
-    } catch (e) {
-        alert("❌ Gagal: " + e.message);
-    }
-}
-
-function kirimProyek() { 
-    prosesData(); 
-}
-
 function handleLogin() {
     const user = document.getElementById('user')?.value;
     const pass = document.getElementById('pass')?.value;
@@ -794,35 +746,16 @@ function handleLogin() {
     }
 }
 
-/* ===============================
-    5. FIX: RATING & ADMIN PANEL
-================================ */
 function setFooterRating(rating) {
     const stars = document.querySelectorAll('.footer-rating-star');
     const status = document.getElementById('rating-status');
     
     stars.forEach((star, index) => {
-        if (index < rating) {
-            star.style.color = '#ff8c00'; // Orange solid
-            star.classList.add('filled');
-        } else {
-            star.style.color = '#d1d5db'; // Abu-abu
-            star.classList.remove('filled');
-        }
+        star.style.color = index < rating ? '#ff8c00' : '#d1d5db';
     });
     
     if(status) status.innerText = "Terima kasih atas " + rating + " bintang Anda!";
     showNotification("Rating " + rating + " bintang berhasil dikirim!");
 }
-
-function toggleAdminPanel() {
-    const adminModal = document.getElementById('admin-portal');
-    if (adminModal) {
-        adminModal.classList.toggle('hidden');
-    } else {
-        console.warn("Elemen admin-portal tidak ditemukan.");
-    }
-}
-</script>
-</body>
+</script></body>
 </html>
