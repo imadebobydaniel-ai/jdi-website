@@ -57,39 +57,102 @@
         border-color: #ff8c00;
     }
 
-    /* SWIPER & LOADER */
-    .swiper { 
-        width: 100%; 
-        border-radius: 0.75rem; 
+    /* iPad Mockup Styles */
+    .ipad-mockup {
+        position: relative;
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+        background: #1a1a1a;
+        border-radius: 30px;
+        padding: 16px 12px 16px 12px;
+        box-shadow: 0 30px 40px -20px rgba(0,0,0,0.5), inset 0 0 0 2px rgba(255,255,255,0.1);
+    }
+
+    .ipad-screen {
+        background: #fff;
+        border-radius: 20px;
+        overflow: hidden;
+        position: relative;
+        aspect-ratio: 4 / 3;
+    }
+
+    .ipad-notch {
+        position: absolute;
+        top: -2px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 8px;
+        background: #1a1a1a;
+        border-radius: 0 0 12px 12px;
+        z-index: 10;
+    }
+
+    .ipad-home-button {
+        position: absolute;
+        bottom: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40px;
+        height: 4px;
+        background: rgba(255,255,255,0.3);
+        border-radius: 4px;
+    }
+
+    /* SWIPER Styles inside iPad */
+    .ipad-mockup .swiper {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
     }
     
-    .swiper-slide {
-        border-radius: 0.75rem;
+    .ipad-mockup .swiper-slide {
+        border-radius: 0;
         overflow: hidden;
     }
     
-    .swiper-slide img { 
+    .ipad-mockup .swiper-slide img { 
         width: 100%; 
-        height: 350px; 
+        height: 100%; 
         object-fit: cover;
-        border-radius: 0.75rem;
     }
 
-    /* Fallback untuk gambar yang gagal load */
-    .swiper-slide img.error-load {
-        display: none;
-    }
-    
-    .swiper-slide .fallback-card {
+    .ipad-mockup .swiper-slide .fallback-card {
         width: 100%;
-        height: 350px;
+        height: 100%;
         display: none;
         align-items: center;
         justify-content: center;
         background: linear-gradient(135deg, #1a3a6e 0%, #0a1d37 100%);
-        border-radius: 0.75rem;
         text-align: center;
         color: white;
+    }
+
+    /* Swiper Navigation buttons position */
+    .ipad-mockup .swiper-button-next,
+    .ipad-mockup .swiper-button-prev {
+        width: 35px;
+        height: 35px;
+        background: rgba(0,0,0,0.5);
+        border-radius: 50%;
+        backdrop-filter: blur(5px);
+    }
+
+    .ipad-mockup .swiper-button-next:after,
+    .ipad-mockup .swiper-button-prev:after {
+        font-size: 18px;
+        font-weight: bold;
+        color: white;
+    }
+
+    .ipad-mockup .swiper-pagination-bullet {
+        background: white;
+        opacity: 0.7;
+    }
+
+    .ipad-mockup .swiper-pagination-bullet-active {
+        background: #ff8c00;
     }
 
     #loading-screen {
@@ -208,12 +271,22 @@
         .nav-logo {
             height: 60px;
         }
+        .ipad-mockup {
+            max-width: 550px;
+        }
     }
 
     @media (max-width: 768px) {
         .hero-section { padding-top: 80px; align-items: flex-start; }
         .footer-rating-container { min-height: auto; margin-top: 20px; }
-        .swiper-slide img, .swiper-slide .fallback-card { height: 250px; }
+        .ipad-mockup {
+            max-width: 100%;
+            padding: 10px 8px;
+        }
+        .ipad-mockup .swiper-button-next,
+        .ipad-mockup .swiper-button-prev {
+            display: none;
+        }
     }
 
     @media (min-width: 1024px) {
@@ -293,91 +366,98 @@
             </div>
 
             <div class="w-full lg:w-7/12 flex flex-col justify-center lg:justify-end">
-                <div class="swiper mySwiper w-full">
-                    <div class="swiper-wrapper">
-                        <!-- Slide 1 -->
-                        <div class="swiper-slide">
-                            <img src="d-klinic.png" alt="D-Klinic" class="w-full h-[350px] object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
-                            <div class="fallback-card">
-                                <div class="text-center p-8">
-                                    <i class="fas fa-clinic-medical text-6xl text-accent-orange mb-4"></i>
-                                    <h3 class="text-xl font-bold">D-Klinic</h3>
-                                    <p class="text-sm mt-2">Sistem Manajemen Klinik</p>
+                <!-- iPad Mockup Container -->
+                <div class="ipad-mockup">
+                    <div class="ipad-notch"></div>
+                    <div class="ipad-screen">
+                        <div class="swiper mySwiper w-full h-full">
+                            <div class="swiper-wrapper">
+                                <!-- Slide 1 -->
+                                <div class="swiper-slide">
+                                    <img src="d-klinic.png" alt="D-Klinic" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
+                                    <div class="fallback-card">
+                                        <div class="text-center p-4">
+                                            <i class="fas fa-clinic-medical text-5xl text-accent-orange mb-3"></i>
+                                            <h3 class="text-lg font-bold">D-Klinic</h3>
+                                            <p class="text-xs mt-1">Sistem Manajemen Klinik</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Slide 2 -->
+                                <div class="swiper-slide">
+                                    <img src="gereja.png" alt="Gereja" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
+                                    <div class="fallback-card">
+                                        <div class="text-center p-4">
+                                            <i class="fas fa-church text-5xl text-accent-orange mb-3"></i>
+                                            <h3 class="text-lg font-bold">Sistem Gereja</h3>
+                                            <p class="text-xs mt-1">Manajemen Jemaat Digital</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Slide 3 -->
+                                <div class="swiper-slide">
+                                    <img src="skin.png" alt="Skin Care" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
+                                    <div class="fallback-card">
+                                        <div class="text-center p-4">
+                                            <i class="fas fa-spa text-5xl text-accent-orange mb-3"></i>
+                                            <h3 class="text-lg font-bold">Skin Care System</h3>
+                                            <p class="text-xs mt-1">Manajemen Klinik Kecantikan</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Slide 4 -->
+                                <div class="swiper-slide">
+                                    <img src="nusa-agro.png" alt="Nusa Agro" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
+                                    <div class="fallback-card">
+                                        <div class="text-center p-4">
+                                            <i class="fas fa-seedling text-5xl text-accent-orange mb-3"></i>
+                                            <h3 class="text-lg font-bold">Nusa Agro</h3>
+                                            <p class="text-xs mt-1">Sistem Manajemen Pertanian</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Slide 5 -->
+                                <div class="swiper-slide">
+                                    <img src="rapopang.png" alt="Rapopang" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
+                                    <div class="fallback-card">
+                                        <div class="text-center p-4">
+                                            <i class="fas fa-utensils text-5xl text-accent-orange mb-3"></i>
+                                            <h3 class="text-lg font-bold">Rapopang</h3>
+                                            <p class="text-xs mt-1">Sistem Restoran</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Slide 6 -->
+                                <div class="swiper-slide">
+                                    <img src="haven-cafe.png" alt="Haven Cafe" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
+                                    <div class="fallback-card">
+                                        <div class="text-center p-4">
+                                            <i class="fas fa-mug-hot text-5xl text-accent-orange mb-3"></i>
+                                            <h3 class="text-lg font-bold">Haven Cafe</h3>
+                                            <p class="text-xs mt-1">Sistem Kafe Digital</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Slide 7 -->
+                                <div class="swiper-slide">
+                                    <img src="de-wave.png" alt="De Wave" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
+                                    <div class="fallback-card">
+                                        <div class="text-center p-4">
+                                            <i class="fas fa-water text-5xl text-accent-orange mb-3"></i>
+                                            <h3 class="text-lg font-bold">De Wave</h3>
+                                            <p class="text-xs mt-1">Sistem Manajemen Waterpark</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- Slide 2 -->
-                        <div class="swiper-slide">
-                            <img src="gereja.png" alt="Gereja" class="w-full h-[350px] object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
-                            <div class="fallback-card">
-                                <div class="text-center p-8">
-                                    <i class="fas fa-church text-6xl text-accent-orange mb-4"></i>
-                                    <h3 class="text-xl font-bold">Sistem Gereja</h3>
-                                    <p class="text-sm mt-2">Manajemen Jemaat Digital</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Slide 3 -->
-                        <div class="swiper-slide">
-                            <img src="skin.png" alt="Skin Care" class="w-full h-[350px] object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
-                            <div class="fallback-card">
-                                <div class="text-center p-8">
-                                    <i class="fas fa-spa text-6xl text-accent-orange mb-4"></i>
-                                    <h3 class="text-xl font-bold">Skin Care System</h3>
-                                    <p class="text-sm mt-2">Manajemen Klinik Kecantikan</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Slide 4 -->
-                        <div class="swiper-slide">
-                            <img src="nusa-agro.png" alt="Nusa Agro" class="w-full h-[350px] object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
-                            <div class="fallback-card">
-                                <div class="text-center p-8">
-                                    <i class="fas fa-seedling text-6xl text-accent-orange mb-4"></i>
-                                    <h3 class="text-xl font-bold">Nusa Agro</h3>
-                                    <p class="text-sm mt-2">Sistem Manajemen Pertanian</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Slide 5 -->
-                        <div class="swiper-slide">
-                            <img src="rapopang.png" alt="Rapopang" class="w-full h-[350px] object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
-                            <div class="fallback-card">
-                                <div class="text-center p-8">
-                                    <i class="fas fa-utensils text-6xl text-accent-orange mb-4"></i>
-                                    <h3 class="text-xl font-bold">Rapopang</h3>
-                                    <p class="text-sm mt-2">Sistem Restoran</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Slide 6 -->
-                        <div class="swiper-slide">
-                            <img src="haven-cafe.png" alt="Haven Cafe" class="w-full h-[350px] object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
-                            <div class="fallback-card">
-                                <div class="text-center p-8">
-                                    <i class="fas fa-mug-hot text-6xl text-accent-orange mb-4"></i>
-                                    <h3 class="text-xl font-bold">Haven Cafe</h3>
-                                    <p class="text-sm mt-2">Sistem Kafe Digital</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Slide 7 -->
-                        <div class="swiper-slide">
-                            <img src="de-wave.png" alt="De Wave" class="w-full h-[350px] object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
-                            <div class="fallback-card">
-                                <div class="text-center p-8">
-                                    <i class="fas fa-water text-6xl text-accent-orange mb-4"></i>
-                                    <h3 class="text-xl font-bold">De Wave</h3>
-                                    <p class="text-sm mt-2">Sistem Manajemen Waterpark</p>
-                                </div>
-                            </div>
+                            <div class="swiper-pagination"></div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
                         </div>
                     </div>
-                    <div class="swiper-pagination"></div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
+                    <div class="ipad-home-button"></div>
                 </div>
-                <p class="text-center text-white/60 text-xs mt-4 uppercase tracking-widest font-bold">CLIENT SATISFACTION PORTFOLIO</p>
+                <p class="text-center text-white/60 text-xs mt-6 uppercase tracking-widest font-bold">CLIENT SATISFACTION PORTFOLIO</p>
             </div>
         </div>
     </header>
@@ -385,36 +465,89 @@
     <!-- Layanan Section -->
     <section id="layanan" class="py-16 md:py-24 max-w-7xl mx-auto px-6">
         <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-navy-dark mb-4">Mengapa Memilih JDI?</h2>
-            <p class="text-gray-500 max-w-2xl mx-auto text-sm md:text-base">Komitmen kami adalah memberikan standar teknologi tertinggi untuk mendukung digitalisasi bisnis Anda melalui sistem yang efisien dan aman.</p>
+            <h2 class="text-3xl md:text-4xl font-bold text-navy-dark mb-4">Fitur Website</h2>
+            <p class="text-gray-500 max-w-2xl mx-auto text-sm md:text-base">Kami menyediakan berbagai fitur canggih untuk mendukung kebutuhan digital Anda.</p>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-            <div class="feature-card bg-white p-8 rounded-3xl shadow-sm">
-                <div class="w-14 h-14 bg-orange-100 text-accent-orange rounded-2xl flex items-center justify-center mb-6 shadow-inner"><i class="fas fa-mobile-alt text-2xl"></i></div>
-                <h3 class="text-xl font-bold mb-3 text-navy-dark">Responsif</h3>
-                <p class="text-gray-600 text-sm leading-relaxed">Optimasi multi-platform yang memastikan aplikasi berjalan sempurna di HP maupun Desktop.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <div class="feature-card bg-white p-6 rounded-2xl shadow-sm">
+                <div class="w-12 h-12 bg-orange-100 text-accent-orange rounded-xl flex items-center justify-center mb-4"><i class="fas fa-mobile-alt text-xl"></i></div>
+                <h3 class="text-lg font-bold mb-2 text-navy-dark">Responsive Design</h3>
+                <p class="text-gray-600 text-sm">Terapkan model 5.0 untuk desain yang lebih modern dan responsif di semua perangkat.</p>
             </div>
-            <div class="feature-card bg-white p-8 rounded-3xl shadow-sm">
-                <div class="w-14 h-14 bg-blue-100 text-navy-dark rounded-2xl flex items-center justify-center mb-6 shadow-inner"><i class="fas fa-expand-alt text-2xl"></i></div>
-                <h3 class="text-xl font-bold mb-3 text-navy-dark">Scalable</h3>
-                <p class="text-gray-600 text-sm leading-relaxed">Arsitektur sistem fleksibel yang siap tumbuh seiring skala kebutuhan bisnis Anda.</p>
+            <div class="feature-card bg-white p-6 rounded-2xl shadow-sm">
+                <div class="w-12 h-12 bg-blue-100 text-navy-dark rounded-xl flex items-center justify-center mb-4"><i class="fas fa-shield-alt text-xl"></i></div>
+                <h3 class="text-lg font-bold mb-2 text-navy-dark">Keamanan Data</h3>
+                <p class="text-gray-600 text-sm">Keamanan data yang lebih baik dengan enkripsi tingkat lanjut.</p>
             </div>
-            <div class="feature-card bg-white p-8 rounded-3xl shadow-sm">
-                <div class="w-14 h-14 bg-orange-100 text-accent-orange rounded-2xl flex items-center justify-center mb-6 shadow-inner"><i class="fas fa-shield-alt text-2xl"></i></div>
-                <h3 class="text-xl font-bold mb-3 text-navy-dark">Aman</h3>
-                <p class="text-gray-600 text-sm leading-relaxed">Implementasi keamanan database tingkat lanjut untuk proteksi data maksimal.</p>
+            <div class="feature-card bg-white p-6 rounded-2xl shadow-sm">
+                <div class="w-12 h-12 bg-orange-100 text-accent-orange rounded-xl flex items-center justify-center mb-4"><i class="fab fa-google text-xl"></i></div>
+                <h3 class="text-lg font-bold mb-2 text-navy-dark">SEO Friendly</h3>
+                <p class="text-gray-600 text-sm">Web design yang mudah diarahkan oleh search engine (Google).</p>
             </div>
-            <div class="feature-card bg-white p-8 rounded-3xl shadow-sm">
-                <div class="w-14 h-14 bg-blue-100 text-navy-dark rounded-2xl flex items-center justify-center mb-6 shadow-inner"><i class="fas fa-lock text-2xl"></i></div>
-                <h3 class="text-xl font-bold mb-3 text-navy-dark">SSL</h3>
-                <p class="text-gray-600 text-sm leading-relaxed">Proteksi enkripsi data end-to-end yang menjamin keamanan informasi sensitif.</p>
+            <div class="feature-card bg-white p-6 rounded-2xl shadow-sm">
+                <div class="w-12 h-12 bg-blue-100 text-navy-dark rounded-xl flex items-center justify-center mb-4"><i class="fas fa-download text-xl"></i></div>
+                <h3 class="text-lg font-bold mb-2 text-navy-dark">CMS Download Management</h3>
+                <p class="text-gray-600 text-sm">Melakukan penambahan web dengan cepat dan mudah.</p>
+            </div>
+            <div class="feature-card bg-white p-6 rounded-2xl shadow-sm">
+                <div class="w-12 h-12 bg-orange-100 text-accent-orange rounded-xl flex items-center justify-center mb-4"><i class="fas fa-plug text-xl"></i></div>
+                <h3 class="text-lg font-bold mb-2 text-navy-dark">Integrasi Multi-Speed</h3>
+                <p class="text-gray-600 text-sm">Chat berfungsi dengan perangkat lunak secara real-time.</p>
+            </div>
+            <div class="feature-card bg-white p-6 rounded-2xl shadow-sm">
+                <div class="w-12 h-12 bg-blue-100 text-navy-dark rounded-xl flex items-center justify-center mb-4"><i class="fas fa-store text-xl"></i></div>
+                <h3 class="text-lg font-bold mb-2 text-navy-dark">Galeri Produk & Kategori</h3>
+                <p class="text-gray-600 text-sm">Produk berkualitas tinggi, memiliki nilai asli dan fitur canggih.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sistem Manajemen Toko Section -->
+    <section class="py-16 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-navy-dark mb-4">Sistem Manajemen Toko</h2>
+                <p class="text-gray-500 max-w-2xl mx-auto text-sm md:text-base">Kelola bisnis Anda dengan sistem terintegrasi yang mudah digunakan.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm">
+                    <i class="fas fa-box text-3xl text-accent-orange mb-3"></i>
+                    <h3 class="text-lg font-bold mb-2 text-navy-dark">Manajemen Produk</h3>
+                    <p class="text-gray-600 text-sm">Berbasis data produk, rencana, kriteria, dan strategi.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm">
+                    <i class="fas fa-chart-line text-3xl text-accent-orange mb-3"></i>
+                    <h3 class="text-lg font-bold mb-2 text-navy-dark">Manajemen Stok Real-time</h3>
+                    <p class="text-gray-600 text-sm">Perlu terukur, informasi dan akuntansi yang akurat.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm">
+                    <i class="fas fa-shopping-cart text-3xl text-accent-orange mb-3"></i>
+                    <h3 class="text-lg font-bold mb-2 text-navy-dark">Transaksi Penjualan</h3>
+                    <p class="text-gray-600 text-sm">Cepat, mudah dan terintegrasi dengan sistem.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm">
+                    <i class="fas fa-users text-3xl text-accent-orange mb-3"></i>
+                    <h3 class="text-lg font-bold mb-2 text-navy-dark">Manajemen Pelanggan</h3>
+                    <p class="text-gray-600 text-sm">Dapat melengkapi transaksi pelanggan dengan mudah.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm">
+                    <i class="fas fa-chart-pie text-3xl text-accent-orange mb-3"></i>
+                    <h3 class="text-lg font-bold mb-2 text-navy-dark">Laporan Manajemen</h3>
+                    <p class="text-gray-600 text-sm">Laporan harta, migrasi, dan keuangan yang terintegrasi.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm">
+                    <i class="fas fa-user-friends text-3xl text-accent-orange mb-3"></i>
+                    <h3 class="text-lg font-bold mb-2 text-navy-dark">Multi User</h3>
+                    <p class="text-gray-600 text-sm">Aplikasi dapat digunakan secara fleksibel oleh banyak pengguna.</p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Profile Section -->
-    <section id="profile" class="py-16 bg-gray-100">
+    <section id="profile" class="py-16 bg-white">
         <div class="max-w-7xl mx-auto px-6 text-center">
             <h2 class="text-3xl md:text-4xl font-bold text-navy-dark mb-4">Profil Perusahaan</h2>
             <p class="text-gray-600 max-w-3xl mx-auto leading-relaxed">
@@ -639,9 +772,9 @@ window.addEventListener('load', () => {
 function initMainContent() {
     console.log("Inisialisasi konten utama dimulai...");
 
-    // Initialize Swiper
+    // Initialize Swiper inside iPad mockup
     if (typeof Swiper !== 'undefined') {
-        const swiper = new Swiper(".mySwiper", {
+        const swiper = new Swiper(".ipad-mockup .mySwiper", {
             loop: true,
             autoplay: {
                 delay: 3000,
@@ -651,11 +784,11 @@ function initMainContent() {
             observeParents: true,
             watchOverflow: true,
             navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
+                nextEl: ".ipad-mockup .swiper-button-next",
+                prevEl: ".ipad-mockup .swiper-button-prev",
             },
             pagination: {
-                el: ".swiper-pagination",
+                el: ".ipad-mockup .swiper-pagination",
                 clickable: true,
             },
             speed: 800,
@@ -743,7 +876,6 @@ function kirimProyek() {
     showNotification("Permintaan proyek berhasil dikirim! Kami akan menghubungi Anda segera.");
     toggleProjectModal();
     
-    // Reset form
     const form = document.getElementById('proyekForm');
     if (form) form.reset();
 }
