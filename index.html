@@ -321,22 +321,26 @@
         </div>
     </div>
 
-    <div class="w-full lg:w-7/12 flex justify-center lg:justify-end">
-        <div id="laptop-mockup" class="relative w-full" style="max-width: 850px;"> 
-            <div class="swiper mySwiper" id="laptop-mockup">
-  <div class="swiper-wrapper">
-    <div class="swiper-slide">
-      <img src="kopu-kopi-ads.jpg" alt="Iklan 1">
-    </div>
-    <div class="swiper-slide">
-      <img src="iklan-lain.jpg" alt="Iklan 2">
-    </div>
-  </div>
+   <div class="w-full lg:w-7/12 flex justify-center lg:justify-end">
+    <div class="relative w-full" style="max-width: 850px;"> 
+        
+        <div class="swiper mySwiper" id="laptop-mockup">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="kopu-kopi-ads.jpg" alt="Iklan 1" class="w-full h-auto rounded-xl">
+                </div>
+                <div class="swiper-slide">
+                    <img src="iklan-lain.jpg" alt="Iklan 2" class="w-full h-auto rounded-xl">
+                </div>
+            </div>
 
-  <div class="swiper-button-next"></div>
-  <div class="swiper-button-prev"></div>
-  
-  <div class="swiper-pagination"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            
+            <div class="swiper-pagination"></div>
+        </div>
+
+    </div>
 </div>
 </header>
 
@@ -573,51 +577,13 @@ window.addEventListener('load', () => {
                     main.offsetHeight; 
                     main.style.opacity = '1';
                 }
-                initMainContent();
+                initMainContent(); // Memanggil fungsi inisialisasi konten
             }, 1000);
         }
     }, 5000); 
 });
-    function initMainContent() {
-    renderServices();
 
-    const ids = ['fade-text-1', 'fade-text-2', 'fade-btns', 'laptop-mockup'];
-    ids.forEach((id, i) => {
-        setTimeout(() => {
-            const el = document.getElementById(id);
-            if (el) el.classList.add(id.includes('laptop') ? 'laptop-visible' : 'fade-in-visible');
-        }, i * 250);
-    });
-
-    // PERBAIKAN INISIALISASI SWIPER
-    if (typeof Swiper !== 'undefined') {
-        const swiper = new Swiper(".mySwiper", {
-            loop: true,
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false, // Tetap autoplay meski sudah disentuh manual
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            effect: "fade", // Efek transisi halus (opsional)
-            fadeEffect: { crossFade: true }
-        });
-        
-        // Memaksa Swiper untuk update posisi setelah konten muncul
-        setTimeout(() => {
-            swiper.update();
-        }, 500);
-    } else {
-        console.error("Library Swiper belum dimuat. Pastikan CDN Swiper sudah dipasang.");
-    }
-}
-
+// FUNGSI INI HANYA BOLEH ADA SATU (DIBAWAH INI VERSI YANG BENAR)
 function initMainContent() {
     renderServices();
 
@@ -629,12 +595,32 @@ function initMainContent() {
         }, i * 250);
     });
 
+    // INISIALISASI SWIPER
     if (typeof Swiper !== 'undefined') {
-        new Swiper(".mySwiper", {
-            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-            autoplay: { delay: 3000 },
-            loop: true
+        const swiper = new Swiper(".mySwiper", {
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false, 
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            effect: "fade", 
+            fadeEffect: { crossFade: true }
         });
+        
+        // Memaksa Swiper untuk update posisi agar tidak nge-blank di awal
+        setTimeout(() => {
+            swiper.update();
+        }, 500);
+    } else {
+        console.error("Library Swiper belum dimuat.");
     }
 }
 
@@ -674,7 +660,7 @@ function toggleMobileMenu() {
 }
 
 /* ===============================
-    3. SERVICES RENDER (TARGET KHUSUS)
+    3. SERVICES RENDER
 ================================ */
 function renderServices() {
     const container = document.getElementById('technical-services-container');
@@ -765,10 +751,10 @@ function setFooterRating(rating) {
     
     stars.forEach((star, index) => {
         if (index < rating) {
-            star.style.color = '#ff8c00'; // Orange solid
+            star.style.color = '#ff8c00'; 
             star.classList.add('filled');
         } else {
-            star.style.color = '#d1d5db'; // Abu-abu
+            star.style.color = '#d1d5db'; 
             star.classList.remove('filled');
         }
     });
@@ -781,10 +767,7 @@ function toggleAdminPanel() {
     const adminModal = document.getElementById('admin-portal');
     if (adminModal) {
         adminModal.classList.toggle('hidden');
-    } else {
-        console.warn("Elemen admin-portal tidak ditemukan.");
     }
 }
-</script>
-</body>
+</script></body>
 </html>
