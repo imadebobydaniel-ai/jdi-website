@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
     
 <style>
+    /* 1. RESET & BASE STYLES */
     html, body { 
         font-family: 'Poppins', sans-serif; 
         scroll-behavior: smooth; 
@@ -23,9 +24,8 @@
     .text-navy-dark { color: #0a1d37; }
     .text-accent-orange { color: #ff8c00; }
     .bg-accent-orange { background-color: #ff8c00; }
-    .star { cursor: pointer; color: #d1d5db; transition: color 0.2s; }
-    .star.active { color: #ff8c00; }
     
+    /* 2. HERO & FEATURE CARDS */
     .hero-section {
         position: relative;
         width: 100%;
@@ -53,18 +53,9 @@
         border-color: #ff8c00;
     }
 
+    /* 3. SWIPER & LOADER */
     .swiper { width: 100%; max-height: 350px; border-radius: 0.75rem; }
     .swiper-slide img { cursor: zoom-in; width: 100%; height: 350px; object-fit: cover; }
-
-    .swiper-button-next, .swiper-button-prev {
-        color: #ff8c00 !important;
-        background: white;
-        width: 40px !important;
-        height: 40px !important;
-        border-radius: 50%;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-    .swiper-button-next:after, .swiper-button-prev:after { font-size: 18px !important; font-weight: bold; }
 
     #loading-screen {
         position: fixed;
@@ -78,26 +69,6 @@
         transition: opacity 1s ease;
     }
 
-    .loader-logo {
-        width: 280px;
-        height: auto;
-        margin-bottom: 30px;
-        filter: drop-shadow(1px 0 0 white) 
-                drop-shadow(-1px 0 0 white) 
-                drop-shadow(0 1px 0 white) 
-                drop-shadow(0 -1px 0 white)
-                drop-shadow(0.5px 0.5px 0.5px rgba(255,255,255,0.5));
-    }
-
-    .loader-bar-container {
-        width: 260px;
-        height: 6px;
-        background: rgba(255,255,255,0.1);
-        border-radius: 20px;
-        overflow: hidden;
-        margin-bottom: 20px;
-    }
-
     .loader-fill {
         width: 0%;
         height: 100%;
@@ -107,42 +78,20 @@
 
     .welcome-text {
         color: white;
-        font-size: 0.8rem;
-        font-weight: 600;
-        letter-spacing: 1.5px;
         opacity: 0;
         transform: translateY(10px);
         transition: all 1s ease 0.5s;
         text-align: center;
-        padding: 0 20px;
     }
 
-    #main-content { opacity: 0; transition: opacity 1.2s ease; overflow-x: hidden; width: 100%; }
+    #main-content { opacity: 0; transition: opacity 1.2s ease; width: 100%; }
 
-    .fade-init {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 1.5s ease, transform 1.5s ease;
-    }
-    
-    .fade-in-visible { opacity: 1; transform: translateY(0); }
-
-    .laptop-mockup {
-        perspective: 1000px;
-        opacity: 0;
-        transform: scale(0.8) rotateX(15deg);
-        transition: all 1.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-        max-width: 100%;
-    }
-
-    .laptop-visible { opacity: 1; transform: scale(1) rotateX(0deg); }
-
+    /* 4. FOOTER & RATING SYSTEM (KOREKSI LOGIKA ORANGE SOLID) */
     .footer-with-bg {
         position: relative;
         background-image: url('jyp.png');
         background-size: cover;
         background-position: center;
-        background-repeat: no-repeat;
         color: white;
     }
 
@@ -154,107 +103,12 @@
         z-index: 1;
     }
 
-    .footer-with-bg > div {
-        position: relative;
-        z-index: 2;
-    }
-
-    @media (max-width: 768px) {
-        .hero-section { padding-top: 80px; padding-bottom: 40px; align-items: flex-start; }
-        .hero-section h1 { font-size: 2rem !important; line-height: 1.2; }
-        .hero-section p { font-size: 0.875rem !important; }
-        .mobile-menu-active { display: block !important; }
-        .footer-rating-container { min-height: auto !important; margin-top: 20px; }
-    }
-
-    /* KOREKSI: POSISI SOSIAL MEDIA & WEBSITE LINK */
-    .footer-socials {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        margin-top: 1.5rem;
-        align-items: center;
-        position: relative;
-        z-index: 100;
-    }
-
-    .social-icon {
-        color: white;
-        font-size: 24px;
-        transition: 0.3s;
-        text-decoration: none;
-    }
-
-    .social-icon:hover, .website-link:hover {
-        color: #ff8c00;
-        transform: scale(1.1);
-    }
-
-    .website-link {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 0.9rem;
-        font-weight: 500;
-        color: white;
-        text-decoration: none;
-        transition: 0.3s;
-    }
-
-    /* KOREKSI: RATING CONTAINER PRESISI & BINTANG BESAR */
     .footer-rating-container {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        min-height: 320px; /* Menyamakan tinggi dengan Maps (Standard Google Embed) */
-        height: 100%;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 1rem;
-        padding: 2rem;
-        text-align: center;
-    }
-
-    .footer-rating-star {
-        font-size: 3rem; /* Bintang diperbesar signifikan agar mudah diklik */
-        cursor: pointer;
-        transition: all 0.3s ease;
-        margin: 0 5px;
-        line-height: 1;
-        display: inline-block;
-    }
-
-    .footer-rating-star:hover {
-        transform: scale(1.2);
-        color: #ffb800;
-    }
-    <style>
-    /* ... kode awal Anda tetap sama ... */
-
-    /* KOREKSI WARNA: Menjadi orange solid sesuai perintah */
-    .footer-rating-star {
-        font-size: 3rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        margin: 0 5px;
-        line-height: 1;
-        display: inline-block;
-        color: #d1d5db; /* Warna abu-abu default (kosong) */
-    }
-
-    /* Class untuk warna orange solid saat aktif */
-    .footer-rating-star.filled {
-        color: #ff8c00 !important; /* Orange solid */
-    }
-
-    /* Pastikan kontainer rating tetap fleksibel untuk berdampingan dengan Maps */
-    .footer-rating-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        min-height: 320px;
+        min-height: 320px; /* Samakan dengan tinggi Maps */
         height: 100%;
         border: 1px solid rgba(255, 255, 255, 0.1);
         background: rgba(255, 255, 255, 0.05);
@@ -262,6 +116,30 @@
         padding: 2rem;
         text-align: center;
         box-sizing: border-box;
+    }
+
+    .footer-rating-star {
+        font-size: 3rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin: 0 5px;
+        color: #d1d5db; /* Warna default abu-abu */
+        display: inline-block;
+    }
+
+    /* Logika Kumulatif: Class yang dipicu JS untuk Orange Solid */
+    .footer-rating-star.filled {
+        color: #ff8c00 !important; 
+    }
+
+    .footer-rating-star:hover {
+        transform: scale(1.2);
+    }
+
+    /* 5. RESPONSIVE LAYOUT */
+    @media (max-width: 768px) {
+        .hero-section { padding-top: 80px; align-items: flex-start; }
+        .footer-rating-container { min-height: auto; margin-top: 20px; }
     }
 </style>
 </style>
