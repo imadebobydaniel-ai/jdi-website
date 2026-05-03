@@ -457,13 +457,13 @@
                 <div class="flex flex-col">
                     <div class="flex flex-col justify-center items-center bg-white/5 rounded-2xl p-4 border border-white/10 flex-grow shadow-2xl h-64 md:h-full relative overflow-hidden">
                         <h3 class="text-lg font-bold mb-4 text-center">Beri Rating Layanan Kami</h3>
-                        <div class="flex gap-2 mb-4 relative z-10" id="footer-rating-stars">
-                            <span class="star-footer text-4xl cursor-pointer transition relative text-gray-400" onclick="setFooterRating(1, event)">★</span>
-                            <span class="star-footer text-4xl cursor-pointer transition relative text-gray-400" onclick="setFooterRating(2, event)">★</span>
-                            <span class="star-footer text-4xl cursor-pointer transition relative text-gray-400" onclick="setFooterRating(3, event)">★</span>
-                            <span class="star-footer text-4xl cursor-pointer transition relative text-gray-400" onclick="setFooterRating(4, event)">★</span>
-                            <span class="star-footer text-4xl cursor-pointer transition relative text-gray-400" onclick="setFooterRating(5, event)">★</span>
-                        </div>
+                       <div class="flex space-x-2">
+    <span class="footer-rating-star cursor-pointer text-gray-400" onclick="setFooterRating(1)">★</span>
+    <span class="footer-rating-star cursor-pointer text-gray-400" onclick="setFooterRating(2)">★</span>
+    <span class="footer-rating-star cursor-pointer text-gray-400" onclick="setFooterRating(3)">★</span>
+    <span class="footer-rating-star cursor-pointer text-gray-400" onclick="setFooterRating(4)">★</span>
+    <span class="footer-rating-star cursor-pointer text-gray-400" onclick="setFooterRating(5)">★</span>
+</div>
                         <p id="rating-status" class="text-xs uppercase tracking-widest text-gray-400 font-bold">Klik untuk menilai</p>
                     </div>
                 </div>
@@ -491,8 +491,9 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 
-    <script>/* ===============================
-   1. LOADING & INIT (FIXED 5s)
+  <script>
+/* ===============================
+    1. LOADING & INIT (FIXED 5s)
 ================================ */
 window.addEventListener('load', () => {
     const screen = document.getElementById('loading-screen');
@@ -526,8 +527,6 @@ window.addEventListener('load', () => {
 });
 
 function initMainContent() {
-    // Fungsi renderServices hanya akan berjalan jika ada kontainer bernama 'services-list-container'
-    // Ini agar tidak menimpa bagian "Mengapa Memilih JDI"
     renderServices();
 
     const ids = ['fade-text-1', 'fade-text-2', 'fade-btns', 'laptop-mockup'];
@@ -548,7 +547,7 @@ function initMainContent() {
 }
 
 /* ===============================
-   2. UI HELPER & NOTIFIKASI
+    2. UI HELPER & NOTIFIKASI
 ================================ */
 function showNotification(message) {
     const toast = document.getElementById('success-toast');
@@ -579,11 +578,9 @@ function toggleProjectModal() {
 }
 
 /* ===============================
-   3. SERVICES RENDER (TARGET KHUSUS)
+    3. SERVICES RENDER (TARGET KHUSUS)
 ================================ */
 function renderServices() {
-    // Pastikan ID ini berbeda dengan kontainer "Mengapa Memilih JDI"
-    // Gunakan ID kontainer yang memang khusus untuk daftar layanan teknis
     const container = document.getElementById('technical-services-container');
     if (!container) return;
 
@@ -603,7 +600,7 @@ function renderServices() {
 }
 
 /* ===============================
-   4. DATA PROCESSING
+    4. DATA PROCESSING & LOGIN
 ================================ */
 function prosesData() {
     const form = document.getElementById('proyekForm') || document.querySelector('form');
@@ -660,6 +657,39 @@ function handleLogin() {
         window.location.href = 'admin.html';
     } else {
         alert("❌ Login Gagal!");
+    }
+}
+
+/* ===============================
+    5. FIX: RATING & ADMIN PANEL
+================================ */
+function setFooterRating(rating) {
+    const stars = document.querySelectorAll('.footer-rating-star');
+    stars.forEach((star, index) => {
+        if (index < rating) {
+            star.classList.add('text-yellow-400');
+            star.classList.remove('text-gray-400');
+        } else {
+            star.classList.add('text-gray-400');
+            star.classList.remove('text-yellow-400');
+        }
+    });
+    showNotification("Terima kasih atas penilaian " + rating + " bintang Anda!");
+}
+
+function toggleAdminPanel() {
+    const adminModal = document.getElementById('admin-modal');
+    if (adminModal) {
+        const isHidden = adminModal.classList.contains('hidden');
+        if (isHidden) {
+            adminModal.classList.remove('hidden');
+            adminModal.style.display = 'flex';
+        } else {
+            adminModal.classList.add('hidden');
+            adminModal.style.display = 'none';
+        }
+    } else {
+        console.warn("Elemen admin-modal tidak ditemukan.");
     }
 }
 </script>/body>
