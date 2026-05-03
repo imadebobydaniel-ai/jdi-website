@@ -187,6 +187,20 @@
         letter-spacing: 0.1em;
         text-transform: uppercase;
     }
+    /* Membuat gambar portofolio sedikit keluar dari container agar terlihat besar */
+.portfolio-preview img {
+    width: 100%;
+    max-width: 800px; /* Atur batas maksimal lebar gambar */
+    height: auto;
+    object-fit: contain;
+}
+
+@media (max-width: 992px) {
+    .portfolio-preview {
+        transform: scale(1) !important; /* Kembali ke ukuran normal di HP agar tidak terpotong */
+        margin-top: 30px;
+    }
+}
 </style>
 </head>
 <body class="bg-gray-50">
@@ -234,40 +248,43 @@
             <button onclick="toggleAdminPanel()" class="block text-xs font-bold uppercase text-navy-dark/60">Login Admin</button>
         </div>
     </nav>
-
-    <header class="hero-section px-4 md:px-10">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between relative z-10 gap-8 w-full">
-            <div class="w-full md:w-1/2 text-center md:text-left md:-mt-32">
-                <h1 id="fade-text-1" class="text-3xl md:text-6xl font-bold leading-tight mb-6 text-white" style="opacity: 0; transform: translateY(30px); transition: opacity 1.5s ease, transform 1.5s ease;">
-                    Transformasi Digital <br><span class="text-accent-orange">Tanpa Batas</span>
-                </h1>
-                <p id="fade-text-2" class="text-gray-200 text-sm md:text-lg mb-8 max-w-lg mx-auto md:mx-0" style="opacity: 0; transform: translateY(30px); transition: opacity 1.5s ease, transform 1.5s ease;">
-                    Kami menghadirkan solusi teknologi mutakhir untuk kebutuhan administrasi, database, dan sistem informasi manajemen di Jayapura dan sekitarnya.
-                </p>
-                <div id="fade-btns" class="flex flex-col sm:flex-row justify-center md:justify-start gap-4" style="opacity: 0; transform: translateY(30px); transition: opacity 1.5s ease, transform 1.5s ease;">
-                    <a href="javascript:void(0)" onclick="toggleProjectModal()" class="bg-accent-orange text-white px-8 py-3 rounded-md font-bold hover:bg-orange-600 transition shadow-lg w-full sm:w-auto text-center">Mulai Proyek</a>
-                    <a href="layanan-kami.html" class="border-2 border-white text-white px-8 py-3 rounded-md font-bold hover:bg-white hover:text-navy-dark transition w-full sm:w-auto text-center">Layanan Kami</a>
-                </div>
-            </div>
-
-            <div class="w-full md:w-1/2 flex flex-col items-center">
-                <div id="laptop-mockup" class="bg-white/10 p-2 md:p-4 rounded-xl backdrop-blur-md border border-white/20 shadow-2xl w-full relative" style="perspective: 1000px; opacity: 0; transform: scale(0.8) rotateX(15deg); transition: all 1.5s cubic-bezier(0.165, 0.84, 0.44, 1); max-width: 100%;">
-                    <div class="swiper mySwiper">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide"><a href="gereja.png" data-fancybox="gallery"><img src="gereja.png" class="rounded-lg"></a></div>
-                            <div class="swiper-slide"><a href="beuthetic.png" data-fancybox="gallery"><img src="beuthetic.png" class="rounded-lg"></a></div>
-                            <div class="swiper-slide"><a href="haven-cafe.png" data-fancybox="gallery"><img src="haven-cafe.png" class="rounded-lg"></a></div>
-                            <div class="swiper-slide"><a href="kopukopi.png" data-fancybox="gallery"><img src="kopukopi.png" class="rounded-lg"></a></div>
-                            <div class="swiper-slide"><a href="nusa-agro.png" data-fancybox="gallery"><img src="nusa-agro.png" class="rounded-lg"></a></div>
-                        </div>
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
-                    </div>
-                </div>
-                <p class="text-white/60 text-[10px] md:text-xs mt-2 uppercase tracking-widest font-bold">Client Satisfaction Portfolio</p>
+<header class="hero-section px-4 md:px-10">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between relative z-10 gap-8 w-full">
+        
+        <div class="w-full md:w-5/12 text-center md:text-left md:-mt-32">
+            <h1 id="fade-text-1" class="text-3xl md:text-6xl font-bold leading-tight mb-6 text-white" style="opacity: 0; transform: translateY(30px); transition: opacity 1.5s ease, transform 1.5s ease;">
+                Transformasi Digital <br><span class="text-accent-orange">Tanpa Batas</span>
+            </h1>
+            <p id="fade-text-2" class="text-gray-200 text-sm md:text-lg mb-8 max-w-lg mx-auto md:mx-0" style="opacity: 0; transform: translateY(30px); transition: opacity 1.5s ease, transform 1.5s ease;">
+                Kami menghadirkan solusi teknologi mutakhir untuk kebutuhan administrasi, database, dan sistem informasi manajemen di Jayapura dan sekitarnya.
+            </p>
+            <div id="fade-btns" class="flex flex-col sm:flex-row justify-center md:justify-start gap-4" style="opacity: 0; transform: translateY(30px); transition: opacity 1.5s ease, transform 1.5s ease;">
+                <a href="javascript:void(0)" onclick="toggleProjectModal()" class="bg-accent-orange text-white px-8 py-3 rounded-md font-bold hover:bg-orange-600 transition shadow-lg w-full sm:w-auto text-center">Mulai Proyek</a>
+                <a href="layanan-kami.html" class="border-2 border-white text-white px-8 py-3 rounded-md font-bold hover:bg-white hover:text-navy-dark transition w-full sm:w-auto text-center">Layanan Kami</a>
             </div>
         </div>
-    </header>
+
+        <div class="w-full md:w-7/12 flex flex-col items-center">
+            <div id="laptop-mockup" class="bg-white/10 p-2 md:p-4 rounded-xl backdrop-blur-md border border-white/20 shadow-2xl w-full relative" 
+                 style="perspective: 1000px; opacity: 0; transform: scale(1.1) rotateX(10deg); transition: all 1.5s cubic-bezier(0.165, 0.84, 0.44, 1); max-width: 110%;">
+                
+                <div class="swiper mySwiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide"><a href="gereja.png" data-fancybox="gallery"><img src="gereja.png" class="rounded-lg w-full"></a></div>
+                        <div class="swiper-slide"><a href="beuthetic.png" data-fancybox="gallery"><img src="beuthetic.png" class="rounded-lg w-full"></a></div>
+                        <div class="swiper-slide"><a href="haven-cafe.png" data-fancybox="gallery"><img src="haven-cafe.png" class="rounded-lg w-full"></a></div>
+                        <div class="swiper-slide"><a href="kopukopi.png" data-fancybox="gallery"><img src="kopukopi.png" class="rounded-lg w-full"></a></div>
+                        <div class="swiper-slide"><a href="nusa-agro.png" data-fancybox="gallery"><img src="nusa-agro.png" class="rounded-lg w-full"></a></div>
+                    </div>
+                    <div class="swiper-button-next" style="color: white;"></div>
+                    <div class="swiper-button-prev" style="color: white;"></div>
+                </div>
+            </div>
+            <p class="text-white/60 text-[10px] md:text-xs mt-6 uppercase tracking-widest font-bold">Client Satisfaction Portfolio</p>
+        </div>
+
+    </div>
+</header>
 
     <section id="layanan" class="py-16 md:py-24 max-w-7xl mx-auto px-6">
         <div class="text-center mb-16">
@@ -415,12 +432,7 @@
                 </div>
             </div>
 
-            <div class="flex flex-col">
-                <div class="ds-special-container shadow-2xl">
-                    <i class="fa-solid fa-tv ds-special-icon"></i>
-                    <h3 class="ds-special-title">Digital Signage</h3>
-                </div>
-            </div>
+           
 
             <div class="flex flex-col">
                 <h3 class="text-xl font-bold mb-6 border-l-4 border-accent-orange pl-4 text-white">Lokasi Kami</h3>
