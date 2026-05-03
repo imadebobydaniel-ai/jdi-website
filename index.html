@@ -172,7 +172,7 @@
         text-transform: uppercase;
     }
 
-    /* 6. PORTFOLIO & HERO CONTENT ALIGNMENT */
+    /* 6. UPPER SECTION PRECISION (Teks Kiri) */
     #upper-section h1 {
         padding-bottom: 5px; 
         line-height: 1.2; 
@@ -188,6 +188,7 @@
         margin-top: 25px; 
     }
 
+    /* 7. PORTFOLIO PREVIEW & LAPTOP MOCKUP (Kanan) */
     .portfolio-preview {
         margin: 0 auto; 
         padding: 10px; 
@@ -211,17 +212,11 @@
         max-width: none !important;
         transform: scale(1.2) !important;
         margin-top: 20px;
+        /* Penting: Default awal opacity 0 untuk animasi masuk JS */
+        opacity: 0; 
     }
 
-    .swiper-slide img {
-        width: 100%;
-        height: auto;
-        display: block;
-        object-fit: cover;
-        border-radius: 12px;
-    }
-
-    /* 7. ANIMATION CLASSES */
+    /* 8. ANIMATION CLASSES (Dipicu JS) */
     .fade-in-visible {
         opacity: 1 !important;
         transform: translateY(0) !important;
@@ -229,10 +224,10 @@
 
     .laptop-visible {
         opacity: 1 !important;
-        transform: scale(1) rotateX(0deg) !important;
+        transform: scale(1.2) rotateX(0deg) !important;
     }
 
-    /* 8. RESPONSIVE MEDIA QUERIES (GROUPED) */
+    /* 9. RESPONSIVE LAYOUT */
     @media (max-width: 768px) {
         .hero-section { padding-top: 80px; align-items: flex-start; }
         .footer-rating-container { min-height: auto; margin-top: 20px; }
@@ -248,10 +243,13 @@
     @media (min-width: 1024px) {
         .hero-section .max-w-7xl { gap: 50px !important; }
         .hero-section .flex-col.md:flex-row { gap: 2rem; }
+        
+        /* Pembagian kolom teks dan gambar agar presisi */
         .w-full.md:w-5/12 { width: 35% !important; }
         .w-full.md:w-7/12 { width: 65% !important; }
         
         #laptop-mockup {
+            /* Efek geser sedikit ke kanan di layar besar */
             transform: translateX(20px) scale(1.05) !important; 
             transition: transform 0.5s ease;
         }
