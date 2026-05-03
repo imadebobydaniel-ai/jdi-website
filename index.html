@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
     
-    <style>
+   <style>
     html, body { 
         font-family: 'Poppins', sans-serif; 
         scroll-behavior: smooth; 
@@ -186,8 +186,29 @@
         .hero-section p { font-size: 0.875rem !important; }
         .mobile-menu-active { display: block !important; }
     }
-</style>
-</head>
+
+    /* POSISI SOSIAL MEDIA YANG DIRAPIKAN */
+    .footer-socials {
+        display: flex;
+        gap: 20px;
+        margin-top: 1.5rem;
+        position: relative;
+        z-index: 100;
+    }
+
+    .social-icon {
+        color: white;
+        font-size: 24px;
+        transition: 0.3s;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .social-icon:hover {
+        color: #ff8c00;
+        transform: scale(1.2);
+    }
+</style></head>
 <body class="bg-gray-50">
 
     <div id="loading-screen">
