@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
     
 <style>
-    /* 1. RESET & BASE STYLES */
+    /* RESET & BASE STYLES */
     html, body { 
         font-family: 'Poppins', sans-serif; 
         scroll-behavior: smooth; 
@@ -25,22 +25,34 @@
     .text-accent-orange { color: #ff8c00; }
     .bg-accent-orange { background-color: #ff8c00; }
     
-    /* 2. HERO & FEATURE CARDS */
+    /* HERO & FEATURE CARDS */
     .hero-section {
         position: relative;
         width: 100%;
         min-height: 100vh;
         display: flex;
         align-items: center;
-        background: linear-gradient(to right, rgba(10, 29, 55, 0.95), rgba(10, 29, 55, 0.3)), 
-                    url('https://via.placeholder.com/1920x1080?text=Background+Image');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
+        background: linear-gradient(to right, rgba(10, 29, 55, 0.95), rgba(10, 29, 55, 0.7));
         overflow: hidden;
     }
 
-    .hero-section h1, .hero-section p { color: #ffffff; z-index: 2; }
+    /* Background pattern sebagai pengganti gambar */
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230a1d37'/%3E%3Cpath d='M20 20 L80 20 L80 80 L20 80 Z' fill='none' stroke='%23ff8c00' stroke-width='1' opacity='0.3'/%3E%3Ccircle cx='50' cy='50' r='30' fill='none' stroke='%23ff8c00' stroke-width='1' opacity='0.2'/%3E%3C/svg%3E");
+        background-repeat: repeat;
+        background-size: 100px;
+        opacity: 0.3;
+        z-index: 0;
+    }
+
+    .hero-section h1, .hero-section p, .hero-section .max-w-7xl { 
+        color: #ffffff; 
+        z-index: 2; 
+        position: relative;
+    }
     
     .feature-card {
         transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -53,7 +65,7 @@
         border-color: #ff8c00;
     }
 
-    /* 3. SWIPER & LOADER */
+    /* SWIPER & LOADER */
     .swiper { 
         width: 100%; 
         border-radius: 0.75rem; 
@@ -64,6 +76,7 @@
         height: 350px; 
         object-fit: cover;
         border-radius: 0.75rem;
+        background: linear-gradient(135deg, #1a3a6e 0%, #0a1d37 100%);
     }
 
     #loading-screen {
@@ -85,6 +98,15 @@
         transition: width 5s linear;
     }
 
+    .loader-bar-container {
+        width: 260px;
+        height: 6px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 20px;
+        overflow: hidden;
+        margin-bottom: 20px;
+    }
+
     .welcome-text {
         color: white;
         opacity: 0;
@@ -100,12 +122,10 @@
         display: none;
     }
 
-    /* 4. FOOTER & RATING SYSTEM */
+    /* FOOTER & RATING SYSTEM */
     .footer-with-bg {
         position: relative;
-        background-image: url('https://via.placeholder.com/1920x1080?text=Footer+Background');
-        background-size: cover;
-        background-position: center;
+        background: linear-gradient(135deg, #0a1d37 0%, #061225 100%);
         color: white;
     }
 
@@ -113,7 +133,7 @@
         content: '';
         position: absolute;
         inset: 0;
-        background-color: rgba(10, 29, 55, 0.85);
+        background-color: rgba(10, 29, 55, 0.95);
         z-index: 1;
     }
 
@@ -123,13 +143,11 @@
         justify-content: center;
         align-items: center;
         min-height: 320px;
-        height: 100%;
         border: 1px solid rgba(255, 255, 255, 0.1);
         background: rgba(255, 255, 255, 0.05);
         border-radius: 1rem;
         padding: 2rem;
         text-align: center;
-        box-sizing: border-box;
     }
 
     .footer-rating-star {
@@ -141,16 +159,26 @@
         display: inline-block;
     }
 
-    .footer-rating-star.filled {
+    .footer-rating-star.filled, .footer-rating-star:hover {
         color: #ff8c00 !important; 
     }
 
     .footer-rating-star:hover {
         transform: scale(1.2);
-        color: #ffb800;
     }
 
-    /* 5. RESPONSIVE LAYOUT */
+    /* Logo SVG Style */
+    .logo-svg {
+        height: 50px;
+        width: auto;
+    }
+
+    @media (min-width: 768px) {
+        .logo-svg {
+            height: 64px;
+        }
+    }
+
     @media (max-width: 768px) {
         .hero-section { padding-top: 80px; align-items: flex-start; }
         .footer-rating-container { min-height: auto; margin-top: 20px; }
@@ -162,10 +190,6 @@
             gap: 2rem;
         }
     }
-
-    .logo-outline {
-        filter: drop-shadow(1px 0 0 white) drop-shadow(-1px 0 0 white) drop-shadow(0 1px 0 white) drop-shadow(0 -1px 0 white);
-    }
 </style>
 </head>
 <body class="bg-gray-50">
@@ -173,8 +197,14 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <div id="loading-screen">
-    <img src="https://via.placeholder.com/280x100?text=JDI+Logo" alt="Logo JDI" class="loader-logo" style="width: 280px; height: auto; margin-bottom: 30px; filter: drop-shadow(1px 0 0 white) drop-shadow(-1px 0 0 white) drop-shadow(0 1px 0 white) drop-shadow(0 -1px 0 white);">
-    <div class="loader-bar-container" style="width: 260px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 20px; overflow: hidden; margin-bottom: 20px;">
+    <!-- Logo menggunakan SVG inline -->
+    <svg class="logo-svg" viewBox="0 0 200 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom: 30px;">
+        <rect width="200" height="80" rx="10" fill="#0a1d37" stroke="#ff8c00" stroke-width="2"/>
+        <text x="100" y="45" text-anchor="middle" fill="#ff8c00" font-family="Arial, sans-serif" font-size="20" font-weight="bold">JDI</text>
+        <text x="100" y="65" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="10">Jaya Digital Integrate</text>
+        <line x1="15" y1="70" x2="185" y2="70" stroke="#ff8c00" stroke-width="1" opacity="0.5"/>
+    </svg>
+    <div class="loader-bar-container">
         <div id="loader-fill" class="loader-fill"></div>
     </div>
     <p id="welcome-msg" class="welcome-text">SELAMAT DATANG DI JAYA DIGITAL INTEGRATE</p>
@@ -184,7 +214,11 @@
     <nav class="bg-white shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-8">
-                <img src="https://via.placeholder.com/200x80?text=JDI" alt="Logo Jaya Digital Integrate" class="h-10 md:h-16 w-auto logo-outline">
+                <svg class="h-10 md:h-12 w-auto" viewBox="0 0 150 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="150" height="60" rx="8" fill="#0a1d37" stroke="#ff8c00" stroke-width="1.5"/>
+                    <text x="75" y="35" text-anchor="middle" fill="#ff8c00" font-family="Arial, sans-serif" font-size="16" font-weight="bold">JDI</text>
+                    <text x="75" y="50" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="8">Jaya Digital Integrate</text>
+                </svg>
                 <div id="nav-links" class="hidden md:flex space-x-8 font-medium text-gray-700">
                     <a href="#profile" class="hover:text-accent-orange transition">Profile</a>
                     <a href="#home" class="hover:text-accent-orange">Beranda</a>
@@ -224,7 +258,7 @@
                     Kami menghadirkan solusi teknologi mutakhir untuk kebutuhan administrasi, database, dan sistem informasi manajemen di Jayapura dan sekitarnya.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                    <a href="#" class="bg-accent-orange px-8 py-3 rounded-md font-bold text-white shadow-lg">Mulai Proyek</a>
+                    <button onclick="toggleProjectModal()" class="bg-accent-orange px-8 py-3 rounded-md font-bold text-white shadow-lg">Mulai Proyek</button>
                     <a href="#layanan" class="border-2 border-white px-8 py-3 rounded-md font-bold text-white">Layanan Kami</a>
                 </div>
             </div>
@@ -233,19 +267,49 @@
                 <div class="swiper mySwiper w-full">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                            <img src="https://via.placeholder.com/850x450?text=Portfolio+1" class="rounded-lg w-full" onerror="this.src='https://via.placeholder.com/850x450?text=Image+Missing'">
+                            <div class="bg-gradient-to-br from-blue-900 to-navy-dark rounded-lg w-full h-[350px] flex items-center justify-center text-white text-center p-8">
+                                <div>
+                                    <i class="fas fa-laptop-code text-6xl text-accent-orange mb-4"></i>
+                                    <h3 class="text-xl font-bold">Website Development</h3>
+                                    <p class="text-sm mt-2">Solusi website profesional untuk bisnis Anda</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="swiper-slide">
-                            <img src="https://via.placeholder.com/850x450?text=Portfolio+2" class="rounded-lg w-full" onerror="this.src='https://via.placeholder.com/850x450?text=Image+Missing'">
+                            <div class="bg-gradient-to-br from-purple-900 to-navy-dark rounded-lg w-full h-[350px] flex items-center justify-center text-white text-center p-8">
+                                <div>
+                                    <i class="fas fa-mobile-alt text-6xl text-accent-orange mb-4"></i>
+                                    <h3 class="text-xl font-bold">Mobile App</h3>
+                                    <p class="text-sm mt-2">Aplikasi Android & iOS modern</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="swiper-slide">
-                            <img src="https://via.placeholder.com/850x450?text=Portfolio+3" class="rounded-lg w-full" onerror="this.src='https://via.placeholder.com/850x450?text=Image+Missing'">
+                            <div class="bg-gradient-to-br from-green-900 to-navy-dark rounded-lg w-full h-[350px] flex items-center justify-center text-white text-center p-8">
+                                <div>
+                                    <i class="fas fa-database text-6xl text-accent-orange mb-4"></i>
+                                    <h3 class="text-xl font-bold">Database System</h3>
+                                    <p class="text-sm mt-2">Sistem manajemen database terintegrasi</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="swiper-slide">
-                            <img src="https://via.placeholder.com/850x450?text=Portfolio+4" class="rounded-lg w-full" onerror="this.src='https://via.placeholder.com/850x450?text=Image+Missing'">
+                            <div class="bg-gradient-to-br from-red-900 to-navy-dark rounded-lg w-full h-[350px] flex items-center justify-center text-white text-center p-8">
+                                <div>
+                                    <i class="fas fa-chart-line text-6xl text-accent-orange mb-4"></i>
+                                    <h3 class="text-xl font-bold">Digital Signage</h3>
+                                    <p class="text-sm mt-2">Solusi display digital modern</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="swiper-slide">
-                            <img src="https://via.placeholder.com/850x450?text=Portfolio+5" class="rounded-lg w-full" onerror="this.src='https://via.placeholder.com/850x450?text=Image+Missing'">
+                            <div class="bg-gradient-to-br from-yellow-800 to-navy-dark rounded-lg w-full h-[350px] flex items-center justify-center text-white text-center p-8">
+                                <div>
+                                    <i class="fas fa-store text-6xl text-accent-orange mb-4"></i>
+                                    <h3 class="text-xl font-bold">POS System</h3>
+                                    <p class="text-sm mt-2">Point of Sale terbaik untuk bisnis ritel</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="swiper-pagination"></div>
@@ -265,22 +329,22 @@
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             <div class="feature-card bg-white p-8 rounded-3xl shadow-sm">
-                <div class="w-14 h-14 bg-orange-100 text-accent-orange rounded-2xl flex items-center justify-center mb-6 shadow-inner"><span class="text-xl font-bold">01</span></div>
+                <div class="w-14 h-14 bg-orange-100 text-accent-orange rounded-2xl flex items-center justify-center mb-6 shadow-inner"><i class="fas fa-mobile-alt text-2xl"></i></div>
                 <h3 class="text-xl font-bold mb-3 text-navy-dark">Responsif</h3>
                 <p class="text-gray-600 text-sm leading-relaxed">Optimasi multi-platform yang memastikan aplikasi berjalan sempurna di HP maupun Desktop.</p>
             </div>
             <div class="feature-card bg-white p-8 rounded-3xl shadow-sm">
-                <div class="w-14 h-14 bg-blue-100 text-navy-dark rounded-2xl flex items-center justify-center mb-6 shadow-inner"><span class="text-xl font-bold">02</span></div>
+                <div class="w-14 h-14 bg-blue-100 text-navy-dark rounded-2xl flex items-center justify-center mb-6 shadow-inner"><i class="fas fa-expand-alt text-2xl"></i></div>
                 <h3 class="text-xl font-bold mb-3 text-navy-dark">Scalable</h3>
                 <p class="text-gray-600 text-sm leading-relaxed">Arsitektur sistem fleksibel yang siap tumbuh seiring skala kebutuhan bisnis Anda.</p>
             </div>
             <div class="feature-card bg-white p-8 rounded-3xl shadow-sm">
-                <div class="w-14 h-14 bg-orange-100 text-accent-orange rounded-2xl flex items-center justify-center mb-6 shadow-inner"><span class="text-xl font-bold">03</span></div>
+                <div class="w-14 h-14 bg-orange-100 text-accent-orange rounded-2xl flex items-center justify-center mb-6 shadow-inner"><i class="fas fa-shield-alt text-2xl"></i></div>
                 <h3 class="text-xl font-bold mb-3 text-navy-dark">Aman</h3>
                 <p class="text-gray-600 text-sm leading-relaxed">Implementasi keamanan database tingkat lanjut untuk proteksi data maksimal.</p>
             </div>
             <div class="feature-card bg-white p-8 rounded-3xl shadow-sm">
-                <div class="w-14 h-14 bg-blue-100 text-navy-dark rounded-2xl flex items-center justify-center mb-6 shadow-inner"><span class="text-xl font-bold">04</span></div>
+                <div class="w-14 h-14 bg-blue-100 text-navy-dark rounded-2xl flex items-center justify-center mb-6 shadow-inner"><i class="fas fa-lock text-2xl"></i></div>
                 <h3 class="text-xl font-bold mb-3 text-navy-dark">SSL</h3>
                 <p class="text-gray-600 text-sm leading-relaxed">Proteksi enkripsi data end-to-end yang menjamin keamanan informasi sensitif.</p>
             </div>
@@ -297,6 +361,7 @@
         </div>
     </section>
 
+    <!-- Project Modal -->
     <div id="project-modal" class="fixed inset-0 bg-navy-dark/90 z-[10002] hidden flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl my-auto">
             <div class="p-6 border-b flex justify-between items-center bg-gray-50 rounded-t-2xl">
@@ -304,7 +369,7 @@
                 <button onclick="toggleProjectModal()" class="text-gray-400 hover:text-red-500 text-2xl">&times;</button>
             </div>
 
-            <form id="proyekForm" class="p-6 space-y-4">
+            <form id="proyekForm" class="p-6 space-y-4" onsubmit="return false;">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Nama Lengkap</label>
@@ -327,7 +392,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Jenis Usaha</label>
-                        <select name="jenis_usaha" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none bg-white">
+                        <select name="jenis_usaha" id="jenis_usaha" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none bg-white">
                             <option>UMKM</option>
                             <option>Usaha Mandiri</option>
                             <option>Usaha Sedang</option>
@@ -342,7 +407,7 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Pilih Layanan</label>
-                        <select name="pilih_layanan" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none bg-white">
+                        <select name="pilih_layanan" id="pilih_layanan" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none bg-white">
                             <option>Website</option>
                             <option>Aplikasi Android</option>
                             <option>Sistem Manajemen</option>
@@ -357,12 +422,12 @@
 
                 <div>
                     <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Jelaskan Singkat Usaha Anda</label>
-                    <input type="text" name="deskripsi_usaha" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="Bidang usaha anda...">
+                    <input type="text" name="deskripsi_usaha" id="deskripsi_usaha" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="Bidang usaha anda...">
                 </div>
 
                 <div>
                     <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Detail Tujuan Proyek</label>
-                    <textarea name="tujuan_proyek" rows="3" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="Apa yang ingin anda capai dengan sistem ini?"></textarea>
+                    <textarea name="tujuan_proyek" id="tujuan_proyek" rows="3" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="Apa yang ingin anda capai dengan sistem ini?"></textarea>
                 </div>
 
                 <div class="flex gap-3 pt-4">
@@ -373,21 +438,27 @@
         </div>
     </div>
 
+    <!-- Toast Notification -->
     <div id="success-toast" class="fixed top-10 left-1/2 -translate-x-1/2 z-[10003] hidden">
         <div class="bg-green-600 text-white px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-4">
-            <span class="text-2xl">✓</span>
+            <span class="text-2xl" id="toast-icon">✓</span>
             <div>
-                <p class="font-bold">Permintaan Anda telah dikirim!</p>
-                <p class="text-xs opacity-90">Kami akan menghubungi Anda segera melalui WhatsApp/Email.</p>
+                <p class="font-bold" id="toast-title">Berhasil!</p>
+                <p class="text-xs opacity-90" id="toast-message">Permintaan Anda telah dikirim!</p>
             </div>
         </div>
     </div>
 
+    <!-- Footer -->
     <footer id="kontak" class="footer-with-bg pt-16 pb-8 border-t-8 border-accent-orange"> 
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 border-b border-white/10 pb-12 relative z-10">
             
             <div class="lg:col-span-3 space-y-6">
-                <img src="https://via.placeholder.com/200x80?text=JDI" alt="Logo JDI" class="h-12 brightness-200 logo-outline">
+                <svg class="h-12 w-auto" viewBox="0 0 150 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="150" height="60" rx="8" fill="#0a1d37" stroke="#ff8c00" stroke-width="1.5"/>
+                    <text x="75" y="35" text-anchor="middle" fill="#ff8c00" font-family="Arial, sans-serif" font-size="16" font-weight="bold">JDI</text>
+                    <text x="75" y="50" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="8">Jaya Digital Integrate</text>
+                </svg>
                 <p class="text-gray-400 text-sm leading-relaxed">Solusi digital terintegrasi untuk pengelolaan sistem yang profesional di tanah Papua.</p>
                 
                 <div class="text-gray-400 text-sm">
@@ -401,10 +472,10 @@
                 </div>
 
                 <div class="footer-socials flex gap-4 mt-6">
-                    <a href="https://www.facebook.com/jaya.digital.integrate2026" target="_blank" class="text-white hover:text-accent-orange text-2xl transition">
+                    <a href="#" target="_blank" class="text-white hover:text-accent-orange text-2xl transition">
                         <i class="fa-brands fa-facebook"></i>
                     </a>
-                    <a href="https://www.instagram.com/jayadigitalintegrate/" target="_blank" class="text-white hover:text-accent-orange text-2xl transition">
+                    <a href="#" target="_blank" class="text-white hover:text-accent-orange text-2xl transition">
                         <i class="fa-brands fa-instagram"></i>
                     </a>
                 </div>
@@ -432,7 +503,7 @@
             <div class="lg:col-span-5">
                 <div class="bg-white/5 rounded-2xl p-8 border border-white/10 h-full shadow-2xl backdrop-blur-sm">
                     <h3 class="text-xl font-bold mb-6 border-l-4 border-accent-orange pl-4 text-white">Saran dan Masukan</h3>
-                    <form id="feedbackForm" class="space-y-4">
+                    <form id="feedbackForm" class="space-y-4" onsubmit="return false;">
                         <div>
                             <input type="text" id="feedbackName" placeholder="Nama Lengkap" class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-accent-orange transition">
                         </div>
@@ -453,6 +524,7 @@
     </footer>
 </div> 
 
+<!-- Admin Portal -->
 <div id="admin-portal" class="fixed inset-0 bg-navy-dark/90 z-[10001] hidden flex items-center justify-center p-6">
     <div class="bg-white w-full max-w-md rounded-2xl p-8 shadow-2xl">
         <h3 class="text-2xl font-bold text-navy-dark mb-6 text-center">Login Administrator</h3>
@@ -469,16 +541,16 @@
 <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 
 <script>
-/* ===============================
-    1. LOADING & INIT
-================================ */
+// ============================================
+// LOADING & INIT
+// ============================================
 let currentRating = 0;
 
 window.addEventListener('load', () => {
     const screen = document.getElementById('loading-screen');
     const main = document.getElementById('main-content');
-    const fill = document.getElementById('loader-fill'); 
-    const welcomeTxt = document.getElementById('welcome-msg'); 
+    const fill = document.getElementById('loader-fill');
+    const welcomeTxt = document.getElementById('welcome-msg');
 
     if (fill) fill.style.width = '100%';
 
@@ -486,7 +558,7 @@ window.addEventListener('load', () => {
         setTimeout(() => {
             welcomeTxt.style.opacity = '1';
             welcomeTxt.style.transform = 'translateY(0)';
-        }, 500); 
+        }, 500);
     }
 
     setTimeout(() => {
@@ -496,30 +568,27 @@ window.addEventListener('load', () => {
                 screen.style.display = 'none';
                 if (main) {
                     main.style.display = 'block';
-                    main.offsetHeight; 
+                    main.offsetHeight;
                     main.style.opacity = '1';
                 }
                 initMainContent();
             }, 1000);
         }
-    }, 5000); 
+    }, 5000);
 });
 
 function initMainContent() {
     console.log("Inisialisasi konten utama dimulai...");
 
-    /* ===============================
-        INTEGRASI SWIPER
-    ================================ */
+    // Initialize Swiper
     if (typeof Swiper !== 'undefined') {
-        console.log("Swiper terdeteksi, memulai inisialisasi...");
         const swiper = new Swiper(".mySwiper", {
             loop: true,
             autoplay: {
                 delay: 3000,
                 disableOnInteraction: false
             },
-            observer: true, 
+            observer: true,
             observeParents: true,
             watchOverflow: true,
             navigation: {
@@ -534,49 +603,35 @@ function initMainContent() {
             grabCursor: true,
             allowTouchMove: true
         });
-
-        setTimeout(() => { 
-            swiper.update(); 
-            console.log("Swiper updated untuk sinkronisasi layout.");
-        }, 1000);
-    } else {
-        console.error("Library Swiper tidak ditemukan! Pastikan CDN sudah terpasang.");
-    }
-
-    // Inisialisasi FancyBox
-    if (typeof Fancybox !== 'undefined') {
-        Fancybox.bind("[data-fancybox]", {});
     }
 }
 
-/* ===============================
-    2. UI HELPER & NOTIFIKASI
-================================ */
+// ============================================
+// UI HELPER FUNCTIONS
+// ============================================
 function showNotification(message, isError = false) {
     const toast = document.getElementById('success-toast');
     if (toast) {
-        const title = toast.querySelector('p.font-bold');
-        const text = toast.querySelector('p.text-xs');
-        const icon = toast.querySelector('span.text-2xl');
+        const title = document.getElementById('toast-title');
+        const text = document.getElementById('toast-message');
+        const icon = document.getElementById('toast-icon');
+        const bgDiv = toast.querySelector('div');
         
         if (title) title.innerText = isError ? 'Gagal!' : 'Berhasil!';
         if (text) text.innerText = message;
         if (icon) icon.innerText = isError ? '❌' : '✓';
         
-        toast.style.display = 'block'; 
-        toast.classList.remove('hidden');
-        
-        // Ubah warna background sesuai error/success
-        const bgDiv = toast.querySelector('div');
         if (bgDiv) {
             bgDiv.classList.remove('bg-green-600', 'bg-red-600');
             bgDiv.classList.add(isError ? 'bg-red-600' : 'bg-green-600');
         }
         
+        toast.style.display = 'block';
+        toast.classList.remove('hidden');
+        
         setTimeout(() => {
             toast.style.display = 'none';
             toast.classList.add('hidden');
-            // Reset warna
             if (bgDiv) {
                 bgDiv.classList.remove('bg-red-600');
                 bgDiv.classList.add('bg-green-600');
@@ -602,9 +657,9 @@ function toggleMobileMenu() {
     if (menu) menu.classList.toggle('hidden');
 }
 
-/* ===============================
-    3. FORM HANDLERS
-================================ */
+// ============================================
+// FORM HANDLERS
+// ============================================
 function kirimProyek() {
     const nama = document.getElementById('nama_lengkap')?.value;
     const nomor = document.getElementById('nomor_hp')?.value;
@@ -630,7 +685,8 @@ function kirimProyek() {
     toggleProjectModal();
     
     // Reset form
-    document.getElementById('proyekForm')?.reset();
+    const form = document.getElementById('proyekForm');
+    if (form) form.reset();
 }
 
 function kirimFeedback() {
@@ -643,12 +699,13 @@ function kirimFeedback() {
     }
     
     showNotification("Terima kasih atas saran dan masukannya!");
-    document.getElementById('feedbackForm')?.reset();
+    const form = document.getElementById('feedbackForm');
+    if (form) form.reset();
 }
 
-/* ===============================
-    4. RATING SYSTEM
-================================ */
+// ============================================
+// RATING SYSTEM
+// ============================================
 function setFooterRating(rating) {
     currentRating = rating;
     const stars = document.querySelectorAll('.footer-rating-star');
@@ -682,24 +739,24 @@ function submitRating() {
             star.style.color = '#d1d5db';
             star.classList.remove('filled');
         });
-        if (document.getElementById('rating-status')) {
-            document.getElementById('rating-status').innerText = "Rating berhasil dikirim! Terima kasih.";
+        const statusEl = document.getElementById('rating-status');
+        if (statusEl) {
+            statusEl.innerText = "Rating berhasil dikirim! Terima kasih.";
         }
         currentRating = 0;
     }, 2000);
 }
 
-/* ===============================
-    5. LOGIN
-================================ */
+// ============================================
+// LOGIN
+// ============================================
 function handleLogin() {
     const user = document.getElementById('user')?.value;
     const pass = document.getElementById('pass')?.value;
     
     if (user === "admin" && pass === "bukadong821") {
-        showNotification("Login berhasil! Mengarahkan ke halaman admin...");
+        showNotification("Login berhasil!");
         setTimeout(() => {
-            // window.location.href = 'admin.html';
             alert("Halaman admin akan segera tersedia");
             toggleAdminPanel();
         }, 1000);
@@ -708,18 +765,21 @@ function handleLogin() {
     }
 }
 
-/* ===============================
-    6. SCROLL SMOOTH
-================================ */
+// ============================================
+// SMOOTH SCROLL
+// ============================================
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+        const targetId = this.getAttribute('href');
+        if (targetId && targetId !== '#') {
+            const target = document.querySelector(targetId);
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
         }
     });
 });
