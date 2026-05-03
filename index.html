@@ -229,6 +229,40 @@
         transform: scale(1.2);
         color: #ffb800;
     }
+    <style>
+    /* ... kode awal Anda tetap sama ... */
+
+    /* KOREKSI WARNA: Menjadi orange solid sesuai perintah */
+    .footer-rating-star {
+        font-size: 3rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin: 0 5px;
+        line-height: 1;
+        display: inline-block;
+        color: #d1d5db; /* Warna abu-abu default (kosong) */
+    }
+
+    /* Class untuk warna orange solid saat aktif */
+    .footer-rating-star.filled {
+        color: #ff8c00 !important; /* Orange solid */
+    }
+
+    /* Pastikan kontainer rating tetap fleksibel untuk berdampingan dengan Maps */
+    .footer-rating-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 320px;
+        height: 100%;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 1rem;
+        padding: 2rem;
+        text-align: center;
+        box-sizing: border-box;
+    }
 </style>
 </style>
 </head>
@@ -467,12 +501,7 @@
                     <a href="https://www.instagram.com/jayadigitalintegrate/" target="_blank" class="social-icon text-white hover:text-accent-orange text-2xl transition">
                         <i class="fa-brands fa-instagram"></i>
                     </a>
-                    <a href="https://imadebobydaniel-ai.github.io/jdi-website/" target="_blank" class="flex items-center text-white hover:text-accent-orange transition">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="Language-21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM12 2a10 10 0 100 20 10 10 0 000-20z" />
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
-        </svg>
-        <span class="text-xs">Lihat Website</span>
+              
     </a>
 </div>
                     </div>
@@ -597,6 +626,38 @@ function showNotification(message) {
         alert(message);
     }
 }
+     function setFooterRating(rating) {
+    const stars = document.querySelectorAll('.footer-rating-star');
+    
+    stars.forEach((star, index) => {
+        // Logika Kumulatif: Jika index lebih kecil dari rating yang diklik, beri warna orange solid
+        if (index < rating) {
+            star.classList.add('filled');
+            // Menghapus class lama jika ada untuk memastikan konsistensi warna
+            star.style.color = '#ff8c00'; 
+        } else {
+            star.classList.remove('filled');
+            star.style.color = '#d1d5db'; // Kembali ke abu-abu
+        }
+    });
+    
+    showNotification("Terima kasih atas penilaian " + rating + " bintang Anda!");
+}
+
+function toggleAdminPanel() {
+    const adminModal = document.getElementById('admin-modal');
+    if (adminModal) {
+        const isHidden = adminModal.classList.contains('hidden');
+        if (isHidden) {
+            adminModal.classList.remove('hidden');
+            adminModal.style.display = 'flex';
+        } else {
+            adminModal.classList.add('hidden');
+            adminModal.style.display = 'none';
+        }
+    } else {
+        console.warn("Elemen admin-modal tidak ditemukan.");
+    }
 
 function toggleAssistant() {
     const chatBox = document.getElementById('chat-assistant');
