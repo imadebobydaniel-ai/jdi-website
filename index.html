@@ -553,7 +553,7 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 
- <script>
+<script>
 /* ===============================
     1. LOADING & INIT (FIXED 5s)
 ================================ */
@@ -626,38 +626,6 @@ function showNotification(message) {
         alert(message);
     }
 }
-     function setFooterRating(rating) {
-    const stars = document.querySelectorAll('.footer-rating-star');
-    
-    stars.forEach((star, index) => {
-        // Logika Kumulatif: Jika index lebih kecil dari rating yang diklik, beri warna orange solid
-        if (index < rating) {
-            star.classList.add('filled');
-            // Menghapus class lama jika ada untuk memastikan konsistensi warna
-            star.style.color = '#ff8c00'; 
-        } else {
-            star.classList.remove('filled');
-            star.style.color = '#d1d5db'; // Kembali ke abu-abu
-        }
-    });
-    
-    showNotification("Terima kasih atas penilaian " + rating + " bintang Anda!");
-}
-
-function toggleAdminPanel() {
-    const adminModal = document.getElementById('admin-modal');
-    if (adminModal) {
-        const isHidden = adminModal.classList.contains('hidden');
-        if (isHidden) {
-            adminModal.classList.remove('hidden');
-            adminModal.style.display = 'flex';
-        } else {
-            adminModal.classList.add('hidden');
-            adminModal.style.display = 'none';
-        }
-    } else {
-        console.warn("Elemen admin-modal tidak ditemukan.");
-    }
 
 function toggleAssistant() {
     const chatBox = document.getElementById('chat-assistant');
@@ -760,12 +728,13 @@ function handleLogin() {
 function setFooterRating(rating) {
     const stars = document.querySelectorAll('.footer-rating-star');
     stars.forEach((star, index) => {
+        // Logika Kumulatif: Jika klik bintang 3, maka bintang 1,2,3 jadi orange
         if (index < rating) {
-            star.classList.remove('text-gray-400');
-            star.classList.add('text-yellow-400');
+            star.style.color = '#ff8c00'; // Orange solid
+            star.classList.add('filled');
         } else {
-            star.classList.remove('text-yellow-400');
-            star.classList.add('text-gray-400');
+            star.style.color = '#d1d5db'; // Abu-abu
+            star.classList.remove('filled');
         }
     });
     showNotification("Terima kasih atas penilaian " + rating + " bintang Anda!");
@@ -775,13 +744,8 @@ function toggleAdminPanel() {
     const adminModal = document.getElementById('admin-modal');
     if (adminModal) {
         const isHidden = adminModal.classList.contains('hidden');
-        if (isHidden) {
-            adminModal.classList.remove('hidden');
-            adminModal.style.display = 'flex';
-        } else {
-            adminModal.classList.add('hidden');
-            adminModal.style.display = 'none';
-        }
+        adminModal.classList.toggle('hidden');
+        adminModal.style.display = isHidden ? 'flex' : 'none';
     } else {
         console.warn("Elemen admin-modal tidak ditemukan.");
     }
