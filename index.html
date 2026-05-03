@@ -361,14 +361,17 @@
     </div>
 
     <div class="w-full lg:w-7/12 flex justify-center lg:justify-end">
-        <div id="laptop-mockup" class="relative w-full" style="max-width: 850px;"> 
-            <div class="swiper mySwiper rounded-xl shadow-2xl border border-white/20 backdrop-blur-md p-2">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img src="kopukopi.png" class="rounded-lg w-full"></div>
-                </div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-            </div>
+      <div class="swiper-wrapper">
+    <div class="swiper-slide">
+        <img src="kopukopi.png" class="rounded-lg w-full" onerror="this.src='https://via.placeholder.com/850x450?text=Kopu+Kopi+Image+Missing'">
+    </div>
+    <div class="swiper-slide">
+        <img src="image_188fe7.jpg" class="rounded-lg w-full" onerror="this.src='https://via.placeholder.com/850x450?text=Portfolio+2+Missing'">
+    </div>
+    <div class="swiper-slide">
+        <img src="image_188fa5.jpg" class="rounded-lg w-full" onerror="this.src='https://via.placeholder.com/850x450?text=Portfolio+3+Missing'">
+    </div>
+</div>
             <p class="text-center text-white/60 text-xs mt-4 uppercase tracking-widest font-bold">Client Satisfaction Portfolio</p>
         </div>
     </div>
@@ -626,33 +629,34 @@ function initMainContent() {
         }, i * 250);
     });
 
-    // INTEGRASI SWIPER DENGAN KONFIGURASI BARU
+    // REVISI: Script Pengambil Gambar & Inisialisasi Swiper (MENCEGAH FREEZE)
     if (typeof Swiper !== 'undefined') {
-        new Swiper(".mySwiper", {
-            navigation: { 
-                nextEl: ".swiper-button-next", 
-                prevEl: ".swiper-button-prev" 
-            },
-            autoplay: { 
-                delay: 3000,
-                disableOnInteraction: false // tetap autoplay walau disentuh
-            },
+        const swiper = new Swiper(".mySwiper", {
             loop: true,
-
-            // ✅ TAMBAHAN AGAR BISA SWIPE HALUS
+            speed: 800,
             grabCursor: true,
             allowTouchMove: true,
-            touchRatio: 1,
-            touchAngle: 45,
-            simulateTouch: true,
-
-            // ✅ RESPONSIF MOBILE
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            // Fitur kunci agar Swiper mendeteksi perubahan tampilan setelah loading
+            observer: true,
+            observeParents: true,
+            // Konfigurasi responsif
             slidesPerView: 1,
             spaceBetween: 10,
-
-            // ✅ EFEK HALUS
-            speed: 800
+            touchRatio: 1,
+            touchAngle: 45,
+            simulateTouch: true
         });
+
+        // Paksa refresh swiper setelah konten benar-benar muncul di layar
+        setTimeout(() => { swiper.update(); }, 500);
     }
 }
 
