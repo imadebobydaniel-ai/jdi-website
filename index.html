@@ -626,11 +626,32 @@ function initMainContent() {
         }, i * 250);
     });
 
+    // INTEGRASI SWIPER DENGAN KONFIGURASI BARU
     if (typeof Swiper !== 'undefined') {
         new Swiper(".mySwiper", {
-            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-            autoplay: { delay: 3000 },
-            loop: true
+            navigation: { 
+                nextEl: ".swiper-button-next", 
+                prevEl: ".swiper-button-prev" 
+            },
+            autoplay: { 
+                delay: 3000,
+                disableOnInteraction: false // tetap autoplay walau disentuh
+            },
+            loop: true,
+
+            // ✅ TAMBAHAN AGAR BISA SWIPE HALUS
+            grabCursor: true,
+            allowTouchMove: true,
+            touchRatio: 1,
+            touchAngle: 45,
+            simulateTouch: true,
+
+            // ✅ RESPONSIF MOBILE
+            slidesPerView: 1,
+            spaceBetween: 10,
+
+            // ✅ EFEK HALUS
+            speed: 800
         });
     }
 }
