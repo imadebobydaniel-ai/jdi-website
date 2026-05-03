@@ -258,7 +258,8 @@
 </head>
 <body>
     </body>
-</html></head>
+</html>
+</head>
 <body class="bg-gray-50">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -325,10 +326,10 @@
         <div class="swiper mySwiper" id="laptop-mockup">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                    <img src="kopu-kopi-ads.jpg" alt="Iklan 1" class="w-full h-auto rounded-xl">
+                    <img src="kopu-kopi-ads.jpg" alt="Iklan 1" class="w-full h-auto rounded-xl" onerror="this.src='https://via.placeholder.com/850x450?text=Gambar+Tidak+Ditemukan'">
                 </div>
                 <div class="swiper-slide">
-                    <img src="iklan-lain.jpg" alt="Iklan 2" class="w-full h-auto rounded-xl">
+                    <img src="iklan-lain.jpg" alt="Iklan 2" class="w-full h-auto rounded-xl" onerror="this.src='https://via.placeholder.com/850x450?text=Cek+Folder+Gambar'">
                 </div>
             </div>
 
@@ -532,7 +533,7 @@
 </div> 
 
 <div id="admin-portal" class="fixed inset-0 bg-navy-dark/90 z-[10001] hidden flex items-center justify-center p-6">
-    <div class="bg-white w-full max-w-md rounded-2xl p-8 shadow-2xl">
+    <div class="bg-white w-full max-md rounded-2xl p-8 shadow-2xl">
         <h3 class="text-2xl font-bold text-navy-dark mb-6 text-center">Login Administrator</h3>
         <div class="space-y-4">
             <input type="text" id="user" placeholder="Username" class="w-full p-3 border rounded-lg outline-none focus:ring-2 focus:ring-accent-orange">
@@ -547,6 +548,43 @@
 <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 
 <script>
+// Kode Tambahan untuk mematikan transparansi dan memicu animasi
+function initMainContent() {
+    // Memaksa elemen muncul meskipun transparan
+    const mockup = document.getElementById('laptop-mockup');
+    if (mockup) {
+        mockup.style.opacity = "1";
+        mockup.classList.add('laptop-visible');
+    }
+
+    // Inisialisasi Swiper
+    if (typeof Swiper !== 'undefined') {
+        new Swiper(".mySwiper", {
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            }
+        });
+    }
+}
+
+// Pastikan dipanggil setelah loading selesai
+window.addEventListener('load', () => {
+    // Logika loading Anda yang sudah ada...
+    setTimeout(() => {
+        initMainContent();
+    }, 5500); // Menyesuaikan dengan total durasi loading screen Anda
+});
+</script>
 /* ===============================
     1. LOADING & INIT (FIXED 5s)
 ================================ */
