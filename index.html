@@ -363,13 +363,19 @@
     <div class="w-full lg:w-7/12 flex justify-center lg:justify-end">
       <div class="swiper-wrapper">
     <div class="swiper-slide">
-        <img src="kopukopi.png" class="rounded-lg w-full" onerror="this.src='https://via.placeholder.com/850x450?text=Kopu+Kopi+Image+Missing'">
+        <img src="d-klinic.png" class="rounded-lg w-full" onerror="this.src='https://via.placeholder.com/850x450?text=Kopu+Kopi+Image+Missing'">
     </div>
     <div class="swiper-slide">
-        <img src="image_188fe7.jpg" class="rounded-lg w-full" onerror="this.src='https://via.placeholder.com/850x450?text=Portfolio+2+Missing'">
+        <img src="gereja.png" class="rounded-lg w-full" onerror="this.src='https://via.placeholder.com/850x450?text=Portfolio+2+Missing'">
     </div>
     <div class="swiper-slide">
-        <img src="image_188fa5.jpg" class="rounded-lg w-full" onerror="this.src='https://via.placeholder.com/850x450?text=Portfolio+3+Missing'">
+        <img src="kopukopi.png" class="rounded-lg w-full" onerror="this.src='https://via.placeholder.com/850x450?text=Portfolio+3+Missing'">
+    </div>
+          <div class="swiper-slide">
+        <img src="nusa-agro.png" class="rounded-lg w-full" onerror="this.src='https://via.placeholder.com/850x450?text=Portfolio+3+Missing'">
+    </div>
+          <div class="swiper-slide">
+        <img src="rapopang.png" class="rounded-lg w-full" onerror="this.src='https://via.placeholder.com/850x450?text=Portfolio+3+Missing'">
     </div>
 </div>
             <p class="text-center text-white/60 text-xs mt-4 uppercase tracking-widest font-bold">Client Satisfaction Portfolio</p>
@@ -629,7 +635,7 @@ function initMainContent() {
         }, i * 250);
     });
 
-    // REVISI: Script Pengambil Gambar & Inisialisasi Swiper (MENCEGAH FREEZE)
+    // INTEGRASI SWIPER (DENGAN PERBAIKAN OBSERVER)
     if (typeof Swiper !== 'undefined') {
         const swiper = new Swiper(".mySwiper", {
             loop: true,
@@ -644,10 +650,10 @@ function initMainContent() {
                 nextEl: ".swiper-button-next",
                 prevEl: ".swiper-button-prev",
             },
-            // Fitur kunci agar Swiper mendeteksi perubahan tampilan setelah loading
+            // PENTING: Mencegah freeze saat gambar muncul/layout berubah
             observer: true,
             observeParents: true,
-            // Konfigurasi responsif
+            
             slidesPerView: 1,
             spaceBetween: 10,
             touchRatio: 1,
@@ -655,10 +661,20 @@ function initMainContent() {
             simulateTouch: true
         });
 
-        // Paksa refresh swiper setelah konten benar-benar muncul di layar
+        // Paksa refresh swiper secara berkala setelah loading selesai
         setTimeout(() => { swiper.update(); }, 500);
+        
+        // Simpan ke window agar bisa diakses global jika diperlukan
+        window.mainSwiper = swiper;
     }
 }
+
+// Tambahan: Paksa update ulang jika ada gambar yang telat dimuat
+window.addEventListener('load', () => {
+    if (window.mainSwiper) {
+        setTimeout(() => { window.mainSwiper.update(); }, 1000);
+    }
+});
 
 /* ===============================
     2. UI HELPER & NOTIFIKASI
