@@ -440,13 +440,7 @@
                     <div class="ipad-screen">
                         <div class="swiper mySwiper w-full h-full">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide"><img src="d-klinic.png" alt="D-Klinic" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'"><div class="fallback-card"><div class="text-center p-4"><i class="fas fa-clinic-medical text-5xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold">D-Klinic</h3><p class="text-xs mt-1">Sistem Manajemen Klinik</p></div></div></div>
-                                <div class="swiper-slide"><img src="gereja.png" alt="Gereja" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'"><div class="fallback-card"><div class="text-center p-4"><i class="fas fa-church text-5xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold">Sistem Gereja</h3><p class="text-xs mt-1">Manajemen Jemaat Digital</p></div></div></div>
-                                <div class="swiper-slide"><img src="skin.png" alt="Skin Care" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'"><div class="fallback-card"><div class="text-center p-4"><i class="fas fa-spa text-5xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold">Skin Care System</h3><p class="text-xs mt-1">Manajemen Klinik Kecantikan</p></div></div></div>
-                                <div class="swiper-slide"><img src="nusa-agro.png" alt="Nusa Agro" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'"><div class="fallback-card"><div class="text-center p-4"><i class="fas fa-seedling text-5xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold">Nusa Agro</h3><p class="text-xs mt-1">Sistem Manajemen Pertanian</p></div></div></div>
-                                <div class="swiper-slide"><img src="rapopang.png" alt="Rapopang" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'"><div class="fallback-card"><div class="text-center p-4"><i class="fas fa-utensils text-5xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold">Rapopang</h3><p class="text-xs mt-1">Sistem Restoran</p></div></div></div>
-                                <div class="swiper-slide"><img src="haven-cafe.png" alt="Haven Cafe" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'"><div class="fallback-card"><div class="text-center p-4"><i class="fas fa-mug-hot text-5xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold">Haven Cafe</h3><p class="text-xs mt-1">Sistem Kafe Digital</p></div></div></div>
-                                <div class="swiper-slide"><img src="de-wave.png" alt="De Wave" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'"><div class="fallback-card"><div class="text-center p-4"><i class="fas fa-water text-5xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold">De Wave</h3><p class="text-xs mt-1">Sistem Manajemen Waterpark</p></div></div></div>
+                                <!-- Slides akan diisi oleh JavaScript dari localStorage -->
                             </div>
                             <div class="swiper-pagination"></div>
                             <div class="swiper-button-next"></div>
@@ -562,6 +556,91 @@
 // ========== SEMUA FUNGSI DALAM SATU BLOK ==========
 let currentRating = 0;
 
+// --- KONSTANTA STORAGE ---
+const STORAGE_RATINGS = 'jdi_ratings';
+const STORAGE_GALLERY = 'jdi_gallery';
+
+// --- DATA DEFAULT GALERI (jika belum ada di localStorage) ---
+const defaultGallery = [
+    { src: 'd-klinic.png', title: 'D-Klinic' },
+    { src: 'gereja.png', title: 'Sistem Gereja' },
+    { src: 'skin.png', title: 'Skin Care System' },
+    { src: 'nusa-agro.png', title: 'Nusa Agro' },
+    { src: 'rapopang.png', title: 'Rapopang' },
+    { src: 'haven-cafe.png', title: 'Haven Cafe' },
+    { src: 'de-wave.png', title: 'De Wave' }
+];
+
+// --- FUNGSI UNTUK AKSES GALERI ---
+function getGallery() {
+    const stored = localStorage.getItem(STORAGE_GALLERY);
+    if (stored) {
+        try {
+            return JSON.parse(stored);
+        } catch(e) { return defaultGallery; }
+    } else {
+        // set default
+        localStorage.setItem(STORAGE_GALLERY, JSON.stringify(defaultGallery));
+        return defaultGallery;
+    }
+}
+
+// --- MEMBANGUN SLIDE SWIPER DARI DATA GALERI ---
+function buildSwiperSlides() {
+    const gallery = getGallery();
+    const wrapper = document.querySelector('.ipad-mockup .swiper-wrapper');
+    if (!wrapper) return;
+    wrapper.innerHTML = '';
+    gallery.forEach(item => {
+        const slide = document.createElement('div');
+        slide.className = 'swiper-slide';
+        // Buat elemen img + fallback
+        const img = document.createElement('img');
+        img.src = item.src;
+        img.alt = item.title;
+        img.className = 'w-full h-full object-cover';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const fb = this.parentElement.querySelector('.fallback-card');
+            if (fb) fb.style.display = 'flex';
+        };
+        const fallbackDiv = document.createElement('div');
+        fallbackDiv.className = 'fallback-card';
+        fallbackDiv.innerHTML = `<div class="text-center p-4"><i class="fas fa-image text-5xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold">${escapeHtml(item.title)}</h3><p class="text-xs mt-1">Portofolio</p></div>`;
+        slide.appendChild(img);
+        slide.appendChild(fallbackDiv);
+        wrapper.appendChild(slide);
+    });
+}
+
+// Helper untuk escape HTML
+function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+    });
+}
+
+// --- MENYIMPAN RATING KE LOCALSTORAGE ---
+function saveRatingToStorage(rating, message = '') {
+    let ratings = [];
+    const stored = localStorage.getItem(STORAGE_RATINGS);
+    if (stored) {
+        try {
+            ratings = JSON.parse(stored);
+        } catch(e) { ratings = []; }
+    }
+    ratings.push({
+        date: new Date().toLocaleString(),
+        rating: rating,
+        message: message || 'Rating dari pengunjung'
+    });
+    localStorage.setItem(STORAGE_RATINGS, JSON.stringify(ratings));
+}
+
 // Helper functions
 function showNotification(message, isError = false) {
     const toast = document.getElementById('success-toast');
@@ -631,8 +710,11 @@ function setFooterRating(rating) {
     });
     document.getElementById('rating-status').innerText = `Anda memilih ${rating} dari 5 bintang. Klik 'Kirim Rating' untuk mengirim.`;
 }
+
 function submitRating() {
     if (currentRating === 0) return showNotification("Silakan pilih bintang terlebih dahulu!", true);
+    // Simpan ke localStorage
+    saveRatingToStorage(currentRating, 'Rating dari website');
     showNotification(`Terima kasih atas rating ${currentRating} bintang Anda! Dukungan Anda sangat berarti bagi kami.`);
     setTimeout(() => {
         document.querySelectorAll('.footer-rating-star').forEach(star => { star.style.color = '#d1d5db'; star.classList.remove('filled'); });
@@ -718,6 +800,8 @@ function showLoadingScreen() {
 }
 
 function initMainContent() {
+    // Bangun slider dari galeri yang tersimpan di localStorage
+    buildSwiperSlides();
     if (typeof Swiper !== 'undefined') {
         new Swiper(".ipad-mockup .mySwiper", {
             loop: true, autoplay: { delay: 3000, disableOnInteraction: false },
