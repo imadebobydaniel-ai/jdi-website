@@ -155,7 +155,7 @@
         background: #ff8c00;
     }
 
-    /* LOADING SCREEN - UPDATED */
+    /* LOADING SCREEN */
     #loading-screen {
         position: fixed;
         inset: 0;
@@ -194,7 +194,7 @@
         }
     }
 
-    /* Loading bar lebih besar */
+    /* Loading bar */
     .loader-bar-container {
         width: 320px;
         max-width: 80vw;
@@ -214,7 +214,7 @@
         border-radius: 20px;
     }
 
-    /* Teks selamat datang lebih besar */
+    /* Teks selamat datang */
     .welcome-text {
         color: white;
         opacity: 0;
@@ -760,24 +760,66 @@
 
 <script>
 // ============================================
-// LOADING & INIT
+// CEK APAKAH DARI REFRESH ATAU NAVIGASI INTERNAL
+// ============================================
+
+// Cek apakah halaman di-reload (bukan navigasi dari halaman lain)
+// Menggunakan performance.navigation (cara lama) atau performance.getEntriesByType
+let isPageRefresh = false;
+
+// Deteksi refresh
+if (performance.navigation && performance.navigation.type === 1) {
+    // Navigation type 1 = refresh/reload
+    isPageRefresh = true;
+} else if (performance.getEntriesByType && performance.getEntriesByType("navigation").length > 0) {
+    const navType = performance.getEntriesByType("navigation")[0].type;
+    if (navType === "reload") {
+        isPageRefresh = true;
+    }
+}
+
+// Cek apakah ada sessionStorage flag dari halaman sebelumnya
+const fromInternalNav = sessionStorage.getItem('jdi_internal_nav') === 'true';
+
+// Set flag untuk navigasi saat ini ke halaman lain (untuk digunakan di halaman tujuan)
+// Ini akan dipakai ketika user klik link ke halaman lain
+document.querySelectorAll('a[href]').forEach(link => {
+    link.addEventListener('click', function() {
+        // Set flag bahwa ini navigasi internal
+        sessionStorage.setItem('jdi_internal_nav', 'true');
+    });
+});
+
+// JANGAN tampilkan loading screen JIKA:
+// 1. Ini adalah navigasi internal (dari halaman lain dalam site yang sama) ATAU
+// 2. Ini BUKAN refresh (bisa jadi pertama kali buka dari luar)
+// TAPI jika refresh, TAMPILKAN loading screen
+
+const shouldShowLoading = isPageRefresh;
+
+// ============================================
+// LOADING SCREEN HANDLER
 // ============================================
 let currentRating = 0;
 
-// Cek apakah halaman ini diakses dari halaman lain (tidak perlu loading screen)
-// Jika URL memiliki parameter ?skipIntro atau dari navigasi internal, langsung tampilkan konten
-const urlParams = new URLSearchParams(window.location.search);
-const skipIntro = urlParams.get('skipIntro') === 'true' || document.referrer.includes(window.location.hostname);
-
-if (skipIntro) {
-    // Langsung tampilkan konten tanpa loading screen
+if (!shouldShowLoading && fromInternalNav) {
+    // Navigasi dari dalam site (klik Beranda dari Layanan Kami) - LANGSUNG TAMPIL
     document.getElementById('loading-screen').style.display = 'none';
     const main = document.getElementById('main-content');
     main.style.display = 'block';
     main.style.opacity = '1';
     initMainContent();
+    // Reset flag setelah digunakan
+    sessionStorage.removeItem('jdi_internal_nav');
+} else if (!shouldShowLoading && !fromInternalNav) {
+    // Pertama kali buka website (bukan refresh) - TAMPILKAN LOADING SCREEN
+    showLoadingScreen();
 } else {
-    // Tampilkan loading screen seperti biasa
+    // Refresh browser - TAMPILKAN LOADING SCREEN
+    showLoadingScreen();
+}
+
+function showLoadingScreen() {
     window.addEventListener('load', () => {
         const screen = document.getElementById('loading-screen');
         const main = document.getElementById('main-content');
@@ -881,6 +923,7 @@ function toggleProjectModal() {
 }
 
 function toggleAdminPanel() {
+    sessionStorage.setItem('jdi_internal_nav', 'true');
     window.location.href = 'admin.html';
 }
 
