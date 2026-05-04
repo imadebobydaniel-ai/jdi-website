@@ -155,10 +155,11 @@
         background: #ff8c00;
     }
 
+    /* LOADING SCREEN - UPDATED */
     #loading-screen {
         position: fixed;
         inset: 0;
-        background: #0a1d37;
+        background: linear-gradient(135deg, #0a1d37 0%, #061225 100%);
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -167,36 +168,74 @@
         transition: opacity 1s ease;
     }
 
+    /* Efek cahaya di belakang logo */
     .loader-logo {
-        width: 280px;
+        width: 380px;
+        max-width: 85vw;
         height: auto;
-        margin-bottom: 30px;
+        margin-bottom: 40px;
+        border-radius: 30px;
+        position: relative;
+        animation: glowPulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes glowPulse {
+        0% {
+            filter: drop-shadow(0 0 5px rgba(255, 140, 0, 0.3)) drop-shadow(0 0 10px rgba(255, 140, 0, 0.2));
+            transform: scale(1);
+        }
+        50% {
+            filter: drop-shadow(0 0 25px rgba(255, 140, 0, 0.6)) drop-shadow(0 0 40px rgba(255, 140, 0, 0.3));
+            transform: scale(1.02);
+        }
+        100% {
+            filter: drop-shadow(0 0 5px rgba(255, 140, 0, 0.3)) drop-shadow(0 0 10px rgba(255, 140, 0, 0.2));
+            transform: scale(1);
+        }
+    }
+
+    /* Loading bar lebih besar */
+    .loader-bar-container {
+        width: 320px;
+        max-width: 80vw;
+        height: 8px;
+        background: rgba(255,255,255,0.15);
         border-radius: 20px;
-        box-shadow: 0 0 20px rgba(255, 140, 0, 0.3);
+        overflow: hidden;
+        margin-bottom: 30px;
+        box-shadow: 0 0 10px rgba(255, 140, 0, 0.3);
     }
 
     .loader-fill {
         width: 0%;
         height: 100%;
-        background: #ff8c00;
+        background: linear-gradient(90deg, #ff8c00, #ffaa33);
         transition: width 5s linear;
-    }
-
-    .loader-bar-container {
-        width: 260px;
-        height: 6px;
-        background: rgba(255,255,255,0.1);
         border-radius: 20px;
-        overflow: hidden;
-        margin-bottom: 20px;
     }
 
+    /* Teks selamat datang lebih besar */
     .welcome-text {
         color: white;
         opacity: 0;
         transform: translateY(10px);
         transition: all 1s ease 0.5s;
         text-align: center;
+        font-size: 1.5rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        text-shadow: 0 0 10px rgba(255, 140, 0, 0.5);
+    }
+
+    @media (min-width: 768px) {
+        .welcome-text {
+            font-size: 2rem;
+            letter-spacing: 4px;
+        }
+        .loader-bar-container {
+            width: 400px;
+            height: 8px;
+        }
     }
 
     #main-content { 
@@ -304,9 +343,9 @@
 <div id="loading-screen">
     <img src="logo-jdi.png" alt="Logo JDI" class="loader-logo" onerror="this.style.display='none'; this.nextSibling.style.display='block'">
     <div style="display: none;" class="text-white text-center mb-8">
-        <i class="fas fa-chart-line text-6xl text-accent-orange mb-4"></i>
-        <p class="font-bold text-xl">JAYA DIGITAL INTEGRATE</p>
-        <p class="text-sm">Loading...</p>
+        <i class="fas fa-chart-line text-7xl text-accent-orange mb-4"></i>
+        <p class="font-bold text-2xl">JAYA DIGITAL INTEGRATE</p>
+        <p class="text-base">Loading...</p>
     </div>
     <div class="loader-bar-container">
         <div id="loader-fill" class="loader-fill"></div>
@@ -725,36 +764,51 @@
 // ============================================
 let currentRating = 0;
 
-window.addEventListener('load', () => {
-    const screen = document.getElementById('loading-screen');
+// Cek apakah halaman ini diakses dari halaman lain (tidak perlu loading screen)
+// Jika URL memiliki parameter ?skipIntro atau dari navigasi internal, langsung tampilkan konten
+const urlParams = new URLSearchParams(window.location.search);
+const skipIntro = urlParams.get('skipIntro') === 'true' || document.referrer.includes(window.location.hostname);
+
+if (skipIntro) {
+    // Langsung tampilkan konten tanpa loading screen
+    document.getElementById('loading-screen').style.display = 'none';
     const main = document.getElementById('main-content');
-    const fill = document.getElementById('loader-fill');
-    const welcomeTxt = document.getElementById('welcome-msg');
+    main.style.display = 'block';
+    main.style.opacity = '1';
+    initMainContent();
+} else {
+    // Tampilkan loading screen seperti biasa
+    window.addEventListener('load', () => {
+        const screen = document.getElementById('loading-screen');
+        const main = document.getElementById('main-content');
+        const fill = document.getElementById('loader-fill');
+        const welcomeTxt = document.getElementById('welcome-msg');
 
-    if (fill) fill.style.width = '100%';
+        if (fill) fill.style.width = '100%';
 
-    if (welcomeTxt) {
-        setTimeout(() => {
-            welcomeTxt.style.opacity = '1';
-            welcomeTxt.style.transform = 'translateY(0)';
-        }, 500);
-    }
-
-    setTimeout(() => {
-        if (screen) {
-            screen.style.opacity = '0';
+        if (welcomeTxt) {
             setTimeout(() => {
-                screen.style.display = 'none';
-                if (main) {
-                    main.style.display = 'block';
-                    main.offsetHeight;
-                    main.style.opacity = '1';
-                }
-                initMainContent();
-            }, 1000);
+                welcomeTxt.style.opacity = '1';
+                welcomeTxt.style.transform = 'translateY(0)';
+            }, 500);
         }
-    }, 5000);
-});
+
+        setTimeout(() => {
+            if (screen) {
+                screen.style.opacity = '0';
+                setTimeout(() => {
+                    screen.style.display = 'none';
+                    if (main) {
+                        main.style.display = 'block';
+                        main.offsetHeight;
+                        main.style.opacity = '1';
+                    }
+                    initMainContent();
+                }, 1000);
+            }
+        }, 5000);
+    });
+}
 
 function initMainContent() {
     console.log("Inisialisasi konten utama dimulai...");
@@ -827,7 +881,6 @@ function toggleProjectModal() {
 }
 
 function toggleAdminPanel() {
-    // Dialihkan ke admin.html
     window.location.href = 'admin.html';
 }
 
