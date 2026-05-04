@@ -306,8 +306,8 @@
         border-radius: 10px;
     }
 
-    /* Admin Modal Styles - DIPERBAIKI TOTAL */
-    .admin-modal {
+    /* Admin Modal Styles */
+    .admin-modal-overlay {
         display: none;
         position: fixed;
         top: 0;
@@ -319,30 +319,21 @@
         align-items: center;
         justify-content: center;
     }
-
-    .admin-modal.show {
+    .admin-modal-overlay.show {
         display: flex;
     }
-
     .admin-modal-content {
         background: white;
         width: 90%;
         max-width: 400px;
         border-radius: 1.5rem;
         padding: 2rem;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        animation: modalSlideIn 0.3s ease;
+        box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+        animation: fadeInScale 0.3s ease;
     }
-
-    @keyframes modalSlideIn {
-        from {
-            opacity: 0;
-            transform: translateY(-30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    @keyframes fadeInScale {
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
     }
 
     @media (min-width: 768px) {
@@ -410,8 +401,8 @@
                 <a href="https://wa.me/6281283393576" target="_blank" class="hidden sm:block bg-accent-orange text-white px-5 py-2 rounded-full font-semibold hover:bg-orange-600 transition shadow-lg text-sm">
                     <i class="fab fa-whatsapp mr-2"></i> Konsultasi Gratis
                 </a>
-                <button onclick="openAdminModal()" class="text-xs font-bold text-navy-dark/40 hover:text-accent-orange border-l pl-4 hidden md:block uppercase tracking-wider">Login Admin</button>
-                <div class="md:hidden text-navy-dark cursor-pointer" onclick="toggleMobileMenu()">
+                <button id="loginAdminBtn" class="text-xs font-bold text-navy-dark/40 hover:text-accent-orange border-l pl-4 hidden md:block uppercase tracking-wider">Login Admin</button>
+                <div class="md:hidden text-navy-dark cursor-pointer" id="mobileMenuBtn">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                     </svg>
@@ -423,11 +414,11 @@
             <a href="index.html" class="block font-medium text-gray-700">Beranda</a>
             <a href="layanan-kami.html" class="block font-medium text-gray-700">Layanan Kami</a>
             <a href="#kontak" class="block font-medium text-gray-700">Kontak</a>
-            <button onclick="openAdminModal()" class="block text-xs font-bold uppercase text-navy-dark/60">Login Admin</button>
+            <button id="mobileLoginAdminBtn" class="block text-xs font-bold uppercase text-navy-dark/60">Login Admin</button>
         </div>
     </nav>
 
-    <!-- Hero Section dengan background jembatan-merah.jpg -->
+    <!-- Hero Section -->
     <header class="hero-section px-4 md:px-10" id="home">
         <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 w-full relative z-10 py-16 lg:py-20">
             <div class="w-full lg:w-5/12 text-center lg:text-left lg:pr-10">
@@ -438,7 +429,7 @@
                     Kami menghadirkan solusi teknologi mutakhir untuk kebutuhan administrasi, database, dan sistem informasi manajemen di Jayapura dan sekitarnya.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                    <button onclick="toggleProjectModal()" class="bg-accent-orange px-8 py-3 rounded-md font-bold text-white shadow-lg hover:bg-orange-600 transition">Mulai Proyek</button>
+                    <button id="mulaiProyekBtn" class="bg-accent-orange px-8 py-3 rounded-md font-bold text-white shadow-lg hover:bg-orange-600 transition">Mulai Proyek</button>
                     <a href="layanan-kami.html" class="border-2 border-white px-8 py-3 rounded-md font-bold text-white hover:bg-white/10 transition">Layanan Kami</a>
                 </div>
             </div>
@@ -449,76 +440,13 @@
                     <div class="ipad-screen">
                         <div class="swiper mySwiper w-full h-full">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <img src="d-klinic.png" alt="D-Klinic" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
-                                    <div class="fallback-card">
-                                        <div class="text-center p-4">
-                                            <i class="fas fa-clinic-medical text-5xl text-accent-orange mb-3"></i>
-                                            <h3 class="text-lg font-bold">D-Klinic</h3>
-                                            <p class="text-xs mt-1">Sistem Manajemen Klinik</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="gereja.png" alt="Gereja" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
-                                    <div class="fallback-card">
-                                        <div class="text-center p-4">
-                                            <i class="fas fa-church text-5xl text-accent-orange mb-3"></i>
-                                            <h3 class="text-lg font-bold">Sistem Gereja</h3>
-                                            <p class="text-xs mt-1">Manajemen Jemaat Digital</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="skin.png" alt="Skin Care" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
-                                    <div class="fallback-card">
-                                        <div class="text-center p-4">
-                                            <i class="fas fa-spa text-5xl text-accent-orange mb-3"></i>
-                                            <h3 class="text-lg font-bold">Skin Care System</h3>
-                                            <p class="text-xs mt-1">Manajemen Klinik Kecantikan</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="nusa-agro.png" alt="Nusa Agro" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
-                                    <div class="fallback-card">
-                                        <div class="text-center p-4">
-                                            <i class="fas fa-seedling text-5xl text-accent-orange mb-3"></i>
-                                            <h3 class="text-lg font-bold">Nusa Agro</h3>
-                                            <p class="text-xs mt-1">Sistem Manajemen Pertanian</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="rapopang.png" alt="Rapopang" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
-                                    <div class="fallback-card">
-                                        <div class="text-center p-4">
-                                            <i class="fas fa-utensils text-5xl text-accent-orange mb-3"></i>
-                                            <h3 class="text-lg font-bold">Rapopang</h3>
-                                            <p class="text-xs mt-1">Sistem Restoran</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="haven-cafe.png" alt="Haven Cafe" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
-                                    <div class="fallback-card">
-                                        <div class="text-center p-4">
-                                            <i class="fas fa-mug-hot text-5xl text-accent-orange mb-3"></i>
-                                            <h3 class="text-lg font-bold">Haven Cafe</h3>
-                                            <p class="text-xs mt-1">Sistem Kafe Digital</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="de-wave.png" alt="De Wave" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
-                                    <div class="fallback-card">
-                                        <div class="text-center p-4">
-                                            <i class="fas fa-water text-5xl text-accent-orange mb-3"></i>
-                                            <h3 class="text-lg font-bold">De Wave</h3>
-                                            <p class="text-xs mt-1">Sistem Manajemen Waterpark</p>
-                                        </div>
-                                    </div>
-                                </div>
+                                <div class="swiper-slide"><img src="d-klinic.png" alt="D-Klinic" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'"><div class="fallback-card"><div class="text-center p-4"><i class="fas fa-clinic-medical text-5xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold">D-Klinic</h3><p class="text-xs mt-1">Sistem Manajemen Klinik</p></div></div></div>
+                                <div class="swiper-slide"><img src="gereja.png" alt="Gereja" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'"><div class="fallback-card"><div class="text-center p-4"><i class="fas fa-church text-5xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold">Sistem Gereja</h3><p class="text-xs mt-1">Manajemen Jemaat Digital</p></div></div></div>
+                                <div class="swiper-slide"><img src="skin.png" alt="Skin Care" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'"><div class="fallback-card"><div class="text-center p-4"><i class="fas fa-spa text-5xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold">Skin Care System</h3><p class="text-xs mt-1">Manajemen Klinik Kecantikan</p></div></div></div>
+                                <div class="swiper-slide"><img src="nusa-agro.png" alt="Nusa Agro" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'"><div class="fallback-card"><div class="text-center p-4"><i class="fas fa-seedling text-5xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold">Nusa Agro</h3><p class="text-xs mt-1">Sistem Manajemen Pertanian</p></div></div></div>
+                                <div class="swiper-slide"><img src="rapopang.png" alt="Rapopang" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'"><div class="fallback-card"><div class="text-center p-4"><i class="fas fa-utensils text-5xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold">Rapopang</h3><p class="text-xs mt-1">Sistem Restoran</p></div></div></div>
+                                <div class="swiper-slide"><img src="haven-cafe.png" alt="Haven Cafe" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'"><div class="fallback-card"><div class="text-center p-4"><i class="fas fa-mug-hot text-5xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold">Haven Cafe</h3><p class="text-xs mt-1">Sistem Kafe Digital</p></div></div></div>
+                                <div class="swiper-slide"><img src="de-wave.png" alt="De Wave" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'"><div class="fallback-card"><div class="text-center p-4"><i class="fas fa-water text-5xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold">De Wave</h3><p class="text-xs mt-1">Sistem Manajemen Waterpark</p></div></div></div>
                             </div>
                             <div class="swiper-pagination"></div>
                             <div class="swiper-button-next"></div>
@@ -532,408 +460,247 @@
         </div>
     </header>
 
-    <!-- Layanan Section -->
     <section id="layanan" class="py-16 md:py-24 max-w-7xl mx-auto px-6">
         <div class="text-center mb-16">
             <h2 class="text-3xl md:text-4xl font-bold text-navy-dark mb-4">Fitur Website</h2>
             <p class="text-gray-500 max-w-2xl mx-auto text-sm md:text-base">Kami menyediakan berbagai fitur canggih untuk mendukung kebutuhan digital Anda.</p>
         </div>
-        
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            <div class="feature-card bg-white p-6 rounded-2xl shadow-sm">
-                <div class="w-12 h-12 bg-orange-100 text-accent-orange rounded-xl flex items-center justify-center mb-4"><i class="fas fa-mobile-alt text-xl"></i></div>
-                <h3 class="text-lg font-bold mb-2 text-navy-dark">Responsive Design</h3>
-                <p class="text-gray-600 text-sm">Terapkan model 5.0 untuk desain yang lebih modern dan responsif di semua perangkat.</p>
-            </div>
-            <div class="feature-card bg-white p-6 rounded-2xl shadow-sm">
-                <div class="w-12 h-12 bg-blue-100 text-navy-dark rounded-xl flex items-center justify-center mb-4"><i class="fas fa-shield-alt text-xl"></i></div>
-                <h3 class="text-lg font-bold mb-2 text-navy-dark">Keamanan Data</h3>
-                <p class="text-gray-600 text-sm">Keamanan data yang lebih baik dengan enkripsi tingkat lanjut.</p>
-            </div>
-            <div class="feature-card bg-white p-6 rounded-2xl shadow-sm">
-                <div class="w-12 h-12 bg-orange-100 text-accent-orange rounded-xl flex items-center justify-center mb-4"><i class="fab fa-google text-xl"></i></div>
-                <h3 class="text-lg font-bold mb-2 text-navy-dark">SEO Friendly</h3>
-                <p class="text-gray-600 text-sm">Web design yang mudah diarahkan oleh search engine (Google).</p>
-            </div>
-            <div class="feature-card bg-white p-6 rounded-2xl shadow-sm">
-                <div class="w-12 h-12 bg-blue-100 text-navy-dark rounded-xl flex items-center justify-center mb-4"><i class="fas fa-download text-xl"></i></div>
-                <h3 class="text-lg font-bold mb-2 text-navy-dark">CMS Download Management</h3>
-                <p class="text-gray-600 text-sm">Melakukan penambahan web dengan cepat dan mudah.</p>
-            </div>
-            <div class="feature-card bg-white p-6 rounded-2xl shadow-sm">
-                <div class="w-12 h-12 bg-orange-100 text-accent-orange rounded-xl flex items-center justify-center mb-4"><i class="fas fa-plug text-xl"></i></div>
-                <h3 class="text-lg font-bold mb-2 text-navy-dark">Integrasi Multi-Speed</h3>
-                <p class="text-gray-600 text-sm">Chat berfungsi dengan perangkat lunak secara real-time.</p>
-            </div>
-            <div class="feature-card bg-white p-6 rounded-2xl shadow-sm">
-                <div class="w-12 h-12 bg-blue-100 text-navy-dark rounded-xl flex items-center justify-center mb-4"><i class="fas fa-store text-xl"></i></div>
-                <h3 class="text-lg font-bold mb-2 text-navy-dark">Galeri Produk & Kategori</h3>
-                <p class="text-gray-600 text-sm">Produk berkualitas tinggi, memiliki nilai asli dan fitur canggih.</p>
-            </div>
+            <div class="feature-card bg-white p-6 rounded-2xl shadow-sm"><div class="w-12 h-12 bg-orange-100 text-accent-orange rounded-xl flex items-center justify-center mb-4"><i class="fas fa-mobile-alt text-xl"></i></div><h3 class="text-lg font-bold mb-2 text-navy-dark">Responsive Design</h3><p class="text-gray-600 text-sm">Terapkan model 5.0 untuk desain yang lebih modern dan responsif di semua perangkat.</p></div>
+            <div class="feature-card bg-white p-6 rounded-2xl shadow-sm"><div class="w-12 h-12 bg-blue-100 text-navy-dark rounded-xl flex items-center justify-center mb-4"><i class="fas fa-shield-alt text-xl"></i></div><h3 class="text-lg font-bold mb-2 text-navy-dark">Keamanan Data</h3><p class="text-gray-600 text-sm">Keamanan data yang lebih baik dengan enkripsi tingkat lanjut.</p></div>
+            <div class="feature-card bg-white p-6 rounded-2xl shadow-sm"><div class="w-12 h-12 bg-orange-100 text-accent-orange rounded-xl flex items-center justify-center mb-4"><i class="fab fa-google text-xl"></i></div><h3 class="text-lg font-bold mb-2 text-navy-dark">SEO Friendly</h3><p class="text-gray-600 text-sm">Web design yang mudah diarahkan oleh search engine (Google).</p></div>
+            <div class="feature-card bg-white p-6 rounded-2xl shadow-sm"><div class="w-12 h-12 bg-blue-100 text-navy-dark rounded-xl flex items-center justify-center mb-4"><i class="fas fa-download text-xl"></i></div><h3 class="text-lg font-bold mb-2 text-navy-dark">CMS Download Management</h3><p class="text-gray-600 text-sm">Melakukan penambahan web dengan cepat dan mudah.</p></div>
+            <div class="feature-card bg-white p-6 rounded-2xl shadow-sm"><div class="w-12 h-12 bg-orange-100 text-accent-orange rounded-xl flex items-center justify-center mb-4"><i class="fas fa-plug text-xl"></i></div><h3 class="text-lg font-bold mb-2 text-navy-dark">Integrasi Multi-Speed</h3><p class="text-gray-600 text-sm">Chat berfungsi dengan perangkat lunak secara real-time.</p></div>
+            <div class="feature-card bg-white p-6 rounded-2xl shadow-sm"><div class="w-12 h-12 bg-blue-100 text-navy-dark rounded-xl flex items-center justify-center mb-4"><i class="fas fa-store text-xl"></i></div><h3 class="text-lg font-bold mb-2 text-navy-dark">Galeri Produk & Kategori</h3><p class="text-gray-600 text-sm">Produk berkualitas tinggi, memiliki nilai asli dan fitur canggih.</p></div>
         </div>
     </section>
 
-    <!-- Sistem Manajemen Toko Section -->
     <section class="py-16 bg-gray-100">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-navy-dark mb-4">Sistem Manajemen Toko</h2>
-                <p class="text-gray-500 max-w-2xl mx-auto text-sm md:text-base">Kelola bisnis Anda dengan sistem terintegrasi yang mudah digunakan.</p>
-            </div>
-            
+            <div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-bold text-navy-dark mb-4">Sistem Manajemen Toko</h2><p class="text-gray-500 max-w-2xl mx-auto text-sm md:text-base">Kelola bisnis Anda dengan sistem terintegrasi yang mudah digunakan.</p></div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-white p-6 rounded-2xl shadow-sm">
-                    <i class="fas fa-box text-3xl text-accent-orange mb-3"></i>
-                    <h3 class="text-lg font-bold mb-2 text-navy-dark">Manajemen Produk</h3>
-                    <p class="text-gray-600 text-sm">Berbasis data produk, rencana, kriteria, dan strategi.</p>
-                </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm">
-                    <i class="fas fa-chart-line text-3xl text-accent-orange mb-3"></i>
-                    <h3 class="text-lg font-bold mb-2 text-navy-dark">Manajemen Stok Real-time</h3>
-                    <p class="text-gray-600 text-sm">Perlu terukur, informasi dan akuntansi yang akurat.</p>
-                </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm">
-                    <i class="fas fa-shopping-cart text-3xl text-accent-orange mb-3"></i>
-                    <h3 class="text-lg font-bold mb-2 text-navy-dark">Transaksi Penjualan</h3>
-                    <p class="text-gray-600 text-sm">Cepat, mudah dan terintegrasi dengan sistem.</p>
-                </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm">
-                    <i class="fas fa-users text-3xl text-accent-orange mb-3"></i>
-                    <h3 class="text-lg font-bold mb-2 text-navy-dark">Manajemen Pelanggan</h3>
-                    <p class="text-gray-600 text-sm">Dapat melengkapi transaksi pelanggan dengan mudah.</p>
-                </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm">
-                    <i class="fas fa-chart-pie text-3xl text-accent-orange mb-3"></i>
-                    <h3 class="text-lg font-bold mb-2 text-navy-dark">Laporan Manajemen</h3>
-                    <p class="text-gray-600 text-sm">Laporan harta, migrasi, dan keuangan yang terintegrasi.</p>
-                </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm">
-                    <i class="fas fa-user-friends text-3xl text-accent-orange mb-3"></i>
-                    <h3 class="text-lg font-bold mb-2 text-navy-dark">Multi User</h3>
-                    <p class="text-gray-600 text-sm">Aplikasi dapat digunakan secara fleksibel oleh banyak pengguna.</p>
-                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm"><i class="fas fa-box text-3xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold mb-2 text-navy-dark">Manajemen Produk</h3><p class="text-gray-600 text-sm">Berbasis data produk, rencana, kriteria, dan strategi.</p></div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm"><i class="fas fa-chart-line text-3xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold mb-2 text-navy-dark">Manajemen Stok Real-time</h3><p class="text-gray-600 text-sm">Perlu terukur, informasi dan akuntansi yang akurat.</p></div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm"><i class="fas fa-shopping-cart text-3xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold mb-2 text-navy-dark">Transaksi Penjualan</h3><p class="text-gray-600 text-sm">Cepat, mudah dan terintegrasi dengan sistem.</p></div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm"><i class="fas fa-users text-3xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold mb-2 text-navy-dark">Manajemen Pelanggan</h3><p class="text-gray-600 text-sm">Dapat melengkapi transaksi pelanggan dengan mudah.</p></div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm"><i class="fas fa-chart-pie text-3xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold mb-2 text-navy-dark">Laporan Manajemen</h3><p class="text-gray-600 text-sm">Laporan harta, migrasi, dan keuangan yang terintegrasi.</p></div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm"><i class="fas fa-user-friends text-3xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold mb-2 text-navy-dark">Multi User</h3><p class="text-gray-600 text-sm">Aplikasi dapat digunakan secara fleksibel oleh banyak pengguna.</p></div>
             </div>
         </div>
     </section>
 
-    <!-- Profile Section -->
     <section id="profile" class="py-16 bg-white">
         <div class="max-w-7xl mx-auto px-6 text-center">
             <h2 class="text-3xl md:text-4xl font-bold text-navy-dark mb-4">Profil Perusahaan</h2>
-            <p class="text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                Jaya Digital Integrate adalah perusahaan teknologi yang berfokus pada pengembangan solusi digital terintegrasi. 
-                Berdiri sejak 2020, kami telah membantu berbagai bisnis di tanah Papua untuk bertransformasi menuju era digital.
-            </p>
+            <p class="text-gray-600 max-w-3xl mx-auto leading-relaxed">Jaya Digital Integrate adalah perusahaan teknologi yang berfokus pada pengembangan solusi digital terintegrasi. Berdiri sejak 2020, kami telah membantu berbagai bisnis di tanah Papua untuk bertransformasi menuju era digital.</p>
         </div>
     </section>
 
     <!-- Project Modal -->
     <div id="project-modal" class="fixed inset-0 bg-navy-dark/90 z-[10002] hidden flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl my-auto">
-            <div class="p-6 border-b flex justify-between items-center bg-gray-50 rounded-t-2xl">
-                <h3 class="text-2xl font-bold text-navy-dark">Konsultasi Proyek Baru</h3>
-                <button onclick="toggleProjectModal()" class="text-gray-400 hover:text-red-500 text-2xl">&times;</button>
-            </div>
-
+            <div class="p-6 border-b flex justify-between items-center bg-gray-50 rounded-t-2xl"><h3 class="text-2xl font-bold text-navy-dark">Konsultasi Proyek Baru</h3><button onclick="toggleProjectModal()" class="text-gray-400 hover:text-red-500 text-2xl">&times;</button></div>
             <form id="proyekForm" class="p-6 space-y-4" onsubmit="return false;">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Nama Lengkap *</label>
-                        <input type="text" name="nama_lengkap" id="nama_lengkap" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="Contoh: John Doe">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Nomor HP / WA *</label>
-                        <input type="tel" name="nomor_hp" id="nomor_hp" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="0812...">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Email *</label>
-                        <input type="email" name="email" id="email" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="nama@email.com">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Alamat *</label>
-                        <input type="text" name="alamat" id="alamat" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="Kota Jayapura...">
-                    </div>
+                    <div><label class="block text-xs font-bold uppercase text-gray-500 mb-1">Nama Lengkap *</label><input type="text" id="nama_lengkap" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none"></div>
+                    <div><label class="block text-xs font-bold uppercase text-gray-500 mb-1">Nomor HP / WA *</label><input type="tel" id="nomor_hp" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none"></div>
+                    <div><label class="block text-xs font-bold uppercase text-gray-500 mb-1">Email *</label><input type="email" id="email" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none"></div>
+                    <div><label class="block text-xs font-bold uppercase text-gray-500 mb-1">Alamat *</label><input type="text" id="alamat" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none"></div>
                 </div>
-
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Jenis Usaha</label>
-                        <select name="jenis_usaha" id="jenis_usaha" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none bg-white">
-                            <option>UMKM</option>
-                            <option>Usaha Mandiri</option>
-                            <option>Usaha Sedang</option>
-                            <option>Usaha Skala Besar</option>
-                            <option>BUMN</option>
-                            <option>Pemerintahan</option>
-                            <option>Pendidikan</option>
-                            <option>Yayasan</option>
-                            <option>NGO / LSM</option>
-                            <option>Lainnya</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Pilih Layanan</label>
-                        <select name="pilih_layanan" id="pilih_layanan" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none bg-white">
-                            <option>Website</option>
-                            <option>Aplikasi Android</option>
-                            <option>Sistem Manajemen</option>
-                            <option>POS (Point of Sales)</option>
-                            <option>Absen Online</option>
-                            <option>Digital Signage</option>
-                            <option>Warehouse System</option>
-                            <option>Tracking System</option>
-                        </select>
-                    </div>
+                    <div><label class="block text-xs font-bold uppercase text-gray-500 mb-1">Jenis Usaha</label><select id="jenis_usaha" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none bg-white"><option>UMKM</option><option>Usaha Mandiri</option><option>Usaha Sedang</option><option>Usaha Skala Besar</option><option>BUMN</option><option>Pemerintahan</option><option>Pendidikan</option><option>Yayasan</option><option>NGO / LSM</option><option>Lainnya</option></select></div>
+                    <div><label class="block text-xs font-bold uppercase text-gray-500 mb-1">Pilih Layanan</label><select id="pilih_layanan" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none bg-white"><option>Website</option><option>Aplikasi Android</option><option>Sistem Manajemen</option><option>POS</option><option>Absen Online</option><option>Digital Signage</option><option>Warehouse System</option><option>Tracking System</option></select></div>
                 </div>
-
-                <div>
-                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Jelaskan Singkat Usaha Anda</label>
-                    <input type="text" name="deskripsi_usaha" id="deskripsi_usaha" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="Bidang usaha anda...">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Detail Tujuan Proyek</label>
-                    <textarea name="tujuan_proyek" id="tujuan_proyek" rows="3" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none" placeholder="Apa yang ingin anda capai dengan sistem ini?"></textarea>
-                </div>
-
-                <div class="flex gap-3 pt-4">
-                    <button type="button" onclick="kirimProyek()" class="flex-1 bg-accent-orange text-white py-3 rounded-lg font-bold hover:bg-orange-600 transition shadow-lg">KIRIM PERMINTAAN</button>
-                    <button type="button" onclick="toggleProjectModal()" class="flex-1 bg-gray-200 text-gray-700 py-3 rounded-lg font-bold hover:bg-gray-300 transition">BATAL</button>
-                </div>
+                <div><label class="block text-xs font-bold uppercase text-gray-500 mb-1">Jelaskan Singkat Usaha Anda</label><input type="text" id="deskripsi_usaha" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none"></div>
+                <div><label class="block text-xs font-bold uppercase text-gray-500 mb-1">Detail Tujuan Proyek</label><textarea id="tujuan_proyek" rows="3" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none"></textarea></div>
+                <div class="flex gap-3 pt-4"><button type="button" onclick="kirimProyek()" class="flex-1 bg-accent-orange text-white py-3 rounded-lg font-bold hover:bg-orange-600 transition">KIRIM PERMINTAAN</button><button type="button" onclick="toggleProjectModal()" class="flex-1 bg-gray-200 text-gray-700 py-3 rounded-lg font-bold hover:bg-gray-300 transition">BATAL</button></div>
             </form>
         </div>
     </div>
 
     <!-- Toast Notification -->
     <div id="success-toast" class="fixed top-10 left-1/2 -translate-x-1/2 z-[10003] hidden">
-        <div class="bg-green-600 text-white px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-4">
-            <span class="text-2xl" id="toast-icon">✓</span>
-            <div>
-                <p class="font-bold" id="toast-title">Berhasil!</p>
-                <p class="text-xs opacity-90" id="toast-message">Permintaan Anda telah dikirim!</p>
-            </div>
-        </div>
+        <div class="bg-green-600 text-white px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-4"><span class="text-2xl" id="toast-icon">✓</span><div><p class="font-bold" id="toast-title">Berhasil!</p><p class="text-xs opacity-90" id="toast-message">Permintaan Anda telah dikirim!</p></div></div>
     </div>
 
-    <!-- Admin Login Modal (Popup) - VERSION SEDERHANA YANG PASTI BERFUNGSI -->
-    <div id="adminModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 29, 55, 0.96); z-index: 10001; align-items: center; justify-content: center;">
-        <div style="background: white; width: 90%; max-width: 400px; border-radius: 1.5rem; padding: 2rem; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); animation: fadeInScale 0.3s ease;">
+    <!-- Admin Modal -->
+    <div id="adminModal" class="admin-modal-overlay">
+        <div class="admin-modal-content">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
                 <h3 style="font-size: 1.5rem; font-weight: bold; color: #0a1d37;">Login Administrator</h3>
-                <button onclick="closeAdminModal()" style="color: #9ca3af; font-size: 1.75rem; cursor: pointer; background: none; border: none;">&times;</button>
+                <button id="closeAdminModalBtn" style="color: #9ca3af; font-size: 1.75rem; cursor: pointer; background: none; border: none;">&times;</button>
             </div>
             <div style="display: flex; flex-direction: column; gap: 1rem;">
-                <div>
-                    <label style="display: block; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; color: #6b7280; margin-bottom: 0.25rem;">Username</label>
-                    <input type="text" id="adminUser" placeholder="Masukkan username" style="width: 100%; padding: 0.75rem; border: 1px solid #e5e7eb; border-radius: 0.5rem; outline: none; transition: all 0.2s;" onfocus="this.style.borderColor='#ff8c00'; this.style.boxShadow='0 0 0 2px rgba(255,140,0,0.2)'" onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
-                </div>
-                <div>
-                    <label style="display: block; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; color: #6b7280; margin-bottom: 0.25rem;">Password</label>
-                    <input type="password" id="adminPass" placeholder="Masukkan password" style="width: 100%; padding: 0.75rem; border: 1px solid #e5e7eb; border-radius: 0.5rem; outline: none; transition: all 0.2s;" onfocus="this.style.borderColor='#ff8c00'; this.style.boxShadow='0 0 0 2px rgba(255,140,0,0.2)'" onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
-                </div>
-                <button onclick="handleAdminLogin()" style="width: 100%; background: #ff8c00; color: white; padding: 0.75rem; border-radius: 0.5rem; font-weight: bold; border: none; cursor: pointer; transition: background 0.2s; margin-top: 1rem;" onmouseover="this.style.background='#ea580c'" onmouseout="this.style.background='#ff8c00'">Masuk</button>
-                <button onclick="closeAdminModal()" style="width: 100%; background: none; color: #9ca3af; padding: 0.5rem; border-radius: 0.5rem; font-size: 0.875rem; cursor: pointer; border: none;">Batal</button>
+                <div><label style="display: block; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; color: #6b7280; margin-bottom: 0.25rem;">Username</label><input type="text" id="adminUser" placeholder="Masukkan username" style="width: 100%; padding: 0.75rem; border: 1px solid #e5e7eb; border-radius: 0.5rem; outline: none;"></div>
+                <div><label style="display: block; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; color: #6b7280; margin-bottom: 0.25rem;">Password</label><input type="password" id="adminPass" placeholder="Masukkan password" style="width: 100%; padding: 0.75rem; border: 1px solid #e5e7eb; border-radius: 0.5rem; outline: none;"></div>
+                <button id="loginSubmitBtn" style="width: 100%; background: #ff8c00; color: white; padding: 0.75rem; border-radius: 0.5rem; font-weight: bold; border: none; cursor: pointer; margin-top: 1rem;">Masuk</button>
+                <button id="batalAdminBtn" style="width: 100%; background: none; color: #9ca3af; padding: 0.5rem; border-radius: 0.5rem; font-size: 0.875rem; cursor: pointer; border: none;">Batal</button>
             </div>
         </div>
     </div>
 
-    <style>
-        @keyframes fadeInScale {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-    </style>
-
-    <script>
-        // Fungsi untuk membuka modal admin
-        function openAdminModal() {
-            const modal = document.getElementById('adminModal');
-            if (modal) {
-                modal.style.display = 'flex';
-                // Clear input fields
-                document.getElementById('adminUser').value = '';
-                document.getElementById('adminPass').value = '';
-            }
-        }
-
-        // Fungsi untuk menutup modal admin
-        function closeAdminModal() {
-            const modal = document.getElementById('adminModal');
-            if (modal) {
-                modal.style.display = 'none';
-            }
-        }
-
-        // Fungsi untuk handle login admin
-        function handleAdminLogin() {
-            const username = document.getElementById('adminUser').value;
-            const password = document.getElementById('adminPass').value;
-            
-            if (username === "admin" && password === "bukadong821") {
-                showNotification("Login berhasil! Mengarahkan ke halaman admin...");
-                closeAdminModal();
-                setTimeout(function() {
-                    sessionStorage.setItem('jdi_internal_nav', 'true');
-                    window.location.href = 'admin.html';
-                }, 1000);
-            } else {
-                showNotification("Username atau password salah!", true);
-            }
-        }
-
-        // Tutup modal jika klik di luar area
-        document.addEventListener('click', function(event) {
-            const modal = document.getElementById('adminModal');
-            if (modal && modal.style.display === 'flex') {
-                const modalContent = modal.querySelector('div > div');
-                if (modalContent && !modalContent.contains(event.target) && event.target !== modal) {
-                    closeAdminModal();
-                }
-            }
-        });
-    </script>
-
-    <!-- Footer dengan background jyp.png -->
+    <!-- Footer -->
     <footer id="kontak" class="footer-with-bg pt-16 pb-8 border-t-8 border-accent-orange"> 
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 border-b border-white/10 pb-12 relative z-10">
-            
             <div class="lg:col-span-3 space-y-6">
                 <img src="logo-jdi.png" alt="Logo JDI" class="h-12 w-auto logo-outline" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 200 80\'%3E%3Crect width=\'200\' height=\'80\' rx=\'10\' fill=\'%230a1d37\' stroke=\'%23ff8c00\' stroke-width=\'2\'/%3E%3Ctext x=\'100\' y=\'45\' text-anchor=\'middle\' fill=\'%23ff8c00\' font-family=\'Arial\' font-size=\'20\' font-weight=\'bold\'%3EJDI%3C/text%3E%3Ctext x=\'100\' y=\'65\' text-anchor=\'middle\' fill=\'white\' font-family=\'Arial\' font-size=\'10\'%3EJaya Digital%3C/text%3E%3C/svg%3E'">
                 <p class="text-gray-400 text-sm leading-relaxed">Solusi digital terintegrasi untuk pengelolaan sistem yang profesional di tanah Papua.</p>
-                
-                <div class="text-gray-400 text-sm">
-                    <p class="font-bold text-white mb-2 underline decoration-accent-orange text-base">Alamat Kantor:</p>
-                    <p>Jl. Tanah Hitam abe Pantai, Awiyo, Abepura, Kota Jayapura, Papua.</p>
-                    <div class="mt-4 flex items-center gap-3 text-accent-orange font-bold text-lg">
-                        <a href="https://wa.me/6281283393576" target="_blank" class="hover:underline flex items-center gap-2">
-                            <span class="bg-white/10 p-2 rounded-full">📞</span> 0812-8339-3576
-                        </a>
-                    </div>
-                </div>
-
-                <div class="footer-socials flex gap-4 mt-6">
-                    <a href="https://www.facebook.com/jaya.digital.integrate2026" target="_blank" class="text-white hover:text-accent-orange text-2xl transition">
-                        <i class="fa-brands fa-facebook"></i>
-                    </a>
-                    <a href="https://www.instagram.com/jayadigitalintegrate/" target="_blank" class="text-white hover:text-accent-orange text-2xl transition">
-                        <i class="fa-brands fa-instagram"></i>
-                    </a>
-                </div>
+                <div class="text-gray-400 text-sm"><p class="font-bold text-white mb-2 underline decoration-accent-orange text-base">Alamat Kantor:</p><p>Jl. Tanah Hitam abe Pantai, Awiyo, Abepura, Kota Jayapura, Papua.</p><div class="mt-4 flex items-center gap-3 text-accent-orange font-bold text-lg"><a href="https://wa.me/6281283393576" target="_blank" class="hover:underline flex items-center gap-2"><span class="bg-white/10 p-2 rounded-full">📞</span> 0812-8339-3576</a></div></div>
+                <div class="footer-socials flex gap-4 mt-6"><a href="https://www.facebook.com/jaya.digital.integrate2026" target="_blank" class="text-white hover:text-accent-orange text-2xl transition"><i class="fa-brands fa-facebook"></i></a><a href="https://www.instagram.com/jayadigitalintegrate/" target="_blank" class="text-white hover:text-accent-orange text-2xl transition"><i class="fa-brands fa-instagram"></i></a></div>
             </div>
-
-            <div class="lg:col-span-4">
-                <div class="footer-rating-container bg-white/5 rounded-2xl p-8 border border-white/10 h-full shadow-2xl relative overflow-hidden flex flex-col justify-center items-center backdrop-blur-sm">
-                    <h3 class="text-xl font-bold mb-6 text-center text-white">Beri Rating Layanan Kami</h3>
-                    <div class="flex justify-center space-x-2 mb-6">
-                        <span class="footer-rating-star text-3xl cursor-pointer" onclick="setFooterRating(1)">★</span>
-                        <span class="footer-rating-star text-3xl cursor-pointer" onclick="setFooterRating(2)">★</span>
-                        <span class="footer-rating-star text-3xl cursor-pointer" onclick="setFooterRating(3)">★</span>
-                        <span class="footer-rating-star text-3xl cursor-pointer" onclick="setFooterRating(4)">★</span>
-                        <span class="footer-rating-star text-3xl cursor-pointer" onclick="setFooterRating(5)">★</span>
-                    </div>
-                    <p id="rating-status" class="text-xs uppercase tracking-widest text-gray-400 font-bold text-center leading-relaxed">
-                        Klik bintang untuk memberikan rating
-                    </p>
-                    <button class="w-full mt-6 py-2 bg-transparent border border-orange-400 text-orange-400 rounded-md hover:bg-orange-400 hover:text-white transition text-sm font-bold uppercase tracking-widest" onclick="submitRating()">
-                        Kirim Rating
-                    </button>
-                </div>
-            </div>
-
-            <div class="lg:col-span-5">
-                <div class="bg-white/5 rounded-2xl p-8 border border-white/10 h-full shadow-2xl backdrop-blur-sm">
-                    <h3 class="text-xl font-bold mb-6 border-l-4 border-accent-orange pl-4 text-white">Saran dan Masukan</h3>
-                    <form id="feedbackForm" class="space-y-4" onsubmit="return false;">
-                        <div>
-                            <input type="text" id="feedbackName" placeholder="Nama Lengkap" class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-accent-orange transition">
-                        </div>
-                        <div>
-                            <textarea id="feedbackMessage" placeholder="Tuliskan saran atau pesan Anda di sini..." rows="4" class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-accent-orange transition"></textarea>
-                        </div>
-                        <button type="button" onclick="kirimFeedback()" class="w-full py-3 bg-accent-orange text-white rounded-lg font-bold hover:bg-orange-600 transition shadow-lg text-sm uppercase tracking-widest">
-                            Kirim Pesan
-                        </button>
-                    </form>
-                </div>
-            </div>
+            <div class="lg:col-span-4"><div class="footer-rating-container bg-white/5 rounded-2xl p-8 border border-white/10 h-full shadow-2xl relative overflow-hidden flex flex-col justify-center items-center backdrop-blur-sm"><h3 class="text-xl font-bold mb-6 text-center text-white">Beri Rating Layanan Kami</h3><div class="flex justify-center space-x-2 mb-6"><span class="footer-rating-star text-3xl cursor-pointer" data-rating="1">★</span><span class="footer-rating-star text-3xl cursor-pointer" data-rating="2">★</span><span class="footer-rating-star text-3xl cursor-pointer" data-rating="3">★</span><span class="footer-rating-star text-3xl cursor-pointer" data-rating="4">★</span><span class="footer-rating-star text-3xl cursor-pointer" data-rating="5">★</span></div><p id="rating-status" class="text-xs uppercase tracking-widest text-gray-400 font-bold text-center leading-relaxed">Klik bintang untuk memberikan rating</p><button id="submitRatingBtn" class="w-full mt-6 py-2 bg-transparent border border-orange-400 text-orange-400 rounded-md hover:bg-orange-400 hover:text-white transition text-sm font-bold uppercase tracking-widest">Kirim Rating</button></div></div>
+            <div class="lg:col-span-5"><div class="bg-white/5 rounded-2xl p-8 border border-white/10 h-full shadow-2xl backdrop-blur-sm"><h3 class="text-xl font-bold mb-6 border-l-4 border-accent-orange pl-4 text-white">Saran dan Masukan</h3><form id="feedbackForm" class="space-y-4" onsubmit="return false;"><div><input type="text" id="feedbackName" placeholder="Nama Lengkap" class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-accent-orange transition"></div><div><textarea id="feedbackMessage" placeholder="Tuliskan saran atau pesan Anda di sini..." rows="4" class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-accent-orange transition"></textarea></div><button type="button" id="kirimFeedbackBtn" class="w-full py-3 bg-accent-orange text-white rounded-lg font-bold hover:bg-orange-600 transition shadow-lg text-sm uppercase tracking-widest">Kirim Pesan</button></form></div></div>
         </div>
-        
-        <div class="max-w-7xl mx-auto px-6 pt-8 text-center text-gray-500 text-[10px] tracking-widest uppercase font-semibold relative z-10">
-            © 2026 Jaya Digital Integrate. All Rights Reserved.
-        </div>
+        <div class="max-w-7xl mx-auto px-6 pt-8 text-center text-gray-500 text-[10px] tracking-widest uppercase font-semibold relative z-10">© 2026 Jaya Digital Integrate. All Rights Reserved.</div>
     </footer>
-</div> 
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 
 <script>
-// ============================================
-// CEK APAKAH DARI REFRESH ATAU NAVIGASI INTERNAL
-// ============================================
+// ========== SEMUA FUNGSI DALAM SATU BLOK ==========
+let currentRating = 0;
 
-let isPageRefresh = false;
+// Helper functions
+function showNotification(message, isError = false) {
+    const toast = document.getElementById('success-toast');
+    if (toast) {
+        const title = document.getElementById('toast-title');
+        const text = document.getElementById('toast-message');
+        const icon = document.getElementById('toast-icon');
+        const bgDiv = toast.querySelector('div');
+        if (title) title.innerText = isError ? 'Gagal!' : 'Berhasil!';
+        if (text) text.innerText = message;
+        if (icon) icon.innerText = isError ? '❌' : '✓';
+        if (bgDiv) {
+            bgDiv.classList.remove('bg-green-600', 'bg-red-600');
+            bgDiv.classList.add(isError ? 'bg-red-600' : 'bg-green-600');
+        }
+        toast.style.display = 'block';
+        toast.classList.remove('hidden');
+        setTimeout(() => {
+            toast.style.display = 'none';
+            toast.classList.add('hidden');
+            if (bgDiv) {
+                bgDiv.classList.remove('bg-red-600');
+                bgDiv.classList.add('bg-green-600');
+            }
+        }, 5000);
+    } else alert(message);
+}
 
-if (performance.navigation && performance.navigation.type === 1) {
-    isPageRefresh = true;
-} else if (performance.getEntriesByType && performance.getEntriesByType("navigation").length > 0) {
-    const navType = performance.getEntriesByType("navigation")[0].type;
-    if (navType === "reload") {
-        isPageRefresh = true;
+function toggleProjectModal() {
+    const modal = document.getElementById('project-modal');
+    if (modal) modal.classList.toggle('hidden');
+}
+
+function kirimProyek() {
+    const nama = document.getElementById('nama_lengkap')?.value;
+    const nomor = document.getElementById('nomor_hp')?.value;
+    const email = document.getElementById('email')?.value;
+    const alamat = document.getElementById('alamat')?.value;
+    if (!nama || !nomor || !email || !alamat) return showNotification("Mohon lengkapi semua field yang wajib diisi!", true);
+    if (!/^\d+$/.test(nomor)) return showNotification("Nomor HP harus berisi angka saja!", true);
+    if (!email.includes('@')) return showNotification("Email tidak valid!", true);
+    showNotification("Permintaan proyek berhasil dikirim! Kami akan menghubungi Anda segera.");
+    toggleProjectModal();
+    document.getElementById('proyekForm')?.reset();
+}
+
+function kirimFeedback() {
+    const name = document.getElementById('feedbackName')?.value;
+    const message = document.getElementById('feedbackMessage')?.value;
+    if (!name || !message) return showNotification("Mohon isi nama dan pesan Anda!", true);
+    showNotification("Terima kasih atas saran dan masukannya!");
+    document.getElementById('feedbackForm')?.reset();
+}
+
+// Rating functions
+function setFooterRating(rating) {
+    currentRating = rating;
+    const stars = document.querySelectorAll('.footer-rating-star');
+    stars.forEach((star, idx) => {
+        if (idx < rating) {
+            star.style.color = '#ff8c00';
+            star.classList.add('filled');
+        } else {
+            star.style.color = '#d1d5db';
+            star.classList.remove('filled');
+        }
+    });
+    document.getElementById('rating-status').innerText = `Anda memilih ${rating} dari 5 bintang. Klik 'Kirim Rating' untuk mengirim.`;
+}
+function submitRating() {
+    if (currentRating === 0) return showNotification("Silakan pilih bintang terlebih dahulu!", true);
+    showNotification(`Terima kasih atas rating ${currentRating} bintang Anda! Dukungan Anda sangat berarti bagi kami.`);
+    setTimeout(() => {
+        document.querySelectorAll('.footer-rating-star').forEach(star => { star.style.color = '#d1d5db'; star.classList.remove('filled'); });
+        document.getElementById('rating-status').innerText = "Rating berhasil dikirim! Terima kasih.";
+        currentRating = 0;
+    }, 2000);
+}
+
+// Admin modal functions
+function openAdminModal() {
+    const modal = document.getElementById('adminModal');
+    if (modal) {
+        modal.classList.add('show');
+        document.getElementById('adminUser').value = '';
+        document.getElementById('adminPass').value = '';
+    }
+}
+function closeAdminModal() {
+    const modal = document.getElementById('adminModal');
+    if (modal) modal.classList.remove('show');
+}
+function handleAdminLogin() {
+    const user = document.getElementById('adminUser').value;
+    const pass = document.getElementById('adminPass').value;
+    if (user === "admin" && pass === "bukadong821") {
+        showNotification("Login berhasil! Mengarahkan ke halaman admin...");
+        closeAdminModal();
+        setTimeout(() => {
+            sessionStorage.setItem('jdi_internal_nav', 'true');
+            window.location.href = 'admin.html';
+        }, 1000);
+    } else {
+        showNotification("Username atau password salah!", true);
     }
 }
 
-const fromInternalNav = sessionStorage.getItem('jdi_internal_nav') === 'true';
-
-document.querySelectorAll('a[href]').forEach(link => {
-    link.addEventListener('click', function() {
-        sessionStorage.setItem('jdi_internal_nav', 'true');
-    });
-});
-
-const shouldShowLoading = isPageRefresh;
-
-// ============================================
-// LOADING SCREEN HANDLER
-// ============================================
-let currentRating = 0;
-
-if (!shouldShowLoading && fromInternalNav) {
-    document.getElementById('loading-screen').style.display = 'none';
-    const main = document.getElementById('main-content');
-    main.style.display = 'block';
-    main.style.opacity = '1';
-    initMainContent();
-    sessionStorage.removeItem('jdi_internal_nav');
-} else if (!shouldShowLoading && !fromInternalNav) {
-    showLoadingScreen();
-} else {
-    showLoadingScreen();
+// Mobile menu
+function toggleMobileMenu() {
+    const menu = document.getElementById('mobile-menu');
+    if (menu) menu.classList.toggle('hidden');
 }
+
+// Loading screen & refresh detection
+let isPageRefresh = false;
+if (performance.navigation && performance.navigation.type === 1) isPageRefresh = true;
+else if (performance.getEntriesByType && performance.getEntriesByType("navigation").length > 0) {
+    if (performance.getEntriesByType("navigation")[0].type === "reload") isPageRefresh = true;
+}
+const fromInternalNav = sessionStorage.getItem('jdi_internal_nav') === 'true';
+document.querySelectorAll('a[href]').forEach(link => {
+    link.addEventListener('click', () => sessionStorage.setItem('jdi_internal_nav', 'true'));
+});
+const shouldShowLoading = isPageRefresh;
 
 function showLoadingScreen() {
     window.addEventListener('load', () => {
-        const screen = document.getElementById('loading-screen');
-        const main = document.getElementById('main-content');
         const fill = document.getElementById('loader-fill');
         const welcomeTxt = document.getElementById('welcome-msg');
-
         if (fill) fill.style.width = '100%';
-
         if (welcomeTxt) {
             setTimeout(() => {
                 welcomeTxt.style.opacity = '1';
                 welcomeTxt.style.transform = 'translateY(0)';
             }, 500);
         }
-
         setTimeout(() => {
+            const screen = document.getElementById('loading-screen');
+            const main = document.getElementById('main-content');
             if (screen) {
                 screen.style.opacity = '0';
                 setTimeout(() => {
@@ -951,166 +718,67 @@ function showLoadingScreen() {
 }
 
 function initMainContent() {
-    console.log("Inisialisasi konten utama dimulai...");
-
     if (typeof Swiper !== 'undefined') {
-        const swiper = new Swiper(".ipad-mockup .mySwiper", {
-            loop: true,
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false
-            },
-            observer: true,
-            observeParents: true,
-            watchOverflow: true,
-            navigation: {
-                nextEl: ".ipad-mockup .swiper-button-next",
-                prevEl: ".ipad-mockup .swiper-button-prev",
-            },
-            pagination: {
-                el: ".ipad-mockup .swiper-pagination",
-                clickable: true,
-            },
-            speed: 800,
-            grabCursor: true,
-            allowTouchMove: true
+        new Swiper(".ipad-mockup .mySwiper", {
+            loop: true, autoplay: { delay: 3000, disableOnInteraction: false },
+            observer: true, observeParents: true, watchOverflow: true,
+            navigation: { nextEl: ".ipad-mockup .swiper-button-next", prevEl: ".ipad-mockup .swiper-button-prev" },
+            pagination: { el: ".ipad-mockup .swiper-pagination", clickable: true },
+            speed: 800, grabCursor: true, allowTouchMove: true
         });
     }
 }
 
-// ============================================
-// UI HELPER FUNCTIONS
-// ============================================
-function showNotification(message, isError = false) {
-    const toast = document.getElementById('success-toast');
-    if (toast) {
-        const title = document.getElementById('toast-title');
-        const text = document.getElementById('toast-message');
-        const icon = document.getElementById('toast-icon');
-        const bgDiv = toast.querySelector('div');
-        
-        if (title) title.innerText = isError ? 'Gagal!' : 'Berhasil!';
-        if (text) text.innerText = message;
-        if (icon) icon.innerText = isError ? '❌' : '✓';
-        
-        if (bgDiv) {
-            bgDiv.classList.remove('bg-green-600', 'bg-red-600');
-            bgDiv.classList.add(isError ? 'bg-red-600' : 'bg-green-600');
-        }
-        
-        toast.style.display = 'block';
-        toast.classList.remove('hidden');
-        
-        setTimeout(() => {
-            toast.style.display = 'none';
-            toast.classList.add('hidden');
-            if (bgDiv) {
-                bgDiv.classList.remove('bg-red-600');
-                bgDiv.classList.add('bg-green-600');
-            }
-        }, 5000);
-    } else {
-        alert(message);
-    }
+// Decision for loading screen
+if (!shouldShowLoading && fromInternalNav) {
+    document.getElementById('loading-screen').style.display = 'none';
+    const main = document.getElementById('main-content');
+    main.style.display = 'block';
+    main.style.opacity = '1';
+    initMainContent();
+    sessionStorage.removeItem('jdi_internal_nav');
+} else {
+    showLoadingScreen();
 }
 
-function toggleProjectModal() {
-    const modal = document.getElementById('project-modal');
-    if (modal) modal.classList.toggle('hidden');
-}
-
-function toggleMobileMenu() {
-    const menu = document.getElementById('mobile-menu');
-    if (menu) menu.classList.toggle('hidden');
-}
-
-// ============================================
-// FORM HANDLERS
-// ============================================
-function kirimProyek() {
-    const nama = document.getElementById('nama_lengkap')?.value;
-    const nomor = document.getElementById('nomor_hp')?.value;
-    const email = document.getElementById('email')?.value;
-    const alamat = document.getElementById('alamat')?.value;
-    
-    if (!nama || !nomor || !email || !alamat) {
-        showNotification("Mohon lengkapi semua field yang wajib diisi!", true);
-        return;
-    }
-    
-    if (!/^\d+$/.test(nomor)) {
-        showNotification("Nomor HP harus berisi angka saja!", true);
-        return;
-    }
-    
-    if (!email.includes('@')) {
-        showNotification("Email tidak valid!", true);
-        return;
-    }
-    
-    showNotification("Permintaan proyek berhasil dikirim! Kami akan menghubungi Anda segera.");
-    toggleProjectModal();
-    
-    const form = document.getElementById('proyekForm');
-    if (form) form.reset();
-}
-
-function kirimFeedback() {
-    const name = document.getElementById('feedbackName')?.value;
-    const message = document.getElementById('feedbackMessage')?.value;
-    
-    if (!name || !message) {
-        showNotification("Mohon isi nama dan pesan Anda!", true);
-        return;
-    }
-    
-    showNotification("Terima kasih atas saran dan masukannya!");
-    const form = document.getElementById('feedbackForm');
-    if (form) form.reset();
-}
-
-// ============================================
-// RATING SYSTEM
-// ============================================
-function setFooterRating(rating) {
-    currentRating = rating;
-    const stars = document.querySelectorAll('.footer-rating-star');
-    const status = document.getElementById('rating-status');
-    
-    stars.forEach((star, index) => {
-        if (index < rating) {
-            star.style.color = '#ff8c00';
-            star.classList.add('filled');
-        } else {
-            star.style.color = '#d1d5db';
-            star.classList.remove('filled');
-        }
+// Attach event listeners after DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+    // Login admin buttons
+    const loginBtn = document.getElementById('loginAdminBtn');
+    const mobileLoginBtn = document.getElementById('mobileLoginAdminBtn');
+    if (loginBtn) loginBtn.addEventListener('click', openAdminModal);
+    if (mobileLoginBtn) mobileLoginBtn.addEventListener('click', openAdminModal);
+    // Close modal buttons
+    const closeBtn = document.getElementById('closeAdminModalBtn');
+    const batalBtn = document.getElementById('batalAdminBtn');
+    if (closeBtn) closeBtn.addEventListener('click', closeAdminModal);
+    if (batalBtn) batalBtn.addEventListener('click', closeAdminModal);
+    // Submit login
+    const submitBtn = document.getElementById('loginSubmitBtn');
+    if (submitBtn) submitBtn.addEventListener('click', handleAdminLogin);
+    // Mulai proyek
+    const mulaiBtn = document.getElementById('mulaiProyekBtn');
+    if (mulaiBtn) mulaiBtn.addEventListener('click', toggleProjectModal);
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+    // Rating stars
+    document.querySelectorAll('.footer-rating-star').forEach(star => {
+        star.addEventListener('click', () => setFooterRating(parseInt(star.getAttribute('data-rating'))));
     });
-    
-    if(status) status.innerText = "Anda memilih " + rating + " dari 5 bintang. Klik 'Kirim Rating' untuk mengirim.";
-}
-
-function submitRating() {
-    if (currentRating === 0) {
-        showNotification("Silakan pilih bintang terlebih dahulu!", true);
-        return;
-    }
-    
-    showNotification("Terima kasih atas rating " + currentRating + " bintang Anda! Dukungan Anda sangat berarti bagi kami.");
-    
-    setTimeout(() => {
-        const stars = document.querySelectorAll('.footer-rating-star');
-        stars.forEach(star => {
-            star.style.color = '#d1d5db';
-            star.classList.remove('filled');
+    const submitRatingBtn = document.getElementById('submitRatingBtn');
+    if (submitRatingBtn) submitRatingBtn.addEventListener('click', submitRating);
+    // Feedback
+    const kirimFeedbackBtn = document.getElementById('kirimFeedbackBtn');
+    if (kirimFeedbackBtn) kirimFeedbackBtn.addEventListener('click', kirimFeedback);
+    // Close modal when clicking outside
+    const modalOverlay = document.getElementById('adminModal');
+    if (modalOverlay) {
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeAdminModal();
         });
-        const statusEl = document.getElementById('rating-status');
-        if (statusEl) {
-            statusEl.innerText = "Rating berhasil dikirim! Terima kasih.";
-        }
-        currentRating = 0;
-    }, 2000);
-}
+    }
+});
 </script>
 </body>
 </html>
