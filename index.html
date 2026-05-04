@@ -306,20 +306,24 @@
         border-radius: 10px;
     }
 
-    /* Admin Modal Styles */
+    /* Admin Modal Styles - DIPERBAIKI */
     .admin-modal {
         position: fixed;
         inset: 0;
-        background: rgba(10, 29, 55, 0.95);
+        background: rgba(10, 29, 55, 0.96);
         z-index: 10001;
-        display: none;
+        visibility: hidden;
+        opacity: 0;
+        display: flex;
         align-items: center;
         justify-content: center;
         padding: 1rem;
+        transition: all 0.3s ease;
     }
 
     .admin-modal.active {
-        display: flex;
+        visibility: visible;
+        opacity: 1;
     }
 
     .admin-modal-content {
@@ -329,18 +333,12 @@
         border-radius: 1.5rem;
         padding: 2rem;
         box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        animation: modalFadeIn 0.3s ease;
+        transform: scale(0.95);
+        transition: transform 0.3s ease;
     }
 
-    @keyframes modalFadeIn {
-        from {
-            opacity: 0;
-            transform: scale(0.95);
-        }
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
+    .admin-modal.active .admin-modal-content {
+        transform: scale(1);
     }
 
     @media (min-width: 768px) {
@@ -448,7 +446,6 @@
                     <div class="ipad-screen">
                         <div class="swiper mySwiper w-full h-full">
                             <div class="swiper-wrapper">
-                                <!-- Slide 1 -->
                                 <div class="swiper-slide">
                                     <img src="d-klinic.png" alt="D-Klinic" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
                                     <div class="fallback-card">
@@ -459,7 +456,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Slide 2 -->
                                 <div class="swiper-slide">
                                     <img src="gereja.png" alt="Gereja" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
                                     <div class="fallback-card">
@@ -470,7 +466,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Slide 3 -->
                                 <div class="swiper-slide">
                                     <img src="skin.png" alt="Skin Care" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
                                     <div class="fallback-card">
@@ -481,7 +476,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Slide 4 -->
                                 <div class="swiper-slide">
                                     <img src="nusa-agro.png" alt="Nusa Agro" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
                                     <div class="fallback-card">
@@ -492,7 +486,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Slide 5 -->
                                 <div class="swiper-slide">
                                     <img src="rapopang.png" alt="Rapopang" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
                                     <div class="fallback-card">
@@ -503,7 +496,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Slide 6 -->
                                 <div class="swiper-slide">
                                     <img src="haven-cafe.png" alt="Haven Cafe" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
                                     <div class="fallback-card">
@@ -514,7 +506,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Slide 7 -->
                                 <div class="swiper-slide">
                                     <img src="de-wave.png" alt="De Wave" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-card').style.display='flex'">
                                     <div class="fallback-card">
@@ -721,7 +712,7 @@
         </div>
     </div>
 
-    <!-- Admin Login Modal (Popup) -->
+    <!-- Admin Login Modal (Popup) - DIPERBAIKI -->
     <div id="admin-modal" class="admin-modal">
         <div class="admin-modal-content">
             <div class="flex justify-between items-center mb-6">
@@ -923,15 +914,19 @@ function initMainContent() {
 }
 
 // ============================================
-// ADMIN LOGIN MODAL FUNCTIONS
+// ADMIN LOGIN MODAL FUNCTIONS - DIPERBAIKI
 // ============================================
 function openAdminModal() {
     const modal = document.getElementById('admin-modal');
     if (modal) {
         modal.classList.add('active');
         // Clear input fields
-        document.getElementById('admin-username').value = '';
-        document.getElementById('admin-password').value = '';
+        const usernameInput = document.getElementById('admin-username');
+        const passwordInput = document.getElementById('admin-password');
+        if (usernameInput) usernameInput.value = '';
+        if (passwordInput) passwordInput.value = '';
+    } else {
+        console.log("Modal tidak ditemukan");
     }
 }
 
@@ -1097,7 +1092,7 @@ document.addEventListener('click', function(event) {
     const modal = document.getElementById('admin-modal');
     const modalContent = document.querySelector('.admin-modal-content');
     if (modal && modal.classList.contains('active')) {
-        if (!modalContent.contains(event.target) && event.target !== modal) {
+        if (modalContent && !modalContent.contains(event.target) && event.target !== modal) {
             closeAdminModal();
         }
     }
