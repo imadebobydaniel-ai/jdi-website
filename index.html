@@ -306,6 +306,43 @@
         border-radius: 10px;
     }
 
+    /* Admin Modal Styles */
+    .admin-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(10, 29, 55, 0.95);
+        z-index: 10001;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+    }
+
+    .admin-modal.active {
+        display: flex;
+    }
+
+    .admin-modal-content {
+        background: white;
+        width: 100%;
+        max-width: 400px;
+        border-radius: 1.5rem;
+        padding: 2rem;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        animation: modalFadeIn 0.3s ease;
+    }
+
+    @keyframes modalFadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
     @media (min-width: 768px) {
         .nav-logo {
             height: 60px;
@@ -371,7 +408,7 @@
                 <a href="https://wa.me/6281283393576" target="_blank" class="hidden sm:block bg-accent-orange text-white px-5 py-2 rounded-full font-semibold hover:bg-orange-600 transition shadow-lg text-sm">
                     <i class="fab fa-whatsapp mr-2"></i> Konsultasi Gratis
                 </a>
-                <a href="admin.html" class="text-xs font-bold text-navy-dark/40 hover:text-accent-orange border-l pl-4 hidden md:block uppercase tracking-wider">Login Admin</a>
+                <button onclick="openAdminModal()" class="text-xs font-bold text-navy-dark/40 hover:text-accent-orange border-l pl-4 hidden md:block uppercase tracking-wider">Login Admin</button>
                 <div class="md:hidden text-navy-dark cursor-pointer" onclick="toggleMobileMenu()">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
@@ -384,7 +421,7 @@
             <a href="index.html" class="block font-medium text-gray-700">Beranda</a>
             <a href="layanan-kami.html" class="block font-medium text-gray-700">Layanan Kami</a>
             <a href="#kontak" class="block font-medium text-gray-700">Kontak</a>
-            <a href="admin.html" class="block text-xs font-bold uppercase text-navy-dark/60">Login Admin</a>
+            <button onclick="openAdminModal()" class="block text-xs font-bold uppercase text-navy-dark/60">Login Admin</button>
         </div>
     </nav>
 
@@ -684,6 +721,28 @@
         </div>
     </div>
 
+    <!-- Admin Login Modal (Popup) -->
+    <div id="admin-modal" class="admin-modal">
+        <div class="admin-modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-navy-dark">Login Administrator</h3>
+                <button onclick="closeAdminModal()" class="text-gray-400 hover:text-red-500 text-2xl">&times;</button>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Username</label>
+                    <input type="text" id="admin-username" placeholder="Masukkan username" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Password</label>
+                    <input type="password" id="admin-password" placeholder="Masukkan password" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-orange outline-none">
+                </div>
+                <button onclick="handleAdminLogin()" class="w-full bg-accent-orange text-white py-3 rounded-lg font-bold hover:bg-orange-600 transition mt-4">Masuk</button>
+                <button onclick="closeAdminModal()" class="w-full text-gray-400 text-sm mt-2 hover:text-gray-600">Batal</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer dengan background jyp.png -->
     <footer id="kontak" class="footer-with-bg pt-16 pb-8 border-t-8 border-accent-orange"> 
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 border-b border-white/10 pb-12 relative z-10">
@@ -763,13 +822,9 @@
 // CEK APAKAH DARI REFRESH ATAU NAVIGASI INTERNAL
 // ============================================
 
-// Cek apakah halaman di-reload (bukan navigasi dari halaman lain)
-// Menggunakan performance.navigation (cara lama) atau performance.getEntriesByType
 let isPageRefresh = false;
 
-// Deteksi refresh
 if (performance.navigation && performance.navigation.type === 1) {
-    // Navigation type 1 = refresh/reload
     isPageRefresh = true;
 } else if (performance.getEntriesByType && performance.getEntriesByType("navigation").length > 0) {
     const navType = performance.getEntriesByType("navigation")[0].type;
@@ -778,22 +833,13 @@ if (performance.navigation && performance.navigation.type === 1) {
     }
 }
 
-// Cek apakah ada sessionStorage flag dari halaman sebelumnya
 const fromInternalNav = sessionStorage.getItem('jdi_internal_nav') === 'true';
 
-// Set flag untuk navigasi saat ini ke halaman lain (untuk digunakan di halaman tujuan)
-// Ini akan dipakai ketika user klik link ke halaman lain
 document.querySelectorAll('a[href]').forEach(link => {
     link.addEventListener('click', function() {
-        // Set flag bahwa ini navigasi internal
         sessionStorage.setItem('jdi_internal_nav', 'true');
     });
 });
-
-// JANGAN tampilkan loading screen JIKA:
-// 1. Ini adalah navigasi internal (dari halaman lain dalam site yang sama) ATAU
-// 2. Ini BUKAN refresh (bisa jadi pertama kali buka dari luar)
-// TAPI jika refresh, TAMPILKAN loading screen
 
 const shouldShowLoading = isPageRefresh;
 
@@ -803,19 +849,15 @@ const shouldShowLoading = isPageRefresh;
 let currentRating = 0;
 
 if (!shouldShowLoading && fromInternalNav) {
-    // Navigasi dari dalam site (klik Beranda dari Layanan Kami) - LANGSUNG TAMPIL
     document.getElementById('loading-screen').style.display = 'none';
     const main = document.getElementById('main-content');
     main.style.display = 'block';
     main.style.opacity = '1';
     initMainContent();
-    // Reset flag setelah digunakan
     sessionStorage.removeItem('jdi_internal_nav');
 } else if (!shouldShowLoading && !fromInternalNav) {
-    // Pertama kali buka website (bukan refresh) - TAMPILKAN LOADING SCREEN
     showLoadingScreen();
 } else {
-    // Refresh browser - TAMPILKAN LOADING SCREEN
     showLoadingScreen();
 }
 
@@ -855,7 +897,6 @@ function showLoadingScreen() {
 function initMainContent() {
     console.log("Inisialisasi konten utama dimulai...");
 
-    // Initialize Swiper inside iPad mockup
     if (typeof Swiper !== 'undefined') {
         const swiper = new Swiper(".ipad-mockup .mySwiper", {
             loop: true,
@@ -878,6 +919,42 @@ function initMainContent() {
             grabCursor: true,
             allowTouchMove: true
         });
+    }
+}
+
+// ============================================
+// ADMIN LOGIN MODAL FUNCTIONS
+// ============================================
+function openAdminModal() {
+    const modal = document.getElementById('admin-modal');
+    if (modal) {
+        modal.classList.add('active');
+        // Clear input fields
+        document.getElementById('admin-username').value = '';
+        document.getElementById('admin-password').value = '';
+    }
+}
+
+function closeAdminModal() {
+    const modal = document.getElementById('admin-modal');
+    if (modal) {
+        modal.classList.remove('active');
+    }
+}
+
+function handleAdminLogin() {
+    const username = document.getElementById('admin-username')?.value;
+    const password = document.getElementById('admin-password')?.value;
+    
+    if (username === "admin" && password === "bukadong821") {
+        showNotification("Login berhasil! Mengarahkan ke halaman admin...");
+        closeAdminModal();
+        setTimeout(() => {
+            sessionStorage.setItem('jdi_internal_nav', 'true');
+            window.location.href = 'admin.html';
+        }, 1000);
+    } else {
+        showNotification("Username atau password salah!", true);
     }
 }
 
@@ -920,11 +997,6 @@ function showNotification(message, isError = false) {
 function toggleProjectModal() {
     const modal = document.getElementById('project-modal');
     if (modal) modal.classList.toggle('hidden');
-}
-
-function toggleAdminPanel() {
-    sessionStorage.setItem('jdi_internal_nav', 'true');
-    window.location.href = 'admin.html';
 }
 
 function toggleMobileMenu() {
@@ -1019,6 +1091,17 @@ function submitRating() {
         currentRating = 0;
     }, 2000);
 }
+
+// Tutup modal jika klik di luar area
+document.addEventListener('click', function(event) {
+    const modal = document.getElementById('admin-modal');
+    const modalContent = document.querySelector('.admin-modal-content');
+    if (modal && modal.classList.contains('active')) {
+        if (!modalContent.contains(event.target) && event.target !== modal) {
+            closeAdminModal();
+        }
+    }
+});
 </script>
 </body>
 </html>
