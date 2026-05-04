@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
 <style>
     /* RESET & BASE STYLES */
@@ -336,6 +337,59 @@
         to { opacity: 1; transform: scale(1); }
     }
 
+    /* ========== TAMBAHAN CSS BARU ========== */
+    /* Efek Hover untuk container fitur */
+    .hover-card {
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    .hover-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.15);
+        border-color: #ff8c00 !important;
+    }
+
+    /* Efek Cap/Stempel Diskon */
+    .stamp-effect {
+        position: relative;
+        overflow: hidden;
+    }
+    .stamp-effect::after {
+        content: "50% OFF";
+        position: absolute;
+        top: -10px;
+        right: -30px;
+        width: 120px;
+        height: 120px;
+        background: rgba(255, 140, 0, 0.9);
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: rotate(35deg);
+        font-family: 'Poppins', sans-serif;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        border: 2px solid white;
+        z-index: 10;
+    }
+
+    /* Progress bar untuk grafik */
+    .progress-bar {
+        transition: width 1s ease-in-out;
+    }
+
+    /* Container sistem manajemen toko existing - diperkuat efeknya */
+    .existing-card {
+        transition: all 0.3s ease;
+    }
+    .existing-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.1);
+        border-color: #ff8c00;
+    }
+
     @media (min-width: 768px) {
         .nav-logo {
             height: 60px;
@@ -355,6 +409,13 @@
         .ipad-mockup .swiper-button-next,
         .ipad-mockup .swiper-button-prev {
             display: none;
+        }
+        .stamp-effect::after {
+            width: 80px;
+            height: 80px;
+            font-size: 12px;
+            top: -5px;
+            right: -20px;
         }
     }
 
@@ -475,16 +536,195 @@
         </div>
     </section>
 
+    <!-- ========== EXISTING SECTION: SISTEM MANAJEMEN TOKO (TIDAK DIUBAH) ========== -->
     <section class="py-16 bg-gray-100">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-bold text-navy-dark mb-4">Sistem Manajemen Toko</h2><p class="text-gray-500 max-w-2xl mx-auto text-sm md:text-base">Kelola bisnis Anda dengan sistem terintegrasi yang mudah digunakan.</p></div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-white p-6 rounded-2xl shadow-sm"><i class="fas fa-box text-3xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold mb-2 text-navy-dark">Manajemen Produk</h3><p class="text-gray-600 text-sm">Berbasis data produk, rencana, kriteria, dan strategi.</p></div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm"><i class="fas fa-chart-line text-3xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold mb-2 text-navy-dark">Manajemen Stok Real-time</h3><p class="text-gray-600 text-sm">Perlu terukur, informasi dan akuntansi yang akurat.</p></div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm"><i class="fas fa-shopping-cart text-3xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold mb-2 text-navy-dark">Transaksi Penjualan</h3><p class="text-gray-600 text-sm">Cepat, mudah dan terintegrasi dengan sistem.</p></div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm"><i class="fas fa-users text-3xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold mb-2 text-navy-dark">Manajemen Pelanggan</h3><p class="text-gray-600 text-sm">Dapat melengkapi transaksi pelanggan dengan mudah.</p></div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm"><i class="fas fa-chart-pie text-3xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold mb-2 text-navy-dark">Laporan Manajemen</h3><p class="text-gray-600 text-sm">Laporan harta, migrasi, dan keuangan yang terintegrasi.</p></div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm"><i class="fas fa-user-friends text-3xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold mb-2 text-navy-dark">Multi User</h3><p class="text-gray-600 text-sm">Aplikasi dapat digunakan secara fleksibel oleh banyak pengguna.</p></div>
+                <div class="existing-card bg-white p-6 rounded-2xl shadow-sm border transition"><i class="fas fa-box text-3xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold mb-2 text-navy-dark">Manajemen Produk</h3><p class="text-gray-600 text-sm">Berbasis data produk, rencana, kriteria, dan strategi.</p></div>
+                <div class="existing-card bg-white p-6 rounded-2xl shadow-sm border transition"><i class="fas fa-chart-line text-3xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold mb-2 text-navy-dark">Manajemen Stok Real-time</h3><p class="text-gray-600 text-sm">Perlu terukur, informasi dan akuntansi yang akurat.</p></div>
+                <div class="existing-card bg-white p-6 rounded-2xl shadow-sm border transition"><i class="fas fa-shopping-cart text-3xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold mb-2 text-navy-dark">Transaksi Penjualan</h3><p class="text-gray-600 text-sm">Cepat, mudah dan terintegrasi dengan sistem.</p></div>
+                <div class="existing-card bg-white p-6 rounded-2xl shadow-sm border transition"><i class="fas fa-users text-3xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold mb-2 text-navy-dark">Manajemen Pelanggan</h3><p class="text-gray-600 text-sm">Dapat melengkapi transaksi pelanggan dengan mudah.</p></div>
+                <div class="existing-card bg-white p-6 rounded-2xl shadow-sm border transition"><i class="fas fa-chart-pie text-3xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold mb-2 text-navy-dark">Laporan Manajemen</h3><p class="text-gray-600 text-sm">Laporan harta, migrasi, dan keuangan yang terintegrasi.</p></div>
+                <div class="existing-card bg-white p-6 rounded-2xl shadow-sm border transition"><i class="fas fa-user-friends text-3xl text-accent-orange mb-3"></i><h3 class="text-lg font-bold mb-2 text-navy-dark">Multi User</h3><p class="text-gray-600 text-sm">Aplikasi dapat digunakan secara fleksibel oleh banyak pengguna.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== 1. PENJELASAN SISTEM MANAJEMEN TOKO (DESKRIPSI LENGKAP) ========== -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="bg-gradient-to-r from-gray-50 to-white rounded-2xl p-8 border shadow-sm">
+                <h3 class="text-2xl font-bold text-navy-dark mb-4">📊 Mengapa Sistem Manajemen Toko Penting?</h3>
+                <p class="text-gray-600 mb-6 leading-relaxed">Sistem Manajemen Toko dari JDI membantu bisnis Anda mengelola operasional sehari-hari secara efisien. Mulai dari pencatatan produk, stok real-time, transaksi penjualan, hingga laporan keuangan yang akurat. Dengan sistem terintegrasi, Anda dapat memantau bisnis dari mana saja dan kapan saja.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                    <div class="p-4"><i class="fas fa-chart-line text-3xl text-accent-orange mb-2"></i><p class="font-bold text-navy-dark">Efisiensi 70%</p><p class="text-xs text-gray-500">Waktu operasional lebih cepat</p></div>
+                    <div class="p-4"><i class="fas fa-dollar-sign text-3xl text-accent-orange mb-2"></i><p class="font-bold text-navy-dark">Akurasi 99%</p><p class="text-xs text-gray-500">Minimal kesalahan manusia</p></div>
+                    <div class="p-4"><i class="fas fa-chart-pie text-3xl text-accent-orange mb-2"></i><p class="font-bold text-navy-dark">Laporan Real-time</p><p class="text-xs text-gray-500">Keputusan lebih cepat dan tepat</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== 2. 8 FITUR BARU DENGAN EFEK HOVER ========== -->
+    <section class="py-16 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-navy-dark mb-4">🚀 Solusi Teknologi Modern</h2>
+                <p class="text-gray-500 max-w-2xl mx-auto">Kami menyediakan berbagai solusi digital untuk mendukung transformasi bisnis Anda.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="hover-card bg-white p-6 rounded-2xl shadow-sm border-2 border-gray-100 text-center transition-all">
+                    <i class="fas fa-face-smile text-4xl text-accent-orange mb-3"></i>
+                    <h3 class="font-bold text-navy-dark text-lg">Absensi Offline & Online</h3>
+                    <p class="text-xs text-gray-500 mt-2">Dengan Face Recognition, akurat dan cepat.</p>
+                </div>
+                <div class="hover-card bg-white p-6 rounded-2xl shadow-sm border-2 border-gray-100 text-center transition-all">
+                    <i class="fas fa-rss text-4xl text-accent-orange mb-3"></i>
+                    <h3 class="font-bold text-navy-dark text-lg">RFID</h3>
+                    <p class="text-xs text-gray-500 mt-2">Tracking aset & akses pintar tanpa sentuh.</p>
+                </div>
+                <div class="hover-card bg-white p-6 rounded-2xl shadow-sm border-2 border-gray-100 text-center transition-all">
+                    <i class="fas fa-fingerprint text-4xl text-accent-orange mb-3"></i>
+                    <h3 class="font-bold text-navy-dark text-lg">Finger Print</h3>
+                    <p class="text-xs text-gray-500 mt-2">Keamanan biometrik untuk kehadiran & login.</p>
+                </div>
+                <div class="hover-card bg-white p-6 rounded-2xl shadow-sm border-2 border-gray-100 text-center transition-all">
+                    <i class="fas fa-tv text-4xl text-accent-orange mb-3"></i>
+                    <h3 class="font-bold text-navy-dark text-lg">Digital Signage</h3>
+                    <p class="text-xs text-gray-500 mt-2">Papan pengumuman digital dinamis.</p>
+                </div>
+                <div class="hover-card bg-white p-6 rounded-2xl shadow-sm border-2 border-gray-100 text-center transition-all">
+                    <i class="fab fa-android text-4xl text-accent-orange mb-3"></i>
+                    <h3 class="font-bold text-navy-dark text-lg">Aplikasi Android</h3>
+                    <p class="text-xs text-gray-500 mt-2">Mobile app untuk karyawan & pelanggan.</p>
+                </div>
+                <div class="hover-card bg-white p-6 rounded-2xl shadow-sm border-2 border-gray-100 text-center transition-all">
+                    <i class="fas fa-book text-4xl text-accent-orange mb-3"></i>
+                    <h3 class="font-bold text-navy-dark text-lg">Manajemen Perpustakaan</h3>
+                    <p class="text-xs text-gray-500 mt-2">Sistem peminjaman & pengembalian buku digital.</p>
+                </div>
+                <div class="hover-card bg-white p-6 rounded-2xl shadow-sm border-2 border-gray-100 text-center transition-all">
+                    <i class="fas fa-warehouse text-4xl text-accent-orange mb-3"></i>
+                    <h3 class="font-bold text-navy-dark text-lg">Manajemen Warehouse</h3>
+                    <p class="text-xs text-gray-500 mt-2">Inventory gudang dengan sistem barcode & RFID.</p>
+                </div>
+                <div class="hover-card bg-white p-6 rounded-2xl shadow-sm border-2 border-gray-100 text-center transition-all">
+                    <i class="fas fa-globe text-4xl text-accent-orange mb-3"></i>
+                    <h3 class="font-bold text-navy-dark text-lg">Website Profesional</h3>
+                    <p class="text-xs text-gray-500 mt-2">Landing page, toko online, company profile.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== 3. MENGAPA PENGUSAHA MEMBUTUHKAN WEBSITE + GRAFIK + TABEL ========== -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-navy-dark mb-4">🌐 Mengapa Pengusaha Membutuhkan Website?</h2>
+                <p class="text-gray-500 max-w-2xl mx-auto">Fakta & data nyata dari perusahaan yang berkembang pesat dengan website dan digital marketing.</p>
+            </div>
+
+            <!-- Fakta Menarik -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-xl text-center shadow-lg">
+                    <p class="text-3xl font-bold">74%</p>
+                    <p class="text-sm mt-2">konsumen lebih percaya bisnis yang memiliki website profesional</p>
+                </div>
+                <div class="bg-gradient-to-r from-green-500 to-green-600 text-white p-6 rounded-xl text-center shadow-lg">
+                    <p class="text-3xl font-bold">+234%</p>
+                    <p class="text-sm mt-2">peningkatan pendapatan UKM setelah menggunakan website + SEO</p>
+                </div>
+                <div class="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-6 rounded-xl text-center shadow-lg">
+                    <p class="text-3xl font-bold">68%</p>
+                    <p class="text-sm mt-2">bisnis di Indonesia mulai beralih ke pemasaran digital (Data 2024)</p>
+                </div>
+            </div>
+
+            <!-- Grafik CSS Progress Bar -->
+            <h3 class="font-bold text-navy-dark text-xl mb-4">📈 Pertumbuhan Bisnis Sebelum vs Sesudah Digital Marketing</h3>
+            <div class="bg-gray-50 p-6 rounded-xl mb-8">
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between text-sm mb-1"><span>Tanpa Website/Digital Marketing</span><span>28%</span></div>
+                        <div class="w-full bg-gray-200 rounded-full h-3"><div class="bg-gray-400 h-3 rounded-full progress-bar" style="width: 28%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-sm mb-1"><span>Dengan Website (Company Profile)</span><span>56%</span></div>
+                        <div class="w-full bg-gray-200 rounded-full h-3"><div class="bg-blue-500 h-3 rounded-full progress-bar" style="width: 56%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-sm mb-1"><span>Dengan Website + SEO + Social Media</span><span>89%</span></div>
+                        <div class="w-full bg-gray-200 rounded-full h-3"><div class="bg-accent-orange h-3 rounded-full progress-bar" style="width: 89%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-sm mb-1"><span>Dengan E-commerce + Digital Ads</span><span>145%</span></div>
+                        <div class="w-full bg-gray-200 rounded-full h-3"><div class="bg-green-500 h-3 rounded-full progress-bar" style="width: 100%"></div><span class="text-xs text-green-600 ml-2">+45% di atas baseline</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabel Kebutuhan Digital Marketing -->
+            <h3 class="font-bold text-navy-dark text-xl mb-4">📋 Tabel Kebutuhan Digital Marketing per Jenis Bisnis</h3>
+            <div class="overflow-x-auto mb-8">
+                <table class="min-w-full bg-white border rounded-xl text-sm">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-4 py-3 text-left border">Jenis Bisnis</th>
+                            <th class="px-4 py-3 text-left border">Website</th>
+                            <th class="px-4 py-3 text-left border">SEO</th>
+                            <th class="px-4 py-3 text-left border">Media Sosial</th>
+                            <th class="px-4 py-3 text-left border">Email Marketing</th>
+                            <th class="px-4 py-3 text-left border">Prioritas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b hover:bg-gray-50"><td class="px-4 py-3">✅ UMKM Produk Fisik</td><td class="px-4 py-3">Wajib</td><td class="px-4 py-3">Tinggi</td><td class="px-4 py-3">Wajib</td><td class="px-4 py-3">Rendah</td><td class="px-4 py-3 text-accent-orange font-bold">Toko Online</td></tr>
+                        <tr class="border-b hover:bg-gray-50"><td class="px-4 py-3">✅ Jasa/Layanan</td><td class="px-4 py-3">Wajib</td><td class="px-4 py-3">Wajib</td><td class="px-4 py-3">Tinggi</td><td class="px-4 py-3">Sedang</td><td class="px-4 py-3 text-accent-orange font-bold">Landing Page</td></tr>
+                        <tr class="border-b hover:bg-gray-50"><td class="px-4 py-3">✅ Restoran/Kafe</td><td class="px-4 py-3">Wajib</td><td class="px-4 py-3">Sedang</td><td class="px-4 py-3">Wajib</td><td class="px-4 py-3">Rendah</td><td class="px-4 py-3 text-accent-orange font-bold">Menu Online</td></tr>
+                        <tr class="border-b hover:bg-gray-50"><td class="px-4 py-3">✅ Pendidikan/Kursus</td><td class="px-4 py-3">Wajib</td><td class="px-4 py-3">Tinggi</td><td class="px-4 py-3">Sedang</td><td class="px-4 py-3">Wajib</td><td class="px-4 py-3 text-accent-orange font-bold">LMS</td></tr>
+                        <tr class="hover:bg-gray-50"><td class="px-4 py-3">✅ Event Organizer</td><td class="px-4 py-3">Wajib</td><td class="px-4 py-3">Tinggi</td><td class="px-4 py-3">Wajib</td><td class="px-4 py-3">Wajib</td><td class="px-4 py-3 text-accent-orange font-bold">Registrasi Online</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Daftar Perusahaan Sukses -->
+            <div class="bg-gray-50 p-6 rounded-xl">
+                <h3 class="font-bold text-navy-dark text-lg mb-3">🏆 Perusahaan yang Berkembang dengan Website & Digital Marketing</h3>
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-accent-orange"></i> <span class="text-gray-700"><b>Tokopedia</b> - Dari UMKM jadi unicorn berkat digital marketing</span></li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-accent-orange"></i> <span class="text-gray-700"><b>Traveloka</b> - Mengubah industri travel dengan website & app</span></li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-accent-orange"></i> <span class="text-gray-700"><b>Sociolla</b> - E-commerce kecantikan yang tumbuh 300% dalam 2 tahun</span></li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-accent-orange"></i> <span class="text-gray-700"><b>Bukalapak</b> - Memberdayakan jutaan UMKM melalui platform digital</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== 4. PROMO DISKON 50% UNTUK PENGUSAHA PAPUA (EFEK CAP) ========== -->
+    <section class="py-16 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="stamp-effect bg-gradient-to-r from-navy-dark to-gray-800 rounded-2xl p-8 text-white relative overflow-hidden shadow-xl">
+                <div class="relative z-10">
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                        <div class="text-center md:text-left">
+                            <i class="fas fa-gem text-5xl text-accent-orange mb-3 block"></i>
+                            <h3 class="text-3xl font-bold">Diskon 50%</h3>
+                            <p class="text-sm opacity-90">Khusus Pengusaha Asli Papua</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-4xl font-bold text-accent-orange">Rp 0</p>
+                            <p class="text-xs line-through opacity-60">Start from Rp 5.000.000</p>
+                            <p class="text-sm font-bold mt-2">💰 Hemat 50% untuk pembuatan Website + Digital Marketing</p>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm p-4 rounded-xl text-center min-w-[180px]">
+                            <i class="fas fa-id-card text-2xl text-accent-orange mb-1"></i>
+                            <p class="text-[10px] font-bold uppercase tracking-wider">Syarat & Ketentuan</p>
+                            <p class="text-[9px] opacity-80">✓ Bukti KTP/SIM asli Papua<br>✓ Minimal 1 tahun berusaha<br>✓ Berlaku untuk 50 klien pertama</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -603,6 +843,23 @@ function kirimProyek() {
     if (!nama || !nomor || !email || !alamat) return showNotification("Mohon lengkapi semua field yang wajib diisi!", true);
     if (!/^\d+$/.test(nomor)) return showNotification("Nomor HP harus berisi angka saja!", true);
     if (!email.includes('@')) return showNotification("Email tidak valid!", true);
+    
+    // SAVE TO localStorage untuk admin
+    const projekData = JSON.parse(localStorage.getItem('projekJDI') || '[]');
+    projekData.push({
+        nama_lengkap: nama,
+        nomor_hp: nomor,
+        email: email,
+        alamat: alamat,
+        jenis_usaha: document.getElementById('jenis_usaha')?.value || '-',
+        pilih_layanan: document.getElementById('pilih_layanan')?.value || '-',
+        penjelasan_usaha: document.getElementById('deskripsi_usaha')?.value || '-',
+        tujuan_proyek: document.getElementById('tujuan_proyek')?.value || '-',
+        status: 'pending',
+        tanggal: new Date().toLocaleString()
+    });
+    localStorage.setItem('projekJDI', JSON.stringify(projekData));
+    
     showNotification("Permintaan proyek berhasil dikirim! Kami akan menghubungi Anda segera.");
     toggleProjectModal();
     document.getElementById('proyekForm')?.reset();
@@ -631,8 +888,19 @@ function setFooterRating(rating) {
     });
     document.getElementById('rating-status').innerText = `Anda memilih ${rating} dari 5 bintang. Klik 'Kirim Rating' untuk mengirim.`;
 }
+
 function submitRating() {
     if (currentRating === 0) return showNotification("Silakan pilih bintang terlebih dahulu!", true);
+    
+    // SAVE rating ke localStorage
+    const ratings = JSON.parse(localStorage.getItem('jdi_ratings') || '[]');
+    ratings.push({
+        date: new Date().toLocaleString(),
+        rating: currentRating,
+        message: 'Rating dari pengunjung website'
+    });
+    localStorage.setItem('jdi_ratings', JSON.stringify(ratings));
+    
     showNotification(`Terima kasih atas rating ${currentRating} bintang Anda! Dukungan Anda sangat berarti bagi kami.`);
     setTimeout(() => {
         document.querySelectorAll('.footer-rating-star').forEach(star => { star.style.color = '#d1d5db'; star.classList.remove('filled'); });
@@ -711,10 +979,21 @@ function showLoadingScreen() {
                         main.style.opacity = '1';
                     }
                     initMainContent();
+                    animateProgressBars();
                 }, 1000);
             }
         }, 5000);
     });
+}
+
+function animateProgressBars() {
+    setTimeout(() => {
+        document.querySelectorAll('.progress-bar').forEach(bar => {
+            const width = bar.style.width;
+            bar.style.width = '0%';
+            setTimeout(() => { bar.style.width = width; }, 100);
+        });
+    }, 500);
 }
 
 function initMainContent() {
@@ -727,6 +1006,7 @@ function initMainContent() {
             speed: 800, grabCursor: true, allowTouchMove: true
         });
     }
+    animateProgressBars();
 }
 
 // Decision for loading screen
